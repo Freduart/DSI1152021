@@ -4,19 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Facultad extends Migration
+class CreateTipoServicioSocialsTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-
     public function up()
     {
-        Schema::create('facultades', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre');
+        Schema::create('tipos_servicio_social', function (Blueprint $table) {
+            $table->id('id');
+            $table->string('nombre', 25);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class Facultad extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('tipo_servicio_socials');
     }
 }

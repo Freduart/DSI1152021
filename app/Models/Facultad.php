@@ -9,4 +9,9 @@ class Facultad extends Model
 {
     protected $table = 'facultades';
     use HasFactory;
+
+    //Relacion uno a muchos
+    public function carreras(){
+        return $this->hasMany('App\Models\Carrera');
+    }
 }

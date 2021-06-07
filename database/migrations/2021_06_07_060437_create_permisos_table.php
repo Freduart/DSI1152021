@@ -4,17 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Facultad extends Migration
+class CreatePermisosTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-
     public function up()
     {
-        Schema::create('facultades', function (Blueprint $table) {
+        Schema::create('permisos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->timestamps();
@@ -28,6 +27,6 @@ class Facultad extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('permisos');
     }
 }
