@@ -16,8 +16,9 @@ class CreateInstitucionsTable extends Migration
         Schema::create('instituciones', function (Blueprint $table) {
             $table->id('id');
             $table->string('nombre', 30);
-            $table->string('contacto', 50);
-            $table->string('telefono', 9);
+            $table->string('contacto', 50)->unique();
+            $table->string('correo', 50)->unique();
+            $table->string('telefono', 9)->unique();
             $table->string('ubicacion', 150);
             $table->string('rubro', 100);
             $table->timestamps();

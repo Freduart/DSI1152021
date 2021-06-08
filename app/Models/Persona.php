@@ -20,4 +20,14 @@ class Persona extends Model
     public function estudiante(){
         return $this->hasOne('App\Models\Estudiante');
     }
+
+    //Relacion uno a uno con EncargadoEscuela
+    public function encargadoEscuela(){
+        return $this->hasOne('App\Models\EncargadoEscuela');
+    }
+       
+    //Relacion uno a uno con EncargadoFacultad
+    public function encargadoFacultad(){
+        return $this->hasOne('App\Models\EncargadoFacultad');
+    }
 }

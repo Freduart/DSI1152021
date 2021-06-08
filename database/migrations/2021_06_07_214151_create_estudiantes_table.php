@@ -16,6 +16,7 @@ class CreateEstudiantesTable extends Migration
         Schema::create('estudiantes', function (Blueprint $table) {
             $table->id('id');
             $table->string('carnet', 7);
+            $table->enum('sexo', ['Masculino', 'Femenino']);
 
             $table->unsignedBigInteger('carrera_id')->nullable();
 
