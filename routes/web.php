@@ -1,8 +1,11 @@
 <?php
 
+
+use App\Http\Controllers\Admins\AdminDashboardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +30,8 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
+
+Route::prefix('admin')->name('admin')->middleware(['auth:sanctum','verified'])->group(function()
+{
+    Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.index');
+});
