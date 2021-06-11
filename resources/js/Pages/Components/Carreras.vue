@@ -70,41 +70,6 @@
     </div>
     <!-- /.sidebar -->
     </aside>
-    <!-- <section class="container">
-        <div class="container-fluid">
-             <table class="table table-striped table-dark">
-                <thead>
-                    <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Carrera</th>
-                    <th scope="col">Facultad</th>
-                    <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section> -->
-
 
         <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -170,8 +135,8 @@
                                     <tbody>
                                         <tr scope="row" v-for="(carrera, index) in carrerasFiltradas" :key="index">
                                             
-                                            <td>{{ carrera.codigo }}</td>
-                                            <td>{{ carrera.nombre }}</td>
+                                            <td>{{ carrera.codigo_carrera }}</td>
+                                            <td>{{ carrera.nombre_carrera }}</td>
                                             <td>{{ carrera.nombre_facultad }}</td>
                                             <td>
                                             <!-- General tools such as edit or delete-->

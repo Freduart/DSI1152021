@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Facultad;
 
+use Illuminate\Support\Facades\DB;
+
 class FacultadSeeder extends Seeder
 {
     /**
@@ -14,7 +16,7 @@ class FacultadSeeder extends Seeder
      */
     public function run()
     {
-        //        DB::table('facultades')->delete();
+        DB::table('facultades')->delete();
 
         $facultades = [
             'Facultad de Ciencias y Humanidades',

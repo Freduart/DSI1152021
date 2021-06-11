@@ -60,11 +60,26 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function persona(){
-        return $this->hasOne('App\Models\Persona');
-    }
+    // public function persona(){
+    //     return $this->hasOne('App\Models\Persona');
+    // }
 
     public function roles(){
         return $this->belongsToMany('App\Models\Rol');
+    }
+
+    //Relacion uno a uno con Estudiante
+    public function estudiante(){
+        return $this->hasOne('App\Models\Estudiante');
+    }
+
+    //Relacion uno a uno con EncargadoEscuela
+    public function encargadoEscuela(){
+        return $this->hasOne('App\Models\EncargadoEscuela');
+    }
+
+    //Relacion uno a uno con EncargadoFacultad
+    public function encargadoFacultad(){
+        return $this->hasOne('App\Models\EncargadoFacultad');
     }
 }

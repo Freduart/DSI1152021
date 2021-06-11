@@ -22,9 +22,9 @@ class Estudiante extends Model
     ];
 
     //Relacion uno a uno con persona
-    public function persona(){
-        return $this->hasOne('App\Models\Persona');
-    }
+    // public function persona(){
+    //     return $this->hasOne('App\Models\Persona');
+    // }
 
     //Relacion uno a uno con carrera
     public function carrera(){
@@ -44,5 +44,10 @@ class Estudiante extends Model
     //Relacion uno a uno con Solicitud
     public function solicitud(){
         return $this->hasOne('App\Models\Solicitud');
+    }
+
+    //Relacion uno a uno con Usuario
+    public function usuario(){
+        return $this->hasOne('App\Models\User');
     }
 }

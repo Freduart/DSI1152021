@@ -15,21 +15,27 @@ class CreateEstudiantesTable extends Migration
     {
         Schema::create('estudiantes', function (Blueprint $table) {
             $table->id('id');
-            $table->string('carnet_estudiante', 7);
+            $table->string('nombre_estudiante');
+            $table->string('apellido_estudiante');
+            $table->unsignedBigInteger('user_id')->nullable()->unique();
+            $table->string('carnet_estudiante', 7)->unique();
             $table->enum('sexo_estudiante', ['Masculino', 'Femenino']);
-
+            $table->string('correo_estudiante', 30)->unique();
+            $table->string('telefono_estudiante', 9)->unique();
             $table->unsignedBigInteger('carrera_id')->nullable();
-
+            $table->string('dui_estudiante', 10)->nullable()->unique();
+            $table->string('nit_estudiante', 17)->nullable()->unique();
             $table->unsignedInteger('materias_cursadas');
             $table->unsignedInteger('cantidad_horas_ss');
             $table->enum('estado_estudiante', ['Inactivo', 'En espera', 'Realizando servicio', 'Servicio finalizado']);
 
-            $table->unsignedBigInteger('persona_id')->nullable();
+            // $table->unsignedBigInteger('persona_id')->nullable();
 
             $table->timestamps();
 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->foreign('carrera_id')->references('id')->on('carreras')->onDelete('set null');
-            $table->foreign('persona_id')->references('id')->on('personas')->onDelete('set null');
+            // $table->foreign('persona_id')->references('id')->on('personas')->onDelete('set null');
         });
     }
 

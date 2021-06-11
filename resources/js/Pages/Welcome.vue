@@ -12,7 +12,7 @@
               <inertia-link :href="route('login')" class="text-muted">
                 Iniciar Sesión
               </inertia-link>
-
+              
               <inertia-link v-if="canRegister" :href="route('estudiantes.create')" class="ml-4 text-muted">
                 Registrarse
               </inertia-link> 
