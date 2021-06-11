@@ -5,18 +5,28 @@
         <div v-if="canLogin" class="d-flex justify-content-end">
           <div>
             <inertia-link v-if="$page.props.user" href="/dashboard" class="text-muted">
-              Dashboard
+              Inicio
             </inertia-link>
 
             <template v-else>
+              <inertia-link :href="route('login')" class="text-muted">
+                Iniciar Sesión
+              </inertia-link>
+
+              <inertia-link v-if="canRegister" :href="route('estudiantes.create')" class="ml-4 text-muted">
+                Registrarse
+              </inertia-link> 
+
+            </template>
+<!-- 
               <inertia-link :href="route('login')" class="text-muted">
                 Log in
               </inertia-link>
 
               <inertia-link v-if="canRegister" :href="route('register')" class="ml-4 text-muted">
                 Register
-              </inertia-link>
-            </template>
+              </inertia-link> -->
+            
           </div>
         </div>
       </div>
@@ -140,12 +150,24 @@
 </style>
 
 <script>
+import JetDropdownLink from '@/Jetstream/DropdownLink'
+import JetNavLink from '@/Jetstream/NavLink'
+import Button from '../Jetstream/Button.vue';
 export default {
+  components:{
+    JetDropdownLink,
+    JetNavLink,
+  },
   props: {
     canLogin: Boolean,
     canRegister: Boolean,
     laravelVersion: String,
     phpVersion: String,
+  },
+  methods:{
+    logout() {
+      this.$inertia.post(route('logout'));
+    },
   }
 }
 </script>

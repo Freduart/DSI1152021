@@ -13,16 +13,16 @@ class CreateEncargadoFacultadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('encargado_facultads', function (Blueprint $table) {
+        Schema::create('encargado_facultades', function (Blueprint $table) {
             $table->id('id');
 
             $table->unsignedBigInteger('persona_id')->nullable();
-            $table->unsignedBigInteger('carrera_id')->nullable();
+            $table->unsignedBigInteger('facultad_id')->nullable();
 
             $table->timestamps();
 
             $table->foreign('persona_id')->references('id')->on('personas')->onDelete('set null');
-            $table->foreign('carrera_id')->references('id')->on('carreras')->onDelete('set null');
+            $table->foreign('facultad_id')->references('id')->on('facultades')->onDelete('set null');
         });
     }
 

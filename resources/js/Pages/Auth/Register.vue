@@ -8,7 +8,8 @@
 
       <jet-validation-errors class="mb-3" />
 
-      <form @submit.prevent="submit">
+        <!-- Este es el formulario que ya venía por defecto -->
+      <!-- <form @submit.prevent="submit">
         <div class="form-group">
           <jet-label for="name" value="Name" />
           <jet-input id="name" type="text" v-model="form.name" required autofocus autocomplete="name" />
@@ -50,7 +51,12 @@
             </jet-button>
           </div>
         </div>
-      </form>
+      </form> -->
+
+
+
+
+
     </div>
   </jet-authentication-card>
 </template>
@@ -89,9 +95,10 @@ export default {
 
   methods: {
     submit() {
-      this.form.post(this.route('register'), {
-        onFinish: () => this.form.reset('password', 'password_confirmation'),
-      })
+      // this.form.post(this.route('register'), {
+      //   onFinish: () => this.form.reset('password', 'password_confirmation'),
+      // })
+      this.form.get(this.route('dashboard'));
     }
   }
 }

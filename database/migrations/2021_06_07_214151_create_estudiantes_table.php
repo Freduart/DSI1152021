@@ -15,14 +15,14 @@ class CreateEstudiantesTable extends Migration
     {
         Schema::create('estudiantes', function (Blueprint $table) {
             $table->id('id');
-            $table->string('carnet', 7);
-            $table->enum('sexo', ['Masculino', 'Femenino']);
+            $table->string('carnet_estudiante', 7);
+            $table->enum('sexo_estudiante', ['Masculino', 'Femenino']);
 
             $table->unsignedBigInteger('carrera_id')->nullable();
 
             $table->unsignedInteger('materias_cursadas');
             $table->unsignedInteger('cantidad_horas_ss');
-            $table->enum('estado', ['Inactivo', 'En espera', 'Realizando servicio', 'Servicio finalizado']);
+            $table->enum('estado_estudiante', ['Inactivo', 'En espera', 'Realizando servicio', 'Servicio finalizado']);
 
             $table->unsignedBigInteger('persona_id')->nullable();
 

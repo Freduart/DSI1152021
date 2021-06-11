@@ -36,7 +36,7 @@ class FacultadSeeder extends Seeder
             //     'updated_at' => date('Y-m-d H:m:s')
             // ]);
 
-            Facultad::create(['nombre' => $facultad]);
+            Facultad::create(['nombre_facultad' => $facultad]);
         }
     }
 }

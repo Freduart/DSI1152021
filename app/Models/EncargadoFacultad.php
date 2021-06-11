@@ -9,11 +9,11 @@ class EncargadoFacultad extends Model
 {
     use HasFactory;
 
-    protected $table = 'encargados_facultad';
+    protected $table = 'encargados_facultades';
 
-    //Relacion uno a uno con Carrera
-    public function carrera(){
-        return $this->hasOne('App\Models\Carrera');
+    //Relacion uno a uno con Facultad
+    public function facultad(){
+        return $this->hasOne('App\Models\Facultad');
     }
 
     //Relacion uno a uno con Persona

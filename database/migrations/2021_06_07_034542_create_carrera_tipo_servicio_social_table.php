@@ -14,7 +14,7 @@ class CreateCarreraTipoServicioSocialTable extends Migration
     public function up()
     {
         Schema::create('carrera_tipo_servicio_social', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');
             $table->unsignedBigInteger('carrera_id')->nullable();
             $table->unsignedBigInteger('tipo_servicio_social_id')->nullable();
             

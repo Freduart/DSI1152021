@@ -19,7 +19,7 @@ class CreateProyectoSocialsTable extends Migration
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->integer('numero_horas');
-            $table->enum('estado', ['No iniciado', 'En curso', 'Finalizado', 'Cancelado']);
+            $table->enum('estado_proyecto_social', ['No iniciado', 'En curso', 'Finalizado', 'Cancelado']);
             $table->timestamps();
 
             $table->foreign('peticion_id')->references('id')->on('peticiones')->onDelete('set null');

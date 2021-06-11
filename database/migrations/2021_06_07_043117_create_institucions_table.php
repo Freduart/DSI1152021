@@ -15,12 +15,12 @@ class CreateInstitucionsTable extends Migration
     {
         Schema::create('instituciones', function (Blueprint $table) {
             $table->id('id');
-            $table->string('nombre', 30);
-            $table->string('contacto', 50)->unique();
-            $table->string('correo', 50)->unique();
-            $table->string('telefono', 9)->unique();
-            $table->string('ubicacion', 150);
-            $table->string('rubro', 100);
+            $table->string('nombre_institucion', 30);
+            $table->string('contacto_institucion', 50)->unique();
+            $table->string('correo_institucion', 50)->unique();
+            $table->string('telefono_institucion', 9)->unique();
+            $table->string('ubicacion_institucion', 150);
+            $table->string('rubro_institucion', 100);
             $table->timestamps();
         });
     }

@@ -11,7 +11,6 @@
       <div v-if="status" class="alert alert-success mb-3 rounded-0" role="alert">
         {{ status }}
       </div>
-
       <form @submit.prevent="submit">
         <div class="form-group">
           <jet-label for="email" value="Email" />

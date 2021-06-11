@@ -16,12 +16,12 @@ class CreatePeticionsTable extends Migration
         Schema::create('peticiones', function (Blueprint $table) {
             $table->id('id')->nullable();
             $table->unsignedInteger('cantidad_estudiantes');
-            $table->text('descripcion');
+            $table->text('descripcion_peticion');
             $table->string('ubicacion_actividades', 50);
-            $table->date('fecha')->nullable();
+            $table->date('fecha_peticion')->nullable();
             $table->string('otros_tipo_servicio')->nullable();
-            $table->enum('estado', ['En espera', 'Aceptado', 'Rechazado']);
-            $table->string('correo', 50)->unique();
+            $table->enum('estado_peticion', ['En espera', 'Aceptado', 'Rechazado']);
+            $table->string('correo_peticion', 50)->unique();
 
             $table->unsignedBigInteger('carrera_id')->nullable();
             $table->unsignedBigInteger('tipo_servicio_social_id')->nullable();

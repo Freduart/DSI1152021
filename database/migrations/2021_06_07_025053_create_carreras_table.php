@@ -15,8 +15,8 @@ class CreateCarrerasTable extends Migration
     {
         Schema::create('carreras', function (Blueprint $table) {
             $table->id('id');
-            $table->string('nombre', 50);
-            $table->string('codigo', 7)->unique();
+            $table->string('nombre_carrera', 50);
+            $table->string('codigo_carrera', 7)->unique();
             $table->unsignedBigInteger('facultad_id')->nullable();
 
             $table->foreign('facultad_id')->references('id')->on('facultades')->onDelete('set null');

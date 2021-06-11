@@ -35,8 +35,4 @@ class Carrera extends Model
         return $this->hasOne('App\Models\EncargadoEscuela');
     }
 
-    //Relacion uno a uno con EncargadoFacultad
-    public function encargadoFacultad(){
-        return $this->hasOne('App\Models\EncargadoFacultad');
-    }
 }

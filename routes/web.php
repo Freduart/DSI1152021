@@ -2,6 +2,8 @@
 
 
 use App\Http\Controllers\Admins\AdminDashboardController;
+use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\CarreraController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,6 +20,8 @@ use Inertia\Inertia;
 |
 */
 
+
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -27,11 +31,19 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+Route::get('/dashboard', function () {
+   // return Inertia::render('Dashboard');
+   return Inertia::render('Admins/Dashboard');
 })->name('dashboard');
+// ->middleware(['auth:sanctum','verified']);
 
 Route::prefix('admin')->name('admin')->middleware(['auth:sanctum','verified'])->group(function()
 {
     Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.index');
 });
+
+Route::resource('estudiantes', EstudianteController::class);
+// Route::get('/formEstudiante', [EstudianteController::class, 'create'])->name('formEstudiante');
+// Route::get('/findCarrerabyFacultad/{id}?', [EstudianteController::class, 'findCarrerasByFacultad', 'id' => null])->name('findCarreraByFac');
+
+Route::resource('carreras', CarreraController::class);

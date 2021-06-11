@@ -15,7 +15,7 @@ class CreateTipoServicioSocialsTable extends Migration
     {
         Schema::create('tipos_servicio_social', function (Blueprint $table) {
             $table->id('id');
-            $table->string('nombre', 25);
+            $table->string('nombre_tipo_servicio', 25);
             $table->timestamps();
         });
     }

@@ -14,4 +14,9 @@ class Facultad extends Model
     public function carreras(){
         return $this->hasMany('App\Models\Carrera');
     }
+
+    //Relacion uno a uno con EncargadoFacultad
+    public function encargadoFacultad(){
+        return $this->hasOne('App\Models\EncargadoFacultad');
+    }
 }

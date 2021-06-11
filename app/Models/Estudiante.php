@@ -11,6 +11,16 @@ class Estudiante extends Model
 
     protected $table = 'estudiantes';
 
+    protected $fillable = [
+        'carrera',
+        'sexo',
+        'carnet',
+        'carrera_id',
+        'materias_cursadas',
+        'cantidad_horas_ss',
+        'estado',
+    ];
+
     //Relacion uno a uno con persona
     public function persona(){
         return $this->hasOne('App\Models\Persona');

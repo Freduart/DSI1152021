@@ -19,8 +19,8 @@ class CreateSolicitudsTable extends Migration
             $table->unsignedBigInteger('estudiante_id')->nullable();
             $table->unsignedBigInteger('proyecto_social_id')->nullable();
 
-            $table->text('justificacion');
-            $table->enum('estado', ['En espera', 'Aceptado', 'Rechazado']);
+            $table->text('justificacion_solicitud');
+            $table->enum('estado_solicitud', ['En espera', 'Aceptado', 'Rechazado']);
             $table->timestamps();
 
             $table->foreign('estudiante_id')->references('id')->on('estudiantes')->onDelete('set null');
