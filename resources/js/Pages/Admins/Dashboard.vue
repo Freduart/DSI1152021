@@ -51,7 +51,7 @@
                     
                     <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <inertia-link :href="route('carreras.index')" class="nav-link">
+                        <inertia-link :href="route('carreras.index')" class="nav-link active" >
                         <i class="far fa-circle nav-icon"></i>
                         <p>Administrar carreras</p>
                         </inertia-link>
@@ -63,7 +63,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="./index3.html" class="nav-link">
+                        <a href="./index3.html" class="nav-link active">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Opcion 3</p>
                         </a>

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class CarreraController extends Controller
 {
@@ -19,9 +20,12 @@ class CarreraController extends Controller
     public function index()
     {
         // $carreras = Carrera::all();
-        $carreras = Carrera::join('facultades', 'facultades.id', '=', 'carreras.facultad_id')
+        // $carreras = Carrera::join('facultades', 'facultades.id', '=', 'carreras.facultad_id')
+        // ->select('*')->get();
+        $carreras = Facultad::join('carreras', 'carreras.facultad_id', '=', 'facultades.id')
         ->select('*')->get();
-        // $carreras = DB::select('select f.nombre, c.nombre from facultades f RIGHTJOIN carreras c ON c.facultad_id = f.id');
+        // $carreras = DB::table('carreras')->paginate(15);
+        // $carreras = DB::select('select * from facultades f JOIN carreras c ON c.facultad_id = f.id');
         // return $carreras;
         $facultades = Facultad::all();
         return Inertia::render('Components/Carreras', ['carreras' => $carreras, 'facultades' => $facultades]);
@@ -34,7 +38,7 @@ class CarreraController extends Controller
      */
     public function create()
     {
-        //
+        return "hola";
     }
 
     /**
@@ -45,7 +49,10 @@ class CarreraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request->all();
+        Carrera::create($request->all());
+        return Redirect::route('carreras.index');
+        // return Inertia::render('Components/Carreras');
     }
 
     /**
@@ -79,7 +86,9 @@ class CarreraController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $carrera = Carrera::find($id);
+        $carrera->update($request->all());
+        return Redirect::route('carreras.index');
     }
 
     /**
@@ -90,6 +99,9 @@ class CarreraController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // return "borrado " + $id;
+        $carrera = Carrera::find($id);
+        $carrera->delete();
+        return Redirect::route('carreras.index');
     }
 }

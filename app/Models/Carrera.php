@@ -10,6 +10,12 @@ class Carrera extends Model
     protected $table = 'carreras';
     use HasFactory;
 
+    protected $fillable = [
+        'nombre_carrera',
+        'codigo_carrera',
+        'facultad_id',
+    ];
+
     //Relacion muchos a uno (inversa de uno a muchos)
     public function facultad(){
         return $this->belongsTo('App\Models\Facultad');
