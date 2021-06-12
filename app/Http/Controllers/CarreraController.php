@@ -86,9 +86,23 @@ class CarreraController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $estadoCliente = $request->estado_carrera;
+        // return $estadoCliente;
         $carrera = Carrera::find($id);
-        $carrera->update($request->all());
+        // return $carrera->estado_carrera;
+        $estadoServidor = $carrera->estado_carrera;
+        // return $estadoServidor;
+        if($estadoCliente == $estadoServidor){
+            // return "No cambia";
+            $carrera->update($request->all());
+        }
+        else{
+            // return "Cambia";
+            $carrera->estado_carrera = $estadoCliente;
+            $carrera->save();
+        }
         return Redirect::route('carreras.index');
+
     }
 
     /**

@@ -47,3 +47,8 @@ Route::resource('estudiantes', EstudianteController::class);
 // Route::get('/findCarrerabyFacultad/{id}?', [EstudianteController::class, 'findCarrerasByFacultad', 'id' => null])->name('findCarreraByFac');
 
 Route::resource('carreras', CarreraController::class);
+
+// Route::put('carreras/cambiar/{estado}', function($carrera, $estado){
+//     $carrera->estado_carrera = $estado;
+//     return $carrera->all();
+// })->name('carreras.updateStatus');

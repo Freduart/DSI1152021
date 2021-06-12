@@ -131,7 +131,8 @@
                                         <th scope='col'>Código</th>
                                         <th scope="col">Carrera</th>
                                         <th scope="col">Facultad</th>
-                                        <th scope="col">Acciones</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -140,24 +141,34 @@
                                             <td>{{ carrera.codigo_carrera }}</td>
                                             <td>{{ carrera.nombre_carrera }}</td>
                                             <td>{{ carrera.nombre_facultad }}</td>
+                                            <td v-if="carrera.estado_carrera == 'Activo'">
+                                                <form @submit.prevent="cambiarEstado(carrera)">
+                                                    <button type="submit" class="btn btn-success" :class="{ 'text-white-50 bg-green-400': form.processing }">{{ carrera.estado_carrera }}</button>
+                                                </form>          
+                                            </td>
+                                            <td v-else>
+                                                <form @submit.prevent="cambiarEstado(carrera)">
+                                                    <button type="submit" class="btn btn-primary" :class="{ 'text-white-50 bg-green-400': form.processing }">{{ carrera.estado_carrera }}</button>
+                                                </form>            
+                                            </td>
                                             <td>
                                             <!-- General tools such as edit or delete-->
-                                                <div class="tools flex justify-center">
+                                                <div class="flex justify-center">
 
                                                     
                                                     <inertia-link
                                                     method="delete"
                                                     :href="route('carreras.destroy', carrera.id)"
                                                     v-on:click="mostrarMensajeDelete(carrera)">
-                                                        <jet-button>
+                                                        <button class="btn btn-danger">
                                                             <i class="fas fa-trash"></i>
-                                                        </jet-button>
+                                                        </button>
                                                     </inertia-link>
                                                     
-                                                    <jet-button v-on:click="mostrarMensajeUpdate(carrera)" data-toggle="modal" data-target="#actualizarCarrera">
+                                                    <button class="btn btn-warning" v-on:click="mostrarMensajeUpdate(carrera)" data-toggle="modal" data-target="#actualizarCarrera">
                                                         <i class="fas fa-edit mx-12"></i>
-                                                    </jet-button>    
-                                                    
+                                                    </button>    
+                                                
                                                 
                                                 </div>
                                             </td>
@@ -351,13 +362,14 @@
     import JetLabel from '@/Jetstream/Label'
     import JetButton from '@/Jetstream/Button'
 import Label from '../../Jetstream/Label.vue'
+import Button from '../../Jetstream/Button.vue'
     export default {
         components:{
             JetNavLink,
             JetDropdownLink,
             JetInput,
             JetLabel,
-            JetButton
+            JetButton,
         },
         props:['carreras', 'facultades'],
         methods:{
@@ -406,6 +418,47 @@ import Label from '../../Jetstream/Label.vue'
                 this.form.facultad_id='';
                 this.form.codigo_carrera='';
             },
+            cambiarEstado(carrera){
+                console.log(carrera);
+                console.log(carrera.estado_carrera);
+                if(carrera.estado_carrera == 'Activo'){
+                    // carrera.estado_carrera = 'Inactivo';
+                    this.formUp.estado_carrera = 'Inactivo'; 
+                    Swal.fire({
+                        title: 'Se ha inactivado la carrera ' + carrera.nombre_carrera,
+                        text: 'Actualice la página para ver los cambios',
+                        icon: 'warning',
+                        iconColor: '#FF8000',
+                        confirmButtonText: 'Aceptar',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                    });
+                // this.$inertia.put(route("carreras.updateStatus", carrera.id, 'Inactivo'));
+
+                }
+                else if(carrera.estado_carrera == 'Inactivo'){
+                    // carrera.estado_carrera = 'Activo';
+                    this.formUp.estado_carrera = 'Activo';
+                    Swal.fire({
+                        title: 'Se ha activado la carrera ' + carrera.nombre_carrera,
+                        text: 'Actualice la página para ver los cambios',
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                    });
+                    // this.$inertia.put(route("carreras.updateStatus", carrera.id, 'Activo'));
+                }
+                // // console.log(this.formUp);
+                // console.log(carrera.estado_carrera);
+                // this.$inertia.put(route("carreras.update", carrera.id), carrera.estado_carrera);
+                // console.log(carrera);
+                // this.$inertia.put(route('carreras.updateStatus', carrera.estado_carrera), carrera);
+                this.$inertia.put(route("carreras.update",carrera.id), this.formUp);
+                // this.submitUpdate(this.formUp);
+            },
             submitUpdate(form){
                 console.log(this.formUp);
                 console.log(form);
@@ -450,6 +503,7 @@ import Label from '../../Jetstream/Label.vue'
                 this.formUp.nombre_carrera = carrera.nombre_carrera;
                 this.formUp.codigo_carrera = carrera.codigo_carrera;
                 this.formUp.facultad_id = carrera.facultad_id;
+                this.formUp.estado_carrera = carrera.estado_carrera;
                 this.formUp.id = carrera.id;
                 console.log(this.formUp);
             }
@@ -491,14 +545,16 @@ import Label from '../../Jetstream/Label.vue'
                     nombre_carrera:'',
                     facultad_id:'',
                     codigo_carrera:'',
+                    estado_carrera: 'Activo',
                     }),
                 formUp: this.$inertia.form({
                     nombre_carrera:'',
                     facultad_id:'',
                     codigo_carrera:'',
                     id: '',
+                    estado_carrera:'',
                     }),
-                borrado: false,    
+                activo: true,    
                 }
             },        
         mounted(){
