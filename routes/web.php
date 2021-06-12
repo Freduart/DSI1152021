@@ -4,6 +4,7 @@
 use App\Http\Controllers\Admins\AdminDashboardController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\CarreraController;
+use App\Http\Controllers\EncargadoFacultadController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -47,3 +48,5 @@ Route::resource('estudiantes', EstudianteController::class);
 // Route::get('/findCarrerabyFacultad/{id}?', [EstudianteController::class, 'findCarrerasByFacultad', 'id' => null])->name('findCarreraByFac');
 
 Route::resource('carreras', CarreraController::class);
+
+Route::resource('encargados/facultad', EncargadoFacultadController::class);
