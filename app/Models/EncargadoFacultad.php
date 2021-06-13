@@ -9,7 +9,7 @@ class EncargadoFacultad extends Model
 {
     use HasFactory;
 
-    protected $table = 'encargados_facultades';
+    protected $table = 'encargado_facultades';
 
     //Relacion uno a uno con Facultad
     public function facultad(){

@@ -15,7 +15,7 @@ class CreateEncargadoFacultadsTable extends Migration
     {
         Schema::create('encargado_facultades', function (Blueprint $table) {
             $table->id('id');
-
+            $table->string('codigo_encargado_facultad', 12);
             $table->string('nombre_encargado_facultad', 50);
             $table->string('apellido_encargado_facultad', 50);
 
@@ -24,7 +24,7 @@ class CreateEncargadoFacultadsTable extends Migration
             $table->string('dui_encargado_facultad', 10)->unique()->nullable();
             // $table->string('nit', 17);
             $table->string('telefono_encargado_facultad', 9)->unique()->nullable();
-
+            $table->string('correo_encargado_facultad', 30)->unique();
             // $table->unsignedBigInteger('persona_id')->nullable();
             $table->unsignedBigInteger('facultad_id')->nullable();
             $table->enum('estado_encargado_facultad', ['Activo', 'Inactivo']);

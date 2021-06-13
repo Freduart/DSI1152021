@@ -4,6 +4,7 @@
 use App\Http\Controllers\Admins\AdminDashboardController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\CarreraController;
+use App\Http\Controllers\EncargadoFacultadController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -52,3 +53,4 @@ Route::resource('carreras', CarreraController::class);
 //     $carrera->estado_carrera = $estado;
 //     return $carrera->all();
 // })->name('carreras.updateStatus');
+Route::resource('encargados/facultad', EncargadoFacultadController::class);

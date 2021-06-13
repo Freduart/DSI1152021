@@ -18,13 +18,14 @@ class CreateEncargadoEscuelasTable extends Migration
 
             // $table->unsignedBigInteger('persona_id')->nullable();
             $table->unsignedBigInteger('carrera_id')->nullable();
-
+            $table->string('codigo_encargado_escuela', 12);
             $table->string('nombre_encargado_escuela', 50);
             $table->string('apellido_encargado_escuela', 50);
 
             $table->unsignedBigInteger('user_id')->unique()->nullable();
 
             $table->string('dui_encargado_escuela', 10)->unique()->nullable();
+            $table->string('correo_encargado_escuela', 30)->unique();
             // $table->string('nit', 17);
             $table->string('telefono_encargado_escuela', 9)->unique()->nullable();
 
