@@ -53,4 +53,4 @@ Route::resource('carreras', CarreraController::class);
 //     $carrera->estado_carrera = $estado;
 //     return $carrera->all();
 // })->name('carreras.updateStatus');
-Route::resource('encargados/facultad', EncargadoFacultadController::class);
+Route::resource('encargadosfacultad', EncargadoFacultadController::class);

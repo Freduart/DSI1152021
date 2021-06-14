@@ -1,72 +1,14 @@
 <template>
-               <div class="wrapper">
+<div class="wrapper">
 
   <!-- Preloader -->
   <!-- <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
   </div> -->
 
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-dark">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="index3.html" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Contact</a>
-            </li>
-        </ul>
-    </nav>
-    <!-- /.navbar -->
-
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">            
-            <span class="brand-text font-weight-light">AdminLTE 3</span>
-        </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-                with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
-                    
-                    <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="./index.html" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Opcion 1</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./index2.html" class="nav-link active">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Opcion 2</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./index3.html" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Opcion 3</p>
-                        </a>
-                    </li>
-                    </ul>
-                </li>            
-            </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-    </aside>
+   <Base>
+      <template v-slot:header></template>
+    </Base> 
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -75,7 +17,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Titulo</h1>
+            <h1 class="m-0">Gestión de encargados de facultad</h1>
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -88,7 +30,7 @@
             <!-- Main row -->
             <div class="row">
             <!-- Left col -->
-            <section class="col-lg-7 connectedSortable">
+            <section class="col-lg-12 connectedSortable">
                 <!-- TO DO List -->
                 <!-- Ejemplo de como podria ser una tabla pero se tendria que añadir al width del 100% -->
                 <div class="card">
@@ -97,23 +39,19 @@
                     <i class="ion ion-clipboard mr-1"></i>
                     Encargados por facultad
                     </h3>
-
-                    <div class="card-tools">
-                    <ul class="pagination pagination-sm">
-                        <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
-                    </ul>
-                    </div>
+                    <button type="button" class="btn btn-success float-right"><i class="fas fa-plus"></i> Añadir encargado de facultad</button>
+                    
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                     <ul class="todo-list" data-widget="todo-list">
                     <li >
                         <!-- todo text -->
-                            
+                            <span>Mostrar por estado:</span>
+                            <select class="ml-4" v-on:change="filtrarByEstado($event)">
+                                <option value="1" selected>Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
                             <hr>
                                 <table class="table table-striped table-dark text-center">
                                     <thead>
@@ -126,10 +64,11 @@
                                         <th scope="col">Telefono</th>
                                         <th scope="col">Estado</th>
                                         <th scope="col">Facultad</th>
+                                        <th scope="col" width="10%"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr scope="row" v-for="(encargado, index) in encargadosF" :key="index">
+                                        <tr scope="row" v-for="(encargado, index) in encargadosFFiltrados" :key="index">
                                             
                                             <td>{{ encargado.codigo_encargado_facultad }}</td>
                                             <td>{{ encargado.nombre_encargado_facultad }}</td>
@@ -154,7 +93,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer clearfix">
-                    <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
+                    
                 </div>
                 </div>
                 <!-- /.card -->
@@ -182,10 +121,45 @@
 </template>
 
 <script>
+
+    import Base from "@/Pages/Base.vue";
+
     export default {
         components:{
-
+            Base
         },
         props: ['encargadosF'],
+        methods:{
+            filtrarByEstado(event){
+                this.encargadosFFiltrados.splice(0, this.encargadosFFiltrados.length);
+                console.log(event.target.value);
+                var estadoText= "Activo";
+                if (event.target.value == 0){
+                    estadoText = "Inactivo";
+                }
+                this.encargadosF.forEach(element => {
+                    if(element.estado_encargado_facultad == estadoText){
+                        console.log(element);
+                        this.encargadosFFiltrados.push(element);
+                    }
+                });
+                console.log(this.encargadosFFiltrados);
+            }
+        }, 
+        data(){
+            return{
+                encargadosFFiltrados:[],
+            }
+        }, 
+        mounted(){
+            this.encargadosF.forEach(element => {
+                if (element.estado_encargado_facultad == 'Activo'){
+                    this.encargadosFFiltrados.push(element);
+                }
+            }),
+            // this.mostrarMensajeSuccess();
+            this.successGuardado = false;        
+        },
+        
     }
 </script>
