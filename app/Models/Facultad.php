@@ -10,6 +10,11 @@ class Facultad extends Model
     protected $table = 'facultades';
     use HasFactory;
 
+    protected $fillable =[
+        'nombre_facultad',
+        'id',
+    ];
+
     //Relacion uno a muchos
     public function carreras(){
         return $this->hasMany('App\Models\Carrera');

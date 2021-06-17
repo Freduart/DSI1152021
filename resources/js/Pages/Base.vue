@@ -79,6 +79,12 @@
                         </ul>
                     </li>
                     
+                    <li class="nav-item">
+                            <inertia-link :href="route('facultades.index')" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Facultades</p>
+                            </inertia-link>
+                    </li>
                     
                     <!-- Cuando es un solo elemento -->
                     <li class="nav-item">
