@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Carrera;
-use App\Models\Estudiante;
-use App\Models\Facultad;
+use App\Models\Institucion;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+
 use Illuminate\Support\Facades\Redirect;
 
-class EstudianteController extends Controller
+class InstitucionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +17,7 @@ class EstudianteController extends Controller
      */
     public function index()
     {
-       return Inertia::render('Dashboard');
+        //
     }
 
     /**
@@ -28,9 +27,7 @@ class EstudianteController extends Controller
      */
     public function create()
     {
-        $facultades = Facultad::all();
-        $carreras = Carrera::all();
-        return Inertia::render('Components/FormEstudiante', ['facultades' => $facultades, 'carreras' => $carreras]);
+        return Inertia::render('Components/FormInstitucion');
     }
 
     /**
@@ -42,18 +39,17 @@ class EstudianteController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
-        Estudiante::create($request->all());
-        return Redirect::route('dashboard');    
-        // return Inertia::render('Welcome');
+        Institucion::create($request->all());
+        return Redirect::route('dashboard'); 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Institucion  $institucion
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Institucion $institucion)
     {
         //
     }
@@ -61,10 +57,10 @@ class EstudianteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Institucion  $institucion
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Institucion $institucion)
     {
         //
     }
@@ -73,10 +69,10 @@ class EstudianteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Institucion  $institucion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Institucion $institucion)
     {
         //
     }
@@ -84,16 +80,11 @@ class EstudianteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Institucion  $institucion
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Institucion $institucion)
     {
         //
     }
-
-    // public function findCarrerasByFacultad(){
-    //     $carreras = Carrera::where('facultad_id', 2)->get();
-    //     return Inertia::render('FormEstudiante', ['carreras' => $carreras]);
-    // }
 }
