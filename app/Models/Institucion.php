@@ -14,5 +14,13 @@ class Institucion extends Model
     public function peticiones(){
         return $this->hasMany('App\Models\Peticion');
     }
-    
+ 
+    protected $fillable = [
+        'nombre_institucion',
+        'contacto_institucion',
+        'correo_institucion',
+        'telefono_institucion',
+        'ubicacion_institucion',
+        'rubro_institucion',
+    ];
 }

@@ -3,7 +3,8 @@
 
         <jet-authentication-card>
     <template #logo>
-      <jet-authentication-card-logo />
+      <!-- <jet-authentication-card-logo /> -->
+      <i class="fa fa-user-circle fa-10x d-flex justify-content-center mb-4" aria-hidden="true"></i>
     </template>
 
     <div class="card-body">
@@ -13,27 +14,48 @@
         <!-- Este es el formulario para los estudiantes -->
       <form @submit.prevent="submit">
         <div class="form-group">
-          <jet-label for="nombre" value="Nombres" />
-          <jet-input id="nombre" type="text" v-model="form.nombre" required autofocus autocomplete="nombre" />
+          <jet-label for="nombre_estudiante" value="Nombres" />
+          <jet-input id="nombre_estudiante" type="text" v-model="form.nombre_estudiante" required autofocus autocomplete="nombre_estudiante" />
         </div>
 
         <div class="form-group">
-          <jet-label for="apellido" value="Apellidos" />
-          <jet-input id="apellido" type="text" v-model="form.apellido" required autofocus autocomplete="apellido" />
+          <jet-label for="apellido_estudiante" value="Apellidos" />
+          <jet-input id="apellido_estudiante" type="text" v-model="form.apellido_estudiante" required autofocus autocomplete="apellido_estudiante" />
         </div>        
 
         <div class="form-group">
-          <jet-label for="carnet" value="Carnet" />
-          <jet-input id="carnet" type="text" v-model="form.carnet" required />
+          <jet-label for="carnet_estudiante" value="Carnet" />
+          <jet-input id="carnet_estudiante" type="text" v-model="form.carnet_estudiante" required />
+        </div>
+
+        <div class="form-group flex justify-center">
+          <jet-label for="sexo_estudiante" value="Sexo" />
+          <br/>
+          <jet-label for="masculino" value="masculino" />
+          <input id="masculino" type="radio" v-model="form.sexo_estudiante" value="masculino" name="sexo_estudiante" required aria-label="Radio button for following text input"/>
+          <br/>
+          <jet-label for="femenino" value="femenino" />
+          <input id="femenino" type="radio" v-model="form.sexo_estudiante" value="femenino" name="sexo_estudiante" required aria-label="Radio button for following text input"/>
         </div>
 
         <div class="form-group">
-          <jet-label for="sexo" value="Sexo" />
-          <br/>
-          <jet-label for="masculino" value="masculino" />
-          <jet-input id="masculino" type="radio" v-model="form.sexo" value="masculino" name="sexo" required aria-label="Radio button for following text input"/>
-          <jet-label for="femenino" value="femenino" />
-          <jet-input id="femenino" type="radio" v-model="form.sexo" value="femenino" name="sexo" required aria-label="Radio button for following text input"/>
+          <jet-label for="correo_estudiante" value="Correo" />
+          <jet-input id="correo_estudiante" type="text" v-model="form.correo_estudiante" required />
+        </div>
+
+        <div class="form-group">
+          <jet-label for="telefono_estudiante" value="Telefono" />
+          <jet-input id="telefono_estudiante" type="text" v-model="form.telefono_estudiante" required />
+        </div>
+
+        <div class="form-group">
+          <jet-label for="dui_estudiante" value="DUI" />
+          <jet-input id="dui_estudiante" type="text" v-model="form.dui_estudiante" required />
+        </div>
+
+        <div class="form-group">
+          <jet-label for="nit_estudiante" value="NIT" />
+          <jet-input id="nit_estudiante" type="text" v-model="form.nit_estudiante" required />
         </div>
 
         <div class="form-group">
@@ -55,15 +77,20 @@
           </select>
         </div>
 
+        <hr/>
         <div class="mb-0">
           <div class="d-flex justify-content-end align-items-baseline">
             <inertia-link :href="route('login')" class="text-muted mr-3 text-decoration-none">
               Ya estas registrado?
             </inertia-link>
 
-            <jet-button class="ml-4" :class="{ 'text-white-50': form.processing }" :disabled="form.processing">
+            <!-- <button class="ml-4 btn btn-primary" :class="{ 'text-white-50': form.processing }" :disabled="form.processing">
               Enviar solicitud de registro
-            </jet-button>
+            </button> -->
+            <button style="padding: 6px" class="ml-4 btn btn-outline-success btn-md" :class="{ 'text-white-50': form.processing }" :disabled="form.processing">
+              <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              Enviar solicitud de registro
+            </button>
           </div>
         </div>
       </form>
@@ -100,16 +127,20 @@ export default {
   data() {
     return {
       form: this.$inertia.form({
-        nombre: '',
-        apellido:'',
-        carnet: '',
+        nombre_estudiante: '',
+        apellido_estudiante:'',
+        carnet_estudiante: '',
         facultad_id: '',
         carrera_id: '',
-        estado: 'En espera',
+        estado_estudiante: 'En espera',
         persona_id: null,
         cantidad_horas_ss: 0,
         materias_cursadas: 0,
-        sexo: '',
+        sexo_estudiante: '',
+        correo_estudiante: '',
+        telefono_estudiante: '',
+        dui_estudiante: '',
+        nit_estudiante: '',
       }), carrerasFiltradas:[],
     }
   },
