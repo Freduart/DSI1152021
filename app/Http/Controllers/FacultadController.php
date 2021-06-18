@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Facultad;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
+use Illuminate\Support\Facades\Redirect;
 class FacultadController extends Controller
 {
     /**
@@ -14,6 +17,8 @@ class FacultadController extends Controller
     public function index()
     {
         //
+        $facultades=Facultad::all(); 
+        return Inertia::render("Components/Facultades",['facultades' => $facultades]);
     }
 
     /**
@@ -35,6 +40,8 @@ class FacultadController extends Controller
     public function store(Request $request)
     {
         //
+        Facultad::create($request->all());
+        return Redirect::route('facultades.index');
     }
 
     /**
@@ -69,6 +76,10 @@ class FacultadController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $facultad=Facultad::find($id);
+        $facultad->update($request->all());
+        return Redirect::route('facultades.index');
+
     }
 
     /**
@@ -80,5 +91,8 @@ class FacultadController extends Controller
     public function destroy($id)
     {
         //
+        $facultad=Facultad::find($id);
+        $facultad->delete();
+        return Redirect::route('facultades.index');
     }
 }
