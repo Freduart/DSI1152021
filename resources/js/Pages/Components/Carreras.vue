@@ -26,7 +26,7 @@
             <!-- Main row -->
             <div class="row">
             <!-- Left col -->
-            <section class="col-lg-7 connectedSortable">
+            <section class="col-lg-12 connectedSortable">
                 <!-- TO DO List -->
                 <!-- Ejemplo de como podria ser una tabla pero se tendria que añadir al width del 100% -->
                 <div class="card">
