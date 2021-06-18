@@ -17,7 +17,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Gestión de encargados de facultad</h1>
+            <h1 class="ml-3">Gestión de encargados por facultad</h1>
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -35,11 +35,11 @@
                 <!-- Ejemplo de como podria ser una tabla pero se tendria que añadir al width del 100% -->
                 <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">
+                    <h3 class="card-title mt-3 mb-3 ml-2">
                     <i class="ion ion-clipboard mr-1"></i>
-                    Encargados por facultad
+                    Listado de encargados de cada facultad
                     </h3>
-                    <inertia-link type="button" class="btn btn-success float-right"  :href="route('encargadosfacultad.create')">
+                    <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('encargadosfacultad.create')">
                         <i class="fas fa-plus"></i> Añadir encargado de facultad</inertia-link>
                     
                 </div>
@@ -48,11 +48,11 @@
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
                         <!-- todo text -->
-                            <span>Mostrar por estado:</span>
+                            <h6 class="ml-4 mt-2">Mostrar por estado:
                             <select class="ml-4" v-on:change="filtrarByEstado($event)">
                                 <option value="1" selected>Activo</option>
                                 <option value="0">Inactivo</option>
-                            </select>
+                            </select></h6>
                             <hr>
                             <table class="table table-striped table-dark text-center">
                                 <thead>

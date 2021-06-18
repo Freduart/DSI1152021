@@ -31,7 +31,7 @@ class CreateEncargadoEscuelasTable extends Migration
 
             // $table->unsignedBigInteger('persona_id')->nullable();
             // $table->unsignedBigInteger('facultad_id')->nullable();
-            $table->boolean('estado_encargado_escuela');
+            $table->enum('estado_encargado_escuela', ['Activo', 'Inactivo']);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
 
             
