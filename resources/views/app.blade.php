@@ -29,7 +29,7 @@
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="sweetalert2.all.min.js"></script>
     </head>
-    <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+    <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
         @inertia
     </body>
 </html>

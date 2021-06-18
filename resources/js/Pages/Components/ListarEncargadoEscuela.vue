@@ -1,0 +1,394 @@
+<template>
+<div class="wrapper">
+
+  <!-- Preloader -->
+  <!-- <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+  </div> -->
+
+   <Base>
+      <template v-slot:header></template>
+    </Base> 
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="ml-3">Gestión de encargados de escuela</h1>
+          </div><!-- /.col -->          
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+          <!-- Main row -->
+          <div class="row">
+          <!-- Left col -->
+          <section class="col-lg-12 connectedSortable">
+              <!-- TO DO List -->
+              <!-- Ejemplo de como podria ser una tabla pero se tendria que añadir al width del 100% -->
+              <div class="card">
+              <div class="card-header">
+                  <h3 class="card-title mt-3 mb-3 ml-2">
+                  <i class="ion ion-clipboard mr-1"></i>
+                  Listado de encargados de escuela por cada facultad
+                  </h3>
+                  <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('encargadosfacultad.create')">
+                      <i class="fas fa-plus"></i> Añadir encargado de escuela</inertia-link>
+                  <br><br>
+                  <h6 class="ml-4 mt-2">Mostrar por estado:
+                  <select class="ml-4" v-on:change="filtrarByEstado($event)">
+                      <option value="1" selected>Activo</option>
+                      <option value="0">Inactivo</option>
+                  </select></h6>
+                  
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body" v-for="(facultad, index) in facultadesFiltradas" :key="index">
+                  <ul class="todo-list" data-widget="todo-list">
+                      <li>
+                      <!-- todo text -->
+                        <h5 class="mt-2 ml-3 mb-3">{{ facultad.nombre_facultad }}</h5>
+                          <table class="table text-center ">
+                              <thead class="thead-dark">
+                                  <tr>
+                                  
+                                  <th scope='col'>Código</th>
+                                  <th scope="col">Nombre</th>
+                                  <th scope="col">Carrera</th>
+                                  <th scope="col">Estado</th>
+                                  <th scope="col" width="15%"></th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr class="table-active" scope="row" v-for="(encargado, index) in encargadosEFiltrados" :key="index">
+                                      
+                                      <td v-if="encargado.nombre_facultad == facultad.nombre_facultad">
+                                        {{ encargado.codigo_encargado_escuela }}
+                                      </td>
+                                      <td v-if="encargado.nombre_facultad == facultad.nombre_facultad">
+                                        {{ encargado.nombre_encargado_escuela }} {{encargado.apellido_encargado_escuela }}
+                                      </td>
+                                      <td v-if="encargado.nombre_facultad == facultad.nombre_facultad">
+                                        {{ encargado.nombre_carrera }}
+                                      </td>
+                                      <td v-if="encargado.nombre_facultad == facultad.nombre_facultad">
+                                        {{ encargado.estado_encargado_escuela }}
+                                      </td>
+                                      <td v-if="encargado.nombre_facultad == facultad.nombre_facultad">
+                                      <!-- General tools such as edit or delete-->
+                                          <div class="tools">
+                                              <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarinfo(encargado)" title="Ver informacion del encargado"></jet-button>
+                                              <inertia-link class="fas fa-edit" title="Editar encargado" :href="route('encargadosfacultad.edit', encargado.idEncargado)"></inertia-link>
+                                              <jet-button  v-if="encargado.estado_encargado_escuela == 'Activo'" class="fas fa-arrow-alt-circle-down" title="Dar de baja a encargado" method="delete" v-on:click="cambiarestado(encargado)"></jet-button>     
+                                              <jet-button v-else class="fas fa-arrow-alt-circle-up" title="Activar a encargado" method="delete" v-on:click="cambiarestado(encargado)"></jet-button>
+                                          </div>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </li>
+                  </ul>
+              </div>
+              <!-- /.card-body -->
+              <!--<div class="card-footer clearfix">
+                  
+              </div>-->
+              </div>
+              <!-- /.card -->
+          </section>
+          <!-- /.Left col -->
+          <!-- right col (We are only adding the ID to make the widgets sortable)-->
+          <section class="col-lg-5 connectedSortable">            
+              <!-- /.card -->
+          </section>
+          <!-- right col -->
+          </div>
+          <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+
+      <!-- Modal Insert-->
+      <div class="modal fade" id="verInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Información del encargado</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+
+                    <form @submit.prevent="submit">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <jet-label for="nombre" value="Nombres" />
+                              <jet-input id="nombre" type="text" readonly="readonly" v-model="form.nombre_encargado_escuela" required autofocus autocomplete="nombre" />
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-group">
+                              <jet-label for="apellido" value="Apellidos" />
+                              <jet-input id="apellido" type="text" readonly="readonly" v-model="form.apellido_encargado_escuela" required autofocus autocomplete="apellido" />
+                            </div>
+                          </div>
+                        </div> 
+                            
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <jet-label for="correo" value="Correo" />
+                              <jet-input id="correo" type="email" readonly="readonly" v-model="form.correo_encargado_escuela" required />
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-group">
+                              <jet-label for="telefono" value="Telefono" />
+                              <jet-input id="telefono" type="text" readonly="readonly" v-model="form.telefono_encargado_escuela" required autofocus autocomplete="telefono" />
+                            </div>
+                          </div>
+                        </div> 
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <jet-label for="dui" value="Dui" />
+                              <jet-input id="dui" type="text" readonly="readonly" v-model="form.dui_encargado_escuela" required autofocus autocomplete="dui" />
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-group">
+                              <jet-label for="Codigo" value="Codigo empleado" />
+                              <jet-input id="Codigo" type="text" readonly="readonly" v-model="form.codigo_encargado_escuela" required autofocus autocomplete="Codigo" />
+                            </div>
+                          </div>
+                        </div> 
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <jet-label for="facultad" value="Facultad" />
+                              <jet-input id="facultad" type="text" readonly="readonly" v-model="form.nombre_facultad" required autofocus autocomplete="Facultad" />
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-group">
+                              <jet-label for="escuela" value="Escuela" />
+                              <jet-input id="escuela" type="text" readonly="readonly" v-model="form.nombre_carrera" required autofocus autocomplete="Escuela" />
+                            </div>
+                          </div>
+                          <hr>
+                        </div>
+                      </div>
+                      <div class="card-footer clearfix"> 
+                        <div class="my-2">
+                          <div class="d-flex justify-content-center align-items-baseline">
+
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Aceptar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+    </section>
+    <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->  
+  </div>
+</template>
+
+<script>
+
+    import Base from "@/Pages/Base.vue";
+    import JetAuthenticationCard from '@/Jetstream/AuthenticationCard'
+    import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo'
+    import JetButton from '@/Jetstream/Button'
+    import JetInput from '@/Jetstream/Input'
+    import JetCheckbox from "@/Jetstream/Checkbox";
+    import JetLabel from '@/Jetstream/Label'
+    import JetValidationErrors from '@/Jetstream/ValidationErrors'
+
+
+    export default {
+        components:{
+          JetAuthenticationCard,
+          JetAuthenticationCardLogo,
+          JetInput,
+          JetCheckbox,
+          JetLabel,
+          JetValidationErrors,
+          Base
+        },
+        props: ['encargadosE', 'facultades', 'carreras'],
+        methods:{
+          filtrarByEstado(event){
+              this.facultadesFiltradas.splice(0, this.facultadesFiltradas.length);
+              console.log(event.target.value);
+              var estadoText= "Activo";
+              if (event.target.value == 0){
+                  estadoText = "Inactivo";
+              }
+              this.facultades.forEach(element => {
+                  if(element.estado_encargado_escuela == estadoText){
+                      console.log(element);
+                      this.facultadesFiltradas.push(element);
+                  }
+              });
+              console.log(this.facultadesFiltradas);
+
+              this.encargadosEFiltrados.splice(0, this.encargadosEFiltrados.length);
+                console.log(event.target.value);
+                var estadoText= "Activo";
+                if (event.target.value == 0){
+                    estadoText = "Inactivo";
+                }
+                this.encargadosE.forEach(element => {
+                    if(element.estado_encargado_escuela == estadoText){
+                        console.log(element);
+                        this.encargadosEFiltrados.push(element);
+                    }
+                });
+                console.log(this.encargadosEFiltrados);
+          }, 
+            /*filtrarByEstado(event){
+                this.encargadosEFiltrados.splice(0, this.encargadosEFiltrados.length);
+                console.log(event.target.value);
+                var estadoText= "Activo";
+                if (event.target.value == 0){
+                    estadoText = "Inactivo";
+                }
+                this.encargadosF.forEach(element => {
+                    if(element.estado_encargado_facultad == estadoText){
+                        console.log(element);
+                        this.encargadosFFiltrados.push(element);
+                    }
+                });
+                console.log(this.encargadosFFiltrados);
+            }, */
+          cambiarestado(encargado){
+              this.borrado = true;
+              if(encargado.estado_encargado_facultad == 'Activo'){
+                  Swal.fire({
+                    title: '¿Esta seguro que desea desactivar al encargado?',
+                    text: "El encargado " + encargado.nombre_encargado_facultad + " " + encargado.apellido_encargado_facultad + " con codigo " + encargado.codigo_encargado_facultad +" no podrá iniciar sesión mientras este desactivado.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, desactivar',
+                    cancelButtonText: 'No, cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        //var tipo = 1;
+                        this.$inertia.delete(route('encargadosfacultad.destroy', encargado.idEncargado/*, tipo*/));
+                        Swal.fire(
+                        '!Desactivado!',
+                        'El encargado se desactivó correctamente',
+                        'success'
+                        );
+                        window.location.reload(true);
+                    }
+                })
+              } else {
+                Swal.fire({
+                    title: '¿Esta seguro que desea activar al encargado?',
+                    text: "El encargado " + encargado.nombre_encargado_facultad + " " + encargado.apellido_encargado_facultad + " con codigo " + encargado.codigo_encargado_facultad +" se habilitará y podrá iniciar sesión.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, activar',
+                    cancelButtonText: 'No, cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        //var tipo = 1;
+                        this.$inertia.delete(route('encargadosfacultad.destroy', encargado.idEncargado/*, tipo*/));
+                        Swal.fire(
+                        '!Activado!',
+                        'El encargado se activó correctamente',
+                        'success'
+                        );
+                        window.location.reload(true);
+                    }
+                })
+              }
+                
+            },
+            mostrarinfo(encargado){
+                //this.$inertia.get(route('encargadosfacultad.destroy', encargado.idEncargado/*, tipo*/));
+              this.form.codigo_encargado_escuela = encargado.codigo_encargado_escuela,
+              this.form.nombre_encargado_escuela = encargado.nombre_encargado_escuela,
+              this.form.apellido_encargado_escuela = encargado.apellido_encargado_escuela,
+              this.form.correo_encargado_escuela = encargado.correo_encargado_escuela,
+              this.form.nombre_carrera = encargado.nombre_carrera,
+              this.form.nombre_facultad = encargado.nombre_facultad,
+              this.form.estado_encargado_escuela = encargado.estado_encargado_escuela,
+              this.form.user_id= null,
+              this.form.dui_encargado_escuela = encargado.dui_encargado_escuela,
+              this.form.telefono_encargado_escuela = encargado.telefono_encargado_escuela
+                
+            }
+        }, 
+        data(){
+          return{
+            encargadosEFiltrados:[],
+            facultadesFiltradas:[],
+            /*informacionencargado: {
+                codigo_encargado_facultad: this.$props.encargadoinfo.codigo_encargado_facultad,
+                nombre_encargado_facultad: this.$props.encargadoinfo.nombre_encargado_facultad,
+                apellido_encargado_facultad: this.$props.encargadoinfo.apellido_encargado_facultad,
+                correo_encargado_facultad: this.$props.encargadoinfo.correo_encargado_facultad,
+                facultad_id: this.$props.encargadoinfo.facultad_id,
+                estado_encargado_facultad: this.$props.encargadoinfo.estado_encargado_facultad,
+                user_id: null,
+                dui_encargado_facultad: this.$props.encargadoinfo.dui_encargado_facultad,
+                telefono_encargado_facultad: this.$props.encargadoinfo.telefono_encargado_facultad
+            }*/
+            form: this.$inertia.form({
+              codigo_encargado_escuela: '',
+              nombre_encargado_escuela: '',
+              apellido_encargado_escuela: '',
+              correo_encargado_escuela: '',
+              nombre_carrera: '',
+              nombre_facultad: '',
+              estado_encargado_escuela: '',
+              user_id: null,
+              dui_encargado_escuela: '',
+              telefono_encargado_escuela: '',
+            })
+          }
+        }, 
+        mounted(){
+            this.facultades.forEach(element => {
+                if (element.estado_encargado_escuela == 'Activo'){
+                    this.facultadesFiltradas.push(element);
+                }
+            }),
+            this.encargadosE.forEach(element => {
+                    if(element.estado_encargado_escuela == 'Activo'){
+                        this.encargadosEFiltrados.push(element);
+                    }
+                });
+            // this.mostrarMensajeSuccess();
+            this.successGuardado = false;        
+        }, 
+    }
+</script>

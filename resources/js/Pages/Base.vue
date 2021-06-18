@@ -71,10 +71,10 @@
                             </inertia-link>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <inertia-link :href="route('encargadosescuela.index')" :active="route().current('encargadosescuela.index')" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Encargados por escuela</p>
-                            </a>
+                            </inertia-link>
                         </li>
                         </ul>
                     </li>
