@@ -7,7 +7,9 @@ use App\Models\Facultad;
 use App\Models\EncargadoEscuela;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 
 class EncargadoEscuelaController extends Controller
 {
@@ -44,6 +46,20 @@ class EncargadoEscuelaController extends Controller
     public function create()
     {
         //
+        $encargadoE = new EncargadoEscuela();
+        $encargadoE->id = null;
+        $encargadoE->codigo_encargado_escuela = '';
+        $encargadoE->nombre_encargado_escuela = '';
+        $encargadoE->apellido_encargado_escuela = '';
+        $encargadoE->correo_encargado_escuela = '';
+        $encargadoE->carrera_id = '';
+        $encargadoE->estado_encargado_escuela = 'Activo';
+        $encargadoE->user_id = null;
+        $encargadoE->dui_encargado_escuela = '';
+        $encargadoE->telefono_encargado_escuela = '';
+        $facultades = Facultad::all();
+        $carreras = Carrera::all();
+        return Inertia::render('Components/FormEncargadoEscuela', ['encargadoE' => $encargadoE,'facultades' => $facultades, 'carreras' => $carreras]);
     }
 
     /**
@@ -55,6 +71,8 @@ class EncargadoEscuelaController extends Controller
     public function store(Request $request)
     {
         //
+        EncargadoEscuela::create($request->all());
+        return Redirect::route('encargadosescuela.index');  
     }
 
     /**
@@ -74,9 +92,16 @@ class EncargadoEscuelaController extends Controller
      * @param  \App\Models\EncargadoEscuela  $encargadoEscuela
      * @return \Illuminate\Http\Response
      */
-    public function edit(EncargadoEscuela $encargadoEscuela)
+    public function edit($encargadoEscuela)
     {
         //
+        $facultades = Facultad::all();
+        $encargadoE = EncargadoEscuela::find($encargadoEscuela);
+        $idCarrera = $encargadoE->carrera_id;
+        $carreraEncargado = Carrera::find($idCarrera);
+        $idFacultad = $carreraEncargado->facultad_id;
+        $carreras = Carrera::all();
+        return Inertia::render('Components/FormEncargadoEscuela', ['encargadoE' => $encargadoE, 'facultades' => $facultades, 'carreras' => $carreras, 'idFacultad' => $idFacultad]);
     }
 
     /**
@@ -86,9 +111,12 @@ class EncargadoEscuelaController extends Controller
      * @param  \App\Models\EncargadoEscuela  $encargadoEscuela
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EncargadoEscuela $encargadoEscuela)
+    public function update(Request $request, $encargadoEscuela)
     {
         //
+        $encargadoE = EncargadoEscuela::find($encargadoEscuela);
+        $encargadoE->update($request->all());
+        return Redirect::route('encargadosescuela.index');
     }
 
     /**
@@ -97,8 +125,19 @@ class EncargadoEscuelaController extends Controller
      * @param  \App\Models\EncargadoEscuela  $encargadoEscuela
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EncargadoEscuela $encargadoEscuela)
+    public function destroy($encargadoEscuela)
     {
         //
+        $encargadoE = EncargadoEscuela::find($encargadoEscuela);
+        if ($encargadoE->estado_encargado_escuela == "Activo"){
+            $encargadoE->estado_encargado_escuela = "Inactivo";
+            $encargadoE->save();
+        } else {
+            $encargadoE->estado_encargado_escuela = "Activo";
+            $encargadoE->save();
+        }
+             
+        //$encargadoF->delete();
+        return Redirect::route('encargadosescuela.index');
     }
 }

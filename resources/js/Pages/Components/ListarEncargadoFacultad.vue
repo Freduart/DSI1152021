@@ -33,7 +33,7 @@
             <section class="col-lg-12 connectedSortable">
                 <!-- TO DO List -->
                 <!-- Ejemplo de como podria ser una tabla pero se tendria que añadir al width del 100% -->
-                <div class="card">
+              <div class="card">
                 <div class="card-header">
                     <h3 class="card-title mt-3 mb-3 ml-2">
                     <i class="ion ion-clipboard mr-1"></i>
@@ -49,13 +49,13 @@
                         <li>
                         <!-- todo text -->
                             <h6 class="ml-4 mt-2">Mostrar por estado:
-                            <select class="ml-4" v-on:change="filtrarByEstado($event)">
+                            <select class="col-2 ml-3 custom-select" v-on:change="filtrarByEstado($event)">
                                 <option value="1" selected>Activo</option>
                                 <option value="0">Inactivo</option>
                             </select></h6>
                             <hr>
-                            <table class="table table-striped table-dark text-center">
-                                <thead>
+                            <table class="table table-hover text-center">
+                                <thead class="thead-dark">
                                     <tr>
                                     
                                     <th scope='col'>Código</th>
@@ -66,7 +66,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr scope="row" v-for="(encargado, index) in encargadosFFiltrados" :key="index">
+                                    <tr class="table-secondary" scope="row" v-for="(encargado, index) in encargadosFFiltrados" :key="index">
                                         
                                         <td>{{ encargado.codigo_encargado_facultad }}</td>
                                         <td>{{ encargado.nombre_encargado_facultad }} {{encargado.apellido_encargado_facultad }}</td>
