@@ -39,11 +39,11 @@
                   <i class="ion ion-clipboard mr-1"></i>
                   Listado de encargados de escuela por cada facultad
                   </h3>
-                  <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('encargadosfacultad.create')">
+                  <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('encargadosescuela.create')">
                       <i class="fas fa-plus"></i> Añadir encargado de escuela</inertia-link>
                   <br><br>
                   <h6 class="ml-4 mt-2">Mostrar por estado:
-                  <select class="ml-4" v-on:change="filtrarByEstado($event)">
+                  <select class="col-2 ml-3 custom-select" v-on:change="filtrarByEstado($event)">
                       <option value="1" selected>Activo</option>
                       <option value="0">Inactivo</option>
                   </select></h6>
@@ -55,7 +55,7 @@
                       <li>
                       <!-- todo text -->
                         <h5 class="mt-2 ml-3 mb-3">{{ facultad.nombre_facultad }}</h5>
-                          <table class="table text-center ">
+                          <table class="table table-hover text-center ">
                               <thead class="thead-dark">
                                   <tr>
                                   
@@ -67,7 +67,7 @@
                                   </tr>
                               </thead>
                               <tbody>
-                                  <tr class="table-active" scope="row" v-for="(encargado, index) in encargadosEFiltrados" :key="index">
+                                  <tr class="table-secondary" scope="row" v-for="(encargado, index) in encargadosEFiltrados" :key="index">
                                       
                                       <td v-if="encargado.nombre_facultad == facultad.nombre_facultad">
                                         {{ encargado.codigo_encargado_escuela }}
@@ -85,7 +85,7 @@
                                       <!-- General tools such as edit or delete-->
                                           <div class="tools">
                                               <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarinfo(encargado)" title="Ver informacion del encargado"></jet-button>
-                                              <inertia-link class="fas fa-edit" title="Editar encargado" :href="route('encargadosfacultad.edit', encargado.idEncargado)"></inertia-link>
+                                              <inertia-link class="fas fa-edit" title="Editar encargado" :href="route('encargadosescuela.edit', encargado.idEncargado)"></inertia-link>
                                               <jet-button  v-if="encargado.estado_encargado_escuela == 'Activo'" class="fas fa-arrow-alt-circle-down" title="Dar de baja a encargado" method="delete" v-on:click="cambiarestado(encargado)"></jet-button>     
                                               <jet-button v-else class="fas fa-arrow-alt-circle-up" title="Activar a encargado" method="delete" v-on:click="cambiarestado(encargado)"></jet-button>
                                           </div>
@@ -268,27 +268,12 @@
                 });
                 console.log(this.encargadosEFiltrados);
           }, 
-            /*filtrarByEstado(event){
-                this.encargadosEFiltrados.splice(0, this.encargadosEFiltrados.length);
-                console.log(event.target.value);
-                var estadoText= "Activo";
-                if (event.target.value == 0){
-                    estadoText = "Inactivo";
-                }
-                this.encargadosF.forEach(element => {
-                    if(element.estado_encargado_facultad == estadoText){
-                        console.log(element);
-                        this.encargadosFFiltrados.push(element);
-                    }
-                });
-                console.log(this.encargadosFFiltrados);
-            }, */
           cambiarestado(encargado){
               this.borrado = true;
-              if(encargado.estado_encargado_facultad == 'Activo'){
+              if(encargado.estado_encargado_escuela == 'Activo'){
                   Swal.fire({
                     title: '¿Esta seguro que desea desactivar al encargado?',
-                    text: "El encargado " + encargado.nombre_encargado_facultad + " " + encargado.apellido_encargado_facultad + " con codigo " + encargado.codigo_encargado_facultad +" no podrá iniciar sesión mientras este desactivado.",
+                    text: "El encargado " + encargado.nombre_encargado_escuela + " " + encargado.apellido_encargado_escuela + " con codigo " + encargado.codigo_encargado_escuela +" no podrá iniciar sesión mientras este desactivado.",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -298,7 +283,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         //var tipo = 1;
-                        this.$inertia.delete(route('encargadosfacultad.destroy', encargado.idEncargado/*, tipo*/));
+                        this.$inertia.delete(route('encargadosescuela.destroy', encargado.idEncargado/*, tipo*/));
                         Swal.fire(
                         '!Desactivado!',
                         'El encargado se desactivó correctamente',
@@ -310,7 +295,7 @@
               } else {
                 Swal.fire({
                     title: '¿Esta seguro que desea activar al encargado?',
-                    text: "El encargado " + encargado.nombre_encargado_facultad + " " + encargado.apellido_encargado_facultad + " con codigo " + encargado.codigo_encargado_facultad +" se habilitará y podrá iniciar sesión.",
+                    text: "El encargado " + encargado.nombre_encargado_escuela + " " + encargado.apellido_encargado_escuela + " con codigo " + encargado.codigo_encargado_escuela +" se habilitará y podrá iniciar sesión.",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -320,7 +305,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         //var tipo = 1;
-                        this.$inertia.delete(route('encargadosfacultad.destroy', encargado.idEncargado/*, tipo*/));
+                        this.$inertia.delete(route('encargadosescuela.destroy', encargado.idEncargado/*, tipo*/));
                         Swal.fire(
                         '!Activado!',
                         'El encargado se activó correctamente',
@@ -333,7 +318,6 @@
                 
             },
             mostrarinfo(encargado){
-                //this.$inertia.get(route('encargadosfacultad.destroy', encargado.idEncargado/*, tipo*/));
               this.form.codigo_encargado_escuela = encargado.codigo_encargado_escuela,
               this.form.nombre_encargado_escuela = encargado.nombre_encargado_escuela,
               this.form.apellido_encargado_escuela = encargado.apellido_encargado_escuela,
@@ -351,17 +335,6 @@
           return{
             encargadosEFiltrados:[],
             facultadesFiltradas:[],
-            /*informacionencargado: {
-                codigo_encargado_facultad: this.$props.encargadoinfo.codigo_encargado_facultad,
-                nombre_encargado_facultad: this.$props.encargadoinfo.nombre_encargado_facultad,
-                apellido_encargado_facultad: this.$props.encargadoinfo.apellido_encargado_facultad,
-                correo_encargado_facultad: this.$props.encargadoinfo.correo_encargado_facultad,
-                facultad_id: this.$props.encargadoinfo.facultad_id,
-                estado_encargado_facultad: this.$props.encargadoinfo.estado_encargado_facultad,
-                user_id: null,
-                dui_encargado_facultad: this.$props.encargadoinfo.dui_encargado_facultad,
-                telefono_encargado_facultad: this.$props.encargadoinfo.telefono_encargado_facultad
-            }*/
             form: this.$inertia.form({
               codigo_encargado_escuela: '',
               nombre_encargado_escuela: '',
@@ -388,7 +361,7 @@
                     }
                 });
             // this.mostrarMensajeSuccess();
-            this.successGuardado = false;        
+            this.successGuardado = false;
         }, 
     }
 </script>

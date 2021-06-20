@@ -11,7 +11,7 @@
       <div class="container-fluid">
         <div class="row justify-content-center mb-2">
           <div class="col-sm-5">
-            <h1 v-if="this.$props.encargadoF.id != null" class="m-2">Modificar encargado de facultad</h1>
+            <h1 v-if="this.$props.encargadoE.id != null" class="m-2">Modificar encargado de escuela</h1>
             <h1 v-else class="m-2">Agregar encargado de facultad</h1>
           </div><!-- /.col -->          
         </div><!-- /.row -->
@@ -37,13 +37,13 @@
                         <div class="col">
                           <div class="form-group">
                             <jet-label for="nombre" value="Nombres" />
-                            <jet-input id="nombre" type="text" v-model="form.nombre_encargado_facultad" required autofocus autocomplete="nombre" />
+                            <jet-input id="nombre" type="text" v-model="form.nombre_encargado_escuela" required autofocus autocomplete="nombre" />
                           </div>
                         </div>
                         <div class="col">
                           <div class="form-group">
                             <jet-label for="apellido" value="Apellidos" />
-                            <jet-input id="apellido" type="text" v-model="form.apellido_encargado_facultad" required autofocus autocomplete="apellido" />
+                            <jet-input id="apellido" type="text" v-model="form.apellido_encargado_escuela" required autofocus autocomplete="apellido" />
                           </div>
                         </div>
                       </div> 
@@ -52,13 +52,13 @@
                         <div class="col">
                           <div class="form-group">
                             <jet-label for="correo" value="Correo" />
-                            <jet-input id="correo" type="email" v-model="form.correo_encargado_facultad" required />
+                            <jet-input id="correo" type="email" v-model="form.correo_encargado_escuela" required />
                           </div>
                         </div>
                         <div class="col">
                           <div class="form-group">
                             <jet-label for="telefono" value="Telefono" />
-                            <jet-input id="telefono" type="text" v-model="form.telefono_encargado_facultad" required autofocus autocomplete="telefono" />
+                            <jet-input id="telefono" type="text" v-model="form.telefono_encargado_escuela" required autofocus autocomplete="telefono" />
                           </div>
                         </div>
                       </div> 
@@ -67,28 +67,44 @@
                         <div class="col">
                           <div class="form-group">
                             <jet-label for="dui" value="Dui" />
-                            <jet-input id="dui" type="text" v-model="form.dui_encargado_facultad" required autofocus autocomplete="dui" />
+                            <jet-input id="dui" type="text" v-model="form.dui_encargado_escuela" required autofocus autocomplete="dui" />
                           </div>
                         </div>
                         <div class="col">
                           <div class="form-group">
                             <jet-label for="Codigo" value="Codigo empleado" />
-                            <jet-input id="Codigo" type="text" v-model="form.codigo_encargado_facultad" required autofocus autocomplete="Codigo" />
+                            <jet-input id="Codigo" type="text" v-model="form.codigo_encargado_escuela" required autofocus autocomplete="Codigo" />
+                          </div>
+                        </div>
+                      </div> 
+                      <div class="row">
+                        <div class="col">
+                          <div class="form-group">
+                            <jet-label for="facultad" value="Facultad" />
+                            <br/>
+                            <select class="custom-select" id="facultad_id" v-model="form.facultad_id" v-on:change="buscarCarreras(form.facultad_id)" required>
+                              <!-- <option value="" selected>Seleccionar</option> -->
+                              <option disabled value="">Seleccione una facultad</option>
+                              <option v-for="(facultad, index) in facultades" :key="index" :value="facultad.id">{{ facultad.nombre_facultad }}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="form-group" v-if="form.facultad_id != ''">
+                            <jet-label for="carrera" value="Carrera" />
+                            <br/>
+                            <select class="custom-select" id="carrera_id" v-model="form.carrera_id" required>
+                              <option disabled value="">Seleccione una carrera</option>
+                              <option v-for="(carrera, index) in carrerasFiltradas" :key="index" :value="carrera.id">{{ carrera.nombre_carrera }}</option>
+                            </select>
                           </div>
                         </div>
                       </div> 
 
-                      <div class="form-group">
-                        <jet-label for="facultad" value="Facultad" />
-                        <br/>
-                        <select class="custom-select" id="facultad_id" v-model="form.facultad_id" required>
-                          <!-- <option value="" selected>Seleccionar</option> -->
-                          <option disabled value="">Seleccione una facultad</option>
-                          <option v-for="(facultad, index) in facultades" :key="index" :value="facultad.id">{{ facultad.nombre_facultad }}</option>
-                        </select>
-                      </div>
                       <hr>
                     </div>
+
+                    
 
                     <div class="card-footer clearfix"> 
                       <div class="my-2">
@@ -97,7 +113,7 @@
                           <jet-button type="submit" class="btn btn-primary float-center" :class="{ 'text-white-50': form.processing }" :disabled="form.processing" >
                           <i class="fas"></i> Guardar</jet-button>
                           <div class="mx-2"></div>
-                          <inertia-link :href="route('encargadosfacultad.index')" type="button" class="btn btn-danger float-center" >
+                          <inertia-link :href="route('encargadosescuela.index')" type="button" class="btn btn-danger float-center" >
                           <i class="fas"></i> Cancelar</inertia-link>
                         </div>
                       </div>
@@ -146,31 +162,54 @@ export default {
     JetValidationErrors,
     Base
   },
-  props:['encargadoF', 'facultades'],
+  props:['encargadoE', 'facultades', 'carreras', 'idFacultad'],
   data() {
     return {
       form: this.$inertia.form({
-        codigo_encargado_facultad: this.$props.encargadoF.codigo_encargado_facultad,
-        nombre_encargado_facultad: this.$props.encargadoF.nombre_encargado_facultad,
-        apellido_encargado_facultad: this.$props.encargadoF.apellido_encargado_facultad,
-        correo_encargado_facultad: this.$props.encargadoF.correo_encargado_facultad,
-        facultad_id: this.$props.encargadoF.facultad_id,
-        estado_encargado_facultad: this.$props.encargadoF.estado_encargado_facultad,
+        codigo_encargado_escuela: this.$props.encargadoE.codigo_encargado_escuela,
+        nombre_encargado_escuela: this.$props.encargadoE.nombre_encargado_escuela,
+        apellido_encargado_escuela: this.$props.encargadoE.apellido_encargado_escuela,
+        correo_encargado_escuela: this.$props.encargadoE.correo_encargado_escuela,
+        facultad_id: this.$props.idFacultad,
+        carrera_id: this.$props.encargadoE.carrera_id,
+        estado_encargado_escuela: this.$props.encargadoE.estado_encargado_escuela,
         user_id: null,
-        dui_encargado_facultad: this.$props.encargadoF.dui_encargado_facultad,
-        telefono_encargado_facultad: this.$props.encargadoF.telefono_encargado_facultad
+        dui_encargado_escuela: this.$props.encargadoE.dui_encargado_escuela,
+        telefono_encargado_escuela: this.$props.encargadoE.telefono_encargado_escuela
       }), carrerasFiltradas:[],
     }
   },
 
+  mounted(){
+    this.carreras.forEach(element => {
+        this.carrerasFiltradas.push(element);
+    })
+  },
+
   methods: {
     submit() {
-      if (this.$props.encargadoF.id != null){
-        this.$inertia.put(route('encargadosfacultad.update', this.$props.encargadoF.id), this.form);
+      if (this.$props.encargadoE.id != null){
+        this.$inertia.put(route('encargadosescuela.update', this.$props.encargadoE.id), this.form);
       } else {
         console.log(this.form);
-        this.form.post(route('encargadosfacultad.store'));
+        this.form.post(route('encargadosescuela.store'));
       }
+    },
+    buscarCarreras: function(id){
+      this.carrerasFiltradas.splice(0, this.carrerasFiltradas.length);
+      this.facultades.forEach(facultad => {
+        
+        if(facultad.id == id){
+          var facultad = facultad.id;
+          console.log(facultad);
+          this.carreras.forEach(carrera => {
+            if(carrera.facultad_id == facultad){
+              console.log(carrera);
+              this.carrerasFiltradas.push(carrera); 
+            }
+          });
+        }
+      });
     }
   },
 }

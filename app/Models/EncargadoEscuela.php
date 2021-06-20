@@ -9,7 +9,19 @@ class EncargadoEscuela extends Model
 {
     use HasFactory;
 
-    protected $table = 'encargados_escuela';
+    protected $table = 'encargado_escuelas';
+
+    protected $fillable = [
+      'codigo_encargado_escuela',
+      'nombre_encargado_escuela',
+      'apellido_encargado_escuela',
+      'correo_encargado_escuela',
+      'carrera_id',
+      'estado_encargado_escuela',
+      'user_id',
+      'dui_encargado_escuela',
+      'telefono_encargado_escuela',
+  ];
 
     //Relacion uno a uno con Carrera
     public function carrera(){
