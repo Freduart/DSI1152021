@@ -85,6 +85,12 @@
                             <p>Facultades</p>
                             </inertia-link>
                     </li>
+                    <li class="nav-item">
+                            <inertia-link :href="route('verificarcuenta.index')" class="nav-link">
+                            <i class="far fa-user nav-icon"></i>
+                            <p>Verificar Cuenta</p>
+                            </inertia-link>
+                    </li>
                     
                     <!-- Cuando es un solo elemento -->
                     <li class="nav-item">
