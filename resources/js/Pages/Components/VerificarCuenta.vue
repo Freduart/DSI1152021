@@ -64,7 +64,7 @@
                                         <!--Modificar aqui-->
                                         <tr scope="row" v-for="(estudiante, index) in estudiantesFiltradas" :key="index">
                                             
-                                            <td>{{ estudiante.carnet }}</td>
+                                            <td>{{ estudiante.carnet_estudiante }}</td>
                                             <td>{{ estudiante.nombre_estudiante }}</td>
                                             <td>{{ estudiante.apellido_estudiante }}</td>
                                             <!--Modificar aqui-->
@@ -93,8 +93,10 @@
                                                     </inertia-link>-->
                                                     
                                                     <!--boton evaluar-->
-                                                    <button class="btn btn-warning" v-on:click="mostrarMensajeUpdate(estudiante)" data-toggle="modal" data-target="#evaluar">
-                                                        <i class="fas fa-edit mx-12"></i>
+                                                    <!--class="btn btn-warning"-->
+                                                    <button class="btn btn-success" v-on:click="mostrarMensajeUpdate(estudiante)" data-toggle="modal" data-target="#evaluar">
+                                                        <!--<i class="fas fa-edit mx-12"></i>-->
+                                                        <i>Evaluar</i>
                                                     </button>    
                                                 
                                                 
@@ -245,18 +247,30 @@
                 <jet-label for="nit_estudiante" value="NIT" />
                 <jet-input id="nit_estudiante" type="text" v-model="formUp.nit_estudiante" required autofocus autocomplete="off" :value="this.formUp.nit_estudiante"/>
             </div>
+            <div class="form-group">
+                <jet-label for="materias_cursadas" value="Materias Cursadas" />
+                <jet-input id="materias_cursadas" type="text" v-model="formUp.materias_cursadas" required autofocus autocomplete="off" :value="this.formUp.materias_cursadas"/>
+            </div>
+            <div class="form-group">
+                <jet-label for="cantidad_horas_ss" value="Cantidad de Horas de Servicio Social" />
+                <jet-input id="cantidad_horas_ss" type="text" v-model="formUp.cantidad_horas_ss" required autofocus autocomplete="off" :value="this.formUp.cantidad_horas_ss"/>
+            </div>
 
 
             <div class="form-group">
 
                 <div class="mt-12">
                     <jet-button class="ml-4" :class="{ 'text-white-50 bg-green-400': formUp.processing }" v-on:click="submitUpdate(this.formUp)">
-                        <i class="fas fa-plus"></i>  APROBAR
+                        <button type="button" class="btn btn-success">APROBAR</button>
                     </jet-button>   
+                     <jet-button class="ml-4" :class="{ 'text-white-50 bg-green-400': formUp.processing }" v-on:click="submitUpdate(this.formUp)">
+                        <button type="button" class="btn btn-danger">DENEGAR</button>
+                    </jet-button>  
 
+                    
                     <jet-button type="button" class="btn btn-danger mx-12" data-dismiss="modal">
-                        <inertia-link :href="route('carreras.index')">
-                        Cancelar
+                        <inertia-link :href="route('verificarcuenta.index')">
+                         CANCELAR
                         </inertia-link>
                     </jet-button>
                     
@@ -310,30 +324,29 @@ import Button from '../../Jetstream/Button.vue'
                 if(id == '0'){
                     this.estudiantes.forEach(element => {
                         this.estudiantesFiltradas.push(element);
-                        // this.mostrarMensajeSuccess();
                     })     
                 }
             },
-            mostrarMensajeSuccess(){
-                    Swal.fire({
-                        title: 'Se ha guardado con éxito',
-                        text: 'Actualice la página para ver los cambios',
-                        icon: 'success',
-                        confirmButtonText: 'Aceptar',
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                    });
-            },
-            submit(){
-                console.log(this.form);
-                    this.mostrarMensajeSuccess();
+            //mostrarMensajeSuccess(){
+            //        Swal.fire({
+            //            title: 'Se ha guardado con éxito',
+            //            text: 'Actualice la página para ver los cambios',
+            //            icon: 'success',
+            //            confirmButtonText: 'Aceptar',
+            //            allowEscapeKey: false,
+            //            allowOutsideClick: false,
+            //            showConfirmButton: false,
+            //        });
+            //},
+            //submit(){
+            //    console.log(this.form);
+            //        this.mostrarMensajeSuccess();
                 // }
-                this.form.post(this.route('carreras.store'));
-                this.form.nombre_carrera='';
-                this.form.facultad_id='';
-                this.form.codigo_carrera='';
-            },
+            //    this.form.post(this.route('carreras.store'));
+            //    this.form.nombre_carrera='';
+            //    this.form.facultad_id='';
+            //    this.form.codigo_carrera='';
+            //},
             cambiarEstado(estudiante){
                 console.log(estudiante);
                 console.log(estudiante.estado_estudiante);
@@ -350,7 +363,6 @@ import Button from '../../Jetstream/Button.vue'
                         allowOutsideClick: false,
                         showConfirmButton: false,
                     });
-                // this.$inertia.put(route("carreras.updateStatus", carrera.id, 'Inactivo'));
 
                 }
                 else if(estudiante.estado_estudiante == 'Realizando Servicio'){
@@ -365,7 +377,6 @@ import Button from '../../Jetstream/Button.vue'
                         allowOutsideClick: false,
                         showConfirmButton: false,
                     });
-                    // this.$inertia.put(route("carreras.updateStatus", carrera.id, 'Activo'));
                 }
                 this.$inertia.put(route("estudiantes.update",estudiante.id), this.formUp);
                 // this.submitUpdate(this.formUp);
@@ -374,7 +385,7 @@ import Button from '../../Jetstream/Button.vue'
                 console.log(this.formUp);
                 console.log(form);
                 Swal.fire({
-                    title: 'Se ha actualizado la carrera ' + form.estudiante_carrera,
+                    title: 'Se ha actualizado la carrera ' + form.nombre_estudiante,
                     text: 'Actualice la página para ver los cambios',
                     icon: 'success',
                     iconColor: '#FF8000',
@@ -384,25 +395,20 @@ import Button from '../../Jetstream/Button.vue'
                     showConfirmButton: false,
                 });
                 this.$inertia.put(route("estudiantes.update",form.id), this.formUp);
-                // this.formUp.nombre_carrera='';
-                // this.formUp.facultad_id='';
-                // this.formUp.codigo_carrera='';
             },
-            //mostrarMensajeDelete(carrera){
-                //this.borrado = true;
-                //Swal.fire({
-                    //title: 'Se ha borrado la carrera ' + carrera.nombre_carrera,
-                    //text: 'Actualice la página para ver los cambios',
-                    //iconColor: '#CB3234',
-                    //icon: 'warning',
-                    //confirmButtonText: 'Aceptar',
-                   // allowEscapeKey: false,
-                 //   allowOutsideClick: false,
-               //     showConfirmButton: false,
-             //   });
-           // },
-            mostrarMensajeUpdate(carrera){
-                console.log(carrera);
+            mostrarMensajeUpdate(estudiante){
+                console.log(estudiante);
+                this.formUp.nombre_estudiante=estudiante.nombre_estudiante;
+                this.formUp.apellido_estudiante=estudiante.apellido_estudiante;
+                this.formUp.carnet_estudiante=estudiante.carnet_estudiante;
+                this.formUp.sexo_estudiante=estudiante.sexo_estudiante;
+                this.formUp.correo_estudiante=estudiante.correo_estudiante;
+                this.formUp.telefono_estudiante=estudiante.telefono_estudiante;
+                this.formUp.carrera_id=estudiante.carrera_id;
+                this.formUp.dui_estudiante=estudiante.dui_estudiante;
+                this.formUp.nit_estudiante=estudiante.nit_estudiante;
+                this.formUp.materias_cursadas=estudiante.materias_cursadas;
+                this.formUp.cantidad_horas_ss=estudiante.cantidad_horas_ss;
                 this.formUp.estado_estudiante = estudiante.estado_estudiante;
                 console.log(this.formUp);
             }
@@ -418,15 +424,29 @@ import Button from '../../Jetstream/Button.vue'
                     nombre_estudiante:'',
                     apellido_estudiante:'',
                     carnet_estudiante:'',
+                    sexo_estudiante:'',
+                    correo_estudiante:'',
+                    telefono_estudiante:'',
+                    carrera_id:'',
+                    dui_estudiante:'',
+                    nit_estudiante:'',
+                    materias_cursadas:'',
+                    cantidad_horas_ss:'',
                     estado_estudiante:'En espera',
                     }),
                 formUp: this.$inertia.form({
                     nombre_estudiante:'',
                     apellido_estudiante:'',
                     carnet_estudiante:'',
-                    codigo_carrera:'',
-                    id: '',
-                    estado_estudiante:'',
+                    sexo_estudiante:'',
+                    correo_estudiante:'',
+                    telefono_estudiante:'',
+                    carrera_id:'',
+                    dui_estudiante:'',
+                    nit_estudiante:'',
+                    materias_cursadas:'',
+                    cantidad_horas_ss:'',
+                    estado_estudiante:'Realizando Servicio',
                     }),
                 activo: true,    
                 }
