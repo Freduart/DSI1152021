@@ -12,13 +12,20 @@ class Estudiante extends Model
     protected $table = 'estudiantes';
 
     protected $fillable = [
-        'carrera',
-        'sexo',
-        'carnet',
+        'id',
+        'nombre_estudiante',
+        'apellido_estudiante',
+        'user_id',
+        'carnet_estudiante',
+        'sexo_estudiante',
+        'correo_estudiante',
+        'telefono_estudiante',
         'carrera_id',
+        'dui_estudiante',
+        'nit_estudiante',
         'materias_cursadas',
         'cantidad_horas_ss',
-        'estado',
+        'estado_estudiante',
     ];
 
     //Relacion uno a uno con persona

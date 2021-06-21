@@ -18876,28 +18876,28 @@ __webpack_require__.r(__webpack_exports__);
     JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_4__.default,
     Base: _Pages_Base_vue__WEBPACK_IMPORTED_MODULE_5__.default
   },
-  props: ['carreras', 'facultades'],
+  props: ['estudiantes'],
   methods: {
     logout: function logout() {
       this.$inertia.post(route('logout'));
     },
-    filtrarByFacultad: function filtrarByFacultad(id) {
+    filtrarEstudiantes: function filtrarEstudiantes(id) {
       var _this = this;
 
-      this.carrerasFiltradas.splice(0, this.carrerasFiltradas.length);
+      this.estudiantesFiltradas.splice(0, this.estudiantesFiltradas.length);
       console.log(id);
-      this.carreras.forEach(function (element) {
-        if (element.facultad_id == id) {
+      this.estudiantes.forEach(function (element) {
+        if (element.estudiante_id == id) {
           console.log(element);
 
-          _this.carrerasFiltradas.push(element);
+          _this.estudiantesFiltradas.push(element);
         }
       });
-      console.log(this.carrerasFiltradas);
+      console.log(this.estudiantesFiltradas);
 
       if (id == '0') {
-        this.carreras.forEach(function (element) {
-          _this.carrerasFiltradas.push(element); // this.mostrarMensajeSuccess();
+        this.estudiantes.forEach(function (element) {
+          _this.estudiantesFiltradas.push(element); // this.mostrarMensajeSuccess();
 
         });
       }
@@ -18914,12 +18914,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     submit: function submit() {
-      console.log(this.form); // this.successGuardado = true;
-      // if(this.form.facultad_id == 0){
-      //     alert("Debe seleccionar facultad");
-      // }
-      // else{
-
+      console.log(this.form);
       this.mostrarMensajeSuccess(); // }
 
       this.form.post(this.route('carreras.store'));
@@ -18927,15 +18922,15 @@ __webpack_require__.r(__webpack_exports__);
       this.form.facultad_id = '';
       this.form.codigo_carrera = '';
     },
-    cambiarEstado: function cambiarEstado(carrera) {
-      console.log(carrera);
-      console.log(carrera.estado_carrera);
+    cambiarEstado: function cambiarEstado(estudiante) {
+      console.log(estudiante);
+      console.log(estudiante.estado_estudiante);
 
-      if (carrera.estado_carrera == 'Activo') {
+      if (estudiante.estado_estudiante == 'En Espera') {
         // carrera.estado_carrera = 'Inactivo';
-        this.formUp.estado_carrera = 'Inactivo';
+        this.formUp.estado_estudiante = 'Realizando Servicio';
         Swal.fire({
-          title: 'Se ha inactivado la carrera ' + carrera.nombre_carrera,
+          title: 'El estudiante esta realizando Su Servicio ' + estudiante.nombre_estudiante,
           text: 'Actualice la página para ver los cambios',
           icon: 'warning',
           iconColor: '#FF8000',
@@ -18944,11 +18939,11 @@ __webpack_require__.r(__webpack_exports__);
           allowOutsideClick: false,
           showConfirmButton: false
         }); // this.$inertia.put(route("carreras.updateStatus", carrera.id, 'Inactivo'));
-      } else if (carrera.estado_carrera == 'Inactivo') {
+      } else if (estudiante.estado_estudiante == 'Realizando Servicio') {
         // carrera.estado_carrera = 'Activo';
-        this.formUp.estado_carrera = 'Activo';
+        this.formUp.estado_estudiante = 'Inactivo';
         Swal.fire({
-          title: 'Se ha activado la carrera ' + carrera.nombre_carrera,
+          title: 'Se ha inactivado el estudiante ' + estudiante.nombre_estudiante,
           text: 'Actualice la página para ver los cambios',
           icon: 'success',
           confirmButtonText: 'Aceptar',
@@ -18956,28 +18951,15 @@ __webpack_require__.r(__webpack_exports__);
           allowOutsideClick: false,
           showConfirmButton: false
         }); // this.$inertia.put(route("carreras.updateStatus", carrera.id, 'Activo'));
-      } // // console.log(this.formUp);
-      // console.log(carrera.estado_carrera);
-      // this.$inertia.put(route("carreras.update", carrera.id), carrera.estado_carrera);
-      // console.log(carrera);
-      // this.$inertia.put(route('carreras.updateStatus', carrera.estado_carrera), carrera);
+      }
 
-
-      this.$inertia.put(route("carreras.update", carrera.id), this.formUp); // this.submitUpdate(this.formUp);
+      this.$inertia.put(route("estudiantes.update", estudiante.id), this.formUp); // this.submitUpdate(this.formUp);
     },
     submitUpdate: function submitUpdate(form) {
       console.log(this.formUp);
-      console.log(form); // this.successGuardado = true;
-      // if(this.form.facultad_id == 0){
-      //     alert("Debe seleccionar facultad");
-      // }
-      // else{
-      // this.mostrarMensajeUpdate(carrera);
-      // }
-      // this.form.post(this.route('carreras.update'));
-
+      console.log(form);
       Swal.fire({
-        title: 'Se ha actualizado la carrera ' + form.nombre_carrera,
+        title: 'Se ha actualizado la carrera ' + form.estudiante_carrera,
         text: 'Actualice la página para ver los cambios',
         icon: 'success',
         iconColor: '#FF8000',
@@ -18986,78 +18968,48 @@ __webpack_require__.r(__webpack_exports__);
         allowOutsideClick: false,
         showConfirmButton: false
       });
-      this.$inertia.put(route("carreras.update", form.id), this.formUp); // this.formUp.nombre_carrera='';
+      this.$inertia.put(route("estudiantes.update", form.id), this.formUp); // this.formUp.nombre_carrera='';
       // this.formUp.facultad_id='';
       // this.formUp.codigo_carrera='';
     },
-    mostrarMensajeDelete: function mostrarMensajeDelete(carrera) {
-      this.borrado = true;
-      Swal.fire({
-        title: 'Se ha borrado la carrera ' + carrera.nombre_carrera,
-        text: 'Actualice la página para ver los cambios',
-        iconColor: '#CB3234',
-        icon: 'warning',
-        confirmButtonText: 'Aceptar',
-        allowEscapeKey: false,
-        allowOutsideClick: false,
-        showConfirmButton: false
-      });
-    },
+    //mostrarMensajeDelete(carrera){
+    //this.borrado = true;
+    //Swal.fire({
+    //title: 'Se ha borrado la carrera ' + carrera.nombre_carrera,
+    //text: 'Actualice la página para ver los cambios',
+    //iconColor: '#CB3234',
+    //icon: 'warning',
+    //confirmButtonText: 'Aceptar',
+    // allowEscapeKey: false,
+    //   allowOutsideClick: false,
+    //     showConfirmButton: false,
+    //   });
+    // },
     mostrarMensajeUpdate: function mostrarMensajeUpdate(carrera) {
       console.log(carrera);
-      this.formUp.nombre_carrera = carrera.nombre_carrera;
-      this.formUp.codigo_carrera = carrera.codigo_carrera;
-      this.formUp.facultad_id = carrera.facultad_id;
-      this.formUp.estado_carrera = carrera.estado_carrera;
-      this.formUp.id = carrera.id;
+      this.formUp.estado_estudiante = estudiante.estado_estudiante;
       console.log(this.formUp);
-    } // borrar(carrera){
-    //     console.log(carrera);
-    //     Swal.fire({
-    //     title: 'Borrar carrera',
-    //     text: 'Se borrará la carrera: ' + carrera.nombre_carrera +
-    //           'Código: ' + carrera.codigo_carrera,
-    //     icon: 'warning',
-    //     showCancelButton: true,
-    //     cancelButtonText: 'Cancelar',
-    //     confirmButtonColor: '#3085d6',
-    //     cancelButtonColor: '#d33',
-    //     confirmButtonText: 'Borrar',
-    //     textColor: '#ffffff',
-    //     customClass:{
-    //         textColor:'text-gray-50'
-    //     }
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             Swal.fire(
-    //             'Borrado exitoso',
-    //             'Actualice la página para ver los cambios',
-    //             'success',
-    //             );
-    //             // this.$inertia.get('carreras.index');
-    //         }
-    //     })
-    // }
-
+    }
   },
   data: function data() {
     return {
-      facultad: 0,
-      carrerasFiltradas: [],
+      estudiante: 0,
+      estudiantesFiltradas: [],
       successGuardado: false,
       formularioNuevaCarrera: false,
       form: this.$inertia.form({
-        nombre_carrera: '',
-        facultad_id: '',
-        codigo_carrera: '',
-        estado_carrera: 'Activo'
+        nombre_estudiante: '',
+        apellido_estudiante: '',
+        carnet_estudiante: '',
+        estado_estudiante: 'En espera'
       }),
       formUp: this.$inertia.form({
-        nombre_carrera: '',
-        facultad_id: '',
+        nombre_estudiante: '',
+        apellido_estudiante: '',
+        carnet_estudiante: '',
         codigo_carrera: '',
         id: '',
-        estado_carrera: ''
+        estado_estudiante: ''
       }),
       activo: true
     };
@@ -19065,8 +19017,8 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this2 = this;
 
-    this.carreras.forEach(function (element) {
-      _this2.carrerasFiltradas.push(element);
+    this.estudiantes.forEach(function (element) {
+      _this2.estudiantesFiltradas.push(element);
     }), // this.mostrarMensajeSuccess();
     this.successGuardado = false;
   }
@@ -25772,7 +25724,15 @@ var _hoisted_8 = {
   "class": "card"
 };
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"card-header\"><h3 class=\"card-title\"><i class=\"ion ion-clipboard mr-1\"></i> Solicitudes de creación de cuenta de estudiantes en espera </h3><div class=\"card-tools\"><ul class=\"pagination pagination-sm\"><li class=\"page-item\"><a href=\"#\" class=\"page-link\">«</a></li><li class=\"page-item\"><a href=\"#\" class=\"page-link\">1</a></li><li class=\"page-item\"><a href=\"#\" class=\"page-link\">2</a></li><li class=\"page-item\"><a href=\"#\" class=\"page-link\">3</a></li><li class=\"page-item\"><a href=\"#\" class=\"page-link\">»</a></li></ul></div></div>", 1);
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "card-header"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", {
+  "class": "card-title"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "ion ion-clipboard mr-1"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Solicitudes de creación de cuenta de estudiantes en espera ")])], -1
+/* HOISTED */
+);
 
 var _hoisted_10 = {
   "class": "card-body"
@@ -25782,29 +25742,18 @@ var _hoisted_11 = {
   "data-widget": "todo-list"
 };
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, "Buscar por", -1
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("hr", null, null, -1
 /* HOISTED */
 );
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
-  value: "0",
-  selected: ""
-}, "Todos", -1
-/* HOISTED */
-);
-
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("hr", null, null, -1
-/* HOISTED */
-);
-
-var _hoisted_15 = {
+var _hoisted_13 = {
   "class": "table table-striped table-dark text-center",
   style: {
     "font-size": "20px"
   }
 };
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", {
   scope: "col"
 }, "Carnet"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", {
   scope: "col"
@@ -25818,64 +25767,56 @@ var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_17 = {
+var _hoisted_15 = {
   key: 0
 };
-var _hoisted_18 = {
+var _hoisted_16 = {
   key: 1
 };
-var _hoisted_19 = {
+var _hoisted_17 = {
   "class": "flex justify-center"
 };
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-  "class": "btn btn-danger"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
-  "class": "fas fa-trash"
-})], -1
-/* HOISTED */
-);
-
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fas fa-edit mx-12"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "card-footer clearfix"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button type=\"button\" class=\"btn btn-success float-right\" data-toggle=\"modal\" data-target=\"#añadirCarrera\">\r\n                    <i class=\"fas fa-plus\"></i> Añadir Carrera</button>  ")], -1
 /* HOISTED */
 );
 
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("section", {
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("section", {
   "class": "col-lg-5 connectedSortable"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card ")], -1
 /* HOISTED */
 );
 
-var _hoisted_24 = {
+var _hoisted_21 = {
   "class": "modal fade",
-  id: "añadirCarrera",
+  id: "evaluar",
   tabindex: "-1",
   role: "dialog",
   "aria-labelledby": "exampleModalLabel",
   "aria-hidden": "true"
 };
-var _hoisted_25 = {
+var _hoisted_22 = {
   "class": "modal-dialog",
   role: "document"
 };
-var _hoisted_26 = {
+var _hoisted_23 = {
   "class": "modal-content"
 };
 
-var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "modal-header"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", {
   "class": "modal-title",
   id: "exampleModalLabel"
-}, "Añadir una nueva carrera"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+}, "Evaluar Cuenta"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
   type: "button",
   "class": "close",
   "data-dismiss": "modal",
@@ -25886,8 +25827,17 @@ var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_28 = {
+var _hoisted_25 = {
   "class": "modal-body"
+};
+var _hoisted_26 = {
+  "class": "form-group"
+};
+var _hoisted_27 = {
+  "class": "form-group"
+};
+var _hoisted_28 = {
+  "class": "form-group"
 };
 var _hoisted_29 = {
   "class": "form-group"
@@ -25898,122 +25848,44 @@ var _hoisted_30 = {
 var _hoisted_31 = {
   "class": "form-group"
 };
-
-var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
-/* HOISTED */
-);
-
-var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
-  disabled: "",
-  value: ""
-}, "Seleccione una facultad", -1
-/* HOISTED */
-);
-
-var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("hr", null, null, -1
-/* HOISTED */
-);
-
+var _hoisted_32 = {
+  "class": "form-group"
+};
+var _hoisted_33 = {
+  "class": "form-group"
+};
+var _hoisted_34 = {
+  "class": "form-group"
+};
 var _hoisted_35 = {
+  "class": "form-group"
+};
+var _hoisted_36 = {
   "class": "mt-12"
 };
 
-var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fas fa-plus"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Guardar nueva Carrera ");
+var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" APROBAR ");
 
-var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Cancelar ");
-
-var _hoisted_39 = {
-  "class": "modal fade",
-  id: "actualizarCarrera",
-  tabindex: "-1",
-  role: "dialog",
-  "aria-labelledby": "exampleModalLabel",
-  "aria-hidden": "true"
-};
-var _hoisted_40 = {
-  "class": "modal-dialog",
-  role: "document"
-};
-var _hoisted_41 = {
-  "class": "modal-content"
-};
-
-var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "modal-header"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", {
-  "class": "modal-title",
-  id: "exampleModalLabel"
-}, "Actualizar carrera"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-  type: "button",
-  "class": "close",
-  "data-dismiss": "modal",
-  "aria-label": "Close"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-  "aria-hidden": "true"
-}, "×")])], -1
-/* HOISTED */
-);
-
-var _hoisted_43 = {
-  "class": "modal-body"
-};
-var _hoisted_44 = {
-  "class": "form-group"
-};
-var _hoisted_45 = {
-  "class": "form-group"
-};
-var _hoisted_46 = {
-  "class": "form-group"
-};
-
-var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
-/* HOISTED */
-);
-
-var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
-  disabled: "",
-  value: ""
-}, "Seleccione una facultad", -1
-/* HOISTED */
-);
-
-var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("hr", null, null, -1
-/* HOISTED */
-);
-
-var _hoisted_50 = {
-  "class": "mt-12"
-};
-
-var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
-  "class": "fas fa-plus"
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_52 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Actualizar Carrera ");
-
-var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Cancelar ");
+var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Cancelar ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
 
   var _component_Base = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Base");
 
-  var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
-
   var _component_jet_label = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-label");
 
   var _component_jet_input = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-input");
 
   var _component_jet_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-button");
+
+  var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Navbar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Base, null, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -26022,236 +25894,203 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Content Wrapper. Contains page content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Content Header (Page header) "), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content-header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Main content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("section", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Main row "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Left col "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("section", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" TO DO List "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Ejemplo de como podria ser una tabla pero se tendria que añadir al width del 100% "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card-header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo text "), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-    "class": "ml-4",
-    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-      return _this.facultad = $event;
-    }),
-    onChange: _cache[2] || (_cache[2] = function ($event) {
-      return $options.filtrarByFacultad(_this.facultad);
-    })
-  }, [_hoisted_13, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.facultades, function (facultad, index) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
-      key: index,
-      value: facultad.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(facultad.nombre_facultad), 9
-    /* TEXT, PROPS */
-    , ["value"]);
-  }), 128
-  /* KEYED_FRAGMENT */
-  ))], 544
-  /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, this.facultad]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<button type=\"button\" class=\"btn btn-success float-right\" data-toggle=\"modal\" data-target=\"#añadirCarrera\">\r\n                            <i class=\"fas fa-plus\"></i> Añadir Carrera</button>"), _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.carrerasFiltradas, function (carrera, index) {
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Content Wrapper. Contains page content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Content Header (Page header) "), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content-header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Main content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("section", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Main row "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Left col "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("section", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" TO DO List "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Ejemplo de como podria ser una tabla pero se tendria que añadir al width del 100% "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card-header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo text \r\n                            <span>Buscar por</span>\r\n                            <select class=\"ml-4\" v-model=\"this.facultad\" v-on:change=\"filtrarEstudiantes(this.facultad)\">\r\n                                <option value=\"0\" selected>Todos</option>\r\n                                <option v-for=\"(facultad, index) in facultades\" :key=\"index\" :value=\"facultad.id\">{{ facultad.nombre_facultad }}</option>\r\n                            </select>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<button type=\"button\" class=\"btn btn-success float-right\" data-toggle=\"modal\" data-target=\"#añadirCarrera\">\r\n                            <i class=\"fas fa-plus\"></i> Añadir Carrera</button>"), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Modificar aqui"), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.estudiantesFiltradas, function (estudiante, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
       scope: "row",
       key: index
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(carrera.codigo_carrera), 1
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(estudiante.carnet), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(carrera.nombre_carrera), 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(estudiante.nombre_estudiante), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(carrera.nombre_facultad), 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(estudiante.apellido_estudiante), 1
     /* TEXT */
-    ), carrera.estado_carrera == 'Activo' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Modificar aqui"), estudiante.estado_estudiante == 'Activo' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
       onSubmit: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-        return $options.cambiarEstado(carrera);
+        return $options.cambiarEstado(estudiante);
       }, ["prevent"])
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
       type: "submit",
       "class": ["btn btn-success", {
         'text-white-50 bg-green-400': $data.form.processing
       }]
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(carrera.estado_carrera), 3
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(estudiante.estado_estudiante), 3
     /* TEXT, CLASS */
     )], 40
     /* PROPS, HYDRATE_EVENTS */
-    , ["onSubmit"])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
+    , ["onSubmit"])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
       onSubmit: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-        return $options.cambiarEstado(carrera);
+        return $options.cambiarEstado(estudiante);
       }, ["prevent"])
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
       type: "submit",
       "class": ["btn btn-primary", {
         'text-white-50 bg-green-400': $data.form.processing
       }]
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(carrera.estado_carrera), 3
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(estudiante.estado_estudiante), 3
     /* TEXT, CLASS */
     )], 40
     /* PROPS, HYDRATE_EVENTS */
-    , ["onSubmit"])])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" General tools such as edit or delete"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
-      method: "delete",
-      href: _ctx.route('carreras.destroy', carrera.id),
-      onClick: function onClick($event) {
-        return $options.mostrarMensajeDelete(carrera);
-      }
-    }, {
-      "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [_hoisted_20];
-      }),
-      _: 2
-      /* DYNAMIC */
-
-    }, 1032
-    /* PROPS, DYNAMIC_SLOTS */
-    , ["href", "onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    , ["onSubmit"])])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" General tools such as edit or delete"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Modificar aqui CREO QUE YA NO VA\r\n                                                    <inertia-link\r\n                                                    method=\"delete\"\r\n                                                    :href=\"route('carreras.destroy', carrera.id)\"\r\n                                                    v-on:click=\"mostrarMensajeDelete(carrera)\">\r\n                                                        <button class=\"btn btn-danger\">\r\n                                                            <i class=\"fas fa-trash\"></i>\r\n                                                        </button>\r\n                                                    </inertia-link>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("boton evaluar"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
       "class": "btn btn-warning",
       onClick: function onClick($event) {
-        return $options.mostrarMensajeUpdate(carrera);
+        return $options.mostrarMensajeUpdate(estudiante);
       },
       "data-toggle": "modal",
-      "data-target": "#actualizarCarrera"
-    }, [_hoisted_21], 8
+      "data-target": "#evaluar"
+    }, [_hoisted_18], 8
     /* PROPS */
     , ["onClick"])])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card-body "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <hr/>\r\n                <div class=\"card-body\">\r\n                    <ul class=\"todo-list\" data-widget=\"todo-list\">\r\n                        <li> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" todo text "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <h3>Añadir nueva carrera</h3>\r\n                            <hr>\r\n\r\n                <div class=\"mx-12\">\r\n              <form @submit.prevent=\"submit\" class=\"bg-gray-50 m-8 h-10\">\r\n                <div class=\"form-group\">\r\n                    <jet-label for=\"nombre_carrera\" value=\"Nombre de la carrera\" />\r\n                    <jet-input id=\"nombre_carrera\" type=\"text\" v-model=\"form.nombre_carrera\" required autofocus/>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <jet-label for=\"codigo_carrera\" value=\"codigo de la carrera\" />\r\n                    <jet-input id=\"codigo_carrera\" type=\"text\" v-model=\"form.codigo_carrera\" required autofocus/>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <jet-label for=\"facultad_id\" value=\"Facultad a la que pertenece\" />\r\n                    <br/>\r\n                    <select id=\"facultad_id\" v-model=\"form.facultad_id\" required>\r\n                        <option disabled value=\"\">Seleccione una facultad</option>\r\n                        <option v-for=\"(facultad, index) in facultades\" :key=\"index\" :value=\"facultad.id\">{{ facultad.nombre_facultad }}</option>\r\n                    </select>\r\n                    <jet-button class=\"ml-4\" :class=\"{ 'text-white-50 bg-green-400': form.processing }\" :disabled=\"form.processing\">\r\n                        Guardar nueva Carrera\r\n                    </jet-button>\r\n                </div>\r\n            </form> \r\n                </div>\r\n\r\n                        </li>\r\n                    </ul>\r\n                </div> "), _hoisted_22]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.Left col "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" right col (We are only adding the ID to make the widgets sortable)"), _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" right col ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.row (main row) ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.container-fluid ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content-wrapper ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal Insert"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
-    onSubmit: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
-      return $options.submit && $options.submit.apply($options, arguments);
-    }, ["prevent"]))
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
-    "for": "nombre_carrera",
-    value: "Nombre de la carrera"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
-    id: "nombre_carrera",
-    type: "text",
-    modelValue: $data.form.nombre_carrera,
-    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-      return $data.form.nombre_carrera = $event;
-    }),
-    required: "",
-    autofocus: "",
-    autocomplete: "off"
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
-    "for": "codigo_carrera",
-    value: "Código de la carrera"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
-    id: "codigo_carrera",
-    type: "text",
-    modelValue: $data.form.codigo_carrera,
-    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
-      return $data.form.codigo_carrera = $event;
-    }),
-    required: "",
-    autofocus: "",
-    autocomplete: "off"
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
-    "for": "facultad_id",
-    value: "Facultad a la que pertenece"
-  }), _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-    id: "facultad_id",
-    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
-      return $data.form.facultad_id = $event;
-    }),
-    required: ""
-  }, [_hoisted_33, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.facultades, function (facultad, index) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
-      key: index,
-      value: facultad.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(facultad.nombre_facultad), 9
-    /* TEXT, PROPS */
-    , ["value"]);
-  }), 128
-  /* KEYED_FRAGMENT */
-  ))], 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.facultad_id]]), _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
-    "class": ["ml-4", {
-      'text-white-50 bg-green-400': $data.form.processing
-    }]
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_36, _hoisted_37];
-    }),
-    _: 1
-    /* STABLE */
-
-  }, 8
-  /* PROPS */
-  , ["class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
-    type: "button",
-    "class": "btn btn-danger mx-12",
-    "data-dismiss": "modal"
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
-        href: _ctx.route('carreras.index')
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_38];
-        }),
-        _: 1
-        /* STABLE */
-
-      }, 8
-      /* PROPS */
-      , ["href"])];
-    }),
-    _: 1
-    /* STABLE */
-
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <jet-button type=\"button\" class=\"btn btn-success ml-4\" :class=\"{ 'text-white-50' : form.processing }\" :disabled=\"form.processing\">Guardar</jet-button> ")])])], 32
-  /* HYDRATE_EVENTS */
-  )])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal Update"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_41, [_hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
+  ))])])])])]), _hoisted_19]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.Left col "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" right col (We are only adding the ID to make the widgets sortable)"), _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" right col ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.row (main row) ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.container-fluid ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content-wrapper ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal Insert\r\n<div class=\"modal fade\" id=\"añadirCarrera\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\r\n  <div class=\"modal-dialog\" role=\"document\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Evaluar estudiante</h5>\r\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        \r\n\r\n        <form @submit.prevent=\"submit\">\r\n            <div class=\"form-group\">\r\n                <jet-label for=\"nombre_carrera\" value=\"Nombre de la carrera\" />\r\n                <jet-input id=\"nombre_carrera\" type=\"text\" v-model=\"form.nombre_carrera\" required autofocus autocomplete=\"off\"/>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <jet-label for=\"codigo_carrera\" value=\"Código de la carrera\" />\r\n                <jet-input id=\"codigo_carrera\" type=\"text\" v-model=\"form.codigo_carrera\" required autofocus autocomplete=\"off\"/>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <jet-label for=\"facultad_id\" value=\"Facultad a la que pertenece\" />\r\n                <br/>\r\n                <select id=\"facultad_id\" v-model=\"form.facultad_id\" required>\r\n                    <option disabled value=\"\">Seleccione una facultad</option>\r\n                    <option v-for=\"(facultad, index) in facultades\" :key=\"index\" :value=\"facultad.id\">{{ facultad.nombre_facultad }}</option>\r\n                </select>\r\n                <hr/>\r\n                <div class=\"mt-12\">\r\n                    <jet-button class=\"ml-4\" :class=\"{ 'text-white-50 bg-green-400': form.processing }\" >\r\n                        <i class=\"fas fa-plus\"></i>  Guardar nueva Carrera  \r\n                    </jet-button>   \r\n                    <jet-button type=\"button\" class=\"btn btn-danger mx-12\" data-dismiss=\"modal\">\r\n                        <inertia-link :href=\"route('carreras.index')\">\r\n                        Cancelar\r\n                        </inertia-link>\r\n                    </jet-button>\r\n                   \r\n                </div>\r\n            </div>\r\n    \r\n \r\n        </form>\r\n        </div>\r\n    </div>\r\n  </div>\r\n</div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" EVALUAR"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
     onSubmit: _cache[11] || (_cache[11] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
       return $options.submitUpdate(_this.formUp);
     }, ["prevent"]))
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
-    "for": "nombre_carrera",
-    value: "Nombre de la carrera"
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+    "for": "nombre_estudiante",
+    value: "Nombre del estudiante"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
-    id: "nombre_carrera",
+    id: "nombre_estudiante",
     type: "text",
-    modelValue: $data.formUp.nombre_carrera,
+    modelValue: $data.formUp.nombre_estudiante,
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.formUp.nombre_estudiante = $event;
+    }),
+    required: "",
+    autofocus: "",
+    autocomplete: "off",
+    value: this.formUp.nombre_estudiante
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+    "for": "apellido_estudiante",
+    value: "Apellido del estudiante"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
+    id: "apellido_estudiante",
+    type: "text",
+    modelValue: $data.formUp.apellido_estudiante,
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.formUp.apellido_estudiante = $event;
+    }),
+    required: "",
+    autofocus: "",
+    autocomplete: "off",
+    value: this.formUp.apellido_estudiante
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+    "for": "carnet_estudiante",
+    value: "Carnet del estudiante"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
+    id: "carnet_estudiante",
+    type: "text",
+    modelValue: $data.formUp.carnet_estudiante,
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return $data.formUp.carnet_estudiante = $event;
+    }),
+    required: "",
+    autofocus: "",
+    autocomplete: "off",
+    value: this.formUp.carnet_estudiante
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+    "for": "sexo_estudiante",
+    value: "Sexo"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
+    id: "sexo_estudiante",
+    type: "text",
+    modelValue: $data.formUp.sexo_estudiante,
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return $data.formUp.sexo_estudiante = $event;
+    }),
+    required: "",
+    autofocus: "",
+    autocomplete: "off",
+    value: this.formUp.sexo_estudiante
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+    "for": "correo_estudiante",
+    value: "Correo"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
+    id: "correo_estudiante",
+    type: "text",
+    modelValue: $data.formUp.correo_estudiante,
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+      return $data.formUp.correo_estudiante = $event;
+    }),
+    required: "",
+    autofocus: "",
+    autocomplete: "off",
+    value: this.formUp.correo_estudiante
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+    "for": "telefono_estudiante",
+    value: "Telefono"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
+    id: "telefono_estudiante",
+    type: "text",
+    modelValue: $data.formUp.telefono_estudiante,
+    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+      return $data.formUp.telefono_estudiante = $event;
+    }),
+    required: "",
+    autofocus: "",
+    autocomplete: "off",
+    value: this.formUp.telefono_estudiante
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+    "for": "carrera_id",
+    value: "Carrera"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
+    id: "carrera_id",
+    type: "text",
+    modelValue: $data.formUp.carrera_id,
     "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
-      return $data.formUp.nombre_carrera = $event;
+      return $data.formUp.carrera_id = $event;
     }),
     required: "",
     autofocus: "",
     autocomplete: "off",
-    value: this.formUp.nombre_carrera
+    value: this.formUp.carrera_id
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
-    "for": "codigo_carrera",
-    value: "Código de la carrera"
+  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+    "for": "dui_estudiante",
+    value: "DUI"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
-    id: "codigo_carrera",
+    id: "dui_estudiante",
     type: "text",
-    modelValue: $data.formUp.codigo_carrera,
+    modelValue: $data.formUp.dui_estudiante,
     "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
-      return $data.formUp.codigo_carrera = $event;
+      return $data.formUp.dui_estudiante = $event;
     }),
     required: "",
     autofocus: "",
     autocomplete: "off",
-    value: this.formUp.codigo_carrera
+    value: this.formUp.dui_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
-    "for": "facultad_id",
-    value: "Facultad a la que pertenece"
-  }), _hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-    id: "facultad_id",
+  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+    "for": "nit_estudiante",
+    value: "NIT"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
+    id: "nit_estudiante",
+    type: "text",
+    modelValue: $data.formUp.nit_estudiante,
     "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
-      return $data.formUp.facultad_id = $event;
+      return $data.formUp.nit_estudiante = $event;
     }),
-    required: ""
-  }, [_hoisted_48, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.facultades, function (facultad, index) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
-      key: index,
-      value: facultad.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(facultad.nombre_facultad), 9
-    /* TEXT, PROPS */
-    , ["value"]);
-  }), 128
-  /* KEYED_FRAGMENT */
-  ))], 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.formUp.facultad_id]]), _hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+    required: "",
+    autofocus: "",
+    autocomplete: "off",
+    value: this.formUp.nit_estudiante
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
     "class": ["ml-4", {
       'text-white-50 bg-green-400': $data.formUp.processing
     }],
@@ -26260,7 +26099,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_51, _hoisted_52];
+      return [_hoisted_37, _hoisted_38];
     }),
     _: 1
     /* STABLE */
@@ -26277,7 +26116,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         href: _ctx.route('carreras.index')
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_53];
+          return [_hoisted_39];
         }),
         _: 1
         /* STABLE */
@@ -26289,7 +26128,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <jet-button type=\"button\" class=\"btn btn-success ml-4\" :class=\"{ 'text-white-50' : form.processing }\" :disabled=\"form.processing\">Guardar</jet-button> ")])])], 32
+  })])])], 32
   /* HYDRATE_EVENTS */
   )])])])])], 64
   /* STABLE_FRAGMENT */
