@@ -27,7 +27,7 @@ class CreateEstudiantesTable extends Migration
             $table->string('nit_estudiante', 17)->nullable()->unique();
             $table->unsignedInteger('materias_cursadas');
             $table->unsignedInteger('cantidad_horas_ss');
-            $table->enum('estado_estudiante', ['Inactivo', 'En espera', 'Realizando servicio', 'Servicio finalizado']);
+            $table->enum('estado_estudiante', ['Inactivo','Activo','En espera', 'Realizando servicio', 'Servicio finalizado']);
 
             // $table->unsignedBigInteger('persona_id')->nullable();
 

@@ -18889,7 +18889,7 @@ __webpack_require__.r(__webpack_exports__);
       var estadoText = "En Espera";
 
       if (event.target.value == 0) {
-        estadoText = "Inactivo";
+        estadoText = "Activo";
       }
 
       this.estudiantes.forEach(function (element) {
@@ -18918,26 +18918,6 @@ __webpack_require__.r(__webpack_exports__);
             })     
         }
     },*/
-    //mostrarMensajeSuccess(){
-    //        Swal.fire({
-    //            title: 'Se ha guardado con éxito',
-    //            text: 'Actualice la página para ver los cambios',
-    //            icon: 'success',
-    //            confirmButtonText: 'Aceptar',
-    //            allowEscapeKey: false,
-    //            allowOutsideClick: false,
-    //            showConfirmButton: false,
-    //        });
-    //},
-    //submit(){
-    //    console.log(this.form);
-    //        this.mostrarMensajeSuccess();
-    // }
-    //    this.form.post(this.route('carreras.store'));
-    //    this.form.nombre_carrera='';
-    //    this.form.facultad_id='';
-    //    this.form.codigo_carrera='';
-    //},
 
     /*cambiarEstado(estudiante){
         console.log(estudiante);
@@ -18979,29 +18959,8 @@ __webpack_require__.r(__webpack_exports__);
 
       if (estudiante.estado_estudiante == 'En espera') {
         Swal.fire({
-          title: '¿Esta seguro que desea desactivar al estudiante?',
-          text: "El estudiante " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante + " no podrá iniciar sesión mientras este desactivado.",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, desactivar',
-          cancelButtonText: 'No, cancelar'
-        }).then(function (result) {
-          if (result.isConfirmed) {
-            //var tipo = 1;
-            _this2.$inertia["delete"](route('estudiantes.destroy', estudiante.idEncargado
-            /*, tipo*/
-            ));
-
-            Swal.fire('!Desactivado!', 'El encargado se desactivó correctamente', 'success');
-            window.location.reload(true);
-          }
-        });
-      } else {
-        Swal.fire({
-          title: '¿Esta seguro que desea activar al encargado?',
-          text: "El encargado " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + encargado.codigo_encargado_facultad + " se habilitará y podrá iniciar sesión.",
+          title: '¿Esta seguro que desea activar al estudiante?',
+          text: "El estudiante " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante,
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -19011,33 +18970,59 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (result) {
           if (result.isConfirmed) {
             //var tipo = 1;
-            _this2.$inertia["delete"](route('estudiantes.destroy', estudiante.idEstudiante
+            _this2.$inertia["delete"](route('verificarcuenta.destroy', estudiante.id
             /*, tipo*/
             ));
 
-            Swal.fire('!Activado!', 'El estudiante se activó correctamente', 'success');
+            Swal.fire('!Activado!', 'El estudiante se activo correctamente', 'success');
             window.location.reload(true);
           }
         });
       }
+      /*else {
+      Swal.fire({
+          title: '¿Esta seguro que desea activar al encargado?',
+          text: "El encargado " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante +" se habilitará y podrá iniciar sesión.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, activar',
+          cancelButtonText: 'No, cancelar'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              
+              this.$inertia.delete(route('verificarcuenta.destroy', estudiante.id));
+              Swal.fire(
+              '!Activado!',
+              'El estudiante se activó correctamente',
+              'success'
+              );
+              window.location.reload(true);
+          }
+      })
+      }*/
+
     },
     submitUpdate: function submitUpdate(form) {
       console.log(this.formUp);
       console.log(form);
-      Swal.fire({
-        title: 'Se ha actualizado la carrera ' + form.nombre_estudiante,
-        text: 'Actualice la página para ver los cambios',
-        icon: 'success',
-        iconColor: '#FF8000',
-        confirmButtonText: 'Aceptar',
-        allowEscapeKey: false,
-        allowOutsideClick: false,
-        showConfirmButton: false
-      });
+      /*Swal.fire({
+          title: 'Se ha actualizado la carrera ' + form.nombre_estudiante,
+          text: 'Actualice la página para ver los cambios',
+          icon: 'success',
+          iconColor: '#FF8000',
+          confirmButtonText: 'Aceptar',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          showConfirmButton: false,
+      });*/
+
       this.$inertia.put(route("estudiantes.update", form.id), this.formUp);
     },
-    mostrarMensajeUpdate: function mostrarMensajeUpdate(estudiante) {
+    mostrarDatos: function mostrarDatos(estudiante) {
       console.log(estudiante);
+      this.formUp.id = estudiante.id;
       this.formUp.nombre_estudiante = estudiante.nombre_estudiante;
       this.formUp.apellido_estudiante = estudiante.apellido_estudiante;
       this.formUp.carnet_estudiante = estudiante.carnet_estudiante;
@@ -19059,21 +19044,23 @@ __webpack_require__.r(__webpack_exports__);
       estudiantesFiltradas: [],
       successGuardado: false,
       formularioNuevaCarrera: false,
-      form: this.$inertia.form({
-        nombre_estudiante: '',
-        apellido_estudiante: '',
-        carnet_estudiante: '',
-        sexo_estudiante: '',
-        correo_estudiante: '',
-        telefono_estudiante: '',
-        carrera_id: '',
-        dui_estudiante: '',
-        nit_estudiante: '',
-        materias_cursadas: '',
-        cantidad_horas_ss: '',
-        estado_estudiante: 'En espera'
-      }),
+
+      /*form: this.$inertia.form({
+          nombre_estudiante:'',
+          apellido_estudiante:'',
+          carnet_estudiante:'',
+          sexo_estudiante:'',
+          correo_estudiante:'',
+          telefono_estudiante:'',
+          carrera_id:'',
+          dui_estudiante:'',
+          nit_estudiante:'',
+          materias_cursadas:'',
+          cantidad_horas_ss:'',
+          estado_estudiante:'En espera',
+          }),*/
       formUp: this.$inertia.form({
+        id: '',
         nombre_estudiante: '',
         apellido_estudiante: '',
         carnet_estudiante: '',
@@ -19085,7 +19072,7 @@ __webpack_require__.r(__webpack_exports__);
         nit_estudiante: '',
         materias_cursadas: '',
         cantidad_horas_ss: '',
-        estado_estudiante: 'Realizando Servicio'
+        estado_estudiante: 'Inactivo'
       }),
       activo: true
     };
@@ -25832,7 +25819,7 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 
 var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
   value: "0"
-}, "Inactivo", -1
+}, "Activo", -1
 /* HOISTED */
 );
 
@@ -25917,79 +25904,79 @@ var _hoisted_27 = {
   "class": "modal-body"
 };
 var _hoisted_28 = {
-  "class": "row"
+  "class": "card-body"
 };
 var _hoisted_29 = {
-  "class": "col"
+  "class": "row"
 };
 var _hoisted_30 = {
-  "class": "form-group"
+  "class": "col"
 };
 var _hoisted_31 = {
-  "class": "col"
+  "class": "form-group"
 };
 var _hoisted_32 = {
-  "class": "form-group"
+  "class": "col"
 };
 var _hoisted_33 = {
-  "class": "row"
+  "class": "form-group"
 };
 var _hoisted_34 = {
-  "class": "col"
+  "class": "row"
 };
 var _hoisted_35 = {
-  "class": "form-group"
+  "class": "col"
 };
 var _hoisted_36 = {
-  "class": "col"
+  "class": "form-group"
 };
 var _hoisted_37 = {
-  "class": "form-group"
+  "class": "col"
 };
 var _hoisted_38 = {
-  "class": "row"
+  "class": "form-group"
 };
 var _hoisted_39 = {
-  "class": "col"
+  "class": "row"
 };
 var _hoisted_40 = {
-  "class": "form-group"
+  "class": "col"
 };
 var _hoisted_41 = {
-  clas: "col"
+  "class": "form-group"
 };
 var _hoisted_42 = {
-  "class": "form-group"
+  clas: "col"
 };
 var _hoisted_43 = {
-  "class": "row"
+  "class": "form-group"
 };
 var _hoisted_44 = {
-  "class": "col"
-};
-var _hoisted_45 = {
-  "class": "form-group"
-};
-var _hoisted_46 = {
-  "class": "col"
-};
-var _hoisted_47 = {
-  "class": "form-group"
-};
-var _hoisted_48 = {
   "class": "row"
 };
-var _hoisted_49 = {
+var _hoisted_45 = {
   "class": "col"
+};
+var _hoisted_46 = {
+  "class": "form-group"
+};
+var _hoisted_47 = {
+  "class": "col"
+};
+var _hoisted_48 = {
+  "class": "form-group"
+};
+var _hoisted_49 = {
+  "class": "row"
 };
 var _hoisted_50 = {
-  "class": "form-group"
-};
-var _hoisted_51 = {
   "class": "col"
 };
-var _hoisted_52 = {
+var _hoisted_51 = {
   "class": "form-group"
+};
+var _hoisted_52 = {
+  "class": "col"
 };
 var _hoisted_53 = {
   "class": "form-group"
@@ -25998,24 +25985,27 @@ var _hoisted_54 = {
   "class": "form-group"
 };
 var _hoisted_55 = {
+  "class": "form-group"
+};
+var _hoisted_56 = {
   "class": "mt-12"
 };
 
-var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
   type: "button",
   "class": "btn btn-success"
 }, "APROBAR", -1
 /* HOISTED */
 );
 
-var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+var _hoisted_58 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
   type: "button",
-  "class": "btn btn-danger"
-}, "DENEGAR", -1
+  "class": "btn btn-success"
+}, "APROBAR", -1
 /* HOISTED */
 );
 
-var _hoisted_58 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+var _hoisted_59 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
   type: "button",
   "class": "btn btn-primary"
 }, "Cancelar", -1
@@ -26027,11 +26017,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Base = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Base");
 
-  var _component_jet_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-button");
-
   var _component_jet_label = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-label");
 
   var _component_jet_input = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-input");
+
+  var _component_jet_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-button");
 
   var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
 
@@ -26061,30 +26051,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(estudiante.estado_estudiante), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Modificar aqui"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [estudiante.estado_estudiante == 'En espera' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_jet_button, {
-      key: 0,
-      "class": "fas fa-arrow-alt-circle-down",
-      title: "Dar de baja a estudiante",
-      method: "delete",
-      onClick: function onClick($event) {
-        return $options.cambiarestado(estudiante);
-      }
-    }, null, 8
-    /* PROPS */
-    , ["onClick"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_jet_button, {
-      key: 1,
-      "class": "fas fa-arrow-alt-circle-up",
-      title: "Activar estudiante",
-      method: "delete",
-      onClick: function onClick($event) {
-        return $options.cambiarestado(estudiante);
-      }
-    }, null, 8
-    /* PROPS */
-    , ["onClick"]))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<td v-if=\"estudiante.estado_estudiante == 'En espera'\">\r\n                                                <form @submit.prevent=\"cambiarEstado(estudiante)\">\r\n                                                    <button type=\"submit\" class=\"btn btn-success\" :class=\"{ 'text-white-50 bg-green-400': form.processing }\">{{ estudiante.estado_estudiante }}</button>\r\n                                                </form>          \r\n                                            </td>\r\n                                            <td v-else>\r\n                                                <form @submit.prevent=\"cambiarEstado(estudiante)\">\r\n                                                    <button type=\"submit\" class=\"btn btn-primary\" :class=\"{ 'text-white-50 bg-green-400': form.processing }\">{{ estudiante.estado_estudiante }}</button>\r\n                                                </form>            \r\n                                            </td>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" General tools such as edit or delete"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("boton evaluar"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("class=\"btn btn-warning\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Modificar aqui\r\n                                            <td>\r\n                                                <jet-button  v-if=\"estudiante.estado_estudiante == 'En espera'\" class=\"fas fa-arrow-alt-circle-down\" title=\"Dar de baja a estudiante\" method=\"delete\" v-on:click=\"cambiarestado(estudiante)\"></jet-button>     \r\n                                                <jet-button v-else class=\"fas fa-arrow-alt-circle-up\" title=\"Activar estudiante\" method=\"delete\" v-on:click=\"cambiarestado(estudiante)\"></jet-button>\r\n                                            </td>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<td v-if=\"estudiante.estado_estudiante == 'En espera'\">\r\n                                                <form @submit.prevent=\"cambiarEstado(estudiante)\">\r\n                                                    <button type=\"submit\" class=\"btn btn-success\" :class=\"{ 'text-white-50 bg-green-400': form.processing }\">{{ estudiante.estado_estudiante }}</button>\r\n                                                </form>          \r\n                                            </td>\r\n                                            <td v-else>\r\n                                                <form @submit.prevent=\"cambiarEstado(estudiante)\">\r\n                                                    <button type=\"submit\" class=\"btn btn-primary\" :class=\"{ 'text-white-50 bg-green-400': form.processing }\">{{ estudiante.estado_estudiante }}</button>\r\n                                                </form>            \r\n                                            </td>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" General tools such as edit or delete"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("boton evaluar"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("class=\"btn btn-warning\""), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
       "class": "btn btn-success",
       onClick: function onClick($event) {
-        return $options.mostrarMensajeUpdate(estudiante);
+        return $options.mostrarDatos(estudiante);
       },
       "data-toggle": "modal",
       "data-target": "#evaluar"
@@ -26093,11 +26063,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["onClick"])])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])])])]), _hoisted_21]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.Left col "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" right col (We are only adding the ID to make the widgets sortable)"), _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" right col ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.row (main row) ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.container-fluid ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content-wrapper ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal Insert\r\n<div class=\"modal fade\" id=\"añadirCarrera\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\r\n  <div class=\"modal-dialog\" role=\"document\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Evaluar estudiante</h5>\r\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        \r\n\r\n        <form @submit.prevent=\"submit\">\r\n            <div class=\"form-group\">\r\n                <jet-label for=\"nombre_carrera\" value=\"Nombre de la carrera\" />\r\n                <jet-input id=\"nombre_carrera\" type=\"text\" v-model=\"form.nombre_carrera\" required autofocus autocomplete=\"off\"/>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <jet-label for=\"codigo_carrera\" value=\"Código de la carrera\" />\r\n                <jet-input id=\"codigo_carrera\" type=\"text\" v-model=\"form.codigo_carrera\" required autofocus autocomplete=\"off\"/>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <jet-label for=\"facultad_id\" value=\"Facultad a la que pertenece\" />\r\n                <br/>\r\n                <select id=\"facultad_id\" v-model=\"form.facultad_id\" required>\r\n                    <option disabled value=\"\">Seleccione una facultad</option>\r\n                    <option v-for=\"(facultad, index) in facultades\" :key=\"index\" :value=\"facultad.id\">{{ facultad.nombre_facultad }}</option>\r\n                </select>\r\n                <hr/>\r\n                <div class=\"mt-12\">\r\n                    <jet-button class=\"ml-4\" :class=\"{ 'text-white-50 bg-green-400': form.processing }\" >\r\n                        <i class=\"fas fa-plus\"></i>  Guardar nueva Carrera  \r\n                    </jet-button>   \r\n                    <jet-button type=\"button\" class=\"btn btn-danger mx-12\" data-dismiss=\"modal\">\r\n                        <inertia-link :href=\"route('carreras.index')\">\r\n                        Cancelar\r\n                        </inertia-link>\r\n                    </jet-button>\r\n                   \r\n                </div>\r\n            </div>\r\n    \r\n \r\n        </form>\r\n        </div>\r\n    </div>\r\n  </div>\r\n</div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" EVALUAR"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
+  ))])])])])]), _hoisted_21]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.Left col "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" right col (We are only adding the ID to make the widgets sortable)"), _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" right col ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.row (main row) ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.container-fluid ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content-wrapper ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" EVALUAR"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
     onSubmit: _cache[15] || (_cache[15] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
       return $options.submitUpdate(_this.formUp);
     }, ["prevent"]))
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "nombre_estudiante",
     value: "Nombre del estudiante"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
@@ -26114,7 +26084,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.nombre_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "apellido_estudiante",
     value: "Apellido del estudiante"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
@@ -26131,7 +26101,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.apellido_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "carnet_estudiante",
     value: "Carnet del estudiante"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
@@ -26148,7 +26118,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.carnet_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "sexo_estudiante",
     value: "Sexo"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
@@ -26165,7 +26135,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.sexo_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "correo_estudiante",
     value: "Correo"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
@@ -26182,7 +26152,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.correo_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "telefono_estudiante",
     value: "Telefono"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
@@ -26199,7 +26169,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.telefono_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "carrera_id",
     value: "Carrera"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
@@ -26216,7 +26186,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.carrera_id
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "dui_estudiante",
     value: "DUI"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
@@ -26233,7 +26203,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.dui_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "nit_estudiante",
     value: "NIT"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
@@ -26250,7 +26220,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.nit_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_52, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_52, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "materias_cursadas",
     value: "Materias Cursadas"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
@@ -26267,7 +26237,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.materias_cursadas
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "cantidad_horas_ss",
     value: "Cantidad de Horas de Servicio Social"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
@@ -26284,28 +26254,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.cantidad_horas_ss
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
-    "class": ["ml-4", {
-      'text-white-50 bg-green-400': $data.formUp.processing
-    }],
+  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_56, [$data.estudiante.estado_estudiante == 'En espera' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_jet_button, {
+    key: 0,
+    title: "Activar estudiante",
+    method: "delete",
     onClick: _cache[13] || (_cache[13] = function ($event) {
-      return $options.submitUpdate(_this.formUp);
-    })
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_56];
-    }),
-    _: 1
-    /* STABLE */
-
-  }, 8
-  /* PROPS */
-  , ["class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
-    "class": ["ml-4", {
-      'text-white-50 bg-green-400': $data.formUp.processing
-    }],
-    onClick: _cache[14] || (_cache[14] = function ($event) {
-      return $options.submitUpdate(_this.formUp);
+      return $options.cambiarestado($data.formUp);
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -26314,9 +26268,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }, 8
-  /* PROPS */
-  , ["class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+  })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_jet_button, {
+    key: 1,
+    title: "Activar estudiante",
+    method: "delete",
+    onClick: _cache[14] || (_cache[14] = function ($event) {
+      return $options.cambiarestado($data.formUp);
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_58];
+    }),
+    _: 1
+    /* STABLE */
+
+  })), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<jet-button class=\"ml-4\" :class=\"{ 'text-white-50 bg-green-400': formUp.processing }\" v-on:click=\"submitUpdate(this.formUp)\">\r\n                        <button type=\"button\" class=\"btn btn-danger\">APROBAR</button>\r\n                    </jet-button>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
     type: "button",
     "class": "btn btn-danger mx-12",
     "data-dismiss": "modal"
@@ -26326,7 +26292,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         href: _ctx.route('verificarcuenta.index')
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_58];
+          return [_hoisted_59];
         }),
         _: 1
         /* STABLE */

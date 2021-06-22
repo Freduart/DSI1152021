@@ -43,7 +43,7 @@
                              <h6 class="ml-4 mt-2">Mostrar por estado:
                             <select class="col-2 ml-3 custom-select" v-on:change="filtrarByEstado($event)">
                                 <option value="1" selected>En espera</option>
-                                <option value="0">Inactivo</option>
+                                <option value="0">Activo</option>
                             </select></h6>
                             <!-- todo text 
                             <span>Buscar por</span>
@@ -74,11 +74,13 @@
                                             <td>{{ estudiante.nombre_estudiante }}</td>
                                             <td>{{ estudiante.apellido_estudiante }}</td>
                                             <td>{{ estudiante.estado_estudiante }}</td>
-                                            <!--Modificar aqui-->
+                                            <!--Modificar aqui
                                             <td>
                                                 <jet-button  v-if="estudiante.estado_estudiante == 'En espera'" class="fas fa-arrow-alt-circle-down" title="Dar de baja a estudiante" method="delete" v-on:click="cambiarestado(estudiante)"></jet-button>     
                                                 <jet-button v-else class="fas fa-arrow-alt-circle-up" title="Activar estudiante" method="delete" v-on:click="cambiarestado(estudiante)"></jet-button>
-                                            </td>
+                                            </td>-->
+
+
                                             <!--<td v-if="estudiante.estado_estudiante == 'En espera'">
                                                 <form @submit.prevent="cambiarEstado(estudiante)">
                                                     <button type="submit" class="btn btn-success" :class="{ 'text-white-50 bg-green-400': form.processing }">{{ estudiante.estado_estudiante }}</button>
@@ -95,7 +97,7 @@
                                                     
                                                     <!--boton evaluar-->
                                                     <!--class="btn btn-warning"-->
-                                                    <button class="btn btn-success" v-on:click="mostrarMensajeUpdate(estudiante)" data-toggle="modal" data-target="#evaluar">
+                                                    <button class="btn btn-success" v-on:click="mostrarDatos(estudiante)" data-toggle="modal" data-target="#evaluar">
                                                         <!--<i class="fas fa-edit mx-12"></i>-->
                                                         <i>Evaluar</i>
                                                     </button>    
@@ -147,57 +149,6 @@
     </div>
 
 
-
-<!-- Modal Insert
-<div class="modal fade" id="añadirCarrera" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Evaluar estudiante</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        
-
-        <form @submit.prevent="submit">
-            <div class="form-group">
-                <jet-label for="nombre_carrera" value="Nombre de la carrera" />
-                <jet-input id="nombre_carrera" type="text" v-model="form.nombre_carrera" required autofocus autocomplete="off"/>
-            </div>
-            <div class="form-group">
-                <jet-label for="codigo_carrera" value="Código de la carrera" />
-                <jet-input id="codigo_carrera" type="text" v-model="form.codigo_carrera" required autofocus autocomplete="off"/>
-            </div>
-            <div class="form-group">
-                <jet-label for="facultad_id" value="Facultad a la que pertenece" />
-                <br/>
-                <select id="facultad_id" v-model="form.facultad_id" required>
-                    <option disabled value="">Seleccione una facultad</option>
-                    <option v-for="(facultad, index) in facultades" :key="index" :value="facultad.id">{{ facultad.nombre_facultad }}</option>
-                </select>
-                <hr/>
-                <div class="mt-12">
-                    <jet-button class="ml-4" :class="{ 'text-white-50 bg-green-400': form.processing }" >
-                        <i class="fas fa-plus"></i>  Guardar nueva Carrera  
-                    </jet-button>   
-                    <jet-button type="button" class="btn btn-danger mx-12" data-dismiss="modal">
-                        <inertia-link :href="route('carreras.index')">
-                        Cancelar
-                        </inertia-link>
-                    </jet-button>
-                   
-                </div>
-            </div>
-    
- 
-        </form>
-        </div>
-    </div>
-  </div>
-</div>-->
-
 <!-- EVALUAR-->
 <div class="modal fade" id="evaluar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -212,13 +163,14 @@
         
 
         <form @submit.prevent="submitUpdate(this.formUp)">
+          <div class="card-body">
             <div class="row">
-                <div class="col">
-                   <div class="form-group">
-                        <jet-label for="nombre_estudiante" value="Nombre del estudiante" />
-                        <jet-input id="nombre_estudiante" type="text" readonly="readonly" v-model="formUp.nombre_estudiante" required autofocus autocomplete="off" :value="this.formUp.nombre_estudiante"/>
+                   <div class="col">
+                       <div class="form-group">
+                            <jet-label for="nombre_estudiante" value="Nombre del estudiante" />
+                            <jet-input id="nombre_estudiante" type="text" readonly="readonly" v-model="formUp.nombre_estudiante" required autofocus autocomplete="off" :value="this.formUp.nombre_estudiante"/>
+                       </div>
                    </div>
-                </div>
             
                 <div class="col">
                     <div class="form-group">
@@ -295,17 +247,22 @@
                 <jet-label for="cantidad_horas_ss" value="Cantidad de Horas de Servicio Social" />
                 <jet-input id="cantidad_horas_ss" type="text" readonly="readonly" v-model="formUp.cantidad_horas_ss" required autofocus autocomplete="off" :value="this.formUp.cantidad_horas_ss"/>
             </div>
+          </div>
 
 
             <div class="form-group">
 
                 <div class="mt-12">
-                    <jet-button class="ml-4" :class="{ 'text-white-50 bg-green-400': formUp.processing }" v-on:click="submitUpdate(this.formUp)">
-                        <button type="button" class="btn btn-success">APROBAR</button>
-                    </jet-button>   
-                     <jet-button class="ml-4" :class="{ 'text-white-50 bg-green-400': formUp.processing }" v-on:click="submitUpdate(this.formUp)">
-                        <button type="button" class="btn btn-danger">DENEGAR</button>
-                    </jet-button>  
+                      <jet-button  v-if="estudiante.estado_estudiante == 'En espera'" title="Activar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
+                          <button type="button" class="btn btn-success">APROBAR</button> </jet-button>  
+
+                      <jet-button v-else  title="Activar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
+                          <button type="button" class="btn btn-success">APROBAR</button> </jet-button>     
+
+
+                     <!--<jet-button class="ml-4" :class="{ 'text-white-50 bg-green-400': formUp.processing }" v-on:click="submitUpdate(this.formUp)">
+                        <button type="button" class="btn btn-danger">APROBAR</button>
+                    </jet-button>-->  
                     
                     <jet-button type="button" class="btn btn-danger mx-12" data-dismiss="modal">
                         <inertia-link :href="route('verificarcuenta.index')">
@@ -356,7 +313,7 @@ import Button from '../../Jetstream/Button.vue'
                 console.log(event.target.value);
                 var estadoText= "En Espera";
                 if (event.target.value == 0){
-                    estadoText = "Inactivo";
+                    estadoText = "Activo";
                 }
                 this.estudiantes.forEach(element => {
                     if(element.estado_estudiante == estadoText){
@@ -382,28 +339,6 @@ import Button from '../../Jetstream/Button.vue'
                     })     
                 }
             },*/
-
-
-            //mostrarMensajeSuccess(){
-            //        Swal.fire({
-            //            title: 'Se ha guardado con éxito',
-            //            text: 'Actualice la página para ver los cambios',
-            //            icon: 'success',
-            //            confirmButtonText: 'Aceptar',
-            //            allowEscapeKey: false,
-            //            allowOutsideClick: false,
-            //            showConfirmButton: false,
-            //        });
-            //},
-            //submit(){
-            //    console.log(this.form);
-            //        this.mostrarMensajeSuccess();
-                // }
-            //    this.form.post(this.route('carreras.store'));
-            //    this.form.nombre_carrera='';
-            //    this.form.facultad_id='';
-            //    this.form.codigo_carrera='';
-            //},
 
 
             /*cambiarEstado(estudiante){
@@ -445,30 +380,8 @@ import Button from '../../Jetstream/Button.vue'
                 this.borrado = true;
                 if(estudiante.estado_estudiante == 'En espera'){
                     Swal.fire({
-                      title: '¿Esta seguro que desea desactivar al estudiante?',
-                      text: "El estudiante " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante +" no podrá iniciar sesión mientras este desactivado.",
-                      icon: 'warning',
-                      showCancelButton: true,
-                      confirmButtonColor: '#3085d6',
-                      cancelButtonColor: '#d33',
-                      confirmButtonText: 'Si, desactivar',
-                      cancelButtonText: 'No, cancelar'
-                  }).then((result) => {
-                      if (result.isConfirmed) {
-                          //var tipo = 1;
-                          this.$inertia.delete(route('estudiantes.destroy', estudiante.idEncargado/*, tipo*/));
-                          Swal.fire(
-                          '!Desactivado!',
-                          'El encargado se desactivó correctamente',
-                          'success'
-                          );
-                          window.location.reload(true);
-                      }
-                  })
-                } else {
-                  Swal.fire({
-                      title: '¿Esta seguro que desea activar al encargado?',
-                      text: "El encargado " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + encargado.codigo_encargado_facultad +" se habilitará y podrá iniciar sesión.",
+                      title: '¿Esta seguro que desea activar al estudiante?',
+                      text: "El estudiante " +estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante,
                       icon: 'warning',
                       showCancelButton: true,
                       confirmButtonColor: '#3085d6',
@@ -478,7 +391,29 @@ import Button from '../../Jetstream/Button.vue'
                   }).then((result) => {
                       if (result.isConfirmed) {
                           //var tipo = 1;
-                          this.$inertia.delete(route('estudiantes.destroy', estudiante.idEstudiante/*, tipo*/));
+                          this.$inertia.delete(route('verificarcuenta.destroy', estudiante.id/*, tipo*/));
+                          Swal.fire(
+                          '!Activado!',
+                          'El estudiante se activo correctamente',
+                          'success'
+                          );
+                          window.location.reload(true);
+                      }
+                  })
+                } /*else {
+                  Swal.fire({
+                      title: '¿Esta seguro que desea activar al encargado?',
+                      text: "El encargado " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante +" se habilitará y podrá iniciar sesión.",
+                      icon: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Si, activar',
+                      cancelButtonText: 'No, cancelar'
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          
+                          this.$inertia.delete(route('verificarcuenta.destroy', estudiante.id));
                           Swal.fire(
                           '!Activado!',
                           'El estudiante se activó correctamente',
@@ -487,7 +422,7 @@ import Button from '../../Jetstream/Button.vue'
                           window.location.reload(true);
                       }
                   })
-                }
+                }*/
                 
             },
 
@@ -496,7 +431,9 @@ import Button from '../../Jetstream/Button.vue'
             submitUpdate(form){
                 console.log(this.formUp);
                 console.log(form);
-                Swal.fire({
+                
+               
+                /*Swal.fire({
                     title: 'Se ha actualizado la carrera ' + form.nombre_estudiante,
                     text: 'Actualice la página para ver los cambios',
                     icon: 'success',
@@ -505,11 +442,12 @@ import Button from '../../Jetstream/Button.vue'
                     allowEscapeKey: false,
                     allowOutsideClick: false,
                     showConfirmButton: false,
-                });
+                });*/
                 this.$inertia.put(route("estudiantes.update",form.id), this.formUp);
             },
-            mostrarMensajeUpdate(estudiante){
+            mostrarDatos(estudiante){
                 console.log(estudiante);
+                this.formUp.id=estudiante.id;
                 this.formUp.nombre_estudiante=estudiante.nombre_estudiante;
                 this.formUp.apellido_estudiante=estudiante.apellido_estudiante;
                 this.formUp.carnet_estudiante=estudiante.carnet_estudiante;
@@ -532,7 +470,7 @@ import Button from '../../Jetstream/Button.vue'
                 estudiantesFiltradas:[],
                 successGuardado:false,
                 formularioNuevaCarrera:false,
-                form: this.$inertia.form({
+                /*form: this.$inertia.form({
                     nombre_estudiante:'',
                     apellido_estudiante:'',
                     carnet_estudiante:'',
@@ -545,8 +483,9 @@ import Button from '../../Jetstream/Button.vue'
                     materias_cursadas:'',
                     cantidad_horas_ss:'',
                     estado_estudiante:'En espera',
-                    }),
+                    }),*/
                 formUp: this.$inertia.form({
+                    id:'',
                     nombre_estudiante:'',
                     apellido_estudiante:'',
                     carnet_estudiante:'',
@@ -558,7 +497,7 @@ import Button from '../../Jetstream/Button.vue'
                     nit_estudiante:'',
                     materias_cursadas:'',
                     cantidad_horas_ss:'',
-                    estado_estudiante:'Realizando Servicio',
+                    estado_estudiante:'Inactivo',
                     }),
                 activo: true,    
                 }
