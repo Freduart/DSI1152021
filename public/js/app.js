@@ -25932,54 +25932,90 @@ var _hoisted_32 = {
   "class": "form-group"
 };
 var _hoisted_33 = {
-  "class": "form-group"
+  "class": "row"
 };
 var _hoisted_34 = {
-  "class": "form-group"
+  "class": "col"
 };
 var _hoisted_35 = {
   "class": "form-group"
 };
 var _hoisted_36 = {
-  "class": "form-group"
+  "class": "col"
 };
 var _hoisted_37 = {
   "class": "form-group"
 };
 var _hoisted_38 = {
-  "class": "form-group"
+  "class": "row"
 };
 var _hoisted_39 = {
-  "class": "form-group"
+  "class": "col"
 };
 var _hoisted_40 = {
   "class": "form-group"
 };
 var _hoisted_41 = {
-  "class": "form-group"
+  clas: "col"
 };
 var _hoisted_42 = {
   "class": "form-group"
 };
 var _hoisted_43 = {
+  "class": "row"
+};
+var _hoisted_44 = {
+  "class": "col"
+};
+var _hoisted_45 = {
+  "class": "form-group"
+};
+var _hoisted_46 = {
+  "class": "col"
+};
+var _hoisted_47 = {
+  "class": "form-group"
+};
+var _hoisted_48 = {
+  "class": "row"
+};
+var _hoisted_49 = {
+  "class": "col"
+};
+var _hoisted_50 = {
+  "class": "form-group"
+};
+var _hoisted_51 = {
+  "class": "col"
+};
+var _hoisted_52 = {
+  "class": "form-group"
+};
+var _hoisted_53 = {
+  "class": "form-group"
+};
+var _hoisted_54 = {
+  "class": "form-group"
+};
+var _hoisted_55 = {
   "class": "mt-12"
 };
 
-var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
   type: "button",
   "class": "btn btn-success"
 }, "APROBAR", -1
 /* HOISTED */
 );
 
-var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
   type: "button",
   "class": "btn btn-danger"
 }, "DENEGAR", -1
 /* HOISTED */
 );
 
-var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+var _hoisted_58 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
   type: "button",
   "class": "btn btn-primary"
 }, "Cancelar", -1
@@ -26095,12 +26131,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.apellido_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "carnet_estudiante",
     value: "Carnet del estudiante"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
     id: "carnet_estudiante",
     type: "text",
+    readonly: "readonly",
     modelValue: $data.formUp.carnet_estudiante,
     "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.formUp.carnet_estudiante = $event;
@@ -26111,12 +26148,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.carnet_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "sexo_estudiante",
     value: "Sexo"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
     id: "sexo_estudiante",
     type: "text",
+    readonly: "readonly",
     modelValue: $data.formUp.sexo_estudiante,
     "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.formUp.sexo_estudiante = $event;
@@ -26127,12 +26165,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.sexo_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "correo_estudiante",
     value: "Correo"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
     id: "correo_estudiante",
     type: "text",
+    readonly: "readonly",
     modelValue: $data.formUp.correo_estudiante,
     "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $data.formUp.correo_estudiante = $event;
@@ -26143,12 +26182,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.correo_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "telefono_estudiante",
     value: "Telefono"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
     id: "telefono_estudiante",
     type: "text",
+    readonly: "readonly",
     modelValue: $data.formUp.telefono_estudiante,
     "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
       return $data.formUp.telefono_estudiante = $event;
@@ -26159,12 +26199,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.telefono_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "carrera_id",
     value: "Carrera"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
     id: "carrera_id",
     type: "text",
+    readonly: "readonly",
     modelValue: $data.formUp.carrera_id,
     "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
       return $data.formUp.carrera_id = $event;
@@ -26175,12 +26216,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.carrera_id
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "dui_estudiante",
     value: "DUI"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
     id: "dui_estudiante",
     type: "text",
+    readonly: "readonly",
     modelValue: $data.formUp.dui_estudiante,
     "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
       return $data.formUp.dui_estudiante = $event;
@@ -26191,12 +26233,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.dui_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "nit_estudiante",
     value: "NIT"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
     id: "nit_estudiante",
     type: "text",
+    readonly: "readonly",
     modelValue: $data.formUp.nit_estudiante,
     "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
       return $data.formUp.nit_estudiante = $event;
@@ -26207,12 +26250,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.nit_estudiante
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_52, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "materias_cursadas",
     value: "Materias Cursadas"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
     id: "materias_cursadas",
     type: "text",
+    readonly: "readonly",
     modelValue: $data.formUp.materias_cursadas,
     "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
       return $data.formUp.materias_cursadas = $event;
@@ -26223,12 +26267,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.materias_cursadas
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue", "value"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "cantidad_horas_ss",
     value: "Cantidad de Horas de Servicio Social"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
     id: "cantidad_horas_ss",
     type: "text",
+    readonly: "readonly",
     modelValue: $data.formUp.cantidad_horas_ss,
     "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
       return $data.formUp.cantidad_horas_ss = $event;
@@ -26239,7 +26284,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.formUp.cantidad_horas_ss
   }, null, 8
   /* PROPS */
-  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
     "class": ["ml-4", {
       'text-white-50 bg-green-400': $data.formUp.processing
     }],
@@ -26248,7 +26293,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_44];
+      return [_hoisted_56];
     }),
     _: 1
     /* STABLE */
@@ -26264,7 +26309,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_45];
+      return [_hoisted_57];
     }),
     _: 1
     /* STABLE */
@@ -26281,7 +26326,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         href: _ctx.route('verificarcuenta.index')
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_46];
+          return [_hoisted_58];
         }),
         _: 1
         /* STABLE */

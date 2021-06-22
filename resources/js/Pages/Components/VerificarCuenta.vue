@@ -215,8 +215,8 @@
             <div class="row">
                 <div class="col">
                    <div class="form-group">
-                      <jet-label for="nombre_estudiante" value="Nombre del estudiante" />
-                      <jet-input id="nombre_estudiante" type="text" readonly="readonly" v-model="formUp.nombre_estudiante" required autofocus autocomplete="off" :value="this.formUp.nombre_estudiante"/>
+                        <jet-label for="nombre_estudiante" value="Nombre del estudiante" />
+                        <jet-input id="nombre_estudiante" type="text" readonly="readonly" v-model="formUp.nombre_estudiante" required autofocus autocomplete="off" :value="this.formUp.nombre_estudiante"/>
                    </div>
                 </div>
             
@@ -226,44 +226,74 @@
                       <jet-input id="apellido_estudiante" type="text" readonly="readonly" v-model="formUp.apellido_estudiante" required autofocus autocomplete="off" :value="this.formUp.apellido_estudiante"/>
                     </div>
                 </div>
-            
+            </div>
+
+            <div class="row">
+                <div class="col">    
+                    <div class="form-group">
+                        <jet-label for="carnet_estudiante" value="Carnet del estudiante" />
+                        <jet-input id="carnet_estudiante" type="text" readonly="readonly" v-model="formUp.carnet_estudiante" required autofocus autocomplete="off" :value="this.formUp.carnet_estudiante"/>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <jet-label for="sexo_estudiante" value="Sexo" />
+                        <jet-input id="sexo_estudiante" type="text" readonly="readonly" v-model="formUp.sexo_estudiante" required autofocus autocomplete="off" :value="this.formUp.sexo_estudiante"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <jet-label for="correo_estudiante" value="Correo" />
+                        <jet-input id="correo_estudiante" type="text" readonly="readonly" v-model="formUp.correo_estudiante" required autofocus autocomplete="off" :value="this.formUp.correo_estudiante"/>
+                    </div>
+                </div>
+
+                <div clas="col">
+                    <div class="form-group">
+                        <jet-label for="telefono_estudiante" value="Telefono" />
+                        <jet-input id="telefono_estudiante" type="text" readonly="readonly" v-model="formUp.telefono_estudiante" required autofocus autocomplete="off" :value="this.formUp.telefono_estudiante"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <jet-label for="carrera_id" value="Carrera" />
+                        <jet-input id="carrera_id" type="text" readonly="readonly" v-model="formUp.carrera_id" required autofocus autocomplete="off" :value="this.formUp.carrera_id"/>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <jet-label for="dui_estudiante" value="DUI" />
+                        <jet-input id="dui_estudiante" type="text" readonly="readonly" v-model="formUp.dui_estudiante" required autofocus autocomplete="off" :value="this.formUp.dui_estudiante"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <jet-label for="nit_estudiante" value="NIT" />
+                        <jet-input id="nit_estudiante" type="text" readonly="readonly" v-model="formUp.nit_estudiante" required autofocus autocomplete="off" :value="this.formUp.nit_estudiante"/>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <jet-label for="materias_cursadas" value="Materias Cursadas" />
+                        <jet-input id="materias_cursadas" type="text" readonly="readonly" v-model="formUp.materias_cursadas" required autofocus autocomplete="off" :value="this.formUp.materias_cursadas"/>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
-                <jet-label for="carnet_estudiante" value="Carnet del estudiante" />
-                <jet-input id="carnet_estudiante" type="text" v-model="formUp.carnet_estudiante" required autofocus autocomplete="off" :value="this.formUp.carnet_estudiante"/>
-            </div>
-             <div class="form-group">
-                <jet-label for="sexo_estudiante" value="Sexo" />
-                <jet-input id="sexo_estudiante" type="text" v-model="formUp.sexo_estudiante" required autofocus autocomplete="off" :value="this.formUp.sexo_estudiante"/>
-            </div>
-             <div class="form-group">
-                <jet-label for="correo_estudiante" value="Correo" />
-                <jet-input id="correo_estudiante" type="text" v-model="formUp.correo_estudiante" required autofocus autocomplete="off" :value="this.formUp.correo_estudiante"/>
-            </div>
-             <div class="form-group">
-                <jet-label for="telefono_estudiante" value="Telefono" />
-                <jet-input id="telefono_estudiante" type="text" v-model="formUp.telefono_estudiante" required autofocus autocomplete="off" :value="this.formUp.telefono_estudiante"/>
-            </div>
-             <div class="form-group">
-                <jet-label for="carrera_id" value="Carrera" />
-                <jet-input id="carrera_id" type="text" v-model="formUp.carrera_id" required autofocus autocomplete="off" :value="this.formUp.carrera_id"/>
-            </div>
-             <div class="form-group">
-                <jet-label for="dui_estudiante" value="DUI" />
-                <jet-input id="dui_estudiante" type="text" v-model="formUp.dui_estudiante" required autofocus autocomplete="off" :value="this.formUp.dui_estudiante"/>
-            </div>
-             <div class="form-group">
-                <jet-label for="nit_estudiante" value="NIT" />
-                <jet-input id="nit_estudiante" type="text" v-model="formUp.nit_estudiante" required autofocus autocomplete="off" :value="this.formUp.nit_estudiante"/>
-            </div>
-            <div class="form-group">
-                <jet-label for="materias_cursadas" value="Materias Cursadas" />
-                <jet-input id="materias_cursadas" type="text" v-model="formUp.materias_cursadas" required autofocus autocomplete="off" :value="this.formUp.materias_cursadas"/>
-            </div>
-            <div class="form-group">
                 <jet-label for="cantidad_horas_ss" value="Cantidad de Horas de Servicio Social" />
-                <jet-input id="cantidad_horas_ss" type="text" v-model="formUp.cantidad_horas_ss" required autofocus autocomplete="off" :value="this.formUp.cantidad_horas_ss"/>
+                <jet-input id="cantidad_horas_ss" type="text" readonly="readonly" v-model="formUp.cantidad_horas_ss" required autofocus autocomplete="off" :value="this.formUp.cantidad_horas_ss"/>
             </div>
 
 
