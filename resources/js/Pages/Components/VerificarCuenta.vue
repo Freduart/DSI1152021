@@ -40,14 +40,20 @@
                 <div class="card-body">
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
+                             <h6 class="ml-4 mt-2">Mostrar por estado:
+                            <select class="col-2 ml-3 custom-select" v-on:change="filtrarByEstado($event)">
+                                <option value="1" selected>En espera</option>
+                                <option value="0">Inactivo</option>
+                            </select></h6>
                             <!-- todo text 
                             <span>Buscar por</span>
                             <select class="ml-4" v-model="this.facultad" v-on:change="filtrarEstudiantes(this.facultad)">
                                 <option value="0" selected>Todos</option>
                                 <option v-for="(facultad, index) in facultades" :key="index" :value="facultad.id">{{ facultad.nombre_facultad }}</option>
                             </select>-->
+
                             <!--<button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#añadirCarrera">
-                            <i class="fas fa-plus"></i> Añadir Carrera</button>--> 
+                            <i class="fas fa-plus"></i> Añadir Carrera</button>-->
                             <hr>
                                 <table class="table table-striped table-dark text-center" style="font-size: 20px">
                                     <thead>
@@ -56,7 +62,7 @@
                                         <th scope='col'>Carnet</th>
                                         <th scope="col">Nombre</th>
                                         <th scope="col">Apellido</th>
-                                        <th scope="col">Acciones</th>
+                                        <th scope="col">Estado</th>
                                         <th scope="col"></th>
                                         </tr>
                                     </thead>
@@ -67,8 +73,13 @@
                                             <td>{{ estudiante.carnet_estudiante }}</td>
                                             <td>{{ estudiante.nombre_estudiante }}</td>
                                             <td>{{ estudiante.apellido_estudiante }}</td>
+                                            <td>{{ estudiante.estado_estudiante }}</td>
                                             <!--Modificar aqui-->
-                                            <td v-if="estudiante.estado_estudiante == 'Activo'">
+                                            <td>
+                                                <jet-button  v-if="estudiante.estado_estudiante == 'En espera'" class="fas fa-arrow-alt-circle-down" title="Dar de baja a estudiante" method="delete" v-on:click="cambiarestado(estudiante)"></jet-button>     
+                                                <jet-button v-else class="fas fa-arrow-alt-circle-up" title="Activar estudiante" method="delete" v-on:click="cambiarestado(estudiante)"></jet-button>
+                                            </td>
+                                            <!--<td v-if="estudiante.estado_estudiante == 'En espera'">
                                                 <form @submit.prevent="cambiarEstado(estudiante)">
                                                     <button type="submit" class="btn btn-success" :class="{ 'text-white-50 bg-green-400': form.processing }">{{ estudiante.estado_estudiante }}</button>
                                                 </form>          
@@ -77,20 +88,10 @@
                                                 <form @submit.prevent="cambiarEstado(estudiante)">
                                                     <button type="submit" class="btn btn-primary" :class="{ 'text-white-50 bg-green-400': form.processing }">{{ estudiante.estado_estudiante }}</button>
                                                 </form>            
-                                            </td>
+                                            </td>-->
                                             <td>
                                             <!-- General tools such as edit or delete-->
                                                 <div class="flex justify-center">
-
-                                                    <!--Modificar aqui CREO QUE YA NO VA
-                                                    <inertia-link
-                                                    method="delete"
-                                                    :href="route('carreras.destroy', carrera.id)"
-                                                    v-on:click="mostrarMensajeDelete(carrera)">
-                                                        <button class="btn btn-danger">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </inertia-link>-->
                                                     
                                                     <!--boton evaluar-->
                                                     <!--class="btn btn-warning"-->
@@ -211,14 +212,23 @@
         
 
         <form @submit.prevent="submitUpdate(this.formUp)">
-            <div class="form-group">
-                <jet-label for="nombre_estudiante" value="Nombre del estudiante" />
-                <jet-input id="nombre_estudiante" type="text" v-model="formUp.nombre_estudiante" required autofocus autocomplete="off" :value="this.formUp.nombre_estudiante"/>
+            <div class="row">
+                <div class="col">
+                   <div class="form-group">
+                      <jet-label for="nombre_estudiante" value="Nombre del estudiante" />
+                      <jet-input id="nombre_estudiante" type="text" readonly="readonly" v-model="formUp.nombre_estudiante" required autofocus autocomplete="off" :value="this.formUp.nombre_estudiante"/>
+                   </div>
+                </div>
+            
+                <div class="col">
+                    <div class="form-group">
+                      <jet-label for="apellido_estudiante" value="Apellido del estudiante" />
+                      <jet-input id="apellido_estudiante" type="text" readonly="readonly" v-model="formUp.apellido_estudiante" required autofocus autocomplete="off" :value="this.formUp.apellido_estudiante"/>
+                    </div>
+                </div>
+            
             </div>
-            <div class="form-group">
-                <jet-label for="apellido_estudiante" value="Apellido del estudiante" />
-                <jet-input id="apellido_estudiante" type="text" v-model="formUp.apellido_estudiante" required autofocus autocomplete="off" :value="this.formUp.apellido_estudiante"/>
-            </div>
+
             <div class="form-group">
                 <jet-label for="carnet_estudiante" value="Carnet del estudiante" />
                 <jet-input id="carnet_estudiante" type="text" v-model="formUp.carnet_estudiante" required autofocus autocomplete="off" :value="this.formUp.carnet_estudiante"/>
@@ -266,11 +276,10 @@
                      <jet-button class="ml-4" :class="{ 'text-white-50 bg-green-400': formUp.processing }" v-on:click="submitUpdate(this.formUp)">
                         <button type="button" class="btn btn-danger">DENEGAR</button>
                     </jet-button>  
-
                     
                     <jet-button type="button" class="btn btn-danger mx-12" data-dismiss="modal">
                         <inertia-link :href="route('verificarcuenta.index')">
-                         CANCELAR
+                         <button type="button" class="btn btn-primary">Cancelar</button>
                         </inertia-link>
                     </jet-button>
                     
@@ -311,7 +320,23 @@ import Button from '../../Jetstream/Button.vue'
             logout() {
                 this.$inertia.post(route('logout'));
             },
-            filtrarEstudiantes(id){
+
+            filtrarByEstado(event){
+                this.estudiantesFiltradas.splice(0, this.estudiantesFiltradas.length);
+                console.log(event.target.value);
+                var estadoText= "En Espera";
+                if (event.target.value == 0){
+                    estadoText = "Inactivo";
+                }
+                this.estudiantes.forEach(element => {
+                    if(element.estado_estudiante == estadoText){
+                        console.log(element);
+                        this.estudiantesFiltradas.push(element);
+                    }
+                });
+                console.log(this.estudiantesFiltrados);
+            }, 
+            /*filtrarEstudiantes(id){
                 this.estudiantesFiltradas.splice(0, this.estudiantesFiltradas.length);
                 console.log(id);
                 this.estudiantes.forEach(element => {
@@ -326,7 +351,9 @@ import Button from '../../Jetstream/Button.vue'
                         this.estudiantesFiltradas.push(element);
                     })     
                 }
-            },
+            },*/
+
+
             //mostrarMensajeSuccess(){
             //        Swal.fire({
             //            title: 'Se ha guardado con éxito',
@@ -347,7 +374,9 @@ import Button from '../../Jetstream/Button.vue'
             //    this.form.facultad_id='';
             //    this.form.codigo_carrera='';
             //},
-            cambiarEstado(estudiante){
+
+
+            /*cambiarEstado(estudiante){
                 console.log(estudiante);
                 console.log(estudiante.estado_estudiante);
                 if(estudiante.estado_estudiante == 'En Espera'){
@@ -380,7 +409,60 @@ import Button from '../../Jetstream/Button.vue'
                 }
                 this.$inertia.put(route("estudiantes.update",estudiante.id), this.formUp);
                 // this.submitUpdate(this.formUp);
+            },*/
+
+            cambiarestado(estudiante){
+                this.borrado = true;
+                if(estudiante.estado_estudiante == 'En espera'){
+                    Swal.fire({
+                      title: '¿Esta seguro que desea desactivar al estudiante?',
+                      text: "El estudiante " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante +" no podrá iniciar sesión mientras este desactivado.",
+                      icon: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Si, desactivar',
+                      cancelButtonText: 'No, cancelar'
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          //var tipo = 1;
+                          this.$inertia.delete(route('estudiantes.destroy', estudiante.idEncargado/*, tipo*/));
+                          Swal.fire(
+                          '!Desactivado!',
+                          'El encargado se desactivó correctamente',
+                          'success'
+                          );
+                          window.location.reload(true);
+                      }
+                  })
+                } else {
+                  Swal.fire({
+                      title: '¿Esta seguro que desea activar al encargado?',
+                      text: "El encargado " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + encargado.codigo_encargado_facultad +" se habilitará y podrá iniciar sesión.",
+                      icon: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Si, activar',
+                      cancelButtonText: 'No, cancelar'
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          //var tipo = 1;
+                          this.$inertia.delete(route('estudiantes.destroy', estudiante.idEstudiante/*, tipo*/));
+                          Swal.fire(
+                          '!Activado!',
+                          'El estudiante se activó correctamente',
+                          'success'
+                          );
+                          window.location.reload(true);
+                      }
+                  })
+                }
+                
             },
+
+
+
             submitUpdate(form){
                 console.log(this.formUp);
                 console.log(form);
