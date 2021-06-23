@@ -19181,12 +19181,11 @@ __webpack_require__.r(__webpack_exports__);
     cambiarestado: function cambiarestado(estudiante) {
       var _this2 = this;
 
-      this.borrado = true;
-
+      //this.borrado = true;
       if (estudiante.estado_estudiante == 'En espera') {
         Swal.fire({
           title: '¿Esta seguro que desea activar al estudiante?',
-          text: "El estudiante " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante,
+          text: "El estudiante " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con carnet " + estudiante.carnet_estudiante,
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -19201,6 +19200,57 @@ __webpack_require__.r(__webpack_exports__);
             ));
 
             Swal.fire('!Activado!', 'El estudiante se activo correctamente', 'success');
+            window.location.reload(true);
+          }
+        });
+      }
+      /*else {
+       Swal.fire({
+           title: '¿Esta seguro que desea activar al encargado?',
+           text: "El encargado " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante +" se habilitará y podrá iniciar sesión.",
+           icon: 'warning',
+           showCancelButton: true,
+           confirmButtonColor: '#3085d6',
+           cancelButtonColor: '#d33',
+           confirmButtonText: 'Si, activar',
+           cancelButtonText: 'No, cancelar'
+       }).then((result) => {
+           if (result.isConfirmed) {
+               
+               this.$inertia.delete(route('verificarcuenta.destroy', estudiante.id));
+               Swal.fire(
+               '!Activado!',
+               'El estudiante se activó correctamente',
+               'success'
+               );
+               window.location.reload(true);
+           }
+       })
+      }*/
+
+    },
+    changestatus: function changestatus(estudiante) {
+      var _this3 = this;
+
+      //this.borrado = true;
+      if (estudiante.estado_estudiante == 'En espera') {
+        Swal.fire({
+          title: '¿Esta seguro que desea desactivar al estudiante?',
+          text: "El estudiante " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con carnet " + estudiante.carnet_estudiante,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, desactivar',
+          cancelButtonText: 'No, cancelar'
+        }).then(function (result) {
+          if (result.isConfirmed) {
+            //var tipo = 1;
+            _this3.$inertia["delete"](route('verificarcuenta.update', estudiante.id
+            /*, tipo*/
+            ));
+
+            Swal.fire('!Desactivado!', 'El estudiante se desactivo correctamente', 'success');
             window.location.reload(true);
           }
         });
@@ -19304,10 +19354,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this4 = this;
 
     this.estudiantes.forEach(function (element) {
-      _this3.estudiantesFiltradas.push(element);
+      _this4.estudiantesFiltradas.push(element);
     }), // this.mostrarMensajeSuccess();
     this.successGuardado = false;
   }
@@ -22946,12 +22996,13 @@ var _hoisted_30 = {
 };
 
 var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
-  "class": "far fa-user nav-icon"
+  "class": "fa fa-user-circle nav-icon",
+  "aria-hidden": "true"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, "Verificar Cuenta", -1
+var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, "Estudiantes", -1
 /* HOISTED */
 );
 
@@ -22960,13 +23011,12 @@ var _hoisted_33 = {
 };
 
 var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
-  "class": "fa fa-user-circle nav-icon",
-  "aria-hidden": "true"
+  "class": "fas fa-file nav-icon"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, "Estudiantes", -1
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, "Verificar Cuenta", -1
 /* HOISTED */
 );
 
@@ -23067,7 +23117,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, 8
   /* PROPS */
   , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("li", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
-    href: _ctx.route('verificarcuenta.index'),
+    href: _ctx.route('estudiantes.index'),
     "class": "nav-link"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -23079,7 +23129,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, 8
   /* PROPS */
   , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("li", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
-    href: _ctx.route('estudiantes.index'),
+    href: _ctx.route('verificarcuenta.index'),
     "class": "nav-link"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -26901,7 +26951,7 @@ var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
   scope: "col"
 }, "Estado"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", {
   scope: "col"
-})])], -1
+}, "Acciones")])], -1
 /* HOISTED */
 );
 
@@ -27392,7 +27442,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     title: "Desactivar estudiante",
     method: "delete",
     onClick: _cache[15] || (_cache[15] = function ($event) {
-      return $options.cambiarestado($data.formUp);
+      return $options.changestatus($data.formUp);
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -27407,7 +27457,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     title: "Desactivar estudiante",
     method: "delete",
     onClick: _cache[16] || (_cache[16] = function ($event) {
-      return $options.cambiarestado($data.formUp);
+      return $options.changestatus($data.formUp);
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {

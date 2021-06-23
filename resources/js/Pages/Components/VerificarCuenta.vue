@@ -63,7 +63,7 @@
                                         <th scope="col">Nombre</th>
                                         <th scope="col">Apellido</th>
                                         <th scope="col">Estado</th>
-                                        <th scope="col"></th>
+                                        <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -275,10 +275,10 @@
 
                                         <div class="col">
                                             <div class="form-group">
-                                                <jet-button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-warning" title="Desactivar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
+                                                <jet-button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-warning" title="Desactivar estudiante" method="delete" v-on:click="changestatus(formUp)"> 
                                                  <i class="fas"></i>DENEGAR </jet-button>  
 
-                                                 <jet-button v-else class="btn btn-warning" title="Desactivar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
+                                                 <jet-button v-else class="btn btn-warning" title="Desactivar estudiante" method="delete" v-on:click="changestatus(formUp)"> 
                                                  <i class="fas"></i>DENEGAR </jet-button>
                                            </div>
                                         </div>
@@ -414,11 +414,11 @@ import Button from '../../Jetstream/Button.vue'
             },*/
 
             cambiarestado(estudiante){
-                this.borrado = true;
+                //this.borrado = true;
                 if(estudiante.estado_estudiante == 'En espera'){
                     Swal.fire({
                       title: '¿Esta seguro que desea activar al estudiante?',
-                      text: "El estudiante " +estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante,
+                      text: "El estudiante " +estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con carnet " + estudiante.carnet_estudiante,
                       icon: 'warning',
                       showCancelButton: true,
                       confirmButtonColor: '#3085d6',
@@ -432,6 +432,56 @@ import Button from '../../Jetstream/Button.vue'
                           Swal.fire(
                           '!Activado!',
                           'El estudiante se activo correctamente',
+                          'success'
+                          );
+                          window.location.reload(true);
+                      }
+                  })
+                }
+                 /*else {
+                  Swal.fire({
+                      title: '¿Esta seguro que desea activar al encargado?',
+                      text: "El encargado " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante +" se habilitará y podrá iniciar sesión.",
+                      icon: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Si, activar',
+                      cancelButtonText: 'No, cancelar'
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          
+                          this.$inertia.delete(route('verificarcuenta.destroy', estudiante.id));
+                          Swal.fire(
+                          '!Activado!',
+                          'El estudiante se activó correctamente',
+                          'success'
+                          );
+                          window.location.reload(true);
+                      }
+                  })
+                }*/
+                
+            },
+            changestatus(estudiante){
+                //this.borrado = true;
+                if(estudiante.estado_estudiante == 'En espera'){
+                    Swal.fire({
+                      title: '¿Esta seguro que desea desactivar al estudiante?',
+                      text: "El estudiante " +estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con carnet " + estudiante.carnet_estudiante,
+                      icon: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Si, desactivar',
+                      cancelButtonText: 'No, cancelar'
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          //var tipo = 1;
+                          this.$inertia.delete(route('verificarcuenta.update', estudiante.id/*, tipo*/));
+                          Swal.fire(
+                          '!Desactivado!',
+                          'El estudiante se desactivo correctamente',
                           'success'
                           );
                           window.location.reload(true);

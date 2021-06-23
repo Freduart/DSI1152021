@@ -16,9 +16,9 @@ class VerificarCuentaController extends Controller
         return Inertia::render('Components/VerificarCuenta',['estudiantes'=>$estudiantes]);
     }
 
-    public function update(Request $request, $id)
+    /*public function update(Request $request, $id)
     {
-         /*$estadoCliente=$request->estado_estudiante;
+         $estadoCliente=$request->estado_estudiante;
 
         $estudiante=Estudiante::find($id);
         $estadoServidor=$estudiante->estado_estudiante;
@@ -30,14 +30,27 @@ class VerificarCuentaController extends Controller
             $estudiante->estado_estudiante=$estadoCliente;
             $estudiante->save();
         }
-        return Redirect::route('verificarcuenta.index');*/
-    }
+        return Redirect::route('verificarcuenta.index');
+    }*/
        
     public function destroy($estudiante)
     {
         $estudiante=Estudiante::find($estudiante);
         if($estudiante->estado_estudiante == "En espera"){
             $estudiante->estado_estudiante = "Activo";
+            $estudiante->save();
+        }else{
+            $estudiante->estado_estudiante="En espera";
+            $estudiante->save();
+        }
+        return Redirect::route('verificarcuenta.index');
+    }
+
+    public function update($estudiante)
+    {
+        $estudiante=Estudiante::find($estudiante);
+        if($estudiante->estado_estudiante == "En espera"){
+            $estudiante->estado_estudiante = "Inactivo";
             $estudiante->save();
         }else{
             $estudiante->estado_estudiante="En espera";
