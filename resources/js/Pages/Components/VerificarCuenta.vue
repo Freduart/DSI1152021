@@ -140,145 +140,186 @@
             </div>
             
             <!-- /.row (main row) -->
-        </div><!-- /.container-fluid -->
+        </div><!---->
+        <!-- EVALUAR-->
+      <div class="modal fade" id="evaluar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Evaluar cuenta</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form @submit.prevent="submitUpdate(this.formUp)">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                    <jet-label for="nombre_estudiante" value="Nombre del estudiante" />
+                                    <jet-input id="nombre_estudiante" type="text" readonly="readonly" v-model="formUp.nombre_estudiante" required autofocus autocomplete="nombre_estudiante"/>
+                                  
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                    <jet-label for="apellido_estudiante" value="Apellido del estudiante" />
+                                   <jet-input id="apellido_estudiante" type="text" readonly="readonly" v-model="formUp.apellido_estudiante" required autofocus autocomplete="apellido_estudiante" />
+
+                                </div>
+                              </div>
+                            </div> 
+                                <!--FILA-->
+                           
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                  <jet-label for="carnet_estudiante" value="Carnet del estudiante" />
+                                  <jet-input id="carnet_estudiante" type="text" readonly="readonly" v-model="formUp.carnet_estudiante" required autofocus autocomplete="carnet_estudiante"/> 
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                   <jet-label for="sexo_estudiante" value="Sexo" />
+                                   <jet-input id="sexo_estudiante" type="text" readonly="readonly" v-model="formUp.sexo_estudiante" required autofocus autocomplete="sexo_estudiante" /> 
+                                  
+                                </div>
+                              </div>
+                            </div> 
+
+                            <!--FILA-->
+
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                <jet-label for="correo_estudiante" value="Correo" />
+                                <jet-input id="correo_estudiante" type="text" readonly="readonly" v-model="formUp.correo_estudiante" required autofocus autocomplete="correo_estudiante" />
+                                 
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                    <jet-label for="telefono_estudiante" value="Telefono" />
+                                    <jet-input id="telefono_estudiante" type="text" readonly="readonly" v-model="formUp.telefono_estudiante" required autofocus autocomplete="telefono_estudiante" />
+                                  
+                                </div>
+                              </div>
+                            </div> 
+
+                            <!--FILA-->
+
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                 <jet-label for="carrera_id" value="Carrera" />
+                                 <jet-input id="carrera_id" type="text" readonly="readonly" v-model="formUp.carrera_id" required autofocus autocomplete="carrera_id" />
+                                  
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+
+                                    <jet-label for="dui_estudiante" value="DUI" />
+                                    <jet-input id="dui_estudiante" type="text" readonly="readonly" v-model="formUp.dui_estudiante" required autofocus autocomplete="dui_estudiante" />
+                                  
+                                </div>
+                              </div>
+                            </div> 
+
+                            <!--FILA-->
+
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                 <jet-label for="nit_estudiante" value="NIT" />
+                                 <jet-input id="nit_estudiante" type="text" readonly="readonly" v-model="formUp.nit_estudiante" required autofocus autocomplete="nit_estudiante" />
+                                  
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+
+                                     <jet-label for="materias_cursadas" value="Materias Cursadas" />
+                                     <jet-input id="materias_cursadas" type="text" readonly="readonly" v-model="formUp.materias_cursadas" required autofocus autocomplete="materias_cursadas" />
+                                  
+                                </div>
+                              </div>
+                            </div> 
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                       <jet-label for="cantidad_horas_ss" value="Cantidad de Horas de Servicio Social" />
+                                       <jet-input id="cantidad_horas_ss" type="text" readonly="readonly" v-model="formUp.cantidad_horas_ss" required autofocus autocomplete="cantidad_horas_ss" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+                          </div>
+
+                          <!--<div class="card-footer clearfix">--> 
+                            <div class="d-flex justify-content-center align-items-baseline">
+                                   <div class="row">
+                                       <div class="col">
+                                            <div class="form-group">
+
+                                                <jet-button  v-if="estudiante.estado_estudiante == 'En espera'" title="Activar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
+                                                 <button type="button" class="btn btn-primary">APROBAR</button> </jet-button>  
+
+                                                 <jet-button v-else  title="Activar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
+                                                 <button type="button" class="btn btn-primary">APROBAR</button> </jet-button>
+                                  
+                                  
+                                           </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <jet-button type="button" class="btn btn-danger mx-12" data-dismiss="modal">
+                                                <inertia-link :href="route('verificarcuenta.index')">
+                                                <button type="button" class="btn btn-warning">Denegar</button>
+                                                </inertia-link>  </jet-button>
+                                           </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <jet-button type="button" class="btn btn-danger mx-12" data-dismiss="modal">
+                                                <inertia-link :href="route('verificarcuenta.index')">
+                                                <button type="button" class="btn btn-danger">Cancelar</button>
+                                                </inertia-link>  </jet-button>
+                                           </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                            </div>
+                          <!--</div>-->
+                          
+                          
+                        </form><!--FIN FORM-->
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </section>
     <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
     </div>
-
-
-<!-- EVALUAR-->
-<div class="modal fade" id="evaluar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Evaluar Cuenta</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        
-
-        <form @submit.prevent="submitUpdate(this.formUp)">
-          <div class="card-body">
-            <div class="row">
-                   <div class="col">
-                       <div class="form-group">
-                            <jet-label for="nombre_estudiante" value="Nombre del estudiante" />
-                            <jet-input id="nombre_estudiante" type="text" readonly="readonly" v-model="formUp.nombre_estudiante" required autofocus autocomplete="off" :value="this.formUp.nombre_estudiante"/>
-                       </div>
-                   </div>
-            
-                <div class="col">
-                    <div class="form-group">
-                      <jet-label for="apellido_estudiante" value="Apellido del estudiante" />
-                      <jet-input id="apellido_estudiante" type="text" readonly="readonly" v-model="formUp.apellido_estudiante" required autofocus autocomplete="off" :value="this.formUp.apellido_estudiante"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">    
-                    <div class="form-group">
-                        <jet-label for="carnet_estudiante" value="Carnet del estudiante" />
-                        <jet-input id="carnet_estudiante" type="text" readonly="readonly" v-model="formUp.carnet_estudiante" required autofocus autocomplete="off" :value="this.formUp.carnet_estudiante"/>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <jet-label for="sexo_estudiante" value="Sexo" />
-                        <jet-input id="sexo_estudiante" type="text" readonly="readonly" v-model="formUp.sexo_estudiante" required autofocus autocomplete="off" :value="this.formUp.sexo_estudiante"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <jet-label for="correo_estudiante" value="Correo" />
-                        <jet-input id="correo_estudiante" type="text" readonly="readonly" v-model="formUp.correo_estudiante" required autofocus autocomplete="off" :value="this.formUp.correo_estudiante"/>
-                    </div>
-                </div>
-
-                <div clas="col">
-                    <div class="form-group">
-                        <jet-label for="telefono_estudiante" value="Telefono" />
-                        <jet-input id="telefono_estudiante" type="text" readonly="readonly" v-model="formUp.telefono_estudiante" required autofocus autocomplete="off" :value="this.formUp.telefono_estudiante"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <jet-label for="carrera_id" value="Carrera" />
-                        <jet-input id="carrera_id" type="text" readonly="readonly" v-model="formUp.carrera_id" required autofocus autocomplete="off" :value="this.formUp.carrera_id"/>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-group">
-                        <jet-label for="dui_estudiante" value="DUI" />
-                        <jet-input id="dui_estudiante" type="text" readonly="readonly" v-model="formUp.dui_estudiante" required autofocus autocomplete="off" :value="this.formUp.dui_estudiante"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <jet-label for="nit_estudiante" value="NIT" />
-                        <jet-input id="nit_estudiante" type="text" readonly="readonly" v-model="formUp.nit_estudiante" required autofocus autocomplete="off" :value="this.formUp.nit_estudiante"/>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-group">
-                        <jet-label for="materias_cursadas" value="Materias Cursadas" />
-                        <jet-input id="materias_cursadas" type="text" readonly="readonly" v-model="formUp.materias_cursadas" required autofocus autocomplete="off" :value="this.formUp.materias_cursadas"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <jet-label for="cantidad_horas_ss" value="Cantidad de Horas de Servicio Social" />
-                <jet-input id="cantidad_horas_ss" type="text" readonly="readonly" v-model="formUp.cantidad_horas_ss" required autofocus autocomplete="off" :value="this.formUp.cantidad_horas_ss"/>
-            </div>
-          </div>
-
-
-            <div class="form-group">
-
-                <div class="mt-12">
-                      <jet-button  v-if="estudiante.estado_estudiante == 'En espera'" title="Activar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
-                          <button type="button" class="btn btn-success">APROBAR</button> </jet-button>  
-
-                      <jet-button v-else  title="Activar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
-                          <button type="button" class="btn btn-success">APROBAR</button> </jet-button>     
-
-
-                     <!--<jet-button class="ml-4" :class="{ 'text-white-50 bg-green-400': formUp.processing }" v-on:click="submitUpdate(this.formUp)">
-                        <button type="button" class="btn btn-danger">APROBAR</button>
-                    </jet-button>-->  
-                    
-                    <jet-button type="button" class="btn btn-danger mx-12" data-dismiss="modal">
-                        <inertia-link :href="route('verificarcuenta.index')">
-                         <button type="button" class="btn btn-primary">Cancelar</button>
-                        </inertia-link>
-                    </jet-button>
-                    
-                </div>
-            </div>
-    
- 
-        </form>
-        </div>
-    </div>
-  </div>
-</div>
 
 </template>
 
