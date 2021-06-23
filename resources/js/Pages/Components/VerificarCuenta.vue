@@ -265,32 +265,28 @@
                                    <div class="row">
                                        <div class="col">
                                             <div class="form-group">
+                                                <jet-button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-primary" title="Activar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
+                                                 <i class="fas"></i>APROBAR </jet-button>  
 
-                                                <jet-button  v-if="estudiante.estado_estudiante == 'En espera'" title="Activar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
-                                                 <button type="button" class="btn btn-primary">APROBAR</button> </jet-button>  
-
-                                                 <jet-button v-else  title="Activar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
-                                                 <button type="button" class="btn btn-primary">APROBAR</button> </jet-button>
-                                  
-                                  
+                                                 <jet-button v-else class="btn btn-primary" title="Activar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
+                                                 <i class="fas"></i>APROBAR </jet-button>
                                            </div>
                                         </div>
 
                                         <div class="col">
                                             <div class="form-group">
-                                                <jet-button type="button" class="btn btn-danger mx-12" data-dismiss="modal">
-                                                <inertia-link :href="route('verificarcuenta.index')">
-                                                <button type="button" class="btn btn-warning">Denegar</button>
-                                                </inertia-link>  </jet-button>
+                                                <jet-button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-warning" title="Desactivar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
+                                                 <i class="fas"></i>DENEGAR </jet-button>  
+
+                                                 <jet-button v-else class="btn btn-warning" title="Desactivar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
+                                                 <i class="fas"></i>DENEGAR </jet-button>
                                            </div>
                                         </div>
 
                                         <div class="col">
                                             <div class="form-group">
-                                                <jet-button type="button" class="btn btn-danger mx-12" data-dismiss="modal">
-                                                <inertia-link :href="route('verificarcuenta.index')">
-                                                <button type="button" class="btn btn-danger">Cancelar</button>
-                                                </inertia-link>  </jet-button>
+                                                <inertia-link :href="route('verificarcuenta.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
+                                                <i class="fas"></i> Cancelar</inertia-link>
                                            </div>
                                         </div>
 
@@ -441,7 +437,8 @@ import Button from '../../Jetstream/Button.vue'
                           window.location.reload(true);
                       }
                   })
-                } /*else {
+                }
+                 /*else {
                   Swal.fire({
                       title: '¿Esta seguro que desea activar al encargado?',
                       text: "El encargado " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante +" se habilitará y podrá iniciar sesión.",
@@ -466,8 +463,6 @@ import Button from '../../Jetstream/Button.vue'
                 }*/
                 
             },
-
-
 
             submitUpdate(form){
                 console.log(this.formUp);
