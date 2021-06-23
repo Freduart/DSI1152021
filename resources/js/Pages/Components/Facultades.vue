@@ -41,12 +41,12 @@
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
                             <!-- todo text -->
-                            <span>Buscar por</span>
-                            <select class="ml-4" v-model="this.facultad" v-on:change="filtrarByFacultad(this.facultad)">
+                            <!-- <span>Buscar por</span> -->
+                            <!-- <select class="col-2 ml-3 custom-select" v-model="this.facultad" v-on:change="filtrarByFacultad(this.facultad)">
                                 <option value="0" selected>Todos</option>
                                 <option v-for="(facultad, index) in facultades" :key="index" :value="facultad.id">{{ facultad.nombre_facultad }}</option>
-                            </select>
-                            <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#añadirFacultad">
+                            </select> -->
+                            <button type="button" class="btn btn-success mb-8" data-toggle="modal" data-target="#añadirFacultad">
                             <i class="fas fa-plus"></i> Añadir</button> 
                             <hr>
                                 <table class="table table-striped table-dark text-center" width="500" >

@@ -7,7 +7,7 @@ use App\Models\Estudiante;
 use App\Models\Facultad;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Redirect;;
+use Illuminate\Support\Facades\Redirect;
 
 class EstudianteController extends Controller
 {
@@ -18,7 +18,13 @@ class EstudianteController extends Controller
      */
     public function index()
     {
-       return Inertia::render('Dashboard');
+        // $estudiantes = Estudiante::all();
+        $estudiantes = Facultad::join('carreras', 'carreras.facultad_id', '=', 'facultades.id')
+                                ->join('estudiantes', 'estudiantes.carrera_id', '=', 'carreras.id')
+                                ->select('*')->get();
+        // return $estudiantes;
+       return Inertia::render('Components/ListarEstudiante', ['estudiantes' => $estudiantes]);
+        // return "hola";
     }
 
     /**

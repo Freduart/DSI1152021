@@ -37,13 +37,13 @@
                     </h3>
 
                     <div class="card-tools">
-                    <ul class="pagination pagination-sm">
+                    <!-- <ul class="pagination pagination-sm">
                         <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
                         <li class="page-item"><a href="#" class="page-link">1</a></li>
                         <li class="page-item"><a href="#" class="page-link">2</a></li>
                         <li class="page-item"><a href="#" class="page-link">3</a></li>
                         <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
-                    </ul>
+                    </ul> -->
                     </div>
                 </div>
                 <!-- /.card-header -->
@@ -52,7 +52,7 @@
                         <li>
                             <!-- todo text -->
                             <span>Buscar por</span>
-                            <select class="ml-4" v-model="this.facultad" v-on:change="filtrarByFacultad(this.facultad)">
+                            <select class="col-2 ml-3 custom-select" v-model="this.facultad" v-on:change="filtrarByFacultad(this.facultad)">
                                 <option value="0" selected>Todos</option>
                                 <option v-for="(facultad, index) in facultades" :key="index" :value="facultad.id">{{ facultad.nombre_facultad }}</option>
                             </select>

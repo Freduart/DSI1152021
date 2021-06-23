@@ -7,7 +7,11 @@ use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\EncargadoFacultadController;
 use App\Http\Controllers\FacultadController;
 use App\Http\Controllers\EncargadoEscuelaController;
+<<<<<<< HEAD
 use App\Http\Controllers\VerificarCuentaController;
+=======
+use App\Http\Controllers\InstitucionController;
+>>>>>>> v1
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -61,4 +65,8 @@ Route::resource('facultades', FacultadController::class);
 
 Route::resource('encargadosescuela', EncargadoEscuelaController::class);
 
+<<<<<<< HEAD
 Route::resource('verificarcuenta', VerificarCuentaController::class);
+=======
+Route::resource('instituciones', InstitucionController::class);
+>>>>>>> v1

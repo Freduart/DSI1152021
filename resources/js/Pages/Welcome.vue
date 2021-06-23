@@ -13,9 +13,13 @@
                 Iniciar Sesión
               </inertia-link>
               
-              <inertia-link v-if="canRegister" :href="route('estudiantes.create')" class="ml-4 text-muted">
+              <!-- <inertia-link v-if="canRegister" :href="route('estudiantes.create')" class="ml-4 text-muted">
                 Registrarse
-              </inertia-link> 
+              </inertia-link>  -->
+
+              <button type="button" class="btn btn-primary" v-on:click="mostrar()">
+                Registrase
+              </button>
 
             </template>
 <!-- 
@@ -156,7 +160,7 @@ import Button from '../Jetstream/Button.vue';
 export default {
   components:{
     JetDropdownLink,
-    JetNavLink,
+    JetNavLink
   },
   props: {
     canLogin: Boolean,
@@ -167,6 +171,33 @@ export default {
   methods:{
     logout() {
       this.$inertia.post(route('logout'));
+    },
+    mostrar(){
+      Swal.fire({
+        title: 'Registrarse como:',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonColor: '#ed254e',
+        confirmButtonText: `<i class="fa fa-building fa-3x" aria-hidden="true"></i><br/>Institución`,
+        denyButtonColor: '#ffab0f',
+        // buttonsStyling: true,
+        // focusCancel: false,
+        // focusConfirm: false,
+        // focusDeny: false,
+        denyButtonText: `<i class="fa fa-graduation-cap fa-3x" aria-hidden="true"></i><br/>Estudiante`,
+        onOpen: () => Swal.getCancelButton().focus()
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          console.log('Formulario institución');
+          // this.route('instituciones.create');
+          this.$inertia.get(route('instituciones.create'));
+        }else if(result.isDenied){
+          console.log('Formulario estudiante');
+          // this.route('estudiantes.create');
+          this.$inertia.get(route('estudiantes.create'));
+        }
+      })
     },
   }
 }
