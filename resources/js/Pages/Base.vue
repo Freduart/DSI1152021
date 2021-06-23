@@ -51,7 +51,7 @@
                     <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <inertia-link :href="route('carreras.index')" class="nav-link" >
-                        <i class="far fa-circle nav-icon"></i>
+                        <i class="fa fa-graduation-cap nav-icon"></i>
                         <p>Administrar carreras</p>
                         </inertia-link>
                     </li>
@@ -81,8 +81,15 @@
                     
                     <li class="nav-item">
                             <inertia-link :href="route('facultades.index')" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
+                            <i class="far fa-building nav-icon"></i>
                             <p>Facultades</p>
+                            </inertia-link>
+                    </li>
+
+                    <li class="nav-item">
+                            <inertia-link :href="route('estudiantes.index')" class="nav-link">
+                            <i class="fa fa-user-circle nav-icon" aria-hidden="true"></i>
+                            <p>Estudiantes</p>
                             </inertia-link>
                     </li>
                     
