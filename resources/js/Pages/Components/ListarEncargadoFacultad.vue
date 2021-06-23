@@ -48,12 +48,14 @@
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
                         <!-- todo text -->
+                          <!-- select para indicar el estado que se desea -->
                             <h6 class="ml-4 mt-2">Mostrar por estado:
                             <select class="col-2 ml-3 custom-select" v-on:change="filtrarByEstado($event)">
                                 <option value="1" selected>Activo</option>
                                 <option value="0">Inactivo</option>
                             </select></h6>
                             <hr>
+                            <!-- tabla de los encargados de acuerdo al estado -->
                             <table class="table table-hover text-center">
                                 <thead class="thead-dark">
                                     <tr>
@@ -66,6 +68,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <!-- cargando datos en la tabla -->
                                     <tr class="table-secondary" scope="row" v-for="(encargado, index) in encargadosFFiltrados" :key="index">
                                         
                                         <td>{{ encargado.codigo_encargado_facultad }}</td>
@@ -104,7 +107,7 @@
             <!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
 
-        <!-- Modal Insert-->
+        <!-- Modal de la informacion del encargado -->
         <div class="modal fade" id="verInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -120,12 +123,14 @@
                           <div class="card-body">
                             <div class="row">
                               <div class="col">
+                                <!-- nombres del encargado -->
                                 <div class="form-group">
                                   <jet-label for="nombre" value="Nombres" />
                                   <jet-input id="nombre" type="text" readonly="readonly" v-model="form.nombre_encargado_facultad" required autofocus autocomplete="nombre" />
                                 </div>
                               </div>
                               <div class="col">
+                                <!-- apellidos del encargado -->
                                 <div class="form-group">
                                   <jet-label for="apellido" value="Apellidos" />
                                   <jet-input id="apellido" type="text" readonly="readonly" v-model="form.apellido_encargado_facultad" required autofocus autocomplete="apellido" />
@@ -135,12 +140,14 @@
                                 
                             <div class="row">
                               <div class="col">
+                                <!-- correo del encargado -->
                                 <div class="form-group">
                                   <jet-label for="correo" value="Correo" />
                                   <jet-input id="correo" type="email" readonly="readonly" v-model="form.correo_encargado_facultad" required />
                                 </div>
                               </div>
                               <div class="col">
+                                <!-- telefono del encargado -->
                                 <div class="form-group">
                                   <jet-label for="telefono" value="Telefono" />
                                   <jet-input id="telefono" type="text" readonly="readonly" v-model="form.telefono_encargado_facultad" required autofocus autocomplete="telefono" />
@@ -150,12 +157,14 @@
 
                             <div class="row">
                               <div class="col">
+                                <!-- dui del encargado -->
                                 <div class="form-group">
                                   <jet-label for="dui" value="Dui" />
                                   <jet-input id="dui" type="text" readonly="readonly" v-model="form.dui_encargado_facultad" required autofocus autocomplete="dui" />
                                 </div>
                               </div>
                               <div class="col">
+                                <!-- codigo de empleado del encargado -->
                                 <div class="form-group">
                                   <jet-label for="Codigo" value="Codigo empleado" />
                                   <jet-input id="Codigo" type="text" readonly="readonly" v-model="form.codigo_encargado_facultad" required autofocus autocomplete="Codigo" />
@@ -164,6 +173,7 @@
                             </div> 
 
                             <div class="form-group">
+                                <!-- facultad del encargado -->
                                 <jet-label for="facultad" value="Facultad" />
                                 <jet-input id="facultad" type="text" v-model="form.nombre_facultad" required autofocus autocomplete="Facultad" />
                               </div>
@@ -222,7 +232,9 @@
         },
         props: ['encargadosF', 'facultades'],
         methods:{
+            // Función para fitrar las facultades de acuerdo a la facultad seleccionada 
             filtrarByEstado(event){
+                //limpia estructura de las facultades de los encargados por estado
                 this.encargadosFFiltrados.splice(0, this.encargadosFFiltrados.length);
                 console.log(event.target.value);
                 var estadoText= "Activo";
@@ -237,6 +249,7 @@
                 });
                 console.log(this.encargadosFFiltrados);
             }, 
+            // Cambiar estado del encargado confirmnaod con sweetalert
             cambiarestado(encargado){
                 this.borrado = true;
                 if(encargado.estado_encargado_facultad == 'Activo'){
@@ -273,7 +286,7 @@
                       cancelButtonText: 'No, cancelar'
                   }).then((result) => {
                       if (result.isConfirmed) {
-                          //var tipo = 1;
+                          // modificando el estado
                           this.$inertia.delete(route('encargadosfacultad.destroy', encargado.idEncargado/*, tipo*/));
                           Swal.fire(
                           '!Activado!',
@@ -286,8 +299,8 @@
                 }
                 
             },
+            //carga informacion del encargado seleccionado al formulario del modal
             mostrarinfo(encargado){
-                //this.$inertia.get(route('encargadosfacultad.destroy', encargado.idEncargado/*, tipo*/));
               this.form.codigo_encargado_facultad = encargado.codigo_encargado_facultad,
               this.form.nombre_encargado_facultad = encargado.nombre_encargado_facultad,
               this.form.apellido_encargado_facultad = encargado.apellido_encargado_facultad,
@@ -300,20 +313,10 @@
                 
             }
         }, 
+        //Data utilizada
         data(){
           return{
             encargadosFFiltrados:[],
-            /*informacionencargado: {
-                codigo_encargado_facultad: this.$props.encargadoinfo.codigo_encargado_facultad,
-                nombre_encargado_facultad: this.$props.encargadoinfo.nombre_encargado_facultad,
-                apellido_encargado_facultad: this.$props.encargadoinfo.apellido_encargado_facultad,
-                correo_encargado_facultad: this.$props.encargadoinfo.correo_encargado_facultad,
-                facultad_id: this.$props.encargadoinfo.facultad_id,
-                estado_encargado_facultad: this.$props.encargadoinfo.estado_encargado_facultad,
-                user_id: null,
-                dui_encargado_facultad: this.$props.encargadoinfo.dui_encargado_facultad,
-                telefono_encargado_facultad: this.$props.encargadoinfo.telefono_encargado_facultad
-            }*/
             form: this.$inertia.form({
               codigo_encargado_facultad: '',
               nombre_encargado_facultad: '',
@@ -328,6 +331,7 @@
           }
         }, 
         mounted(){
+            // Llena los encargados al cargar pagina
             this.encargadosF.forEach(element => {
                 if (element.estado_encargado_facultad == 'Activo'){
                     this.encargadosFFiltrados.push(element);
