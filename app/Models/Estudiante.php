@@ -12,7 +12,6 @@ class Estudiante extends Model
     protected $table = 'estudiantes';
 
     protected $fillable = [
-<<<<<<< HEAD
         'id',
         'nombre_estudiante',
         'apellido_estudiante',
@@ -21,26 +20,21 @@ class Estudiante extends Model
         'sexo_estudiante',
         'correo_estudiante',
         'telefono_estudiante',
-=======
         'carrera',
         'sexo_estudiante',
         'carnet_estudiante',
->>>>>>> v1
         'carrera_id',
         'dui_estudiante',
         'nit_estudiante',
         'materias_cursadas',
         'cantidad_horas_ss',
         'estado_estudiante',
-<<<<<<< HEAD
-=======
         'nombre_estudiante',
         'apellido_estudiante',
         'correo_estudiante',
         'telefono_estudiante',
         'dui_estudiante',
         'nit_estudiante',
->>>>>>> v1
     ];
 
     //Relacion uno a uno con persona
