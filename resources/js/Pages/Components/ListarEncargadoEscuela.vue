@@ -42,6 +42,7 @@
                   <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('encargadosescuela.create')">
                       <i class="fas fa-plus"></i> Añadir encargado de escuela</inertia-link>
                   <br><br>
+                  <!-- select para indicar el estado que se desea -->
                   <h6 class="ml-4 mt-2">Mostrar por estado:
                   <select class="col-2 ml-3 custom-select" v-on:change="filtrarByEstado($event)">
                       <option value="1" selected>Activo</option>
@@ -50,11 +51,13 @@
                   
               </div>
               <!-- /.card-header -->
+              <!-- creacion de una card por cada facultad donde tengan asignados encargados -->
               <div class="card-body" v-for="(facultad, index) in facultadesFiltradas" :key="index">
                   <ul class="todo-list" data-widget="todo-list">
                       <li>
                       <!-- todo text -->
                         <h5 class="mt-2 ml-3 mb-3">{{ facultad.nombre_facultad }}</h5>
+                          <!-- tabla de los encargados de acuerdo al estado -->
                           <table class="table table-hover text-center ">
                               <thead class="thead-dark">
                                   <tr>
@@ -67,6 +70,7 @@
                                   </tr>
                               </thead>
                               <tbody>
+                                  <!-- cargando datos en la tabla -->
                                   <tr class="table-secondary" scope="row" v-for="(encargado, index) in encargadosEFiltrados" :key="index">
                                       
                                       <td v-if="encargado.nombre_facultad == facultad.nombre_facultad">
@@ -113,7 +117,7 @@
           <!-- /.row (main row) -->
       </div><!-- /.container-fluid -->
 
-      <!-- Modal Insert-->
+      <!-- Modal de la informacion del encargado -->
       <div class="modal fade" id="verInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
@@ -129,12 +133,14 @@
                       <div class="card-body">
                         <div class="row">
                           <div class="col">
+                            <!-- nombres del encargado -->
                             <div class="form-group">
                               <jet-label for="nombre" value="Nombres" />
                               <jet-input id="nombre" type="text" readonly="readonly" v-model="form.nombre_encargado_escuela" required autofocus autocomplete="nombre" />
                             </div>
                           </div>
                           <div class="col">
+                            <!-- apellidos del encargado -->
                             <div class="form-group">
                               <jet-label for="apellido" value="Apellidos" />
                               <jet-input id="apellido" type="text" readonly="readonly" v-model="form.apellido_encargado_escuela" required autofocus autocomplete="apellido" />
@@ -144,12 +150,14 @@
                             
                         <div class="row">
                           <div class="col">
+                            <!-- correo del encargado -->
                             <div class="form-group">
                               <jet-label for="correo" value="Correo" />
                               <jet-input id="correo" type="email" readonly="readonly" v-model="form.correo_encargado_escuela" required />
                             </div>
                           </div>
                           <div class="col">
+                            <!-- telefono del encargado -->
                             <div class="form-group">
                               <jet-label for="telefono" value="Telefono" />
                               <jet-input id="telefono" type="text" readonly="readonly" v-model="form.telefono_encargado_escuela" required autofocus autocomplete="telefono" />
@@ -159,12 +167,14 @@
 
                         <div class="row">
                           <div class="col">
+                            <!-- dui del encargado -->
                             <div class="form-group">
                               <jet-label for="dui" value="Dui" />
                               <jet-input id="dui" type="text" readonly="readonly" v-model="form.dui_encargado_escuela" required autofocus autocomplete="dui" />
                             </div>
                           </div>
                           <div class="col">
+                            <!-- codigo de empleado del encargado -->
                             <div class="form-group">
                               <jet-label for="Codigo" value="Codigo empleado" />
                               <jet-input id="Codigo" type="text" readonly="readonly" v-model="form.codigo_encargado_escuela" required autofocus autocomplete="Codigo" />
@@ -174,12 +184,14 @@
 
                         <div class="row">
                           <div class="col">
+                            <!-- facultad del encargado -->
                             <div class="form-group">
                               <jet-label for="facultad" value="Facultad" />
                               <jet-input id="facultad" type="text" readonly="readonly" v-model="form.nombre_facultad" required autofocus autocomplete="Facultad" />
                             </div>
                           </div>
                           <div class="col">
+                            <!-- escuela del encargado -->
                             <div class="form-group">
                               <jet-label for="escuela" value="Escuela" />
                               <jet-input id="escuela" type="text" readonly="readonly" v-model="form.nombre_carrera" required autofocus autocomplete="Escuela" />
@@ -239,13 +251,15 @@
         },
         props: ['encargadosE', 'facultades', 'carreras'],
         methods:{
+          // Función para fitrar las facultades 
           filtrarByEstado(event){
+              //limpia estructura de las facultades de los encargados por estado
               this.facultadesFiltradas.splice(0, this.facultadesFiltradas.length);
-              console.log(event.target.value);
               var estadoText= "Activo";
               if (event.target.value == 0){
                   estadoText = "Inactivo";
               }
+              //llenado de la estructura de las facultades de los encargados por estado seleccionado
               this.facultades.forEach(element => {
                   if(element.estado_encargado_escuela == estadoText){
                       console.log(element);
@@ -254,12 +268,14 @@
               });
               console.log(this.facultadesFiltradas);
 
+              //limpiar estructura de encargados filtradas por estado
               this.encargadosEFiltrados.splice(0, this.encargadosEFiltrados.length);
                 console.log(event.target.value);
                 var estadoText= "Activo";
                 if (event.target.value == 0){
                     estadoText = "Inactivo";
                 }
+                //llenado de la estructura de las facultades de los encargados por estado seleccionado
                 this.encargadosE.forEach(element => {
                     if(element.estado_encargado_escuela == estadoText){
                         console.log(element);
@@ -268,6 +284,7 @@
                 });
                 console.log(this.encargadosEFiltrados);
           }, 
+          // Cambiar estado del encargado confirmnaod con sweetalert
           cambiarestado(encargado){
               this.borrado = true;
               if(encargado.estado_encargado_escuela == 'Activo'){
@@ -282,8 +299,8 @@
                     cancelButtonText: 'No, cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        //var tipo = 1;
-                        this.$inertia.delete(route('encargadosescuela.destroy', encargado.idEncargado/*, tipo*/));
+                        // modificando el estado
+                        this.$inertia.delete(route('encargadosescuela.destroy', encargado.idEncargado));
                         Swal.fire(
                         '!Desactivado!',
                         'El encargado se desactivó correctamente',
@@ -304,8 +321,8 @@
                     cancelButtonText: 'No, cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        //var tipo = 1;
-                        this.$inertia.delete(route('encargadosescuela.destroy', encargado.idEncargado/*, tipo*/));
+                        // modificando el estado
+                        this.$inertia.delete(route('encargadosescuela.destroy', encargado.idEncargado));
                         Swal.fire(
                         '!Activado!',
                         'El encargado se activó correctamente',
@@ -317,6 +334,7 @@
               }
                 
             },
+            //carga informacion del encargado seleccionado al formulario del modal
             mostrarinfo(encargado){
               this.form.codigo_encargado_escuela = encargado.codigo_encargado_escuela,
               this.form.nombre_encargado_escuela = encargado.nombre_encargado_escuela,
@@ -331,6 +349,7 @@
                 
             }
         }, 
+        //Data utilizada
         data(){
           return{
             encargadosEFiltrados:[],
@@ -350,18 +369,17 @@
           }
         }, 
         mounted(){
-            this.facultades.forEach(element => {
-                if (element.estado_encargado_escuela == 'Activo'){
-                    this.facultadesFiltradas.push(element);
-                }
-            }),
-            this.encargadosE.forEach(element => {
-                    if(element.estado_encargado_escuela == 'Activo'){
-                        this.encargadosEFiltrados.push(element);
-                    }
-                });
-            // this.mostrarMensajeSuccess();
-            this.successGuardado = false;
+          // Llena las facultades y encargados al cargar pagina
+          this.facultades.forEach(element => {
+              if (element.estado_encargado_escuela == 'Activo'){
+                  this.facultadesFiltradas.push(element);
+              }
+          }),
+          this.encargadosE.forEach(element => {
+              if(element.estado_encargado_escuela == 'Activo'){
+                  this.encargadosEFiltrados.push(element);
+              }
+          });
         }, 
     }
 </script>
