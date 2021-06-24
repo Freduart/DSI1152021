@@ -11,6 +11,7 @@
       <div class="container-fluid">
         <div class="row justify-content-center mb-2">
           <div class="col-sm-5">
+            <!-- titulo que cambiará conforme a la accion seleccionada -->
             <h1 v-if="this.$props.encargadoE.id != null" class="m-2">Modificar encargado de escuela</h1>
             <h1 v-else class="m-2">Agregar encargado de facultad</h1>
           </div><!-- /.col -->          
@@ -35,12 +36,14 @@
                     <div class="card-body">
                       <div class="row">
                         <div class="col">
+                           <!-- nombres del encargado -->
                           <div class="form-group">
                             <jet-label for="nombre" value="Nombres" />
                             <jet-input id="nombre" type="text" v-model="form.nombre_encargado_escuela" required autofocus autocomplete="nombre" />
                           </div>
                         </div>
                         <div class="col">
+                          <!-- apellidos del encargado -->
                           <div class="form-group">
                             <jet-label for="apellido" value="Apellidos" />
                             <jet-input id="apellido" type="text" v-model="form.apellido_encargado_escuela" required autofocus autocomplete="apellido" />
@@ -50,12 +53,14 @@
                           
                       <div class="row">
                         <div class="col">
+                          <!-- correo del encargado -->
                           <div class="form-group">
                             <jet-label for="correo" value="Correo" />
                             <jet-input id="correo" type="email" v-model="form.correo_encargado_escuela" required />
                           </div>
                         </div>
                         <div class="col">
+                          <!-- telefono del encargado -->
                           <div class="form-group">
                             <jet-label for="telefono" value="Telefono" />
                             <jet-input id="telefono" type="text" v-model="form.telefono_encargado_escuela" required autofocus autocomplete="telefono" />
@@ -65,12 +70,14 @@
 
                       <div class="row">
                         <div class="col">
+                          <!-- dui del encargado -->
                           <div class="form-group">
                             <jet-label for="dui" value="Dui" />
                             <jet-input id="dui" type="text" v-model="form.dui_encargado_escuela" required autofocus autocomplete="dui" />
                           </div>
                         </div>
                         <div class="col">
+                          <!-- codigo de empleado del encargado -->
                           <div class="form-group">
                             <jet-label for="Codigo" value="Codigo empleado" />
                             <jet-input id="Codigo" type="text" v-model="form.codigo_encargado_escuela" required autofocus autocomplete="Codigo" />
@@ -79,23 +86,26 @@
                       </div> 
                       <div class="row">
                         <div class="col">
+                          <!-- facultad del encargado -->
                           <div class="form-group">
                             <jet-label for="facultad" value="Facultad" />
                             <br/>
+                            <!-- select para cargar las facultades -->
                             <select class="custom-select" id="facultad_id" v-model="form.facultad_id" v-on:change="buscarCarreras(form.facultad_id)" required>
-                              <!-- <option value="" selected>Seleccionar</option> -->
                               <option disabled value="">Seleccione una facultad</option>
                               <option v-for="(facultad, index) in facultades" :key="index" :value="facultad.id">{{ facultad.nombre_facultad }}</option>
                             </select>
                           </div>
                         </div>
                         <div class="col">
+                          <!-- escuela del encargado -->
                           <div class="form-group" v-if="form.facultad_id != ''">
                             <jet-label for="carrera" value="Carrera" />
                             <br/>
+                            <!-- select para cargar las carreras de la facultad seleccionada -->
                             <select class="custom-select" id="carrera_id" v-model="form.carrera_id" required>
                               <option disabled value="">Seleccione una carrera</option>
-                              <option v-for="(carrera, index) in carrerasFiltradas" :key="index" :value="carrera.id">{{ carrera.nombre_carrera }}</option>
+                              <option v-for="(carrera, index) in carrerasFiltradas" :key="index" :value="carrera.idC">{{ carrera.nombre_carrera }}</option>
                             </select>
                           </div>
                         </div>
@@ -104,12 +114,10 @@
                       <hr>
                     </div>
 
-                    
-
                     <div class="card-footer clearfix"> 
                       <div class="my-2">
                         <div class="d-flex justify-content-center align-items-baseline">
-
+                          <!-- botones de accion -->
                           <jet-button type="submit" class="btn btn-primary float-center" :class="{ 'text-white-50': form.processing }" :disabled="form.processing" >
                           <i class="fas"></i> Guardar</jet-button>
                           <div class="mx-2"></div>
@@ -162,7 +170,8 @@ export default {
     JetValidationErrors,
     Base
   },
-  props:['encargadoE', 'facultades', 'carreras', 'idFacultad'],
+  props:['encargadoE', 'facultades', 'carreras', 'idFacultad', 'escuela'],
+  // data a utilizar
   data() {
     return {
       form: this.$inertia.form({
@@ -173,7 +182,6 @@ export default {
         facultad_id: this.$props.idFacultad,
         carrera_id: this.$props.encargadoE.carrera_id,
         estado_encargado_escuela: this.$props.encargadoE.estado_encargado_escuela,
-        user_id: null,
         dui_encargado_escuela: this.$props.encargadoE.dui_encargado_escuela,
         telefono_encargado_escuela: this.$props.encargadoE.telefono_encargado_escuela
       }), carrerasFiltradas:[],
@@ -181,12 +189,45 @@ export default {
   },
 
   mounted(){
-    this.carreras.forEach(element => {
+    // funcion para cargar las carreras de la facultad seleccionada al inicio
+    /*this.carreras.forEach(element => {
         this.carrerasFiltradas.push(element);
-    })
+    })*/
+    if(this.$props.encargadoE.id != null){
+      var idFac = this.form.facultad_id;
+      var contador = 0;
+      this.facultades.forEach(facultad => {
+        if(facultad.id == idFac){
+          this.carreras.forEach(carrera => {
+            if(carrera.facultad_id == idFac){
+              this.carrerasFiltradas.push(carrera); 
+            }
+          });
+        }
+      })
+      /*this.escuela.forEach(element => {
+        this.carreras.forEach(element2 => {
+          if(element.nombre_carrera == element2.nombre_carrera){
+            contador++;
+          }
+        }); 
+      });*/
+      //if (contador == 0){
+        this.escuela.forEach(element => {
+          this.carrerasFiltradas.push(element);
+        });
+      //}
+    } 
+    /*this.carreras.forEach(element => {
+      this.carrerasFiltradas.push(element);
+      /*if(this.form.facultad_id == elemento.facultad_id){
+        this.carrerasFiltradas.push(carrera); 
+      }*/
+    //});
   },
 
   methods: {
+    // funcion guardar (insert o update)
     submit() {
       if (this.$props.encargadoE.id != null){
         this.$inertia.put(route('encargadosescuela.update', this.$props.encargadoE.id), this.form);
@@ -195,21 +236,28 @@ export default {
         this.form.post(route('encargadosescuela.store'));
       }
     },
-    buscarCarreras: function(id){
-      this.carrerasFiltradas.splice(0, this.carrerasFiltradas.length);
+    // funcion para cargar la carrera de la facultad seleccionada
+    buscarCarreras(id){
+      //this.carrerasFiltradas.splice(0, this.carrerasFiltradas.length);
+      this.carrerasFiltradas.length = 0;
       this.facultades.forEach(facultad => {
-        
         if(facultad.id == id){
-          var facultad = facultad.id;
-          console.log(facultad);
+          //this.carrerasFiltradas.push(this.escuela);
+          
           this.carreras.forEach(carrera => {
-            if(carrera.facultad_id == facultad){
-              console.log(carrera);
+            if(carrera.facultad_id == facultad.id){
               this.carrerasFiltradas.push(carrera); 
             }
-          });
+          });          
         }
+
+        
       });
+      if (id == this.$props.idFacultad){
+        this.escuela.forEach(element => {
+          this.carrerasFiltradas.push(element);
+        });
+      }
     }
   },
 }
