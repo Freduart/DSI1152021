@@ -143,21 +143,24 @@
                  <jet-label for="facultad_id" value="Codigo de la facultad" />
                  <jet-input id="facultad_id" type="text" v-model="form.facultad_id" required autofocus autocomplete="off"/>
             </div>-->
-            <div class="form-group">
-
-                <br/>
-                <hr/>
-                <div class="mt-12">
-                    <jet-button class="ml-4" :class="{ 'text-white-50 bg-green-400': form.processing }" >
-                        <button type="button" class="btn btn-primary">Guardar Facultad</button>
-                        <!--<i class="fas fa-save"></i>  Guardar Facultad --> 
-                    </jet-button>   
-                    <jet-button type="button" class="btn btn-danger mx-12" data-dismiss="modal">
-                        <inertia-link :href="route('facultades.index')">
-                        <button type="button" class="btn btn-danger">Cancelar</button>
-                        </inertia-link>
-                    </jet-button>
-                    
+            <div class="d-flex justify-content-center align-items-baseline">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <div class="mt-12">
+                                <jet-button class="btn btn-primary float-center" :class="{ 'text-white-50 bg-green-400': form.processing }" >
+                                <i class="fas"></i>Guardar
+                                <!--<i class="fas fa-save"></i>  Guardar Facultad --> 
+                                </jet-button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <inertia-link :href="route('facultades.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
+                            <i class="fas"></i> Cancelar</inertia-link>
+                        </div>
+                    </div>
                 </div>
             </div>
     

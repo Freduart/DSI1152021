@@ -110,6 +110,13 @@
                             <p>Estudiantes</p>
                             </inertia-link>
                     </li>
+
+                    <li class="nav-item">
+                            <inertia-link :href="route('verificarcuenta.index')" class="nav-link">
+                            <i class="fas fa-file nav-icon"></i>
+                            <p>Verificar Cuenta</p>
+                            </inertia-link>
+                    </li>
                     
                     <!-- Cuando es un solo elemento -->
                     <li class="nav-item">
