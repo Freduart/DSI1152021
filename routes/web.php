@@ -13,6 +13,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+use App\Mail\CredencialesMailable;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,3 +67,12 @@ Route::resource('encargadosescuela', EncargadoEscuelaController::class);
 Route::resource('verificarcuenta', VerificarCuentaController::class);
 Route::resource('instituciones', InstitucionController::class);
 //Route::delete('verificarcuenta/{id}', [VerificarCuentaController::class, 'id'])->name('verificarcuenta.eliminar');
+Route::get('credenciales', function (){
+  $details = [
+    'usuario' => 'usuariooo',
+    'contrasena' => 'contra'
+  ];
+  //$correo = new CredencialesMailable;
+  Mail::to('jganuzaramírez@gmail.com')->send(new CredencialesMailable($details));
+  return "mensaje enviado";
+});

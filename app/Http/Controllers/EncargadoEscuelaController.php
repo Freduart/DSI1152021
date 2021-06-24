@@ -60,7 +60,14 @@ class EncargadoEscuelaController extends Controller
         $encargadoE->dui_encargado_escuela = '';
         $encargadoE->telefono_encargado_escuela = '';
         $facultades = Facultad::all();
-        $carreras = Carrera::all();
+        $carreras = DB::table('carreras')->distinct('nombre_carrera')
+        ->select('carreras.id AS idC', 'nombre_carrera', 'facultad_id')
+        ->whereNotIn('nombre_carrera', DB::table('encargado_escuelas')
+        ->select('nombre_carrera')
+        ->distinct('nombre_carrera')
+        ->join('carreras', 'encargado_escuelas.carrera_id', '=', 'carreras.id')
+        ->where('estado_encargado_escuela', '=', 'Activo'))
+        ->get();
         return Inertia::render('Components/FormEncargadoEscuela', ['encargadoE' => $encargadoE,'facultades' => $facultades, 'carreras' => $carreras]);
     }
 

@@ -78,6 +78,9 @@ class VerificarCuentaController extends Controller
         $user->email = $data['correo_estudiante'];
         $user->password = Hash::make($contra);    
         $user->save();
+
+        //envio de correo
+        
       
         $usuario = User::where('email', '=', $data['correo_estudiante'])->firstOrFail();
         $id = $usuario->id;
