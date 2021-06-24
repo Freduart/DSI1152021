@@ -270,7 +270,7 @@ import Base from "@/Pages/Base.vue";
                         // console.log(element);
                         var nombreCompleto = element.nombre_estudiante + element.apellido_estudiante;
                         //Filtrar por nombre
-                        if(nombreCompleto.includes(nombreEstudiante)){
+                        if(nombreCompleto.toUpperCase().includes(nombreEstudiante.toUpperCase())){
                             console.log(element);
                             this.filtrarEstudiantes.push(element);
                         }

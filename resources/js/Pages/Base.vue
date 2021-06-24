@@ -12,20 +12,38 @@
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
-            <li class="nav-item d-none d-sm-inline-block">
+            <li class="nav-item d-none d-sm-inline-block mx-4">
                 <!-- <a href="index3.html" class="nav-link">Home</a> -->
                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
-                    Dashboard
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    Inicio
                 </jet-nav-link>
             </li>
 
-            <form @submit.prevent="logout">
-                <li class="nav-item d-none d-sm-inline-block"> 
-                    <jet-dropdown-link class="nav-item d-none d-sm-inline-block" as="button"> 
+            <!-- <form @submit.prevent="logout">
+                <li class="d-flex flex-row-reverse bd-highlight col"> 
+                    <button class="btn btn-primary d-flex flex-row-reverse bd-highlight col" as="button"> 
                         Cerrar Sesión
-                    </jet-dropdown-link>
+                    </button>
                 </li> 
-            </form>  
+            </form>   -->
+
+            <div class="dropdown mx-3">
+                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Cuenta
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <!-- <a class="dropdown-item" href="#">Action</a> -->
+                    <a class="dropdown-item" href="#">Mi cuenta</a>
+                    <form @submit.prevent="logout">
+                    
+                        <button class="btn"> 
+                            Cerrar Sesión
+                        </button>
+                    
+                    </form>  
+                </div>
+            </div>
             
         </ul>
     </nav>
@@ -34,7 +52,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">            
+        <a href="#" class="brand-link">            
             <span class="brand-text font-weight-light">SASS - UES</span>
         </a>
 
@@ -121,11 +139,12 @@
 
     import JetNavLink from '@/Jetstream/NavLink'
     import JetDropdownLink from '@/Jetstream/DropdownLink'
+
     export default {
         components:{
             name: 'menu',
             JetNavLink,
-            JetDropdownLink,
+            JetDropdownLink
         },
           props: {
             canLogin: Boolean,
