@@ -56,7 +56,9 @@
                   <ul class="todo-list" data-widget="todo-list">
                       <li>
                       <!-- todo text -->
-                        <h5 class="mt-2 ml-3 mb-3">{{ facultad.nombre_facultad }}</h5>
+                        <h5 class="mt-2 ml-3" style="margin-bottom: 0.2rem;">{{ facultad.nombre_facultad }}</h5>
+                        <p class="ml-4 mb-4 text-gray" v-if="facultad.nombre_encargado_facultad != null">Encargado: {{ facultad.nombre_encargado_facultad }} {{ facultad.apellido_encargado_facultad }}</p>
+                        <p class="ml-4 mb-4 text-gray" v-else>Encargado: No asignado</p>
                           <!-- tabla de los encargados de acuerdo al estado -->
                           <table class="table table-hover text-center ">
                               <thead class="thead-dark">
@@ -118,101 +120,86 @@
       </div><!-- /.container-fluid -->
 
       <!-- Modal de la informacion del encargado -->
-      <div class="modal fade" id="verInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Información del encargado</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
+      
 
-                    <form @submit.prevent="submit">
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col">
-                            <!-- nombres del encargado -->
-                            <div class="form-group">
-                              <jet-label for="nombre" value="Nombres" />
-                              <jet-input id="nombre" type="text" readonly="readonly" v-model="form.nombre_encargado_escuela" required autofocus autocomplete="nombre" />
-                            </div>
-                          </div>
-                          <div class="col">
-                            <!-- apellidos del encargado -->
-                            <div class="form-group">
-                              <jet-label for="apellido" value="Apellidos" />
-                              <jet-input id="apellido" type="text" readonly="readonly" v-model="form.apellido_encargado_escuela" required autofocus autocomplete="apellido" />
-                            </div>
-                          </div>
-                        </div> 
-                            
-                        <div class="row">
-                          <div class="col">
-                            <!-- correo del encargado -->
-                            <div class="form-group">
-                              <jet-label for="correo" value="Correo" />
-                              <jet-input id="correo" type="email" readonly="readonly" v-model="form.correo_encargado_escuela" required />
-                            </div>
-                          </div>
-                          <div class="col">
-                            <!-- telefono del encargado -->
-                            <div class="form-group">
-                              <jet-label for="telefono" value="Telefono" />
-                              <jet-input id="telefono" type="text" readonly="readonly" v-model="form.telefono_encargado_escuela" required autofocus autocomplete="telefono" />
-                            </div>
-                          </div>
-                        </div> 
+    <div class="modal fade" id="verInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+              <!-- <h5 class="modal-title" id="exampleModalLabel">{{ verDetalleForm.nombre_estudiante }} {{ verDetalleForm.apellido_estudiante }}</h5> -->
+              <h3 class="modal-title text-primary">{{ form.nombre_encargado_escuela }} {{ form.apellido_encargado_escuela }}</h3>
+              <span class="d-flex flex-row-reverse bd-highlight col">
+                  
+                  <button class="btn btn-dark text-light text-lg" style="cursor: default;">
+                      {{ form.codigo_encargado_escuela }}                   
+                  </button>    
+                  <h5 class="mt-2 mr-2"><strong>Codigo:</strong></h5> 
+                  <!-- <h3 class="modal-title text-primary border rounded-lg mx-4">{{ verDetalleForm.carnet_estudiante }} </h3> -->
+              </span>
+              <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button> -->
+          </div>
+          <div class="modal-body">
+              
+            <div>
+              <div class="row">
+                <div class="col">
+                  <h5 class=""><strong>Correo: </strong>{{ form.correo_encargado_escuela }}</h5>
+                </div>
+                <div class="col-4">
+                  <h5 class=""><strong>Teléfono: </strong>{{ form.telefono_encargado_escuela }}</h5>
+                </div>
+              </div>
 
-                        <div class="row">
-                          <div class="col">
-                            <!-- dui del encargado -->
-                            <div class="form-group">
-                              <jet-label for="dui" value="Dui" />
-                              <jet-input id="dui" type="text" readonly="readonly" v-model="form.dui_encargado_escuela" required autofocus autocomplete="dui" />
-                            </div>
-                          </div>
-                          <div class="col">
-                            <!-- codigo de empleado del encargado -->
-                            <div class="form-group">
-                              <jet-label for="Codigo" value="Codigo empleado" />
-                              <jet-input id="Codigo" type="text" readonly="readonly" v-model="form.codigo_encargado_escuela" required autofocus autocomplete="Codigo" />
-                            </div>
-                          </div>
-                        </div> 
+              <div class="row">
+                <div class="col">
+                  <h5 class=""><strong>DUI: </strong>{{ form.dui_encargado_escuela }}</h5>
+                </div>
+                <div class="col">
+                  <h5 class=""></h5>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col">
+                  <h5 class=""><strong>Facultad: </strong>{{ form.nombre_facultad }}</h5>
+                </div>
+              </div>
 
-                        <div class="row">
-                          <div class="col">
-                            <!-- facultad del encargado -->
-                            <div class="form-group">
-                              <jet-label for="facultad" value="Facultad" />
-                              <jet-input id="facultad" type="text" readonly="readonly" v-model="form.nombre_facultad" required autofocus autocomplete="Facultad" />
-                            </div>
-                          </div>
-                          <div class="col">
-                            <!-- escuela del encargado -->
-                            <div class="form-group">
-                              <jet-label for="escuela" value="Escuela" />
-                              <jet-input id="escuela" type="text" readonly="readonly" v-model="form.nombre_carrera" required autofocus autocomplete="Escuela" />
-                            </div>
-                          </div>
-                          <hr>
-                        </div>
-                      </div>
-                      <div class="card-footer clearfix"> 
-                        <div class="my-2">
-                          <div class="d-flex justify-content-center align-items-baseline">
+              <div class="row">
+                <div class="col">
+                <h5><strong>Carrera: </strong>{{ form.nombre_carrera }}</h5>
+                </div>
+              </div>
 
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Aceptar</button>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
+              <div class="row">
+                <div>
+                  <span class="d-flex flex-row-reverse bd-highlight col">
+                    <h5 class=""><strong>Estado:  </strong>
+                      <button v-if="form.estado_encargado_escuela == 'Activo'" class="btn btn-primary" disabled>{{ form.estado_encargado_escuela }}</button>
+                      <button v-else-if="form.estado_encargado_escuela == 'Inactivo'" class="btn btn-danger" disabled>{{ form.estado_encargado_escuela }}</button>
+                      </h5>
+                  </span>
+                </div>
+              </div>
+
+            </div>  
+            <hr class="mb-1"/>
+          </div>
+          <div class="mb-4">
+              <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button> -->
+              <div class="d-flex justify-content-center">
+                  <button class="btn btn-warning" data-dismiss="modal">
+                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                    Ocultar detalle
+                  </button>
               </div>
           </div>
+        </div>
       </div>
+    </div>
 
     </section>
     <!-- /.content -->
@@ -354,18 +341,18 @@
           return{
             encargadosEFiltrados:[],
             facultadesFiltradas:[],
-            form: this.$inertia.form({
+            form: {
               codigo_encargado_escuela: '',
               nombre_encargado_escuela: '',
               apellido_encargado_escuela: '',
               correo_encargado_escuela: '',
               nombre_carrera: '',
               nombre_facultad: '',
-              estado_encargado_escuela: '',
+              estado_encargado_escuela: 'Activo',
               user_id: null,
               dui_encargado_escuela: '',
               telefono_encargado_escuela: '',
-            })
+            }
           }
         }, 
         mounted(){

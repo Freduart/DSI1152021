@@ -35,12 +35,14 @@
                     <div class="card-body">
                       <div class="row">
                         <div class="col">
+                          <!-- nombres del encargado -->
                           <div class="form-group">
                             <jet-label for="nombre" value="Nombres" />
                             <jet-input id="nombre" type="text" v-model="form.nombre_encargado_facultad" required autofocus autocomplete="nombre" />
                           </div>
                         </div>
                         <div class="col">
+                          <!-- apellidos del encargado -->
                           <div class="form-group">
                             <jet-label for="apellido" value="Apellidos" />
                             <jet-input id="apellido" type="text" v-model="form.apellido_encargado_facultad" required autofocus autocomplete="apellido" />
@@ -51,11 +53,13 @@
                       <div class="row">
                         <div class="col">
                           <div class="form-group">
+                            <!-- correo del encargado -->
                             <jet-label for="correo" value="Correo" />
                             <jet-input id="correo" type="email" v-model="form.correo_encargado_facultad" required />
                           </div>
                         </div>
                         <div class="col">
+                          <!-- telefono del encargado -->
                           <div class="form-group">
                             <jet-label for="telefono" value="Telefono" />
                             <jet-input id="telefono" type="text" v-model="form.telefono_encargado_facultad" required autofocus autocomplete="telefono" />
@@ -65,26 +69,28 @@
 
                       <div class="row">
                         <div class="col">
+                          <!-- dui del encargado -->
                           <div class="form-group">
                             <jet-label for="dui" value="Dui" />
                             <jet-input id="dui" type="text" v-model="form.dui_encargado_facultad" required autofocus autocomplete="dui" />
                           </div>
                         </div>
                         <div class="col">
+                          <!-- codigo de empleado del encargado -->
                           <div class="form-group">
                             <jet-label for="Codigo" value="Codigo empleado" />
                             <jet-input id="Codigo" type="text" v-model="form.codigo_encargado_facultad" required autofocus autocomplete="Codigo" />
                           </div>
                         </div>
                       </div> 
-
+                      <!-- facultad del encargado -->
                       <div class="form-group">
                         <jet-label for="facultad" value="Facultad" />
                         <br/>
+                        <!-- select para cargar las facultades -->
                         <select class="custom-select" id="facultad_id" v-model="form.facultad_id" required>
-                          <!-- <option value="" selected>Seleccionar</option> -->
                           <option disabled value="">Seleccione una facultad</option>
-                          <option v-for="(facultad, index) in facultades" :key="index" :value="facultad.id">{{ facultad.nombre_facultad }}</option>
+                          <option v-for="(facultad, index) in facultadesFiltradas" :key="index" :value="facultad.idF">{{ facultad.nombre_facultad }}</option>
                         </select>
                       </div>
                       <hr>
@@ -93,7 +99,7 @@
                     <div class="card-footer clearfix"> 
                       <div class="my-2">
                         <div class="d-flex justify-content-center align-items-baseline">
-
+                          <!-- botones de accion -->
                           <jet-button type="submit" class="btn btn-primary float-center" :class="{ 'text-white-50': form.processing }" :disabled="form.processing" >
                           <i class="fas"></i> Guardar</jet-button>
                           <div class="mx-2"></div>
@@ -146,7 +152,8 @@ export default {
     JetValidationErrors,
     Base
   },
-  props:['encargadoF', 'facultades'],
+  props:['encargadoF', 'facultades', 'facultad'],
+  // data a utilizar
   data() {
     return {
       form: this.$inertia.form({
@@ -156,14 +163,37 @@ export default {
         correo_encargado_facultad: this.$props.encargadoF.correo_encargado_facultad,
         facultad_id: this.$props.encargadoF.facultad_id,
         estado_encargado_facultad: this.$props.encargadoF.estado_encargado_facultad,
-        user_id: null,
         dui_encargado_facultad: this.$props.encargadoF.dui_encargado_facultad,
         telefono_encargado_facultad: this.$props.encargadoF.telefono_encargado_facultad
-      }), carrerasFiltradas:[],
+      }), facultadesFiltradas:[], 
     }
   },
 
+  mounted(){
+    // funcion para cargar las facultades sin encargado asignado
+
+    if(this.$props.encargadoF.id != null){
+      var contador = 0;
+      this.facultad.forEach(element => {
+        this.facultades.forEach(element2 => {
+          if(element.nombre_facultad == element2.nombre_facultad){
+            contador++;
+          }
+        }); 
+      });
+      if (contador == 0){
+        this.facultad.forEach(element => {
+          this.facultadesFiltradas.push(element);
+        });
+      }
+    } 
+    this.facultades.forEach(element => {
+      this.facultadesFiltradas.push(element);
+    });
+  },
+
   methods: {
+    // metodo guardar (insert o update)
     submit() {
       if (this.$props.encargadoF.id != null){
         this.$inertia.put(route('encargadosfacultad.update', this.$props.encargadoF.id), this.form);

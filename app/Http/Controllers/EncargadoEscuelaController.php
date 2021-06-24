@@ -31,7 +31,8 @@ class EncargadoEscuelaController extends Controller
         $facultades = DB::table('facultades')->distinct('nombre_facultad')
         ->join('carreras', 'facultades.id', '=', 'carreras.facultad_id')
         ->join('encargado_escuelas', 'carreras.id', '=', 'encargado_escuelas.carrera_id')
-        ->select('nombre_facultad', 'estado_encargado_escuela')
+        ->leftJoin('encargado_facultades', 'facultades.id', '=', 'encargado_facultades.facultad_id')
+        ->select('nombre_facultad', 'estado_encargado_escuela', 'nombre_encargado_facultad', 'apellido_encargado_facultad')
         //->groupBy('nombre_facultad')
         ->get();
         $carreras = Carrera::all();
@@ -54,7 +55,6 @@ class EncargadoEscuelaController extends Controller
         $encargadoE->correo_encargado_escuela = '';
         $encargadoE->carrera_id = '';
         $encargadoE->estado_encargado_escuela = 'Activo';
-        $encargadoE->user_id = null;
         $encargadoE->dui_encargado_escuela = '';
         $encargadoE->telefono_encargado_escuela = '';
         $facultades = Facultad::all();
@@ -100,8 +100,21 @@ class EncargadoEscuelaController extends Controller
         $idCarrera = $encargadoE->carrera_id;
         $carreraEncargado = Carrera::find($idCarrera);
         $idFacultad = $carreraEncargado->facultad_id;
-        $carreras = Carrera::all();
-        return Inertia::render('Components/FormEncargadoEscuela', ['encargadoE' => $encargadoE, 'facultades' => $facultades, 'carreras' => $carreras, 'idFacultad' => $idFacultad]);
+        //$carreras = Carrera::all();
+        $carreras = DB::table('carreras')->distinct('nombre_carrera')
+        ->select('carreras.id AS idC', 'nombre_carrera', 'facultad_id')
+        ->whereNotIn('nombre_carrera', DB::table('encargado_escuelas')
+        ->select('nombre_carrera')
+        ->distinct('nombre_carrera')
+        ->join('carreras', 'encargado_escuelas.carrera_id', '=', 'carreras.id')
+        ->where('estado_encargado_escuela', '=', 'Activo'))
+        ->get();
+        $escuela = DB::table('carreras')->distinct('nombre_carrera')
+        ->join('encargado_escuelas', 'carreras.id', '=', 'encargado_escuelas.carrera_id')
+        ->select('carreras.id AS idC', 'nombre_carrera', 'facultad_id')
+        ->where('encargado_escuelas.id', '=', $encargadoEscuela)
+        ->get();
+        return Inertia::render('Components/FormEncargadoEscuela', ['encargadoE' => $encargadoE, 'facultades' => $facultades, 'carreras' => $carreras, 'idFacultad' => $idFacultad, 'escuela'=> $escuela]);
     }
 
     /**
