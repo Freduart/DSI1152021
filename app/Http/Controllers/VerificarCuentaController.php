@@ -12,7 +12,8 @@ class VerificarCuentaController extends Controller
 {
     //
     public function index(){
-        $estudiantes=Estudiante::all();
+        // $estudiantes=Estudiante::all();
+        $estudiantes = Estudiante::where('estado_estudiante', '=', 'En espera')->get();
         return Inertia::render('Components/VerificarCuenta',['estudiantes'=>$estudiantes]);
     }
 

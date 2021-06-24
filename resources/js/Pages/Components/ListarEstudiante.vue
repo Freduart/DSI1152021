@@ -71,8 +71,8 @@
               <div class="card-footer clearfix" >
                   <!-- <p>{{ estudiante.nombre_estudiante }}</p> -->
                 <div class="row">
-                      <div class="col-sm-4" v-for="(estudiante, index) in this.filtrarEstudiantes" :key="index">
-                        <div class="card">
+                      <!-- <div class="col-sm-4" v-for="(estudiante, index) in this.filtrarEstudiantes" :key="index"> -->
+                        <!-- <div class="card">
                         <div class="card-body">
                             <div class="">
                                 <div class="">
@@ -102,8 +102,55 @@
                                 </div>
                                                                                                              
                         </div>
-                        </div>
+                        </div> -->
+                        <table class="table table-striped table-dark text-center" style="font-size: 20px">
+                                    <thead>
+                                        <tr>
+                                        
+                                        <th scope='col'>Nombres</th>
+                                        <th scope="col">Apellidos</th>
+                                        <th scope="col">Carnet</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr scope="row" v-for="(estudiante, index) in filtrarEstudiantes" :key="index">
+                                            
+                                            <td>{{ estudiante.nombre_estudiante }}</td>
+                                            <td>{{ estudiante.apellido_estudiante }}</td>
+                                            <td>{{ estudiante.carnet_estudiante }}</td>
+                                            <td>
+                                                <button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-primary" style="cursor: default;">{{ estudiante.estado_estudiante }}</button>
+                                                <button v-else-if="estudiante.estado_estudiante == 'Inactivo'" class="btn btn-danger" style="cursor: default;">{{ estudiante.estado_estudiante }}</button>
+                                                <button v-else-if="estudiante.estado_estudiante == 'Servicio finalizado'" class="btn btn-success" style="cursor: default;">{{ estudiante.estado_estudiante }}</button>
+                                                <button v-else-if="estudiante.estado_estudiante == 'Realizando servicio'" class="btn btn-info" style="cursor: default;">En servicio</button>
+                                            </td>
+                                            <td>
+                                            <!-- General tools such as edit or delete-->
+                                                <div class="flex justify-center">
 
+                                                    
+                                                    <!-- <inertia-link
+                                                    method="delete"
+                                                    :href="route('carreras.destroy', carrera.id)"
+                                                    v-on:click="mostrarMensajeDelete(carrera)">
+                                                        <button class="btn btn-danger">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </inertia-link> -->
+                                                    
+                                                    <button class="btn btn-warning" v-on:click="this.verDetalle(estudiante)" data-toggle="modal" data-target="#detalleEstudianteModal">
+                                                        <i class="fas fa-eye mx-12"></i>
+                                                        Ver detalle
+                                                    </button>    
+                                                
+                                                
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
         <!-- Modal -->
     <div class="modal fade" id="detalleEstudianteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -200,7 +247,7 @@
             </div>
 
 
-                    </div>    
+                    <!-- </div>     -->
 
                 </div>  
               </div>

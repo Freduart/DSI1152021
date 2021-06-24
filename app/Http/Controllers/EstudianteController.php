@@ -72,7 +72,7 @@ class EstudianteController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Inertia::render('Components/FormEstudianteModificar');
     }
 
     /**

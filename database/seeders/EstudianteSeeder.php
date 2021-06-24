@@ -2,13 +2,9 @@
 
 namespace Database\Seeders;
 
-use Faker\Core\Number;
 use Illuminate\Database\Seeder;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-
-class CarreraSeeder extends Seeder
+class EstudianteSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,7 +13,6 @@ class CarreraSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Carrera::factory()->count(12)->create();
-
+        \App\Models\Estudiante::factory()->count(15)->create();
     }
 }

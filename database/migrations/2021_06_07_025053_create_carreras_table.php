@@ -17,6 +17,7 @@ class CreateCarrerasTable extends Migration
             $table->id('id');
             $table->string('nombre_carrera', 50)->unique();
             $table->string('codigo_carrera', 7)->unique();
+            $table->unsignedBigInteger('materias_para_aprobar');
             $table->unsignedBigInteger('facultad_id')->nullable();
             $table->enum('estado_carrera', ['Activo', 'Inactivo']);
 

@@ -49,10 +49,10 @@
                             <button type="button" class="btn btn-success mb-8" data-toggle="modal" data-target="#añadirFacultad">
                             <i class="fas fa-plus"></i> Añadir</button> 
                             <hr>
-                                <table class="table table-striped table-dark text-center" width="500" >
+                                <table class="table table-striped table-dark text-center" width="500" style="font-size: 20px">
                                     <thead>
                                         <tr> 
-                                        <th scope='col'>Código</th>
+                                        <!-- <th scope='col'>Código</th> -->
                                         <th scope="col">Nombre de la Facultad</th>
                                         <th scope="col"></th>
                                         </tr>
@@ -60,21 +60,23 @@
                                     <tbody>
                                         <tr scope="row" v-for="(facultad, index) in facultadesFiltradas" :key="index">
                                             
-                                            <td>{{ facultad.id }}</td>
+                                            <!-- <td>{{ facultad.id }}</td> -->
                                             <td>{{ facultad.nombre_facultad }}</td>
                                             <td>
                                             <!-- General tools such as edit or delete-->
-                                                <div class="flex justify-center">
+                                                <div class="d-flex justify-content-end">
                                                     <inertia-link
                                                     method="delete"
                                                     :href="route('facultades.destroy', facultad.id)"
                                                     v-on:click="mostrarMensajeDelete(facultad)">
-                                                        <button class="btn btn-danger">
+                                                        <button class="btn btn-danger mr-4">
                                                             <i class="fas fa-trash"></i>
+                                                            Eliminar
                                                         </button>
                                                     </inertia-link>
                                                     <button class="btn btn-warning" v-on:click="mostrarMensajeUpdate(facultad)" data-toggle="modal" data-target="#modificarFacultad">
                                                         <i class="fas fa-edit mx-12"></i>
+                                                        Editar
                                                     </button>    
                                                 
                                                 

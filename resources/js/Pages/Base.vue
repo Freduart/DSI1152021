@@ -12,13 +12,13 @@
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
-            <li class="nav-item d-none d-sm-inline-block mx-4">
-                <!-- <a href="index3.html" class="nav-link">Home</a> -->
+            <!-- <li class="nav-item d-none d-sm-inline-block mx-4">
+                <a href="index3.html" class="nav-link">Home</a>
                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                     <i class="fa fa-home" aria-hidden="true"></i>
                     Inicio
                 </jet-nav-link>
-            </li>
+            </li> -->
 
             <!-- <form @submit.prevent="logout">
                 <li class="d-flex flex-row-reverse bd-highlight col"> 
@@ -34,7 +34,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <!-- <a class="dropdown-item" href="#">Action</a> -->
-                    <a class="dropdown-item" href="#">Mi cuenta</a>
+                    <a class="dropdown-item" :href="route('estudiantes.edit', 0)">Mi cuenta</a>
                     <form @submit.prevent="logout">
                     
                         <button class="btn"> 
@@ -70,7 +70,7 @@
                     <li class="nav-item">
                         <inertia-link :href="route('carreras.index')" class="nav-link" >
                         <i class="fa fa-graduation-cap nav-icon"></i>
-                        <p>Administrar carreras</p>
+                        <p>Carreras</p>
                         </inertia-link>
                     </li>
                     <li class="nav-item">
@@ -119,14 +119,14 @@
                     </li>
                     
                     <!-- Cuando es un solo elemento -->
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a href="pages/gallery.html" class="nav-link">
                         <i class="nav-icon far fa-image"></i>
                         <p>
                             Gallery
                         </p>
                         </a>
-                    </li>
+                    </li> -->
 
                     </ul>
                 </li>            
