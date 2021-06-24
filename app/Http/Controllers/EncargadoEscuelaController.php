@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class EncargadoEscuelaController extends Controller
 {
@@ -71,8 +73,35 @@ class EncargadoEscuelaController extends Controller
     public function store(Request $request)
     {
         //
-        EncargadoEscuela::create($request->all());
-        return Redirect::route('encargadosescuela.index');  
+        //EncargadoEscuela::create($request->all());
+        /*$permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+      $contra = substr(str_shuffle($permitted_chars), 0, 10);*/
+      $contra = "adminadmin";
+
+      $data = $request->input();
+      
+      $user = new User();
+      $user->name = $data['codigo_encargado_escuela'];
+      $user->email = $data['correo_encargado_escuela'];
+      $user->password = Hash::make($contra);    
+      $user->save();
+		
+      $usuario = User::where('name', '=', $data['codigo_encargado_escuela'])->firstOrFail();
+      $id = $usuario->id;
+      
+      $encargado = new EncargadoEscuela();
+      $encargado->nombre_encargado_escuela = $data['nombre_encargado_escuela'];
+      $encargado->apellido_encargado_escuela = $data['apellido_encargado_escuela'];
+      $encargado->correo_encargado_escuela = $data['correo_encargado_escuela'];
+      $encargado->codigo_encargado_escuela = $data['codigo_encargado_escuela'];
+      $encargado->carrera_id = $data['carrera_id'];
+      $encargado->estado_encargado_escuela = $data['estado_encargado_escuela'];
+      $encargado->user_id = $id;
+      $encargado->dui_encargado_escuela = $data['dui_encargado_escuela'];
+      $encargado->telefono_encargado_escuela = $data['telefono_encargado_escuela'];
+      $encargado->save();
+
+      return Redirect::route('encargadosescuela.index');  
     }
 
     /**

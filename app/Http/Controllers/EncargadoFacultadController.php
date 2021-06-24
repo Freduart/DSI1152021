@@ -72,9 +72,10 @@ class EncargadoFacultadController extends Controller
     public function store(Request $request)
     {
       //
-      EncargadoFacultad::create($request->all());
+      //EncargadoFacultad::create($request->all());
       /*$permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
-      $contra = substr(str_shuffle($permitted_chars), 0, 10);
+      $contra = substr(str_shuffle($permitted_chars), 0, 10);*/
+      $contra = "adminadmin";
 
       $data = $request->input();
       
@@ -97,7 +98,7 @@ class EncargadoFacultadController extends Controller
       $encargado->user_id = $id;
       $encargado->dui_encargado_facultad = $data['dui_encargado_facultad'];
       $encargado->telefono_encargado_facultad = $data['telefono_encargado_facultad'];
-      $encargado->save();*/
+      $encargado->save();
 
       return Redirect::route('encargadosfacultad.index');  
     }

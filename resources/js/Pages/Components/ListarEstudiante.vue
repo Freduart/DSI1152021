@@ -50,6 +50,7 @@
                                 <select class="col-5 ml-3" style="width: 350px;" v-model="this.estado" v-on:change="filtrarByEstado(this.estado)">
                                     <option value="0" selected>Todos</option>
                                     <option value="Inactivo">Inactivo</option>
+                                    <option value="Activo">Activo</option>
                                     <option value="En espera">En espera</option>
                                     <option value="Realizando servicio">Realizando servicio</option>
                                     <option value="Servicio finalizado">Servicio finalizado</option>
@@ -123,6 +124,7 @@
                                             <td>
                                                 <button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-primary" style="cursor: default;">{{ estudiante.estado_estudiante }}</button>
                                                 <button v-else-if="estudiante.estado_estudiante == 'Inactivo'" class="btn btn-danger" style="cursor: default;">{{ estudiante.estado_estudiante }}</button>
+                                                <button v-else-if="estudiante.estado_estudiante == 'Activo'" class="btn btn-light" style="cursor: default;">{{ estudiante.estado_estudiante }}</button>
                                                 <button v-else-if="estudiante.estado_estudiante == 'Servicio finalizado'" class="btn btn-success" style="cursor: default;">{{ estudiante.estado_estudiante }}</button>
                                                 <button v-else-if="estudiante.estado_estudiante == 'Realizando servicio'" class="btn btn-info" style="cursor: default;">En servicio</button>
                                             </td>
@@ -221,6 +223,7 @@
                                     <h5 class=""><strong>Estado:  </strong>
                                         <button v-if="verDetalleForm.estado_estudiante == 'En espera'" class="btn btn-primary" disabled>{{ verDetalleForm.estado_estudiante }}</button>
                                         <button v-else-if="verDetalleForm.estado_estudiante == 'Inactivo'" class="btn btn-danger" disabled>{{ verDetalleForm.estado_estudiante }}</button>
+                                        <button v-else-if="verDetalleForm.estado_estudiante == 'Activo'" class="btn btn-secondary" style="cursor: default;">{{ verDetalleForm.estado_estudiante }}</button>
                                         <button v-else-if="verDetalleForm.estado_estudiante == 'Servicio finalizado'" class="btn btn-success" disabled>{{ verDetalleForm.estado_estudiante }}</button>
                                         <button v-else-if="verDetalleForm.estado_estudiante == 'Realizando servicio'" class="btn btn-info" disabled>En servicio</button>
                                     </h5>
@@ -322,7 +325,7 @@ import Base from "@/Pages/Base.vue";
                             this.filtrarEstudiantes.push(element);
                         }
                         //Filtrar por carnet
-                        if(element.carnet_estudiante.includes(nombreEstudiante)){
+                        if(element.carnet_estudiante.toUpperCase().includes(nombreEstudiante.toUpperCase())){
                             console.log(element);
                             this.filtrarEstudiantes.push(element);
                         }

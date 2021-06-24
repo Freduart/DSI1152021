@@ -40,11 +40,11 @@
                 <div class="card-body">
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
-                             <h6 class="ml-4 mt-2">Mostrar por estado:
+                             <!--<h6 class="ml-4 mt-2">Mostrar por estado:
                             <select class="col-2 ml-3 custom-select" v-on:change="filtrarByEstado($event)">
                                 <option value="1" selected>En espera</option>
                                 <option value="0">Activo</option>
-                            </select></h6>
+                            </select></h6>-->
                             <!-- todo text 
                             <span>Buscar por</span>
                             <select class="ml-4" v-model="this.facultad" v-on:change="filtrarEstudiantes(this.facultad)">
@@ -265,21 +265,21 @@
                                    <div class="row">
                                        <div class="col">
                                             <div class="form-group">
-                                                <jet-button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-primary" title="Activar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
-                                                 <i class="fas"></i>APROBAR </jet-button>  
+                                                <button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-primary" title="Activar estudiante" v-on:click="cambiarestado(formUp)"> 
+                                                 <i class="fas"></i>APROBAR </button>  
 
-                                                 <jet-button v-else class="btn btn-primary" title="Activar estudiante" method="delete" v-on:click="cambiarestado(formUp)"> 
-                                                 <i class="fas"></i>APROBAR </jet-button>
+                                                 <button v-else class="btn btn-primary" title="Activar estudiante" v-on:click="cambiarestado(formUp)"> 
+                                                 <i class="fas"></i>APROBAR </button>
                                            </div>
                                         </div>
 
                                         <div class="col">
                                             <div class="form-group">
-                                                <jet-button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-warning" title="Desactivar estudiante" method="delete" v-on:click="changestatus(formUp)"> 
-                                                 <i class="fas"></i>DENEGAR </jet-button>  
+                                                <inertia-link v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-warning" title="Desactivar estudiante" method="delete" :href="route('verificarcuenta.destroy', this.formUp.id)" v-on:click="changestatus(formUp)"> 
+                                                 <i class="fas"></i>DENEGAR </inertia-link>  
 
-                                                 <jet-button v-else class="btn btn-warning" title="Desactivar estudiante" method="delete" v-on:click="changestatus(formUp)"> 
-                                                 <i class="fas"></i>DENEGAR </jet-button>
+                                                 <inertia-link v-else class="btn btn-warning" title="Desactivar estudiante" method="delete" :href="route('verificarcuenta.destroy', this.formUp.id)"  v-on:click="changestatus(formUp)"> 
+                                                 <i class="fas"></i>DENEGAR </inertia-link>
                                            </div>
                                         </div>
 
@@ -428,13 +428,13 @@ import Button from '../../Jetstream/Button.vue'
                   }).then((result) => {
                       if (result.isConfirmed) {
                           //var tipo = 1;
-                          this.$inertia.delete(route('verificarcuenta.destroy', estudiante.id/*, tipo*/));
+                          this.$inertia.put(route('verificarcuenta.update', estudiante.id), this.formUp);
                           Swal.fire(
                           '!Activado!',
                           'El estudiante se activo correctamente',
                           'success'
                           );
-                          window.location.reload(true);
+                          //window.location.reload(true);
                       }
                   })
                 }
@@ -478,13 +478,13 @@ import Button from '../../Jetstream/Button.vue'
                   }).then((result) => {
                       if (result.isConfirmed) {
                           //var tipo = 1;
-                          this.$inertia.delete(route('verificarcuenta.update', estudiante.id/*, tipo*/));
+                          //this.$inertia.delete(route('verificarcuenta.eliminar', estudiante.id/*, tipo*/));
                           Swal.fire(
                           '!Desactivado!',
                           'El estudiante se desactivo correctamente',
                           'success'
                           );
-                          window.location.reload(true);
+                          //window.location.reload(true);
                       }
                   })
                 }
@@ -529,7 +529,7 @@ import Button from '../../Jetstream/Button.vue'
                     allowOutsideClick: false,
                     showConfirmButton: false,
                 });*/
-                this.$inertia.put(route("estudiantes.update",form.id), this.formUp);
+                //this.$inertia.put(route("verificarcuenta.update",form.id), this.formUp);
             },
             mostrarDatos(estudiante){
                 console.log(estudiante);
@@ -583,7 +583,7 @@ import Button from '../../Jetstream/Button.vue'
                     nit_estudiante:'',
                     materias_cursadas:'',
                     cantidad_horas_ss:'',
-                    estado_estudiante:'Inactivo',
+                    estado_estudiante:'Activo',
                     }),
                 activo: true,    
                 }

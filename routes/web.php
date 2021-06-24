@@ -64,3 +64,4 @@ Route::resource('encargadosescuela', EncargadoEscuelaController::class);
 
 Route::resource('verificarcuenta', VerificarCuentaController::class);
 Route::resource('instituciones', InstitucionController::class);
+//Route::delete('verificarcuenta/{id}', [VerificarCuentaController::class, 'id'])->name('verificarcuenta.eliminar');
