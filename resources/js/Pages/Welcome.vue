@@ -17,7 +17,7 @@
                 Registrarse
               </inertia-link>  -->
 
-              <button type="button" class="btn btn-primary" v-on:click="mostrar()">
+              <button type="button" class="btn btn-primary" v-on:click="mostrarFormularioEstudiante()">
                 Registrase
               </button>
 
@@ -198,6 +198,9 @@ export default {
           this.$inertia.get(route('estudiantes.create'));
         }
       })
+    },
+    mostrarFormularioEstudiante(){
+      this.$inertia.get(route('estudiantes.create'));
     },
   }
 }

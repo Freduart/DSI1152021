@@ -7,6 +7,7 @@ use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\EncargadoFacultadController;
 use App\Http\Controllers\FacultadController;
 use App\Http\Controllers\EncargadoEscuelaController;
+use App\Http\Controllers\VerificarCuentaController;
 use App\Http\Controllers\InstitucionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -61,4 +62,5 @@ Route::resource('facultades', FacultadController::class);
 
 Route::resource('encargadosescuela', EncargadoEscuelaController::class);
 
+Route::resource('verificarcuenta', VerificarCuentaController::class);
 Route::resource('instituciones', InstitucionController::class);

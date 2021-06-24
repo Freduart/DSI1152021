@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Carrera;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class CarreraFactory extends Factory
 {
@@ -22,8 +23,9 @@ class CarreraFactory extends Factory
     public function definition()
     {
         return [
-            'nombre_carrera' => $this->faker->name(),
-            'codigo_carrera' => "COD-CAR",
+            'nombre_carrera' => Str::random(10),
+            'codigo_carrera' => Str::random(7),
+            'materias_para_aprobar'=>$this->faker->numberBetween(32, 40),
             'facultad_id' => $this->faker->numberBetween(1, 9)    
         ];
     }

@@ -83,7 +83,7 @@
                                             </td>
                                             <td v-else>
                                                 <form @submit.prevent="cambiarEstado(carrera)">
-                                                    <button type="submit" class="btn btn-primary" :class="{ 'text-white-50 bg-green-400': form.processing }">{{ carrera.estado_carrera }}</button>
+                                                    <button type="submit" class="btn btn-danger" :class="{ 'text-white-50 bg-green-400': form.processing }">{{ carrera.estado_carrera }}</button>
                                                 </form>            
                                             </td>
                                             <td>
@@ -91,17 +91,18 @@
                                                 <div class="flex justify-center">
 
                                                     
-                                                    <inertia-link
+                                                    <!-- <inertia-link
                                                     method="delete"
                                                     :href="route('carreras.destroy', carrera.id)"
                                                     v-on:click="mostrarMensajeDelete(carrera)">
                                                         <button class="btn btn-danger">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
-                                                    </inertia-link>
+                                                    </inertia-link> -->
                                                     
-                                                    <button class="btn btn-warning" v-on:click="mostrarMensajeUpdate(carrera)" data-toggle="modal" data-target="#actualizarCarrera">
+                                                    <button class="btn btn-warning ml-4" v-on:click="mostrarMensajeUpdate(carrera)" data-toggle="modal" data-target="#actualizarCarrera">
                                                         <i class="fas fa-edit mx-12"></i>
+                                                        Editar
                                                     </button>    
                                                 
                                                 
@@ -395,7 +396,9 @@ import Button from '../../Jetstream/Button.vue'
                 // this.$inertia.put(route("carreras.update", carrera.id), carrera.estado_carrera);
                 // console.log(carrera);
                 // this.$inertia.put(route('carreras.updateStatus', carrera.estado_carrera), carrera);
+                // window.location.reload(true);
                 this.$inertia.put(route("carreras.update",carrera.id), this.formUp);
+                
                 // this.submitUpdate(this.formUp);
             },
             submitUpdate(form){
