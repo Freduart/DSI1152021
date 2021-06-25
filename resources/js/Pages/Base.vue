@@ -29,21 +29,21 @@
             </form>   -->
 
             <div class="dropdown mx-3">
-                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <!--<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Cuenta
-                </button>
+                </button>-->
                 <!--<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
                     <!-- <a class="dropdown-item" href="#">Action</a> -->
                     <!--<a class="dropdown-item" :href="route('estudiantes.edit', 0)">Mi cuenta</a>
-                    <form @submit.prevent="logout">
+                </div> -->
+            </div>
+                <form @submit.prevent="logout">
                     
-                        <button class="btn"> 
+                        <button class="btn btn-info"> 
                             Cerrar Sesión
                         </button>
                     
-                    </form>
-                </div> -->
-            </div>
+                </form>
             
         </ul>
     </nav>
