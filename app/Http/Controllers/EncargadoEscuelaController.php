@@ -86,12 +86,12 @@ class EncargadoEscuelaController extends Controller
       $contra = "adminadmin";
 
       $data = $request->input();
-      
-      $user = new User();
-      $user->name = $data['codigo_encargado_escuela'];
-      $user->email = $data['correo_encargado_escuela'];
-      $user->password = Hash::make($contra);    
-      $user->save();
+  
+      User::create([
+        'name' => $data['codigo_encargado_escuela'],
+        'email'=> $data['correo_encargado_escuela'],
+        'password' => bcrypt($contra)
+      ])->assignRole('Encargado Escuela');
 		
       $usuario = User::where('name', '=', $data['codigo_encargado_escuela'])->firstOrFail();
       $id = $usuario->id;

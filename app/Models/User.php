@@ -10,6 +10,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -17,6 +19,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasRoles;
 
     protected $table = 'users';
     /**
@@ -64,9 +67,6 @@ class User extends Authenticatable
     //     return $this->hasOne('App\Models\Persona');
     // }
 
-    public function roles(){
-        return $this->belongsToMany('App\Models\Rol');
-    }
 
     //Relacion uno a uno con Estudiante
     public function estudiante(){

@@ -78,12 +78,12 @@ class EncargadoFacultadController extends Controller
       $contra = "adminadmin";
 
       $data = $request->input();
-      
-      $user = new User();
-      $user->name = $data['codigo_encargado_facultad'];
-      $user->email = $data['correo_encargado_facultad'];
-      $user->password = Hash::make($contra);    
-      $user->save();
+    
+      User::create([
+        'name' => $data['codigo_encargado_facultad'],
+        'email'=> $data['correo_encargado_facultad'],
+        'password' => bcrypt($contra)
+      ])->assignRole('Encargado Facultad');
 		
       $usuario = User::where('name', '=', $data['codigo_encargado_facultad'])->firstOrFail();
       $id = $usuario->id;

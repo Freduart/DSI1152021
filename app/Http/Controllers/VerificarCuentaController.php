@@ -73,11 +73,17 @@ class VerificarCuentaController extends Controller
 
         $data = $request->input();
         
-        $user = new User();
+        /*$user = new User();
         $user->name = $data['carnet_estudiante'];
         $user->email = $data['correo_estudiante'];
         $user->password = Hash::make($contra);    
-        $user->save();
+        $user->save();*/
+
+        User::create([
+          'name' => $data['carnet_estudiante'],
+          'email'=> $data['correo_estudiante'],
+          'password' => bcrypt($contra)
+        ])->assignRole('Estudiante');
 
         //envio de correo
         

@@ -434,7 +434,7 @@ import Button from '../../Jetstream/Button.vue'
                           'El estudiante se activo correctamente',
                           'success'
                           );
-                          //window.location.reload(true);
+                          window.location.reload(true);
                       }
                   })
                 }
@@ -484,7 +484,7 @@ import Button from '../../Jetstream/Button.vue'
                           'El estudiante se desactivo correctamente',
                           'success'
                           );
-                          //window.location.reload(true);
+                          window.location.reload(true);
                       }
                   })
                 }

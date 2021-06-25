@@ -9,9 +9,11 @@ use App\Http\Controllers\FacultadController;
 use App\Http\Controllers\EncargadoEscuelaController;
 use App\Http\Controllers\VerificarCuentaController;
 use App\Http\Controllers\InstitucionController;
+use App\Http\Controllers\RolController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\UsersController;
 
 use App\Mail\CredencialesMailable;
 use Illuminate\Support\Facades\Mail;
@@ -27,7 +29,8 @@ use Illuminate\Support\Facades\Mail;
 |
 */
 
-
+Route::resource('usuarios', UsersController::class);
+Route::resource('roles', RolController::class);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
