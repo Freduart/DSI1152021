@@ -26,7 +26,7 @@ class CreateEstudiantesTable extends Migration
             $table->string('dui_estudiante', 10)->nullable()->unique();
             $table->string('nit_estudiante', 17)->nullable()->unique();
             $table->unsignedInteger('materias_cursadas');
-            $table->unsignedBigInteger('porcentaje_aprobacion');
+            $table->float('porcentaje_aprobacion')->default(0);
             $table->unsignedInteger('cantidad_horas_ss');
             $table->enum('estado_estudiante', ['Inactivo','Activo','En espera', 'Realizando servicio', 'Servicio finalizado']);
 

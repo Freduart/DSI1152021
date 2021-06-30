@@ -48,8 +48,19 @@ class EstudianteController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
+        $carrera = Carrera::find($request->carrera_id);
+        
         Estudiante::create($request->all());
-        return Redirect::route('dashboard');    
+        // return $request->carnet_estudiante;
+        $porcentaje = ($request->materias_cursadas/$carrera->materias_para_aprobar)*100;
+        $estudiante = Estudiante::where('carnet_estudiante', '=', $request->carnet_estudiante)->firstOrFail();
+        // return $request;
+        // return $estudiante;
+        // return $porcentaje;
+        $estudiante->porcentaje_aprobacion = $porcentaje;
+        $estudiante->save();
+        
+        return Inertia::render('Admins/Dashboard');    
         // return Inertia::render('Welcome');
     }
 

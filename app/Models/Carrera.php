@@ -14,6 +14,7 @@ class Carrera extends Model
         'nombre_carrera',
         'codigo_carrera',
         'facultad_id',
+        'materias_para_aprobar',
     ];
 
     //Relacion muchos a uno (inversa de uno a muchos)

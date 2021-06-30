@@ -35,6 +35,7 @@ class Estudiante extends Model
         'telefono_estudiante',
         'dui_estudiante',
         'nit_estudiante',
+        'porcentaje_aprobacion'
     ];
 
     //Relacion uno a uno con persona

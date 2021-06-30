@@ -17,24 +17,41 @@
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Titulo</h1>
-          </div><!-- /.col -->          
+       
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <!-- Main row -->
+    <!-- <section class="content"> -->
+        <!-- <div class="container-fluid"> -->
+        <div class="card -mt-1">
             <div class="row">
+                <div class="col">
+                    <img src="https://www.ues.edu.sv/storage/app/media/minerva2.png" class="" alt="..." width="500px" height="600px">
+                    <div class="card-body">
+                    <h1 class="">SASS</h1>
+                    <p class="">Sistema de Administración de Servicios Sociales</p>
+                    </div>
+                    <div class="card-footer">
+                    <h1 class="text-muted d-flex justify-content-center">Universidad de El Salvador</h1>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="https://eluniversitario.ues.edu.sv/wp-content/uploads/sites/11/2021/02/Minerva-Universidad-de-El-Salvador-UES.jpg" class="" alt="..." width="1100px" height="850px">
+                </div>
+            </div>
+            
+
+        </div>
+            <!-- Main row -->
+            <!-- <div class="row"> -->
             <!-- Left col -->
-            <section class="col-lg-7 connectedSortable">
+            <!-- <section class="col-lg-7 connectedSortable"> -->
                 <!-- TO DO List -->
                 <!-- Ejemplo de como podria ser una tabla pero se tendria que añadir al width del 100% -->
-                <div class="card">
+                <!-- <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
                     <i class="ion ion-clipboard mr-1"></i>
@@ -50,27 +67,27 @@
                         <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
                     </ul>
                     </div>
-                </div>
+                </div> -->
                 <!-- /.card-header -->
-                <div class="card-body">
+                <!-- <div class="card-body">
                     <ul class="todo-list" data-widget="todo-list">
-                    <li>
+                    <li> -->
                         <!-- drag handle -->
-                        <span class="handle">
+                        <!-- <span class="handle">
                         <i class="fas fa-ellipsis-v"></i>
                         <i class="fas fa-ellipsis-v"></i>
-                        </span>
+                        </span> -->
                         <!-- checkbox -->
-                        <div  class="icheck-primary d-inline ml-2">
+                        <!-- <div  class="icheck-primary d-inline ml-2">
                         <input type="checkbox" value="" name="todo1" id="todoCheck1">
                         <label for="todoCheck1"></label>
-                        </div>
+                        </div> -->
                         <!-- todo text -->
-                        <span class="text">Design a nice theme</span>
+                        <!-- <span class="text">Design a nice theme</span> -->
                         <!-- Emphasis label -->
-                        <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
+                        <!-- <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small> -->
                         <!-- General tools such as edit or delete-->
-                        <div class="tools">
+                        <!-- <div class="tools">
                         <i class="fas fa-edit"></i>
                         <i class="fas fa-trash-o"></i>
                         </div>
@@ -156,24 +173,26 @@
                         </div>
                     </li>
                     </ul>
-                </div>
+                </div> -->
                 <!-- /.card-body -->
-                <div class="card-footer clearfix">
+                <!-- <div class="card-footer clearfix">
                     <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
                 </div>
-                </div>
+                </div> -->
                 <!-- /.card -->
-            </section>
+            <!-- </section> -->
             <!-- /.Left col -->
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
-            <section class="col-lg-5 connectedSortable">            
+            <!-- <section class="col-lg-5 connectedSortable">             -->
                 <!-- /.card -->
-            </section>
+            <!-- </section> -->
             <!-- right col -->
-            </div>
+            <!-- </div> -->
             <!-- /.row (main row) -->
-        </div><!-- /.container-fluid -->
-    </section>
+        <!-- </div> -->
+
+        <!-- /.container-fluid -->
+    <!-- </section> -->
     <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->

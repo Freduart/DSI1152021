@@ -211,6 +211,10 @@
                 <jet-input id="codigo_carrera" type="text" v-model="form.codigo_carrera" required autofocus autocomplete="off"/>
             </div>
             <div class="form-group">
+                <jet-label for="materias_para_aprobar" value="Cantidad de materias para graduar alumno" />
+                <jet-input id="materias_para_aprobar" type="text" v-model="form.materias_para_aprobar" required autofocus autocomplete="off"/>
+            </div>
+            <div class="form-group">
                 <jet-label for="facultad_id" value="Facultad a la que pertenece" />
                 <br/>
                 <select id="facultad_id" v-model="form.facultad_id" required>
@@ -259,6 +263,10 @@
             <div class="form-group">
                 <jet-label for="codigo_carrera" value="Código de la carrera" />
                 <jet-input id="codigo_carrera" type="text" v-model="formUp.codigo_carrera" required autofocus autocomplete="off" :value="this.formUp.codigo_carrera"/>
+            </div>
+            <div class="form-group">
+                <jet-label for="materias_para_aprobar" value="Cantidad de materias para graduar alumno" />
+                <jet-input id="materias_para_aprobar" type="text" v-model="formUp.materias_para_aprobar" required autofocus autocomplete="off" :value="this.formUp.materias_para_aprobar"/>
             </div>
             <div class="form-group">
                 <jet-label for="facultad_id" value="Facultad a la que pertenece" />
@@ -447,6 +455,7 @@ import Button from '../../Jetstream/Button.vue'
                 this.formUp.facultad_id = carrera.facultad_id;
                 this.formUp.estado_carrera = carrera.estado_carrera;
                 this.formUp.id = carrera.id;
+                this.formUp.materias_para_aprobar = carrera.materias_para_aprobar;
                 console.log(this.formUp);
             }
             // borrar(carrera){
@@ -488,6 +497,7 @@ import Button from '../../Jetstream/Button.vue'
                     facultad_id:'',
                     codigo_carrera:'',
                     estado_carrera: 'Activo',
+                    materias_para_aprobar:'',
                     }),
                 formUp: this.$inertia.form({
                     nombre_carrera:'',
@@ -495,6 +505,7 @@ import Button from '../../Jetstream/Button.vue'
                     codigo_carrera:'',
                     id: '',
                     estado_carrera:'',
+                    materias_para_aprobar:''
                     }),
                 activo: true,    
                 }

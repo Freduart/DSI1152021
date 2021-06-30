@@ -206,7 +206,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <h5 class=""><strong>Porcentaje de carrera: </strong>{{ verDetalleForm.materias_cursadas }} %</h5>
+                            <h5 class=""><strong>Porcentaje de carrera: </strong>{{ verDetalleForm.porcentaje_aprobacion }} %</h5>
                         </div>
                         <div class="col">
                             <h5 class=""><strong>Cantidad horas en servicio: </strong>{{ verDetalleForm.cantidad_horas_ss }} h</h5>
@@ -305,6 +305,7 @@ import Base from "@/Pages/Base.vue";
                 this.verDetalleForm.nit_estudiante = estudiante.nit_estudiante;
                 this.verDetalleForm.materias_cursadas = estudiante.materias_cursadas;
                 this.verDetalleForm.cantidad_horas_ss = estudiante.cantidad_horas_ss;
+                this.verDetalleForm.porcentaje_aprobacion = estudiante.porcentaje_aprobacion;
             },
             buscar(nombreEstudiante){
                 this.estado = 0;
@@ -369,6 +370,7 @@ import Base from "@/Pages/Base.vue";
                     nombre_carrera:'',
                     estado_estudiante:'',
                     carnet_estudiante:'',
+                    porcentaje_aprobacion:'',
                 },
                 buscarNombre:'',
                 filtrarEstudiantes:[],

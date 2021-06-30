@@ -50,12 +50,12 @@
 
         <div class="form-group">
           <jet-label for="dui_estudiante" value="DUI" />
-          <jet-input id="dui_estudiante" type="text" v-model="form.dui_estudiante" required />
+          <jet-input id="dui_estudiante" type="text" v-model="form.dui_estudiante" />
         </div>
 
         <div class="form-group">
           <jet-label for="nit_estudiante" value="NIT" />
-          <jet-input id="nit_estudiante" type="text" v-model="form.nit_estudiante" required />
+          <jet-input id="nit_estudiante" type="text" v-model="form.nit_estudiante" />
         </div>
 
         <div class="form-group">
@@ -92,7 +92,9 @@
             <!-- <button class="ml-4 btn btn-primary" :class="{ 'text-white-50': form.processing }" :disabled="form.processing">
               Enviar solicitud de registro
             </button> -->
-            <button style="padding: 6px" class="ml-4 btn btn-outline-success btn-md" :class="{ 'text-white-50': form.processing }" :disabled="form.processing">
+            <button style="padding: 6px" class="ml-4 btn btn-outline-success btn-md" :class="{ 'text-white-50': form.processing }" 
+            
+            >
               <i class="fa fa-paper-plane" aria-hidden="true"></i>
               Enviar solicitud de registro
             </button>
@@ -146,6 +148,7 @@ export default {
         telefono_estudiante: '',
         dui_estudiante: '',
         nit_estudiante: '',
+        porcentaje_aprobacion:0,
       }), carrerasFiltradas:[],
     }
   },

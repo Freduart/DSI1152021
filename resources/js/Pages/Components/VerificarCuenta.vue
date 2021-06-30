@@ -241,8 +241,8 @@
                               <div class="col">
                                 <div class="form-group">
 
-                                     <jet-label for="materias_cursadas" value="Materias Cursadas" />
-                                     <jet-input id="materias_cursadas" type="text" readonly="readonly" v-model="formUp.materias_cursadas" required autofocus autocomplete="materias_cursadas" />
+                                     <jet-label for="materias_cursadas" value="Porcentaje de avance del alumno en la carrera (%)" />
+                                     <jet-input id="materias_cursadas" type="text" readonly="readonly" v-model="formUp.porcentaje_aprobacion" required autofocus autocomplete="materias_cursadas"/>
                                   
                                 </div>
                               </div>
@@ -546,6 +546,7 @@ import Button from '../../Jetstream/Button.vue'
                 this.formUp.materias_cursadas=estudiante.materias_cursadas;
                 this.formUp.cantidad_horas_ss=estudiante.cantidad_horas_ss;
                 this.formUp.estado_estudiante = estudiante.estado_estudiante;
+                this.formUp.porcentaje_aprobacion = estudiante.porcentaje_aprobacion;
                 console.log(this.formUp);
             }
 
@@ -584,6 +585,7 @@ import Button from '../../Jetstream/Button.vue'
                     materias_cursadas:'',
                     cantidad_horas_ss:'',
                     estado_estudiante:'Activo',
+                    porcentaje_aprobacion:''
                     }),
                 activo: true,    
                 }

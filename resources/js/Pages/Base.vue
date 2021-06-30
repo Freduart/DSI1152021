@@ -12,6 +12,8 @@
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
+
+            
             <!-- <li class="nav-item d-none d-sm-inline-block mx-4">
                 <a href="index3.html" class="nav-link">Home</a>
                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
@@ -28,15 +30,7 @@
                 </li> 
             </form>   -->
 
-            <div class="dropdown mx-3">
-                <!--<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Cuenta
-                </button>-->
-                <!--<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
-                    <!-- <a class="dropdown-item" href="#">Action</a> -->
-                    <!--<a class="dropdown-item" :href="route('estudiantes.edit', 0)">Mi cuenta</a>
-                </div> -->
-            </div>
+            <div v-if="$page.props.user">
                 <form @submit.prevent="logout">
                     
                         <button class="btn btn-info"> 
@@ -44,6 +38,23 @@
                         </button>
                     
                 </form>
+            </div>
+            <template v-else>
+              <inertia-link :href="route('login')" class="btn btn-success">
+                Iniciar Sesión
+              </inertia-link>
+              
+              <!-- <inertia-link v-if="canRegister" :href="route('estudiantes.create')" class="ml-4 text-muted">
+                Registrarse
+              </inertia-link>  -->
+
+              <button type="button" class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
+                Registrase
+              </button>
+
+            </template>
+
+
             
         </ul>
     </nav>
@@ -67,6 +78,12 @@
                 <li class="nav-item menu-open">
                     
                     <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <inertia-link href="/" class="nav-link" >
+                        <i class="fa fa-home nav-icon"></i>
+                        <p>Inicio</p>
+                        </inertia-link>
+                    </li>
                     <li class="nav-item">
                         <inertia-link :href="route('carreras.index')" class="nav-link" >
                         <i class="fa fa-graduation-cap nav-icon"></i>
@@ -177,6 +194,9 @@
             logout() {
                 this.$inertia.post(route('logout'));
              },
+            mostrarFormularioEstudiante(){
+                this.$inertia.get(route('estudiantes.create'));
+            }
         },
         mounted(){
             /*$(".nav li").on("click", function(){
