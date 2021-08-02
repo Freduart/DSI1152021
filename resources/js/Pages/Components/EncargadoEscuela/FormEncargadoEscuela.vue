@@ -13,7 +13,7 @@
           <div class="col-sm-5">
             <!-- titulo que cambiará conforme a la accion seleccionada -->
             <h1 v-if="this.$props.encargadoE.id != null" class="m-2">Modificar encargado de escuela</h1>
-            <h1 v-else class="m-2">Agregar encargado de facultad</h1>
+            <h1 v-else class="m-2">Agregar encargado de escuela</h1>
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -171,6 +171,7 @@ export default {
     Base
   },
   props:['encargadoE', 'facultades', 'carreras', 'idFacultad', 'escuela'],
+
   // data a utilizar
   data() {
     return {
@@ -188,74 +189,50 @@ export default {
     }
   },
 
+  // lineas a ser ejecutadas al inicio 
   mounted(){
-    // funcion para cargar las carreras de la facultad seleccionada al inicio
-    /*this.carreras.forEach(element => {
-        this.carrerasFiltradas.push(element);
-    })*/
-    if(this.$props.encargadoE.id != null){
-      var idFac = this.form.facultad_id;
-      var contador = 0;
-      this.facultades.forEach(facultad => {
-        if(facultad.id == idFac){
-          this.carreras.forEach(carrera => {
-            if(carrera.facultad_id == idFac){
-              this.carrerasFiltradas.push(carrera); 
-            }
-          });
+
+    // funcion para cargar las carreras de las facultades al cargar la pagina
+    if(this.$props.encargadoE.id != null){ // validar si es insercion o actualizacion por medio del id
+      var idFac = this.form.facultad_id;  // obteniendo la facultad del encargado
+      this.carreras.forEach(carrera => { 
+        if(carrera.facultad_id == idFac){
+          this.carrerasFiltradas.push(carrera); // llenar las carreras de la facultad
         }
-      })
-      /*this.escuela.forEach(element => {
-        this.carreras.forEach(element2 => {
-          if(element.nombre_carrera == element2.nombre_carrera){
-            contador++;
-          }
-        }); 
-      });*/
-      //if (contador == 0){
-        this.escuela.forEach(element => {
-          this.carrerasFiltradas.push(element);
-        });
-      //}
+      });
+
+      this.escuela.forEach(element => {
+        this.carrerasFiltradas.push(element); //agregar la facultad del encargado al arreglo
+      });
     } 
-    /*this.carreras.forEach(element => {
-      this.carrerasFiltradas.push(element);
-      /*if(this.form.facultad_id == elemento.facultad_id){
-        this.carrerasFiltradas.push(carrera); 
-      }*/
-    //});
   },
 
   methods: {
     // funcion guardar (insert o update)
     submit() {
       if (this.$props.encargadoE.id != null){
+        // actualizar
         this.$inertia.put(route('encargadosescuela.update', this.$props.encargadoE.id), this.form);
       } else {
+        // insertar
         console.log(this.form);
         this.form.post(route('encargadosescuela.store'));
       }
     },
-    // funcion para cargar la carrera de la facultad seleccionada
-    buscarCarreras(id){
-      //this.carrerasFiltradas.splice(0, this.carrerasFiltradas.length);
-      this.carrerasFiltradas.length = 0;
-      this.facultades.forEach(facultad => {
-        if(facultad.id == id){
-          //this.carrerasFiltradas.push(this.escuela);
-          
-          this.carreras.forEach(carrera => {
-            if(carrera.facultad_id == facultad.id){
-              this.carrerasFiltradas.push(carrera); 
-            }
-          });          
-        }
 
-        
-      });
+    // funcion para cargar las carreras de la facultad seleccionada
+    buscarCarreras(id){
+      this.carrerasFiltradas.length = 0; // vaciar arreglo
+      this.carreras.forEach(carrera => {
+        if(carrera.facultad_id == id){ 
+          this.carrerasFiltradas.push(carrera); // llenar las carreras de la facultad
+        }
+      });          
+
+      // compara la facultad seleccionada con la facultad del encargado 
       if (id == this.$props.idFacultad){
         this.escuela.forEach(element => {
-          this.carrerasFiltradas.push(element);
+          this.carrerasFiltradas.push(element); //agrega la escuela del encargado
         });
       }
     }

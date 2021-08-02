@@ -153,6 +153,7 @@ export default {
     Base
   },
   props:['encargadoF', 'facultades', 'facultad'],
+
   // data a utilizar
   data() {
     return {
@@ -169,24 +170,17 @@ export default {
     }
   },
 
+  // lineas a ser ejecutadas al inicio 
   mounted(){
-    // funcion para cargar las facultades sin encargado asignado
 
-    if(this.$props.encargadoF.id != null){
-      var contador = 0;
-      this.facultad.forEach(element => {
-        this.facultades.forEach(element2 => {
-          if(element.nombre_facultad == element2.nombre_facultad){
-            contador++;
-          }
-        }); 
-      });
-      if (contador == 0){
+    // funcion para cargar las facultades sin encargado asignado
+    if(this.$props.encargadoF.id != null){ // validar si es insercion o actualizacion por medio del id
+      // agregando elemento de facultad del encargado a la estructura
         this.facultad.forEach(element => {
-          this.facultadesFiltradas.push(element);
+          this.facultadesFiltradas.push(element); // llenar la facultad seleccionada
         });
-      }
     } 
+    // agregando las demas facultades a la estructura
     this.facultades.forEach(element => {
       this.facultadesFiltradas.push(element);
     });

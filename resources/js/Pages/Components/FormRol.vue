@@ -56,7 +56,7 @@
                           <jet-button type="submit" class="btn btn-primary float-center" :class="{ 'text-white-50': form.processing }" :disabled="form.processing" >
                           <i class="fas"></i> Guardar</jet-button>
                           <div class="mx-2"></div>
-                          <inertia-link :href="route('encargadosfacultad.index')" type="button" class="btn btn-danger float-center" >
+                          <inertia-link :href="route('roles.index')" type="button" class="btn btn-danger float-center" >
                           <i class="fas"></i> Cancelar</inertia-link>
                         </div>
                       </div>
@@ -69,8 +69,8 @@
                   <div class="card">
                     <div class="card-body">
                       <h5 class ="ml-4 mb-4">Listado de permisos del rol</h5>
-                  <table class="table table-striped table-dark text-center" style="font-size: 20px">
-                    <thead>
+                  <table class="table table-hover text-center">
+                    <thead class="thead-dark">
                         <tr>
                         
                         <th scope='col'>ID</th>
@@ -79,21 +79,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr scope="row" v-for="(permiso, index) in permisosUser" :key="index">
+                        <tr  class="table-secondary" scope="row" v-for="(permiso, index) in permisosUser" :key="index">
                             
                             <td>{{ permiso.ident }}</td>
                             <td>{{ permiso.permiso }}</td>
                             
                             <td>
                             <!-- General tools such as edit or delete-->
-                                <div class="flex justify-center">
-                                    
-                                    <button class="btn btn-warning ml-4" v-on:click="mostrarMensajeUpdate(carrera)" data-toggle="modal" data-target="#actualizarCarrera">
-                                        <i class="fas fa-edit mx-12"></i>
-                                        Quitar
-                                    </button>    
-                                
-                                
+                                <div class="tools">
+                                    <jet-button type="button" class="fas fa-minus-circle text-red" v-on:click="eliminar(permiso)"></jet-button>    
                                 </div>
                             </td>
                         </tr>
@@ -143,7 +137,7 @@
             JetDropdownLink,
             JetInput,
             JetLabel,
-            JetButton,
+            //JetButton,
             Base
         },
         props:['permisos','permisosUser', 'idrol'],
@@ -159,7 +153,10 @@
                 'success'
                 );
                 window.location.reload(true);
-            }           
+            },
+            /*eliminar(permiso){
+              this.$inertia.put(route('roles.destroy', permiso));
+            } */         
         },    
         data(){
             return{

@@ -15,8 +15,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
-        //$usuarios=User::all(); 
+        // obteniendo todos los usuarios con su rol
         $usuarios = User::join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
         ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
         ->select('users.id as ident', 'users.name as username', 'email', 'roles.name as rol')->get();
