@@ -22,16 +22,12 @@ class EncargadoFacultadController extends Controller
      */
     public function index()
     {
-        //
-        //$encargadoFacultad = EncargadoFacultad::all();
-        /*$encargadoFacultad = DB::table('encargado_facultads')
-        ->join('carreras', 'encargado_facultads.carrera_id', '=', 'carreras.id')
-        ->join('personas', 'encargado_facultads.persona_id', '=', 'personas.id')
-        ->get();*/
+        // obteniendo las facultades
         $facultades = Facultad::all();
+        // obteniendo los encarcargados de las facultades
         $encargadoFacultad = EncargadoFacultad::join('facultades', 'encargado_facultades.facultad_id', '=', 'facultades.id')
         ->select('encargado_facultades.id AS idEncargado', 'codigo_encargado_facultad', 'dui_encargado_facultad', 'nombre_encargado_facultad', 'apellido_encargado_facultad', 'correo_encargado_facultad', 'telefono_encargado_facultad', 'estado_encargado_facultad', 'nombre_facultad', 'facultad_id')->get();
-        return Inertia::render('Components/ListarEncargadoFacultad', ['encargadosF' => $encargadoFacultad, 'facultades' => $facultades]);
+        return Inertia::render('Components/EncargadoFacultad/ListarEncargadoFacultad', ['encargadosF' => $encargadoFacultad, 'facultades' => $facultades]);
     }
 
     /**
@@ -41,6 +37,7 @@ class EncargadoFacultadController extends Controller
      */
     public function create()
     {
+      // inicializacion de datos del encargado de escuela
       $encargadoF = new EncargadoFacultad();
       $encargadoF->id = null;
       $encargadoF->codigo_encargado_facultad = '';
@@ -51,7 +48,8 @@ class EncargadoFacultadController extends Controller
       $encargadoF->estado_encargado_facultad = 'Activo';
       $encargadoF->dui_encargado_facultad = '';
       $encargadoF->telefono_encargado_facultad = '';
-      //$facultades = Facultad::all();
+      
+      // obteniendo las facultades que aun no tienen asignado encargado de facultad activo
       $facultades = DB::table('facultades')->distinct('nombre_facultad')
         ->select('facultades.id AS idF', 'nombre_facultad')
         ->whereNotIn('nombre_facultad', DB::table('encargado_facultades')
@@ -60,7 +58,8 @@ class EncargadoFacultadController extends Controller
         ->join('facultades', 'encargado_facultades.facultad_id', '=', 'facultades.id')
         ->where('estado_encargado_facultad', '=', 'Activo'))
         ->get();
-      return Inertia::render('Components/FormEncargadoFacultad', ['encargadoF' => $encargadoF,'facultades' => $facultades]);
+
+      return Inertia::render('Components/EncargadoFacultad/FormEncargadoFacultad', ['encargadoF' => $encargadoF,'facultades' => $facultades]);
     }
 
     /**
@@ -71,23 +70,15 @@ class EncargadoFacultadController extends Controller
      */
     public function store(Request $request)
     {
-      //
-      //EncargadoFacultad::create($request->all());
+      // generación de contraseña
       /*$permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
       $contra = substr(str_shuffle($permitted_chars), 0, 10);*/
       $contra = "adminadmin";
 
+      // obteniendo la data de request
       $data = $request->input();
     
-      User::create([
-        'name' => $data['codigo_encargado_facultad'],
-        'email'=> $data['correo_encargado_facultad'],
-        'password' => bcrypt($contra)
-      ])->assignRole('Encargado Facultad');
-		
-      $usuario = User::where('name', '=', $data['codigo_encargado_facultad'])->firstOrFail();
-      $id = $usuario->id;
-      
+      // creando el encargado
       $encargado = new EncargadoFacultad();
       $encargado->nombre_encargado_facultad = $data['nombre_encargado_facultad'];
       $encargado->apellido_encargado_facultad = $data['apellido_encargado_facultad'];
@@ -95,10 +86,27 @@ class EncargadoFacultadController extends Controller
       $encargado->codigo_encargado_facultad = $data['codigo_encargado_facultad'];
       $encargado->facultad_id = $data['facultad_id'];
       $encargado->estado_encargado_facultad = $data['estado_encargado_facultad'];
-      $encargado->user_id = $id;
       $encargado->dui_encargado_facultad = $data['dui_encargado_facultad'];
       $encargado->telefono_encargado_facultad = $data['telefono_encargado_facultad'];
-      $encargado->save();
+
+      if($encargado->save()){
+
+        // creando el usuario y asignando el rol
+        User::create([
+          'name' => $data['codigo_encargado_facultad'],
+          'email'=> $data['correo_encargado_facultad'],
+          'password' => bcrypt($contra)
+        ])->assignRole('Encargado Facultad');
+        
+        // obteniendo el id usuario creado
+        $usuario = User::where('name', '=', $data['codigo_encargado_facultad'])->firstOrFail();
+        $id = $usuario->id;
+
+        // asignando el usuario al encargado
+        $encargado = EncargadoFacultad::where('correo_encargado_facultad', '=', $data['correo_encargado_facultad'])->firstOrFail();
+        $encargado->user_id = $id;
+        $encargado->save();
+      }
 
       return Redirect::route('encargadosfacultad.index');  
     }
@@ -124,14 +132,7 @@ class EncargadoFacultadController extends Controller
      */
     public function edit($encargadoFacultad)
     {
-        //
-        //$facultades = Facultad::all();
-        /*$facultades = DB::table('facultades')
-        ->leftJoin('encargado_facultades', 'facultades.id', '=', 'encargado_facultades.facultad_id')
-        ->select('facultades.id AS idF', 'nombre_facultad')
-        ->whereNull('encargado_facultades.id')
-        ->orWhere('encargado_facultades.estado_encargado_facultad', '=', 'Inactivo')
-        ->get();*/
+        // obteniendo las facultades que aun no tienen asignado encargado de facultad activo
         $facultades = DB::table('facultades')->distinct('nombre_facultad')
         ->select('facultades.id AS idF', 'nombre_facultad')
         ->whereNotIn('nombre_facultad', DB::table('encargado_facultades')
@@ -140,14 +141,16 @@ class EncargadoFacultadController extends Controller
         ->join('facultades', 'encargado_facultades.facultad_id', '=', 'facultades.id')
         ->where('estado_encargado_facultad', '=', 'Activo'))
         ->get();
+        // obteniendo datos del encargado de facultad
         $encargadoF = EncargadoFacultad::find($encargadoFacultad);
+        // obteniendo la facultad del encargado de facultad
         $facultad = DB::table('facultades')->distinct('nombre_facultad')
         ->join('encargado_facultades', 'facultades.id', '=', 'encargado_facultades.facultad_id')
         ->select('facultades.id AS idF', 'nombre_facultad')
         ->where('encargado_facultades.id', '=', $encargadoFacultad)
         ->get();
         
-        return Inertia::render('Components/FormEncargadoFacultad', ['encargadoF' => $encargadoF, 'facultades' => $facultades, 'facultad' => $facultad]);
+        return Inertia::render('Components/EncargadoFacultad/FormEncargadoFacultad', ['encargadoF' => $encargadoF, 'facultades' => $facultades, 'facultad' => $facultad]);
     }
 
     /**
@@ -159,7 +162,7 @@ class EncargadoFacultadController extends Controller
      */
     public function update(Request $request, $encargadoFacultad)
     {
-        //
+        // actualizando datos
         $encargadoF = EncargadoFacultad::find($encargadoFacultad);
         $encargadoF->update($request->all());
         return Redirect::route('encargadosfacultad.index');
@@ -173,25 +176,24 @@ class EncargadoFacultadController extends Controller
      */
     public function destroy($encargadoFacultad)
     {
-        //
-        /*$encargadoFacultad->estado_encargado_facultad = "Inactivo";
-        $encargadoFacultad->save();*/
+        // cambio de estado del encargado de escuela
         $encargadoF = EncargadoFacultad::find($encargadoFacultad);
         if ($encargadoF->estado_encargado_facultad == "Activo"){
             $encargadoF->estado_encargado_facultad = "Inactivo";
             $encargadoF->save();
         } else {
+            // validando si existe un encargado activo antes de activar otro
             $encargado = EncargadoFacultad::where('facultad_id', '=', $encargadoF->facultad_id)
             ->where('estado_encargado_facultad', '=', 'Activo')
             ->get()->first();
             
             if ($encargado==null){
+              // cambiando estado a activo en caso de no haber otro activo
               $encargadoF->estado_encargado_facultad = "Activo";
               $encargadoF->save();
             } 
         }
-             
-        //$encargadoF->delete();
+        
         return Redirect::route('encargadosfacultad.index');
     }
 }

@@ -48,9 +48,8 @@
                             </select> -->
                             <!--<button type="button" class="btn btn-success mb-8">
                             <i class="fas fa-plus"></i> Añadir</button> -->
-                            <hr>
-                                <table class="table table-striped text-center" width="500" style="font-size: 20px">
-                                    <thead>
+                                <table class="table table-hover text-center">
+                                    <thead class="thead-dark">
                                         <tr> 
                                         <th scope='col'>ID</th>
                                         <th scope="col">Usuarios</th>
@@ -60,7 +59,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr scope="row" v-for="(usuario, index) in usuarios" :key="index">
+                                        <tr class="table-secondary" scope="row" v-for="(usuario, index) in usuarios" :key="index">
                                             
                                             <td>{{ usuario.ident }}</td> 
                                             <td>{{ usuario.username }}</td>

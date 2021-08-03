@@ -40,41 +40,32 @@
                 <div class="card-body">
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
-                            <!-- todo text -->
-                            <!-- <span>Buscar por</span> -->
-                            <!-- <select class="col-2 ml-3 custom-select" v-model="this.facultad" v-on:change="filtrarByFacultad(this.facultad)">
-                                <option value="0" selected>Todos</option>
-                                <option v-for="(facultad, index) in facultades" :key="index" :value="facultad.id">{{ facultad.nombre_facultad }}</option>
-                            </select> -->
-                            <!--<button type="button" class="btn btn-success mb-8">
-                            <i class="fas fa-plus"></i> Añadir</button> -->
-                            <hr>
-                                <table class="table table-striped text-center" width="500" style="font-size: 20px">
-                                    <thead>
-                                        <tr> 
-                                        <th scope='col'>ID</th>
-                                        <th scope="col">Rol</th>
-                                        <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr scope="row" v-for="(rol, index) in roles" :key="index">
+                            <table class="table table-hover text-center">
+                                <thead class="thead-dark">
+                                    <tr> 
+                                    <th scope='col'>ID</th>
+                                    <th scope="col">Rol</th>
+                                    <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary" scope="row" v-for="(rol, index) in roles" :key="index">
+                                        
+                                        <td>{{ rol.id }}</td> 
+                                        <td>{{ rol.name }}</td>
+                                        <td>
+                                        <!-- General tools such as edit or delete-->
+                                            <div class="d-flex justify-content-end">
+                                                    
+                                            <inertia-link class="ml-4" :href="route('roles.edit', rol.id)" >
+                                                <i class="fas fa-edit"></i>   
+                                            </inertia-link>  
                                             
-                                            <td>{{ rol.id }}</td> 
-                                            <td>{{ rol.name }}</td>
-                                            <td>
-                                            <!-- General tools such as edit or delete-->
-                                                <div class="d-flex justify-content-end">
-                                                       
-                                                <inertia-link class="ml-4" :href="route('roles.edit', rol.id)" >
-                                                    <i class="fas fa-edit"></i>  Editar  
-                                                </inertia-link>  
-                                                
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
                         </li>
                     </ul>
