@@ -40,17 +40,11 @@
                 <div class="card-body">
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
-                            <!-- todo text -->
-                            <!-- <span>Buscar por</span> -->
-                            <!-- <select class="col-2 ml-3 custom-select" v-model="this.facultad" v-on:change="filtrarByFacultad(this.facultad)">
-                                <option value="0" selected>Todos</option>
-                                <option v-for="(facultad, index) in facultades" :key="index" :value="facultad.id">{{ facultad.nombre_facultad }}</option>
-                            </select> -->
                             <button type="button" class="btn btn-success mb-8" data-toggle="modal" data-target="#añadirFacultad">
                             <i class="fas fa-plus"></i> Añadir</button> 
                             <hr>
-                                <table class="table table-striped table-dark text-center" width="500" style="font-size: 20px">
-                                    <thead>
+                                <table class="table table-hover text-center" width="500" style="font-size: 20px">
+                                    <thead class="thead-dark">
                                         <tr> 
                                         <!-- <th scope='col'>Código</th> -->
                                         <th scope="col">Nombre de la Facultad</th>
@@ -58,28 +52,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr scope="row" v-for="(facultad, index) in facultadesFiltradas" :key="index">
+                                        <tr class="table-secondary" scope="row" v-for="(facultad, index) in facultadesFiltradas" :key="index">
                                             
                                             <!-- <td>{{ facultad.id }}</td> -->
                                             <td>{{ facultad.nombre_facultad }}</td>
                                             <td>
                                             <!-- General tools such as edit or delete-->
-                                                <div class="d-flex justify-content-end">
-                                                    <inertia-link
-                                                    method="delete"
+                                                <div class="tools">
+                                                    <inertia-link class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a Facultad" method="delete"
                                                     :href="route('facultades.destroy', facultad.id)"
-                                                    v-on:click="mostrarMensajeDelete(facultad)">
-                                                        <button class="btn btn-danger mr-4">
+                                                    v-on:click="mostrarMensajeDelete(facultad)"></inertia-link>
+                                                        
+                                                        <!--<jet-button type="button" class="fas fa-arrow-alt-circle-down" title="Dar de baja a Facultad" method="delete" :href="route('facultades.destroy', facultad.id)" v-on:click="mostrarMensajeDelete(facultad)">
                                                             <i class="fas fa-trash"></i>
                                                             Eliminar
-                                                        </button>
-                                                    </inertia-link>
-                                                    <button class="btn btn-warning" v-on:click="mostrarMensajeUpdate(facultad)" data-toggle="modal" data-target="#modificarFacultad">
-                                                        <i class="fas fa-edit mx-12"></i>
-                                                        Editar
-                                                    </button>    
+                                                        </jet-button>-->
                                                 
-                                                
+                                                    <jet-button type="button" class="fas fa-edit" v-on:click="mostrarMensajeUpdate(facultad)" data-toggle="modal" data-target="#modificarFacultad" title="Editar Facultad"></jet-button>
+                                                    
+                                                    <!--<inertia-link class="fas fa-edit" v-on:click="mostrarMensajeUpdate(facultad)" data-toggle="modal" data-target="#modificarFacultad" title="Editar Facultad"></inertia-link>-->
+                                                          
                                                 </div>
                                             </td>
                                         </tr>
@@ -195,24 +187,28 @@
                 <jet-label for="facultad_id" value="Codigo de la facultad" />
                 <jet-input id="facultad_id" type="text" v-model="formUp.facultad_id" required autofocus autocomplete="off"/>
             </div>-->
-            <div class="form-group">
-                <br/>
-                <hr/>
-                <div class="mt-12">
-                    <jet-button class="ml-4" :class="{ 'text-white-50 bg-green-400': formUp.processing }" v-on:click="submitUpdate(this.formUp)">
-                        <button type="button" class="btn btn-primary">Modificar</button>
-                        <!--<i class="fas fa-edit"></i>  Modificar-->   
-                    </jet-button>   
+               <div class="d-flex justify-content-center align-items-baseline">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="mt-12">
+                                    <jet-button class="btn btn-primary float-center" :class="{ 'text-white-50 bg-green-400': formUp.processing }" v-on:click="submitUpdate(this.formUp)">
+                                    <i class="fas"></i>Guardar
+                                         <!--<i class="fas fa-edit"></i>  Modificar-->   
+                                     </jet-button>  
+                                </div>                  
+                            </div>
+                        </div>
 
-                    <jet-button type="button" class="btn btn-danger mx-12" data-dismiss="modal">
-                        <inertia-link :href="route('facultades.index')">
-                        <button type="button" class="btn btn-danger">Cancelar</button>
-                        </inertia-link>
-                    </jet-button>
-                    
-                </div>
-            </div>
-    
+                        <div class="col">
+                            <div class="form-grup">
+                                <inertia-link :href="route('facultades.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
+                                <i class="fas"></i> Cancelar</inertia-link>
+                            </div>
+                        </div>
+
+                    </div>
+               </div>
  
         </form>
         </div>
