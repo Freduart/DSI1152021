@@ -28,7 +28,6 @@
             <!-- Left col -->
             <section class="col-lg-12 connectedSortable">
                 <!-- TO DO List -->
-                <!-- Ejemplo de como podria ser una tabla pero se tendria que añadir al width del 100% -->
                 <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
@@ -40,9 +39,11 @@
                 <div class="card-body">
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
+                            <!--Boton para añadir facultades-->
                             <button type="button" class="btn btn-success mb-8" data-toggle="modal" data-target="#añadirFacultad">
                             <i class="fas fa-plus"></i> Añadir</button> 
                             <hr>
+                                <!--Tabla donde apareceran todos las facultades-->
                                 <table class="table table-hover text-center" width="500" style="font-size: 20px">
                                     <thead class="thead-dark">
                                         <tr> 
@@ -54,23 +55,18 @@
                                     <tbody>
                                         <tr class="table-secondary" scope="row" v-for="(facultad, index) in facultadesFiltradas" :key="index">
                                             
-                                            <!-- <td>{{ facultad.id }}</td> -->
+                                            <!--Aqui devuelven los datos que se mostraran en pantalla -->
                                             <td>{{ facultad.nombre_facultad }}</td>
                                             <td>
-                                            <!-- General tools such as edit or delete-->
+                                            <!-- Botones para edit or delete-->
                                                 <div class="tools">
                                                     <inertia-link class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a Facultad" method="delete"
                                                     :href="route('facultades.destroy', facultad.id)"
                                                     v-on:click="mostrarMensajeDelete(facultad)"></inertia-link>
-                                                        
-                                                        <!--<jet-button type="button" class="fas fa-arrow-alt-circle-down" title="Dar de baja a Facultad" method="delete" :href="route('facultades.destroy', facultad.id)" v-on:click="mostrarMensajeDelete(facultad)">
-                                                            <i class="fas fa-trash"></i>
-                                                            Eliminar
-                                                        </jet-button>-->
-                                                
-                                                    <jet-button type="button" class="fas fa-edit" v-on:click="mostrarMensajeUpdate(facultad)" data-toggle="modal" data-target="#modificarFacultad" title="Editar Facultad"></jet-button>
+                                                       
+                                                    <!--<jet-button class="fas fa-edit" style='color:#007bff' v-on:click="mostrarMensajeUpdate(facultad)" data-toggle="modal" data-target="#modificarFacultad" title="Editar Facultad"></jet-button>-->
                                                     
-                                                    <!--<inertia-link class="fas fa-edit" v-on:click="mostrarMensajeUpdate(facultad)" data-toggle="modal" data-target="#modificarFacultad" title="Editar Facultad"></inertia-link>-->
+                                                    <inertia-link :href="route('facultades.update', facultad.id)" v-on:click="mostrarMensajeUpdate(facultad)" data-toggle="modal" data-target="#modificarFacultad" title="Editar Facultad"> <i class="fas fa-edit"></i> </inertia-link>
                                                           
                                                 </div>
                                             </td>
@@ -83,10 +79,6 @@
                 </div>
 
                 <div class="card-footer clearfix">
-                    <!-- <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#añadirCarrera">
-                    <i class="fas fa-plus"></i> Añadir Carrera</button>  -->
-
-
 
                 </div>
                 </div>
@@ -115,7 +107,7 @@
 
 
 
-<!-- Modal Insertar los datos de las facultades-->
+<!-- Modal Insertar los datos de las facultades desde el boton añadir-->
 <div class="modal fade" id="añadirFacultad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -133,10 +125,6 @@
                 <jet-label for="nombre_facultad" value="Nombre de la Facultad" />
                 <jet-input id="nombre_facultad" type="text" v-model="form.nombre_facultad" required autofocus autocomplete="off"/>
             </div>
-            <!-- <div class="form-group">
-                 <jet-label for="facultad_id" value="Codigo de la facultad" />
-                 <jet-input id="facultad_id" type="text" v-model="form.facultad_id" required autofocus autocomplete="off"/>
-            </div>-->
             <div class="d-flex justify-content-center align-items-baseline">
                 <div class="row">
                     <div class="col">
@@ -165,7 +153,7 @@
   </div>
 </div><!--Final Modal Insertar facultades-->
 
-<!-- Modal para actualizar los campos de las facultades-->
+<!-- Modal para actualizar los campos de las facultades con el boton de edit-->
 <div class="modal fade" id="modificarFacultad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -183,10 +171,6 @@
                 <jet-label for="nombre_facultad" value="Nombre de la facultad" />
                 <jet-input id="nombre_facultad" type="text" v-model="formUp.nombre_facultad" required autofocus autocomplete="off" :value="this.formUp.nombre_facultad"/>
             </div>
-            <!--<div class="form-group">
-                <jet-label for="facultad_id" value="Codigo de la facultad" />
-                <jet-input id="facultad_id" type="text" v-model="formUp.facultad_id" required autofocus autocomplete="off"/>
-            </div>-->
                <div class="d-flex justify-content-center align-items-baseline">
                     <div class="row">
                         <div class="col">
@@ -215,7 +199,7 @@
     </div>
   </div>
 </div>
-<!--Final Modal Update-->
+<!--Final Modal Update de facultades-->
 
 </template>
 
@@ -279,7 +263,7 @@
                 this.form.nombre_facultad='';
                 //this.form.facultad_id='';
             },
-           
+            //Muestra mensaje cuando se actualiza los campos
             submitUpdate(form){
                 console.log(this.formUp);
                 console.log(form);
@@ -295,6 +279,7 @@
                 });
                 this.$inertia.put(route("facultades.update",form.id), this.formUp);
             },
+            //Muestra mmensaje cuando se borra los campos
             mostrarMensajeDelete(facultad){
                 this.borrado = true;
                 Swal.fire({
@@ -308,6 +293,7 @@
                     showConfirmButton: false,
                 });
             },
+            
             mostrarMensajeUpdate(facultad){
                 console.log(facultad);
                 this.formUp.nombre_facultad = facultad.nombre_facultad;
