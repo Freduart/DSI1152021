@@ -14,9 +14,9 @@ class Facultad extends Migration
 
     public function up()
     {
-        Schema::create('Facultad', function (Blueprint $table) {
-            $table->id('id_facultad');
-            $table->string('nombre');
+        Schema::create('facultades', function (Blueprint $table) {
+            $table->id('id');
+            $table->string('nombre_facultad')->unique();
             $table->timestamps();
         });
     }

@@ -10,6 +10,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -17,7 +19,9 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasRoles;
 
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
@@ -58,4 +62,24 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    // public function persona(){
+    //     return $this->hasOne('App\Models\Persona');
+    // }
+
+
+    //Relacion uno a uno con Estudiante
+    public function estudiante(){
+        return $this->hasOne('App\Models\Estudiante');
+    }
+
+    //Relacion uno a uno con EncargadoEscuela
+    public function encargadoEscuela(){
+        return $this->hasOne('App\Models\EncargadoEscuela');
+    }
+
+    //Relacion uno a uno con EncargadoFacultad
+    public function encargadoFacultad(){
+        return $this->hasOne('App\Models\EncargadoFacultad');
+    }
 }

@@ -1,0 +1,233 @@
+<template>
+   <div class="wrapper">
+
+  <!-- Preloader -->
+  <!-- <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+  </div> -->
+
+    <!-- Navbar -->
+    <Base>
+      <template v-slot:header></template>
+    </Base> 
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+       
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <!-- <section class="content"> -->
+        <!-- <div class="container-fluid"> -->
+        <div class="card -mt-1">
+            <div class="row">
+                <div class="col">
+                    <img src="https://www.ues.edu.sv/storage/app/media/minerva2.png" class="" alt="..." width="500px" height="600px">
+                    <div class="card-body">
+                    <h1 class="">SASS</h1>
+                    <p class="">Sistema de Administración de Servicios Sociales</p>
+                    </div>
+                    <div class="card-footer">
+                    <h1 class="text-muted d-flex justify-content-center">Universidad de El Salvador</h1>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="https://eluniversitario.ues.edu.sv/wp-content/uploads/sites/11/2021/02/Minerva-Universidad-de-El-Salvador-UES.jpg" class="" alt="..." width="1100px" height="850px">
+                </div>
+            </div>
+            
+
+        </div>
+            <!-- Main row -->
+            <!-- <div class="row"> -->
+            <!-- Left col -->
+            <!-- <section class="col-lg-7 connectedSortable"> -->
+                <!-- TO DO List -->
+                <!-- Ejemplo de como podria ser una tabla pero se tendria que añadir al width del 100% -->
+                <!-- <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                    <i class="ion ion-clipboard mr-1"></i>
+                    To Do List
+                    </h3>
+
+                    <div class="card-tools">
+                    <ul class="pagination pagination-sm">
+                        <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
+                        <li class="page-item"><a href="#" class="page-link">1</a></li>
+                        <li class="page-item"><a href="#" class="page-link">2</a></li>
+                        <li class="page-item"><a href="#" class="page-link">3</a></li>
+                        <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
+                    </ul>
+                    </div>
+                </div> -->
+                <!-- /.card-header -->
+                <!-- <div class="card-body">
+                    <ul class="todo-list" data-widget="todo-list">
+                    <li> -->
+                        <!-- drag handle -->
+                        <!-- <span class="handle">
+                        <i class="fas fa-ellipsis-v"></i>
+                        <i class="fas fa-ellipsis-v"></i>
+                        </span> -->
+                        <!-- checkbox -->
+                        <!-- <div  class="icheck-primary d-inline ml-2">
+                        <input type="checkbox" value="" name="todo1" id="todoCheck1">
+                        <label for="todoCheck1"></label>
+                        </div> -->
+                        <!-- todo text -->
+                        <!-- <span class="text">Design a nice theme</span> -->
+                        <!-- Emphasis label -->
+                        <!-- <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small> -->
+                        <!-- General tools such as edit or delete-->
+                        <!-- <div class="tools">
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash-o"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="handle">
+                        <i class="fas fa-ellipsis-v"></i>
+                        <i class="fas fa-ellipsis-v"></i>
+                        </span>
+                        <div  class="icheck-primary d-inline ml-2">
+                        <input type="checkbox" value="" name="todo2" id="todoCheck2" checked>
+                        <label for="todoCheck2"></label>
+                        </div>
+                        <span class="text">Make the theme responsive</span>
+                        <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small>
+                        <div class="tools">
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash-o"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="handle">
+                        <i class="fas fa-ellipsis-v"></i>
+                        <i class="fas fa-ellipsis-v"></i>
+                        </span>
+                        <div  class="icheck-primary d-inline ml-2">
+                        <input type="checkbox" value="" name="todo3" id="todoCheck3">
+                        <label for="todoCheck3"></label>
+                        </div>
+                        <span class="text">Let theme shine like a star</span>
+                        <small class="badge badge-warning"><i class="far fa-clock"></i> 1 day</small>
+                        <div class="tools">
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash-o"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="handle">
+                        <i class="fas fa-ellipsis-v"></i>
+                        <i class="fas fa-ellipsis-v"></i>
+                        </span>
+                        <div  class="icheck-primary d-inline ml-2">
+                        <input type="checkbox" value="" name="todo4" id="todoCheck4">
+                        <label for="todoCheck4"></label>
+                        </div>
+                        <span class="text">Let theme shine like a star</span>
+                        <small class="badge badge-success"><i class="far fa-clock"></i> 3 days</small>
+                        <div class="tools">
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash-o"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="handle">
+                        <i class="fas fa-ellipsis-v"></i>
+                        <i class="fas fa-ellipsis-v"></i>
+                        </span>
+                        <div  class="icheck-primary d-inline ml-2">
+                        <input type="checkbox" value="" name="todo5" id="todoCheck5">
+                        <label for="todoCheck5"></label>
+                        </div>
+                        <span class="text">Check your messages and notifications</span>
+                        <small class="badge badge-primary"><i class="far fa-clock"></i> 1 week</small>
+                        <div class="tools">
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash-o"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="handle">
+                        <i class="fas fa-ellipsis-v"></i>
+                        <i class="fas fa-ellipsis-v"></i>
+                        </span>
+                        <div  class="icheck-primary d-inline ml-2">
+                        <input type="checkbox" value="" name="todo6" id="todoCheck6">
+                        <label for="todoCheck6"></label>
+                        </div>
+                        <span class="text">Let theme shine like a star</span>
+                        <small class="badge badge-secondary"><i class="far fa-clock"></i> 1 month</small>
+                        <div class="tools">
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash-o"></i>
+                        </div>
+                    </li>
+                    </ul>
+                </div> -->
+                <!-- /.card-body -->
+                <!-- <div class="card-footer clearfix">
+                    <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
+                </div>
+                </div> -->
+                <!-- /.card -->
+            <!-- </section> -->
+            <!-- /.Left col -->
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <!-- <section class="col-lg-5 connectedSortable">             -->
+                <!-- /.card -->
+            <!-- </section> -->
+            <!-- right col -->
+            <!-- </div> -->
+            <!-- /.row (main row) -->
+        <!-- </div> -->
+
+        <!-- /.container-fluid -->
+    <!-- </section> -->
+    <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->  
+            </div>
+</template>
+
+<script>
+    import JetNavLink from '@/Jetstream/NavLink'
+    import JetDropdownLink from '@/Jetstream/DropdownLink'
+
+    import Base from "@/Pages/Base.vue";
+
+    export default {
+        components:{
+            JetNavLink,
+            JetDropdownLink,
+            Base
+        },
+          props: {
+            canLogin: Boolean,
+            canRegister: Boolean,
+            laravelVersion: String,
+            phpVersion: String,
+        },
+        methods:{
+            logout() {
+                this.$inertia.post(route('logout'));
+             },
+        },
+    }    
+    
+</script>
