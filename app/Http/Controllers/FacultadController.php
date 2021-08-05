@@ -18,7 +18,7 @@ class FacultadController extends Controller
     {
         //Aqui se obtienen todos los campos de facultades
         $facultades=Facultad::all(); 
-        return Inertia::render("Components/Facultades",['facultades' => $facultades]);
+        return Inertia::render("Components/Facultades/Facultades",['facultades' => $facultades]);
     }
 
     /**

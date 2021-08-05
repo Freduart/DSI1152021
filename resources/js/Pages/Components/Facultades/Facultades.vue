@@ -63,10 +63,9 @@
                                                     <inertia-link class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a Facultad" method="delete"
                                                     :href="route('facultades.destroy', facultad.id)"
                                                     v-on:click="mostrarMensajeDelete(facultad)"></inertia-link>
-                                                       
-                                                    <!--<jet-button class="fas fa-edit" style='color:#007bff' v-on:click="mostrarMensajeUpdate(facultad)" data-toggle="modal" data-target="#modificarFacultad" title="Editar Facultad"></jet-button>-->
                                                     
-                                                    <inertia-link :href="route('facultades.update', facultad.id)" v-on:click="mostrarMensajeUpdate(facultad)" data-toggle="modal" data-target="#modificarFacultad" title="Editar Facultad"> <i class="fas fa-edit"></i> </inertia-link>
+                                                    <jet-button :href="route('facultades.update', facultad.id)" v-on:click="mostrarMensajeUpdate(facultad)" data-toggle="modal" 
+                                                    data-target="#modificarFacultad" title="Editar Facultad"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>
                                                           
                                                 </div>
                                             </td>
@@ -130,17 +129,17 @@
                     <div class="col">
                         <div class="form-group">
                             <div class="mt-12">
-                                <jet-button class="btn btn-primary float-center" :class="{ 'text-white-50 bg-green-400': form.processing }" >
+                                <button class="btn btn-dark float-center" :class="{ 'text-white-50 bg-green-400': form.processing }" >
                                 <i class="fas"></i>Guardar
                                 <!--<i class="fas fa-save"></i>  Guardar Facultad --> 
-                                </jet-button>
+                                </button>
                             </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <inertia-link :href="route('facultades.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
-                            <i class="fas"></i> Cancelar</inertia-link>
+                             Cancelar</inertia-link>
                         </div>
                     </div>
                 </div>
@@ -176,7 +175,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <div class="mt-12">
-                                    <jet-button class="btn btn-primary float-center" :class="{ 'text-white-50 bg-green-400': formUp.processing }" v-on:click="submitUpdate(this.formUp)">
+                                    <jet-button class="btn btn-dark float-center" :class="{ 'text-white-50 bg-green-400': formUp.processing }" v-on:click="submitUpdate(this.formUp)">
                                     <i class="fas"></i>Guardar
                                          <!--<i class="fas fa-edit"></i>  Modificar-->   
                                      </jet-button>  
@@ -186,8 +185,8 @@
 
                         <div class="col">
                             <div class="form-grup">
-                                <inertia-link :href="route('facultades.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
-                                <i class="fas"></i> Cancelar</inertia-link>
+                                <jet-button :href="route('facultades.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
+                                 Cancelar</jet-button>
                             </div>
                         </div>
 
@@ -209,8 +208,8 @@
     import JetInput from '@/Jetstream/Input'
     import JetLabel from '@/Jetstream/Label'
     import JetButton from '@/Jetstream/Button'
-    import Label from '../../Jetstream/Label.vue'
-    import Button from '../../Jetstream/Button.vue'
+    import Label from '../../../Jetstream/Label.vue'
+    import Button from '../../../Jetstream/Button.vue'
 
     import Base from "@/Pages/Base.vue";
 
@@ -220,7 +219,7 @@
             JetDropdownLink,
             JetInput,
             JetLabel,
-            JetButton,
+            //JetButton,
             Base
         },
         props:['facultades'],
