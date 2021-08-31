@@ -91,6 +91,7 @@
                         </inertia-link>
                     </li>
                     <li class="nav-item">
+                        <!--<a v-if="is('Estudiante')" href="#" class="nav-link">-->
                         <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-id-card"></i>
                         <p>
