@@ -149,6 +149,14 @@
                             <p>Roles</p>
                             </inertia-link>
                     </li>
+                    <!-- https://es.vuejs.org/v2/guide/conditional.html -->
+                    <!-- https://www.npmjs.com/package/laravel-permission-to-vuejs -->
+                    <li v-if="is('Estudiante')" class="nav-item">
+                            <inertia-link :href="route('solicitudesestudiante.index')" class="nav-link">
+                            <i class="fas fa-paper-plane nav-icon"></i>
+                            <p>Mis solicitudes</p>
+                            </inertia-link>
+                    </li>
                     
                     <!-- Cuando es un solo elemento -->
                     <!-- <li class="nav-item">

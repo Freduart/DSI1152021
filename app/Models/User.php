@@ -84,4 +84,9 @@ class User extends Authenticatable
     public function encargadoFacultad(){
         return $this->hasOne('App\Models\EncargadoFacultad');
     }
+
+    //Relacion uno a uno con Institucion
+    public function institucion(){
+        return $this->hasOne('App\Models\Institucion');
+    }
 }

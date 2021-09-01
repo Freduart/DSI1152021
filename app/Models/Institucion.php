@@ -23,4 +23,9 @@ class Institucion extends Model
         'ubicacion_institucion',
         'rubro_institucion',
     ];
+
+    //Relacion uno a uno con Usuario
+    public function usuario(){
+        return $this->hasOne('App\Models\User');
+    }
 }

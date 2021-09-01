@@ -16,6 +16,7 @@ class CreatePeticionsTable extends Migration
         Schema::create('peticiones', function (Blueprint $table) {
             $table->id('id')->nullable();
             $table->unsignedInteger('cantidad_estudiantes');
+            $table->string('nombre_peticion', 60);
             $table->text('descripcion_peticion');
             $table->string('ubicacion_actividades', 50);
             $table->date('fecha_peticion')->nullable();
