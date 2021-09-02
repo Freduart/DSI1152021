@@ -134,21 +134,27 @@
                               </div>
                               <div class="col">
                                 <div class="form-group">
-                                    <jet-label for="estudiante_id" value="Nombre del estudiante" />
-                                   <jet-input id="estudiante_id" type="text" readonly="readonly" v-model="formUp.estudiante_id" required autofocus autocomplete="estudiante_id" />
+                                    <jet-label for="nombre_estudiante" value="Nombre del estudiante" />
+                                   <jet-input id="nombre_estudiante" type="text" readonly="readonly" v-model="formUp.nombre_estudiante" required autofocus autocomplete="nombre_estudiante" />
 
                                 </div>
                               </div>
-                            </div> 
-                                <!--FILA-->
-                           
-                            <div class="row">
+
                               <div class="col">
                                 <div class="form-group">
                                   <jet-label for="proyecto_social_id" value="Proyecto Social" />
                                   <jet-input id="proyecto_social_id" type="text" readonly="readonly" v-model="formUp.proyecto_social_id" required autofocus autocomplete="proyecto_social_id"/> 
                                 </div>
                               </div>
+
+
+
+                            </div> 
+                                <!--FILA-->
+                           
+                            <div class="row">
+                              
+
                               <div class="col">
                                 <div class="form-group">
                                    <jet-label for="justificacion_solicitud" value="Justificacion" />
@@ -168,21 +174,21 @@
                                    <div class="row">
                                        <div class="col">
                                             <div class="form-group">
-                                                <button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-dark float-center" title="Activar estudiante" v-on:click="cambiarestado(formUp)"> 
+                                                <button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-dark float-center" title="Aprobar" v-on:click="cambiarestado(formUp)"> 
                                                  <i class="fas"></i>APROBAR </button>  
 
-                                                 <button v-else class="btn btn-dark float-center" title="Activar estudiante" v-on:click="cambiarestado(formUp)"> 
+                                                 <button v-else class="btn btn-dark float-center" title="Aprobar" v-on:click="cambiarestado(formUp)"> 
                                                  <i class="fas"></i>APROBAR </button>
                                            </div>
                                         </div>
 
                                         <div class="col">
                                             <div class="form-group">
-                                                <inertia-link v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-warning" title="Desactivar estudiante" method="delete" :href="route('verificarcuenta.destroy', this.formUp.id)" v-on:click="changestatus(formUp)"> 
-                                                 <i class="fas"></i>DENEGAR </inertia-link>  
+                                                <inertia-link v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-warning" title="Desactivar estudiante" method="delete" :href="route('solicitudes.destroy', this.formUp.id)" v-on:click="changestatus(formUp)"> 
+                                                 <i class="fas"></i>RECHAZAR </inertia-link>  
 
-                                                 <inertia-link v-else class="btn btn-warning" title="Desactivar estudiante" method="delete" :href="route('verificarcuenta.destroy', this.formUp.id)"  v-on:click="changestatus(formUp)"> 
-                                                 <i class="fas"></i>DENEGAR </inertia-link>
+                                                 <inertia-link v-else class="btn btn-warning" title="Desactivar estudiante" method="delete" :href="route('solicitudes.destroy', this.formUp.id)"  v-on:click="changestatus(formUp)"> 
+                                                 <i class="fas"></i>RECHAZAR </inertia-link>
                                            </div>
                                         </div>
 
@@ -269,21 +275,21 @@
                 //this.borrado = true;
                 if(solicitud.estado_solicitud == 'En espera'){
                     Swal.fire({
-                      title: '¿Esta seguro que desea activar al estudiante?',
-                      text: "El estudiante " +solicitud.estudiante_id,
+                      title: '¿Esta seguro que desea aprobar al estudiante?',
+                      text: "El estudiante " +solicitud.nombre_estudiante,
                       icon: 'warning',
                       showCancelButton: true,
                       confirmButtonColor: '#3085d6',
                       cancelButtonColor: '#d33',
-                      confirmButtonText: 'Si, activar',
+                      confirmButtonText: 'Si, aprobar',
                       cancelButtonText: 'No, cancelar'
                   }).then((result) => {
                       if (result.isConfirmed) {
                           //var tipo = 1;
-                          this.$inertia.put(route('verificarcuenta.update', estudiante.id), this.formUp);
+                          this.$inertia.put(route('solicitudes.update', solicitud.nombre_estudiante), this.formUp);
                           Swal.fire(
-                          '!Activado!',
-                          'El estudiante se activo correctamente',
+                          '!Aprobado!',
+                          'El estudiante se aprobo correctamente',
                           'success'
                           );
                           window.location.reload(true);
@@ -319,21 +325,21 @@
                 //this.borrado = true;
                 if(solicitud.estado_solicitud == 'En espera'){
                     Swal.fire({
-                      title: '¿Esta seguro que desea desactivar al estudiante?',
-                      text: "El estudiante " +solicitud.solicitud.estudiante_id,
+                      title: '¿Esta seguro que desea rechazar al estudiante?',
+                      text: "El estudiante " +solicitud.estudiante_id,
                       icon: 'warning',
                       showCancelButton: true,
                       confirmButtonColor: '#3085d6',
                       cancelButtonColor: '#d33',
-                      confirmButtonText: 'Si, desactivar',
+                      confirmButtonText: 'Si, rechazar',
                       cancelButtonText: 'No, cancelar'
                   }).then((result) => {
                       if (result.isConfirmed) {
                           //var tipo = 1;
                           //this.$inertia.delete(route('verificarcuenta.eliminar', estudiante.id/*, tipo*/));
                           Swal.fire(
-                          '!Desactivado!',
-                          'El estudiante se desactivo correctamente',
+                          '!Rechazado!',
+                          'El estudiante se rechazo correctamente',
                           'success'
                           );
                           window.location.reload(true);
@@ -376,7 +382,7 @@
             mostrarDatos(solicitud){
                 console.log(solicitud);
                 this.formUp.id=solicitud.id;
-                this.formUp.estudiante_id=solicitud.estudiante_id;
+                this.formUp.nombre_estudiante=solicitud.nombre_estudiante;
                 this.formUp.proyecto_social_id=solicitud.proyecto_social_id;
                 this.formUp.justificacion_solicitud=solicitud.justificacion_solicitud;
                 this.formUp.estado_solicitud=solicitud.estado_solicitud;

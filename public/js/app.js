@@ -18700,20 +18700,20 @@ __webpack_require__.r(__webpack_exports__);
       //this.borrado = true;
       if (solicitud.estado_solicitud == 'En espera') {
         Swal.fire({
-          title: '¿Esta seguro que desea activar al estudiante?',
-          text: "El estudiante " + solicitud.estudiante_id,
+          title: '¿Esta seguro que desea aprobar al estudiante?',
+          text: "El estudiante " + solicitud.nombre_estudiante,
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, activar',
+          confirmButtonText: 'Si, aprobar',
           cancelButtonText: 'No, cancelar'
         }).then(function (result) {
           if (result.isConfirmed) {
             //var tipo = 1;
-            _this2.$inertia.put(route('verificarcuenta.update', estudiante.id), _this2.formUp);
+            _this2.$inertia.put(route('solicitudes.update', solicitud.nombre_estudiante), _this2.formUp);
 
-            Swal.fire('!Activado!', 'El estudiante se activo correctamente', 'success');
+            Swal.fire('!Aprobado!', 'El estudiante se aprobo correctamente', 'success');
             window.location.reload(true);
           }
         });
@@ -18747,19 +18747,19 @@ __webpack_require__.r(__webpack_exports__);
       //this.borrado = true;
       if (solicitud.estado_solicitud == 'En espera') {
         Swal.fire({
-          title: '¿Esta seguro que desea desactivar al estudiante?',
-          text: "El estudiante " + solicitud.solicitud.estudiante_id,
+          title: '¿Esta seguro que desea rechazar al estudiante?',
+          text: "El estudiante " + solicitud.estudiante_id,
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, desactivar',
+          confirmButtonText: 'Si, rechazar',
           cancelButtonText: 'No, cancelar'
         }).then(function (result) {
           if (result.isConfirmed) {
             //var tipo = 1;
             //this.$inertia.delete(route('verificarcuenta.eliminar', estudiante.id/*, tipo*/));
-            Swal.fire('!Desactivado!', 'El estudiante se desactivo correctamente', 'success');
+            Swal.fire('!Rechazado!', 'El estudiante se rechazo correctamente', 'success');
             window.location.reload(true);
           }
         });
@@ -18796,7 +18796,7 @@ __webpack_require__.r(__webpack_exports__);
     mostrarDatos: function mostrarDatos(solicitud) {
       console.log(solicitud);
       this.formUp.id = solicitud.id;
-      this.formUp.estudiante_id = solicitud.estudiante_id;
+      this.formUp.nombre_estudiante = solicitud.nombre_estudiante;
       this.formUp.proyecto_social_id = solicitud.proyecto_social_id;
       this.formUp.justificacion_solicitud = solicitud.justificacion_solicitud;
       this.formUp.estado_solicitud = solicitud.estado_solicitud;
@@ -25993,13 +25993,13 @@ var _hoisted_29 = {
   "class": "form-group"
 };
 var _hoisted_30 = {
-  "class": "row"
-};
-var _hoisted_31 = {
   "class": "col"
 };
-var _hoisted_32 = {
+var _hoisted_31 = {
   "class": "form-group"
+};
+var _hoisted_32 = {
+  "class": "row"
 };
 var _hoisted_33 = {
   "class": "col"
@@ -26054,7 +26054,7 @@ var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("DENEGAR ");
+var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("RECHAZAR ");
 
 var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fas"
@@ -26062,7 +26062,7 @@ var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("DENEGAR ");
+var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("RECHAZAR ");
 
 var _hoisted_50 = {
   "class": "col"
@@ -26149,22 +26149,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8
   /* PROPS */
   , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
-    "for": "estudiante_id",
+    "for": "nombre_estudiante",
     value: "Nombre del estudiante"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
-    id: "estudiante_id",
+    id: "nombre_estudiante",
     type: "text",
     readonly: "readonly",
-    modelValue: $data.formUp.estudiante_id,
+    modelValue: $data.formUp.nombre_estudiante,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return $data.formUp.estudiante_id = $event;
+      return $data.formUp.nombre_estudiante = $event;
     }),
     required: "",
     autofocus: "",
-    autocomplete: "estudiante_id"
+    autocomplete: "nombre_estudiante"
   }, null, 8
   /* PROPS */
-  , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("FILA"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "proyecto_social_id",
     value: "Proyecto Social"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
@@ -26180,7 +26180,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     autocomplete: "proyecto_social_id"
   }, null, 8
   /* PROPS */
-  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("FILA"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "justificacion_solicitud",
     value: "Justificacion"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
@@ -26199,14 +26199,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , ["modelValue"])])])]), _hoisted_35]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div class=\"card-footer clearfix\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_39, [$data.estudiante.estado_estudiante == 'En espera' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 0,
     "class": "btn btn-dark float-center",
-    title: "Activar estudiante",
+    title: "Aprobar",
     onClick: _cache[5] || (_cache[5] = function ($event) {
       return $options.cambiarestado($data.formUp);
     })
   }, [_hoisted_40, _hoisted_41])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 1,
     "class": "btn btn-dark float-center",
-    title: "Activar estudiante",
+    title: "Aprobar",
     onClick: _cache[6] || (_cache[6] = function ($event) {
       return $options.cambiarestado($data.formUp);
     })
@@ -26215,7 +26215,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "btn btn-warning",
     title: "Desactivar estudiante",
     method: "delete",
-    href: _ctx.route('verificarcuenta.destroy', this.formUp.id),
+    href: _ctx.route('solicitudes.destroy', this.formUp.id),
     onClick: _cache[7] || (_cache[7] = function ($event) {
       return $options.changestatus($data.formUp);
     })
@@ -26233,7 +26233,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "btn btn-warning",
     title: "Desactivar estudiante",
     method: "delete",
-    href: _ctx.route('verificarcuenta.destroy', this.formUp.id),
+    href: _ctx.route('solicitudes.destroy', this.formUp.id),
     onClick: _cache[8] || (_cache[8] = function ($event) {
       return $options.changestatus($data.formUp);
     })
