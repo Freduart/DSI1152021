@@ -13,7 +13,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Administración de Facultades</h1>
+            <h1 class="m-0">Gestion de Actividades</h1>
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -32,13 +32,13 @@
                 <div class="card-header">
                     <h3 class="card-title">
                     <i class="ion ion-clipboard mr-1"></i>
-                    Lista de Facultades
+                    Listado de actividades realizadas
                     </h3>
+                     <!--Boton para añadir actividades -->
+                      <button type="button" class="btn btn-success float-right mt-2" data-toggle="modal" data-target="#añadirActividad">
+                      <i class="fas fa-plus"></i> Añadir Actividad</button> 
+                      <br> <br>
 
-                     <!--Boton para añadir facultades-->
-                            <button type="button" class="btn btn-success float-right mt-2" data-toggle="modal" data-target="#añadirFacultad">
-                            <i class="fas fa-plus"></i> Añadir Facultades</button> 
-                            <br> <br>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -49,20 +49,29 @@
                                 <table class="table table-hover text-center" width="500" style="font-size: 20px">
                                     <thead class="thead-dark">
                                         <tr> 
-                                        <!-- <th scope='col'>Código</th> -->
-                                        <th scope="col">Nombre de la Facultad</th>
+                                        <th scope='col'>Código</th>
+                                        <th scope="col">Bitacora</th>
+                                        <th scope="col">Nombre de la Actividad</th>
+                                        <th scope='col'>Fecha Actividad</th>
+                                        <th scope='col'>Total de horas</th>
+                                        <th scope='col'>Verificado</th>
                                         <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="table-secondary" scope="row" v-for="(facultad, index) in facultadesFiltradas" :key="index">
+                                        <tr class="table-secondary" scope="row" v-for="(actividad, index) in actividadesFiltradas" :key="index">
                                             
                                             <!--Aqui devuelven los datos que se mostraran en pantalla -->
-                                            <td>{{ facultad.nombre_facultad }}</td>
+                                            <td>{{ actividad.id }}</td>
+                                            <!--<td>{{ actividad.bitacora_id }}</td>-->
+                                            <td>{{ actividad.nombre_actividad }}</td>
+                                            <td>{{ actividad.fecha_actividad }}</td>
+                                            <td>{{ actividad.total_horas }}</td>
+                                            <td>{{ actividad.verificado }}</td>
                                             <td>
                                             <!-- Botones para edit or delete-->
                                                 <div class="tools">
-                                                    <inertia-link class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a Facultad" method="delete"
+                                                    <inertia-link class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Eliminar actividad" method="delete"
                                                     :href="route('facultades.destroy', facultad.id)"
                                                     v-on:click="mostrarMensajeDelete(facultad)"></inertia-link>
                                                     
@@ -109,11 +118,11 @@
 
 
 <!-- Modal Insertar los datos de las facultades desde el boton añadir-->
-<div class="modal fade" id="añadirFacultad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="añadirActividad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Añadir Facultad</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Añadir Actividad</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -122,10 +131,49 @@
         
 
         <form @submit.prevent="submit">
-            <div class="form-group">
-                <jet-label for="nombre_facultad" value="Nombre de la Facultad" />
-                <jet-input id="nombre_facultad" type="text" v-model="form.nombre_facultad" required autofocus autocomplete="off"/>
-            </div>
+
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                            <jet-label for="id" value="Codigo" />
+                            <jet-input id="id" type="text" v-model="form.id" required autofocus autocomplete="off"/>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                            <jet-label for="nombre_actividad" value="Nombre de la Actividad" />
+                            <jet-input id="nombre_actividad" type="text" v-model="form.nombre_actividad" required autofocus autocomplete="off"/>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                            <jet-label for="fecha_actividad" value="Fecha de la actividad" />
+                            <jet-input id="fecha_actividad" type="text" v-model="form.id" required autofocus autocomplete="off"/>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                            <jet-label for="total_horas" value="Total de horas" />
+                            <jet-input id="total_horas" type="text" v-model="form.total_horas" required autofocus autocomplete="off"/>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                            <jet-label for="verificado" value="Verificado" />
+                            <jet-input id="verificado" type="text" v-model="form.verificado" required autofocus autocomplete="off"/>
+                        </div>
+                      </div>
+                      
+                    </div>
+            
+            
+            
             <div class="d-flex justify-content-center align-items-baseline">
                 <div class="row">
                     <div class="col">
@@ -140,7 +188,7 @@
                     </div>
                     <div class="col">
                         <div class="form-group">
-                            <inertia-link :href="route('facultades.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
+                            <inertia-link :href="route('actividades.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
                              Cancelar</inertia-link>
                         </div>
                     </div>
@@ -148,7 +196,7 @@
             </div>
     
  
-        </form>
+        </form> <!--FIN FORM-->
         </div>
     </div>
   </div>
@@ -224,24 +272,24 @@
             //JetButton,
             Base
         },
-        props:['facultades'],
+        props:['actividades'],
         methods:{
             logout() {
                 this.$inertia.post(route('logout'));
             },
-            filtrarByFacultad(id){
-                this.facultadesFiltradas.splice(0, this.facultadesFiltradas.length);
+            filtrarByActividad(id){
+                this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
                 console.log(id);
-                this.facultades.forEach(element => {
-                    if(element.facultad_id == id){
+                this.actividades.forEach(element => {
+                    if(element.actividad_id == id){
                         console.log(element);
-                        this.facultadesFiltradas.push(element);
+                        this.actividadesFiltradas.push(element);
                     }
                 });
-                console.log(this.facultadesFiltradas);
+                console.log(this.actividadesFiltradas);
                 if(id == '0'){
-                    this.facultades.forEach(element => {
-                        this.facultadesFiltradas.push(element);
+                    this.actividades.forEach(element => {
+                        this.actividadesFiltradas.push(element);
                         // this.mostrarMensajeSuccess();
                     })     
                 }
@@ -260,16 +308,21 @@
             submit(){
                 console.log(this.form);
                     this.mostrarMensajeSuccess();
-                this.form.post(this.route('facultades.store'));
-                this.form.nombre_facultad='';
-                //this.form.facultad_id='';
+                this.form.post(this.route('actividades.store'));
+                this.form.id='';
+               // this.form.bitacora_id='';
+                this.form.nombre_actividad='';
+                this.form.fecha_actividad='';
+                this.form.total_horas='';
+                this.form.verificado='';
+                
             },
             //Muestra mensaje cuando se actualiza los campos
             submitUpdate(form){
                 console.log(this.formUp);
                 console.log(form);
                 Swal.fire({
-                    title: 'Se ha actualizado la facultad ' + form.nombre_facultad,
+                    title: 'Se ha actualizado la actividad' + form.nombre_actividad,
                     text: 'Actualice la página para ver los cambios',
                     icon: 'success',
                     iconColor: '#FF8000',
@@ -281,10 +334,10 @@
                 this.$inertia.put(route("facultades.update",form.id), this.formUp);
             },
             //Muestra mmensaje cuando se borra los campos
-            mostrarMensajeDelete(facultad){
+            mostrarMensajeDelete(actividad){
                 this.borrado = true;
                 Swal.fire({
-                    title: 'Se ha borrado la facultad ' + facultad.nombre_facultad,
+                    title: 'Se ha borrado la actividad ' + actividad.nombre_actividad,
                     text: 'Actualice la página para ver los cambios',
                     iconColor: '#CB3234',
                     icon: 'warning',
@@ -295,11 +348,14 @@
                 });
             },
             
-            mostrarMensajeUpdate(facultad){
-                console.log(facultad);
-                this.formUp.nombre_facultad = facultad.nombre_facultad;
-                //this.formUp.facultad_id = facultad.facultad_id;
-                this.formUp.id = facultad.id;
+            mostrarMensajeUpdate(actividad){
+                console.log(actividad);
+                this.formUp.id = actividad.id;
+               // this.formUp.bitacora_id=actividades.bitacora_id;
+                this.formUp.nombre_actividad = actividad.nombre_actividad;
+                this.formUp.fecha_actividad = actividad.fecha_actividad;
+                this.formUp.total_horas = actividad.total_horas;
+                this.formUp.verificado = actividad.verificado;
                 console.log(this.formUp);
             }
            
@@ -307,23 +363,30 @@
         data(){
             return{
                 facultad:0,
-                facultadesFiltradas:[],
+                actividadesFiltradas:[],
                 successGuardado:false,
                 formularioNuevaCarrera:false,
                 form: this.$inertia.form({
-                    nombre_facultad:'',
-                    //facultad_id:'',
+                    id: '',
+                   // bitacora_id:'',
+                    nombre_actividad:'',
+                    fecha_Actividad:'',
+                    total_horas:'',
+                    verificado:'',
                     }),
                 formUp: this.$inertia.form({
-                    nombre_facultad:'',
-                    //facultad_id:'',
                     id: '',
+                   // bitacora_id:'',
+                    nombre_actividad:'',
+                    fecha_Actividad:'',
+                    total_horas:'',
+                    verificado:'',
                     }),
                 }
             },        
         mounted(){
-            this.facultades.forEach(element => {
-                this.facultadesFiltradas.push(element);
+            this.actividades.forEach(element => {
+                this.actividadesFiltradas.push(element);
             }),
             // this.mostrarMensajeSuccess();
             this.successGuardado = false;        

@@ -157,6 +157,20 @@
                             </inertia-link>
                     </li>
 
+                    <li class="nav-item">
+                            <inertia-link :href="route('verificaractividades.index')" class="nav-link">
+                            <i class="nav-icon fa fa-check-square"></i>
+                            <p>Verificar Actividades</p>
+                            </inertia-link>
+                    </li>
+
+                    <li class="nav-item">
+                            <inertia-link :href="route('actividades.index')" class="nav-link">
+                            <i class="nav-icon fa fa-list-alt"></i>
+                            <p>Actividades</p>
+                            </inertia-link>
+                    </li>
+
 
 
                     <!-- https://es.vuejs.org/v2/guide/conditional.html -->

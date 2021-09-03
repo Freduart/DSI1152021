@@ -58,7 +58,7 @@
                                         <tr class="table-secondary" scope="row" v-for="(solicitud, index) in solicitudesFiltradas" :key="index">
                                             
                                             <td>{{ solicitud.id }}</td>
-                                            <td>{{ solicitud.nombre_estudiante }}</td>
+                                            <td>{{ solicitud.nombre_estudiante }} {{ solicitud.apellido_estudiante }}</td>
                                             <td>{{ solicitud.proyecto_social_id }}</td>
                                             <td>{{ solicitud.estado_solicitud }}</td>
                           
