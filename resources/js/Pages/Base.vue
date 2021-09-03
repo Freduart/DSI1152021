@@ -13,23 +13,6 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
 
-            
-            <!-- <li class="nav-item d-none d-sm-inline-block mx-4">
-                <a href="index3.html" class="nav-link">Home</a>
-                <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
-                    <i class="fa fa-home" aria-hidden="true"></i>
-                    Inicio
-                </jet-nav-link>
-            </li> -->
-
-            <!-- <form @submit.prevent="logout">
-                <li class="d-flex flex-row-reverse bd-highlight col"> 
-                    <button class="btn btn-primary d-flex flex-row-reverse bd-highlight col" as="button"> 
-                        Cerrar Sesión
-                    </button>
-                </li> 
-            </form>   -->
-
             <div v-if="$page.props.user">
                 <form @submit.prevent="logout">
                     
@@ -43,10 +26,7 @@
               <inertia-link :href="route('login')" class="btn btn-success">
                 Iniciar Sesión
               </inertia-link>
-              
-              <!-- <inertia-link v-if="canRegister" :href="route('estudiantes.create')" class="ml-4 text-muted">
-                Registrarse
-              </inertia-link>  -->
+
 
               <button type="button" class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
                 Registrase
@@ -148,17 +128,14 @@
                             <p>Roles</p>
                             </inertia-link>
                     </li>
-                    
-                    <!-- Cuando es un solo elemento -->
-                    <!-- <li class="nav-item">
-                        <a href="pages/gallery.html" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
-                        <p>
-                            Gallery
-                        </p>
-                        </a>
-                    </li> -->
 
+                        <!-- Tag para las peticiones -->
+                        <li class="nav-item">
+                            <inertia-link :href="route('peticiones.index')" class="nav-link">
+                            <i class="fas fa-key nav-icon"></i>
+                            <p>Peticiones de servicio social</p>
+                            </inertia-link>
+                        </li>
                     </ul>
                 </li>            
             </ul>

@@ -9,6 +9,7 @@ use App\Http\Controllers\FacultadController;
 use App\Http\Controllers\EncargadoEscuelaController;
 use App\Http\Controllers\VerificarCuentaController;
 use App\Http\Controllers\InstitucionController;
+use App\Http\Controllers\PeticionController;
 use App\Http\Controllers\RolController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -79,3 +80,6 @@ Route::get('credenciales', function (){
   Mail::to('jganuzaramírez@gmail.com')->send(new CredencialesMailable($details));
   return "mensaje enviado";
 });
+
+//Ruta de peticiones
+Route::resource('peticiones', PeticionController::class)->middleware(['auth:sanctum','verified']);
