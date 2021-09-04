@@ -59,19 +59,19 @@
                             <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#añadirCarrera">
                             <i class="fas fa-plus"></i> Añadir Carrera</button> 
                             <hr>
-                                <table class="table table-striped table-dark text-center" style="font-size: 20px">
-                                    <thead>
+                                <table class="table table-hover text-center">
+                                    <thead class="thead-dark">
                                         <tr>
                                         
                                         <th scope='col'>Código</th>
                                         <th scope="col">Carrera</th>
                                         <th scope="col">Facultad</th>
                                         <th scope="col">Estado</th>
-                                        <th scope="col"></th>
+                                        <th scope="col" width="15%"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr scope="row" v-for="(carrera, index) in carrerasFiltradas" :key="index">
+                                        <tr scope="row" class="table-secondary" v-for="(carrera, index) in carrerasFiltradas" :key="index">
                                             
                                             <td>{{ carrera.codigo_carrera }}</td>
                                             <td>{{ carrera.nombre_carrera }}</td>
@@ -88,9 +88,6 @@
                                             </td>
                                             <td>
                                             <!-- General tools such as edit or delete-->
-                                                <div class="flex justify-center">
-
-                                                    
                                                     <!-- <inertia-link
                                                     method="delete"
                                                     :href="route('carreras.destroy', carrera.id)"
@@ -99,14 +96,19 @@
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </inertia-link> -->
-                                                    
+                                            <!--                                                     
                                                     <button class="btn btn-warning ml-4" v-on:click="mostrarMensajeUpdate(carrera)" data-toggle="modal" data-target="#actualizarCarrera">
                                                         <i class="fas fa-edit mx-12"></i>
                                                         Editar
-                                                    </button>    
+                                                    </button>     -->
                                                 
+                                                    <div class="tools">
+                                                        <!-- <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarinfo(encargado)" title="Ver informacion del encargado"></jet-button> -->
+                                                        <jet-button class="fas fa-edit" title="Editar carrera" v-on:click="mostrarMensajeUpdate(carrera)" data-toggle="modal" data-target="#actualizarCarrera"></jet-button>
+                                                        <jet-button  v-if="carrera.estado_carrera == 'Activo'" class="fas fa-arrow-alt-circle-down" title="Dar de baja a carrera" method="delete" v-on:click="cambiarEstado(carrera)"></jet-button>     
+                                                        <jet-button v-else class="fas fa-arrow-alt-circle-up" title="Activar carrera" method="delete" v-on:click="cambiarEstado(carrera)"></jet-button>
+                                                    </div>
                                                 
-                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -305,8 +307,7 @@
     import JetInput from '@/Jetstream/Input'
     import JetLabel from '@/Jetstream/Label'
     import JetButton from '@/Jetstream/Button'
-import Label from '../../Jetstream/Label.vue'
-import Button from '../../Jetstream/Button.vue'
+
 
     import Base from "@/Pages/Base.vue";
 
