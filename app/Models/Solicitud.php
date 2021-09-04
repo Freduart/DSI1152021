@@ -11,6 +11,15 @@ class Solicitud extends Model
 
     protected $table = 'solicitudes';
 
+    protected $fillable = [
+        'id',
+        'estudiante_id',
+        'proyecto_social_id',
+        'justificacion_solicitud',
+        'estado_solicitud',
+
+    ];
+
     //Relacion uno a uno con Estudiante
     public function estudiante(){
         return $this->hasOne('App\Models\Estudiante');

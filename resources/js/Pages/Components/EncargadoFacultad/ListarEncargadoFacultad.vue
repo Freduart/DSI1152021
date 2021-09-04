@@ -41,54 +41,57 @@
                     </h3>
                     <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('encargadosfacultad.create')">
                         <i class="fas fa-plus"></i> Añadir encargado de facultad</inertia-link>
+                    <br><br>
+                    <!-- select para indicar el estado que se desea -->
+                    <h6 class="ml-4 mt-2">Mostrar por estado:
+                    <select class="col-2 ml-3 custom-select" v-on:change="filtrarByEstado($event)">
+                        <option value="1" selected>Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select></h6>
                     
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body">
-                    <ul class="todo-list" data-widget="todo-list">
-                        <li>
-                        <!-- todo text -->
-                          <!-- select para indicar el estado que se desea -->
-                            <h6 class="ml-4 mt-2">Mostrar por estado:
-                            <select class="col-2 ml-3 custom-select" v-on:change="filtrarByEstado($event)">
-                                <option value="1" selected>Activo</option>
-                                <option value="0">Inactivo</option>
-                            </select></h6>
-                            <hr>
-                            <!-- tabla de los encargados de acuerdo al estado -->
-                            <table class="table table-hover text-center">
-                                <thead class="thead-dark">
-                                    <tr>
-                                    
-                                    <th scope='col'>Código</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Facultad</th>
-                                    <th scope="col">Estado</th>
-                                    <th scope="col" width="15%"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- cargando datos en la tabla -->
-                                    <tr class="table-secondary" scope="row" v-for="(encargado, index) in encargadosFFiltrados" :key="index">
-                                        
-                                        <td>{{ encargado.codigo_encargado_facultad }}</td>
-                                        <td>{{ encargado.nombre_encargado_facultad }} {{encargado.apellido_encargado_facultad }}</td>
-                                        <td>{{ encargado.nombre_facultad }}</td>
-                                        <td>{{ encargado.estado_encargado_facultad }}</td>
-                                        <td>
-                                        <!-- General tools such as edit or delete-->
-                                            <div class="tools">
-                                                <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarinfo(encargado)" title="Ver informacion del encargado"></jet-button>
-                                                <inertia-link class="fas fa-edit" title="Editar encargado" :href="route('encargadosfacultad.edit', encargado.idEncargado)"></inertia-link>
-                                                <jet-button  v-if="encargado.estado_encargado_facultad == 'Activo'" class="fas fa-arrow-alt-circle-down" title="Dar de baja a encargado" method="delete" v-on:click="cambiarestado(encargado)"></jet-button>     
-                                                <jet-button v-else class="fas fa-arrow-alt-circle-up" title="Activar a encargado" method="delete" v-on:click="cambiarestado(encargado)"></jet-button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </li>
-                    </ul>
+                <div class="card-body" v-if="encargadosFFiltrados.length != 0">
+                  <ul class="todo-list" data-widget="todo-list">
+                    <li>
+                      <!-- todo text -->
+                      <!-- tabla de los encargados de acuerdo al estado -->
+                      <table class="table table-hover text-center">
+                        <thead class="thead-dark">
+                            <tr>
+                              <th scope='col'>Código</th>
+                              <th scope="col">Nombre</th>
+                              <th scope="col">Facultad</th>
+                              <th scope="col">Estado</th>
+                              <th scope="col" width="15%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- cargando datos en la tabla -->
+                            <tr class="table-secondary" scope="row" v-for="(encargado, index) in encargadosFFiltrados" :key="index">
+                                
+                                <td>{{ encargado.codigo_encargado_facultad }}</td>
+                                <td>{{ encargado.nombre_encargado_facultad }} {{encargado.apellido_encargado_facultad }}</td>
+                                <td>{{ encargado.nombre_facultad }}</td>
+                                <td>{{ encargado.estado_encargado_facultad }}</td>
+                                <td>
+                                <!-- General tools such as edit or delete-->
+                                    <div class="tools">
+                                        <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarinfo(encargado)" title="Ver informacion del encargado"></jet-button>
+                                        <inertia-link class="fas fa-edit" title="Editar encargado" :href="route('encargadosfacultad.edit', encargado.idEncargado)"></inertia-link>
+                                        <jet-button  v-if="encargado.estado_encargado_facultad == 'Activo'" class="fas fa-arrow-alt-circle-down" title="Dar de baja a encargado" method="delete" v-on:click="cambiarestado(encargado)"></jet-button>     
+                                        <jet-button v-else class="fas fa-arrow-alt-circle-up" title="Activar a encargado" method="delete" v-on:click="cambiarestado(encargado)"></jet-button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                      </table>
+                     
+                    </li>
+                  </ul>
+                </div>
+                <div v-else class="alert alert-warning ml-4 mr-4 mt-3" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                  No se han encontrado datos
                 </div>
                 <!-- /.card-body -->
                 <!--<div class="card-footer clearfix">
@@ -219,9 +222,8 @@
         methods:{
             // Función para fitrar las facultades de acuerdo a la facultad seleccionada 
             filtrarByEstado(event){
-                //limpia estructura de las facultades de los encargados por estado
-                this.encargadosFFiltrados.splice(0, this.encargadosFFiltrados.length);
-                console.log(event.target.value);
+                this.encargadosFFiltrados.splice(0, this.encargadosFFiltrados.length); //limpia estructura de las facultades de los encargados por estado
+                //console.log(event.target.value);
                 var estadoText= "Activo";
                 if (event.target.value == 0){
                     estadoText = "Inactivo";
@@ -229,15 +231,14 @@
                 this.encargadosF.forEach(element => {
                     if(element.estado_encargado_facultad == estadoText){
                         console.log(element);
-                        this.encargadosFFiltrados.push(element);
+                        this.encargadosFFiltrados.push(element); //llenado de los encargados de acuerdo al estado
                     }
                 });
-                console.log(this.encargadosFFiltrados);
             }, 
             // Cambiar estado del encargado confirmnaod con sweetalert
             cambiarestado(encargado){
-                this.borrado = true;
                 if(encargado.estado_encargado_facultad == 'Activo'){
+                    // mensaje de confirmacion
                     Swal.fire({
                       title: '¿Esta seguro que desea desactivar al encargado?',
                       text: "El encargado " + encargado.nombre_encargado_facultad + " " + encargado.apellido_encargado_facultad + " con codigo " + encargado.codigo_encargado_facultad +" no podrá iniciar sesión mientras este desactivado.",
@@ -249,8 +250,8 @@
                       cancelButtonText: 'No, cancelar'
                   }).then((result) => {
                       if (result.isConfirmed) {
-                          //var tipo = 1;
-                          this.$inertia.delete(route('encargadosfacultad.destroy', encargado.idEncargado/*, tipo*/));
+                          // modificando el estado al confirmar
+                          this.$inertia.delete(route('encargadosfacultad.destroy', encargado.idEncargado));
                           Swal.fire(
                           '!Desactivado!',
                           'El encargado se desactivó correctamente',
@@ -260,6 +261,7 @@
                       }
                   })
                 } else {
+                  // mensaje de confirmacion
                   Swal.fire({
                       title: '¿Esta seguro que desea activar al encargado?',
                       text: "El encargado " + encargado.nombre_encargado_facultad + " " + encargado.apellido_encargado_facultad + " con codigo " + encargado.codigo_encargado_facultad +" se habilitará y podrá iniciar sesión.",
@@ -271,8 +273,8 @@
                       cancelButtonText: 'No, cancelar'
                   }).then((result) => {
                       if (result.isConfirmed) {
-                          // modificando el estado
-                          this.$inertia.delete(route('encargadosfacultad.destroy', encargado.idEncargado/*, tipo*/));
+                          // modificando el estado al confirmar
+                          this.$inertia.delete(route('encargadosfacultad.destroy', encargado.idEncargado));
                           Swal.fire(
                           '!Activado!',
                           'El encargado se activó correctamente',
@@ -295,7 +297,6 @@
               this.form.user_id= null,
               this.form.dui_encargado_facultad = encargado.dui_encargado_facultad,
               this.form.telefono_encargado_facultad = encargado.telefono_encargado_facultad
-                
             }
         }, 
         //Data utilizada
@@ -322,7 +323,6 @@
                     this.encargadosFFiltrados.push(element);
                 }
             }),
-            // this.mostrarMensajeSuccess();
             this.successGuardado = false;        
         }, 
     }

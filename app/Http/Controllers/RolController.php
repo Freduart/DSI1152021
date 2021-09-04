@@ -19,7 +19,7 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
+        // obteniendo los roles
         $roles = Role::all();
         return Inertia::render("Components/Roles",['roles' => $roles]);
     }
@@ -42,9 +42,10 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // obteniendo la data de request
         $data = $request->input();
-    
+        
+        // agregando el permiso al rol
         DB::table('role_has_permissions')->insert([
             'permission_id' => $data['permission_id'],
             'role_id' => $data['role_id']
@@ -71,15 +72,23 @@ class RolController extends Controller
      */
     public function edit($id)
     {
-        //
+        // obteniendo los permisos de rol seleccionado
         $permisosUser = DB::table('role_has_permissions')
-        ->select('permissions.id as ident', 'permissions.name as permiso')
+        ->select('permissions.id as ident', 'permissions.name as permiso', 'role_has_permissions.role_id as idrols')
         ->join('permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')
         ->where('role_has_permissions.role_id', '=', $id)
+        ->orderBy('permissions.id', 'asc')
         ->get();
+        // obteniendo todos los permisos
         $permisos = DB::table('permissions')
         ->select('permissions.id as ident', 'permissions.name as permiso')
+        ->whereNotIn('permissions.name', DB::table('permissions')
+        ->select('permissions.name')
+        ->join('role_has_permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')
+        ->join('roles', 'roles.id', '=', 'role_has_permissions.role_id')
+        ->where('role_id', '=', $id))
         ->get();
+
         return Inertia::render("Components/FormRol",['permisosUser' => $permisosUser, 'permisos' => $permisos, 'idrol' => $id]);
     }
 
@@ -101,8 +110,12 @@ class RolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($data)
     {
-        //
+        // validando si existe un encargado activo antes de activar otro
+        $rol = DB::table('role_has_permissions')->where('permissions_id', '=', $data->ident)
+        ->where('role_id', '=', $data->idrols)
+        ->get()->first();
+        $rol->delete();
     }
 }

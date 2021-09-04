@@ -11,6 +11,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
 use Spatie\Permission\Traits\HasRoles;
+use LaravelAndVueJS\Traits\LaravelPermissionToVueJS;
 
 class User extends Authenticatable
 {
@@ -20,6 +21,7 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;
+    use LaravelPermissionToVueJS;
 
     protected $table = 'users';
     /**
@@ -81,5 +83,10 @@ class User extends Authenticatable
     //Relacion uno a uno con EncargadoFacultad
     public function encargadoFacultad(){
         return $this->hasOne('App\Models\EncargadoFacultad');
+    }
+
+    //Relacion uno a uno con Institucion
+    public function institucion(){
+        return $this->hasOne('App\Models\Institucion');
     }
 }

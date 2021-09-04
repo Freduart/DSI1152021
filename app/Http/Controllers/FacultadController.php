@@ -16,9 +16,9 @@ class FacultadController extends Controller
      */
     public function index()
     {
-        //
+        //Aqui se obtienen todos los campos de facultades
         $facultades=Facultad::all(); 
-        return Inertia::render("Components/Facultades",['facultades' => $facultades]);
+        return Inertia::render("Components/Facultades/Facultades",['facultades' => $facultades]);
     }
 
     /**
@@ -39,7 +39,7 @@ class FacultadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Aqui es un metodo para Crear facultades
         Facultad::create($request->all());
         return Redirect::route('facultades.index');
     }
@@ -75,7 +75,7 @@ class FacultadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //Aqui se actualizan los campos de facultades
         $facultad=Facultad::find($id);
         $facultad->update($request->all());
         return Redirect::route('facultades.index');
@@ -90,7 +90,7 @@ class FacultadController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //Aqui es el metodo para eliminar las facultades
         $facultad=Facultad::find($id);
         $facultad->delete();
         return Redirect::route('facultades.index');

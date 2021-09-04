@@ -91,6 +91,7 @@
                         </inertia-link>
                     </li>
                     <li class="nav-item">
+                        <!--<a v-if="is('Estudiante')" href="#" class="nav-link">-->
                         <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-id-card"></i>
                         <p>
@@ -146,6 +147,38 @@
                             <inertia-link :href="route('roles.index')" class="nav-link">
                             <i class="fas fa-key nav-icon"></i>
                             <p>Roles</p>
+                            </inertia-link>
+                    </li>
+
+                    <li class="nav-item">
+                            <inertia-link :href="route('solicitudes.index')" class="nav-link">
+                            <i class="nav-icon fas fa-edit"></i>
+                            <p>Evaluacion de Solicitudes</p>
+                            </inertia-link>
+                    </li>
+
+                    <li class="nav-item">
+                            <inertia-link :href="route('verificaractividades.index')" class="nav-link">
+                            <i class="nav-icon fa fa-check-square"></i>
+                            <p>Verificar Actividades</p>
+                            </inertia-link>
+                    </li>
+
+                    <li class="nav-item">
+                            <inertia-link :href="route('actividades.index')" class="nav-link">
+                            <i class="nav-icon fa fa-list-alt"></i>
+                            <p>Actividades</p>
+                            </inertia-link>
+                    </li>
+
+
+
+                    <!-- https://es.vuejs.org/v2/guide/conditional.html -->
+                    <!-- https://www.npmjs.com/package/laravel-permission-to-vuejs -->
+                    <li v-if="is('Estudiante')" class="nav-item">
+                            <inertia-link :href="route('solicitudesestudiante.index')" class="nav-link">
+                            <i class="fas fa-paper-plane nav-icon"></i>
+                            <p>Mis solicitudes</p>
                             </inertia-link>
                     </li>
                     

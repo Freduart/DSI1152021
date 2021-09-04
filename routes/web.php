@@ -10,6 +10,10 @@ use App\Http\Controllers\EncargadoEscuelaController;
 use App\Http\Controllers\VerificarCuentaController;
 use App\Http\Controllers\InstitucionController;
 use App\Http\Controllers\RolController;
+use App\Http\Controllers\SolicitudController;
+use App\Http\Controllers\SolicitudesController;
+use App\Http\Controllers\VerificarActividadesController;
+use App\Http\Controllers\ActividadesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -69,6 +73,14 @@ Route::resource('encargadosescuela', EncargadoEscuelaController::class)->middlew
 
 Route::resource('verificarcuenta', VerificarCuentaController::class)->middleware(['auth:sanctum','verified']);
 Route::resource('instituciones', InstitucionController::class)->middleware(['auth:sanctum','verified']);
+Route::resource('solicitudesestudiante', SolicitudController::class)->middleware(['auth:sanctum','verified']);
+
+Route::resource('solicitudes', SolicitudesController::class)->middleware(['auth:sanctum','verified']);
+
+Route::resource('verificaractividades', VerificarActividadesController::class)->middleware(['auth:sanctum','verified']);
+
+Route::resource('actividades', ActividadesController::class)->middleware(['auth:sanctum','verified']);
+
 //Route::delete('verificarcuenta/{id}', [VerificarCuentaController::class, 'id'])->name('verificarcuenta.eliminar');
 Route::get('credenciales', function (){
   $details = [

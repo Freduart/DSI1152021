@@ -40,23 +40,10 @@
                 <div class="card-body">
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
-                             <!--<h6 class="ml-4 mt-2">Mostrar por estado:
-                            <select class="col-2 ml-3 custom-select" v-on:change="filtrarByEstado($event)">
-                                <option value="1" selected>En espera</option>
-                                <option value="0">Activo</option>
-                            </select></h6>-->
-                            <!-- todo text 
-                            <span>Buscar por</span>
-                            <select class="ml-4" v-model="this.facultad" v-on:change="filtrarEstudiantes(this.facultad)">
-                                <option value="0" selected>Todos</option>
-                                <option v-for="(facultad, index) in facultades" :key="index" :value="facultad.id">{{ facultad.nombre_facultad }}</option>
-                            </select>-->
-
-                            <!--<button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#añadirCarrera">
-                            <i class="fas fa-plus"></i> Añadir Carrera</button>-->
+                            
                             <hr>
-                                <table class="table table-striped table-dark text-center" style="font-size: 20px">
-                                    <thead>
+                                <table class="table table-hover text-center" width="500" style="font-size: 20px">
+                                    <thead class="thead-dark">
                                         <tr>
                                         
                                         <th scope='col'>Carnet</th>
@@ -67,30 +54,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!--Modificar aqui-->
-                                        <tr scope="row" v-for="(estudiante, index) in estudiantesFiltradas" :key="index">
+                                        <!--Aqui devuelven los datos para que se muestren en pantalla-->
+                                        <tr class="table-secondary" scope="row" v-for="(estudiante, index) in estudiantesFiltradas" :key="index">
                                             
                                             <td>{{ estudiante.carnet_estudiante }}</td>
                                             <td>{{ estudiante.nombre_estudiante }}</td>
                                             <td>{{ estudiante.apellido_estudiante }}</td>
                                             <td>{{ estudiante.estado_estudiante }}</td>
-                                            <!--Modificar aqui
-                                            <td>
-                                                <jet-button  v-if="estudiante.estado_estudiante == 'En espera'" class="fas fa-arrow-alt-circle-down" title="Dar de baja a estudiante" method="delete" v-on:click="cambiarestado(estudiante)"></jet-button>     
-                                                <jet-button v-else class="fas fa-arrow-alt-circle-up" title="Activar estudiante" method="delete" v-on:click="cambiarestado(estudiante)"></jet-button>
-                                            </td>-->
-
-
-                                            <!--<td v-if="estudiante.estado_estudiante == 'En espera'">
-                                                <form @submit.prevent="cambiarEstado(estudiante)">
-                                                    <button type="submit" class="btn btn-success" :class="{ 'text-white-50 bg-green-400': form.processing }">{{ estudiante.estado_estudiante }}</button>
-                                                </form>          
-                                            </td>
-                                            <td v-else>
-                                                <form @submit.prevent="cambiarEstado(estudiante)">
-                                                    <button type="submit" class="btn btn-primary" :class="{ 'text-white-50 bg-green-400': form.processing }">{{ estudiante.estado_estudiante }}</button>
-                                                </form>            
-                                            </td>-->
+                          
                                             <td>
                                             <!-- General tools such as edit or delete-->
                                                 <div class="flex justify-center">
@@ -115,8 +86,6 @@
                 
 
                 <div class="card-footer clearfix">
-                    <!-- <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#añadirCarrera">
-                    <i class="fas fa-plus"></i> Añadir Carrera</button>  -->
 
 
 
@@ -141,7 +110,7 @@
             
             <!-- /.row (main row) -->
         </div><!---->
-        <!-- EVALUAR-->
+        <!-- Boton EVALUAR que evaluara-->
       <div class="modal fade" id="evaluar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -265,10 +234,10 @@
                                    <div class="row">
                                        <div class="col">
                                             <div class="form-group">
-                                                <button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-primary" title="Activar estudiante" v-on:click="cambiarestado(formUp)"> 
+                                                <button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-dark float-center" title="Activar estudiante" v-on:click="cambiarestado(formUp)"> 
                                                  <i class="fas"></i>APROBAR </button>  
 
-                                                 <button v-else class="btn btn-primary" title="Activar estudiante" v-on:click="cambiarestado(formUp)"> 
+                                                 <button v-else class="btn btn-dark float-center" title="Activar estudiante" v-on:click="cambiarestado(formUp)"> 
                                                  <i class="fas"></i>APROBAR </button>
                                            </div>
                                         </div>
