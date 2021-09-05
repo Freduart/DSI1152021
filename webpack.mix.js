@@ -19,13 +19,6 @@ mix.js('resources/js/app.js', 'public/js').vue()
 mix.js('resources/js/dashboard.js', 'public/js')
     .sass('resources/sass/dashboard/dashboard.scss', 'public/css');
 
-let mix = require('laravel-mix');
-
-mix
-  .js('resources/assets/js/app.js', 'public/js')
-  .sourceMaps(false, 'source-map')
-  .sass('resources/assets/sass/app.scss', 'public/css');
-
 if (mix.inProduction()) {
     mix.version();
 }

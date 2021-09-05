@@ -1,66 +1,39 @@
 <template>
-   <div class="wrapper">
-
-  <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__wobble" src="https://www.ues.edu.sv/storage/app/media/minerva2.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
-
+  <div class="wrapper">
     <!-- Navbar -->
     <Base>
       <template v-slot:header></template>
     </Base> 
 
-    <!-- Content Wrapper. Contains page content -->
+    <!-- content-wrapper -->
     <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-       
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <!-- <section class="content"> -->
-        <!-- <div class="container-fluid"> -->
-        <!-- Imagenes -->
-        <div>
-            <md-toolbar class="md-large md-primary">
-            <div class="md-toolbar-row">
-                <div class="md-toolbar-section-start">
-                <md-button class="md-icon-button">
-                    <md-icon>menu</md-icon>
-                </md-button>
-                </div>
-
-                <div class="md-toolbar-section-end">
-                <md-button class="md-icon-button">
-                    <md-icon>refresh</md-icon>
-                </md-button>
-
-                <md-button class="md-icon-button">
-                    <md-icon>more_vert</md-icon>
-                </md-button>
-                </div>
+      <div class="content-header">
+        <div class="container-fuild">
+          <div class="row mb-2">
+            <div class="col-sm-8">                            
+              <img class="img-portal" src="https://www.ues.edu.sv/storage/app/media/minerva2.png"/>
+              <h1 class="ml-3">Universidad de El Salvador</h1>
+              <h4 class="ml-3">Hacia la libertal por la cultura</h4>
             </div>
+            <div class="col-md-4">
+              <inertia-link type="button" class="btn btn-success float-right mt-2"  
+              :href="route('encargadosescuela.create')">
+                <i class="fas fa-plus"></i> Añadir petición
+              </inertia-link>
+            </div>              
+          </div>
+        </div>            
+      </div>   
 
-                <div class="md-toolbar-row md-toolbar-offset">
-                    <h3 class="md-title">Title on a second row</h3>
-                </div>
-            </md-toolbar>
-        </div>
-    </div>
-    <!-- /.content-wrapper -->
 
+
+    </div>              
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->
     </aside>
     <!-- /.control-sidebar -->  
-            </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>

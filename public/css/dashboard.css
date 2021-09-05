@@ -9361,6 +9361,12 @@ input[type=button].btn-block {
   left: auto;
 }
 
+.img-portal{
+  width: 70px;
+  height: 70px;
+  float: left;
+}
+
 @media (min-width: 576px) {
   .dropdown-menu-sm-left {
     right: auto;
@@ -49304,3 +49310,5 @@ a.text-muted:hover {
   -webkit-animation-name: slideIn;
   animation-name: slideIn;
 }
+
+
