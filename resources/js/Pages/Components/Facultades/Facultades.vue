@@ -62,13 +62,14 @@
                                             <td>
                                             <!-- Botones para edit or delete-->
                                                 <div class="tools">
-                                                    <inertia-link class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a Facultad" method="delete"
-                                                    :href="route('facultades.destroy', facultad.id)"
-                                                    v-on:click="mostrarMensajeDelete(facultad)"></inertia-link>
+                                                    
                                                     
                                                     <jet-button :href="route('facultades.update', facultad.id)" v-on:click="mostrarMensajeUpdate(facultad)" data-toggle="modal" 
                                                     data-target="#modificarFacultad" title="Editar Facultad"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>
-                                                          
+
+                                                    <inertia-link class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a Facultad" method="delete"
+                                                    :href="route('facultades.destroy', facultad.id)"
+                                                    v-on:click="mostrarMensajeDelete(facultad)"></inertia-link>
                                                 </div>
                                             </td>
                                         </tr>

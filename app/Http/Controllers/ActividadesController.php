@@ -4,22 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Actividad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
-use Illuminate\Support\Facades\Redirect;
 class ActividadesController extends Controller
 {
+    //
     public function index()
     {
-         //Se obtienen todos los campos de tabla actividad
-        $actividades = Actividad::all();
-     return Inertia::render("Components/Actividades/Actividades",['actividades' => $actividades]);
-
+        $actividades= Actividad::all();
+        return Inertia::render("Components/Actividades/Actividades",['actividades' => $actividades]);
     }
 
     public function store(Request $request)
     {
         Actividad::create($request->all());
+        return Redirect::route('actividades.index');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $actividades=Actividad::find($id);
+        $actividades->update($request->all());
         return Redirect::route('actividades.index');
     }
 
@@ -29,5 +35,4 @@ class ActividadesController extends Controller
         $actividades->delete();
         return Redirect::route('actividades.index');
     }
-    
 }
