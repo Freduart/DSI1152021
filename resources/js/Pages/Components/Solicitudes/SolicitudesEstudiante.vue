@@ -45,17 +45,16 @@
                   
               </div>
               <!-- /.card-header -->
-              <!-- creacion de una card por cada facultad donde tengan asignados encargados -->
               <div class="card-body" v-if="solicitudes.length != 0">
                   <ul class="todo-list" data-widget="todo-list">
                       <li>
                       <!-- todo text -->
-                          <!-- tabla de los encargados de acuerdo al estado -->
+                          <!-- tabla de las solicitudes del estudiante -->
                           <table class="table table-hover text-center ">
                               <thead class="thead-dark">
                                   <tr>
-                                  <th scope='col'>Proyecto</th>
-                                  <th scope="col">Institución</th>
+                                  <th scope='col' width="40%">Proyecto</th>
+                                  <th scope='col'>Tipo</th>
                                   <th scope="col">Fecha</th>
                                   <th scope="col">Estado</th>
                                   <th scope="col" width="15%"></th>
@@ -65,15 +64,15 @@
                                   <!-- cargando datos en la tabla -->
                                   <tr class="table-secondary" scope="row" v-for="(solicitud, index) in solicitudes" :key="index">
                                       
-                                      <td> {{ solicitud.nombre }}</td>
-                                      <td> {{ solicitud.institucion }}</td>
-                                      <td> dd/MM/yyy </td>
+                                      <td> {{ solicitud.servicio }}</td>
+                                      <td> {{ solicitud.tipo }}</td>
+                                      <td> {{ solicitud.fecha }} </td>
                                       <td> {{ solicitud.estado }}</td>
                                       <td >
                                       <!-- General tools such as edit or delete-->
                                           <div class="tools">
-                                              <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" title="Ver informacion de la solicitud"></jet-button>
-                                              
+                                            <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarinfo(solicitud)" title="Ver informacion de la solicitud"></jet-button>
+                                            <jet-button v-if="solicitud.estado == 'En espera'" class="fas fa-trash" title="Eliminar solicitud" method="delete" v-on:click="eliminarSolicitud(solicitud)"></jet-button>
                                           </div>
                                       </td>
                                   </tr>
@@ -102,11 +101,111 @@
           <!-- /.row (main row) -->
       </div><!-- /.container-fluid -->
 
-    <!-- Modal de la informacion del encargado -->
-    
+    <!-- Modal de la informacion del solicitud -->
+        <div class="modal fade" id="verInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <!-- <h5 class="modal-title" id="exampleModalLabel">{{ verDetalleForm.nombre_estudiante }} {{ verDetalleForm.apellido_estudiante }}</h5> -->
+                  <h3 class="modal-title text-primary">Detalle de la solicitud</h3>
+                  <span class="d-flex flex-row-reverse bd-highlight col">
+                      <button v-if="form.estado == 'En espera'" class="btn btn-primary" disabled>{{ form.estado }}</button>
+                            <button v-else-if="form.estado == 'Aceptado'" class="btn btn-success" disabled>{{ form.estado }}</button>
+                            <button v-else-if="form.estado == 'Rechazado'" class="btn btn-danger" disabled>{{ form.estado }}</button>
+                            
+                       
+                      <h5 class="mt-2 mr-2"><strong>Estado:</strong></h5> 
+                  </span>
+                  <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button> -->
+              </div>
+              <div class="modal-body">
+                  
+                <div>
+                  <div class="row">
+                    <div class="col">
+                      <h4 class="text-uppercase"><strong>Información del servicio social </strong></h4>
+                    </div>
+                  </div>
 
+                  <div class="row">
+                    <div class="col">
+                      <h5 class=""><strong>Servicio: </strong> {{ form.servicio }} </h5>
+                    </div>
+                  </div>
+                  <div class="row"> 
+                    <div class="col-4">
+                      <h5 class=""><strong>Tipo: </strong>{{ form.tipo }}</h5>
+                    </div>
+                  </div>
 
+                  <div class="row">
+                    <div class="col">
+                      <h5 class=""><strong>Descripción: </strong>{{ form.descripcion }}</h5>
+                    </div>
+                  </div>
 
+                  <div class="row">
+                    <div class="col">
+                      <h5 class=""><strong>Institución: </strong>{{ form.institucion }}</h5>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <h5 class=""><strong>Rubro: </strong>{{ form.rubro }}</h5>
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col">
+                      <h5 class=""><strong>Ubicación: </strong>{{ form.ubicacion }}</h5>
+                    </div>
+                  </div>
+                  <br>
+
+                  <div class="row">
+                    <div class="col">
+                      <h4 class="text-uppercase"><strong>Información de la solicitud </strong></h4>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <h5 class=""><strong>Solicitante:</strong> {{ form.nombreEstudiante }} {{ form.apellidoEstudiante}} </h5>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <h5 class=""><strong>Fecha solicitud: </strong>{{ form.fecha }}</h5>
+                    </div>
+                    
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <h5 class=""><strong>Justificación: </strong>{{ form.justificacion }}</h5>
+                    </div>
+                  </div>
+
+                </div>  
+                <hr class="mb-1"/>
+              </div>
+              <div class="mb-4">
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button> -->
+                  <div class="d-flex justify-content-center">
+                      <button class="btn btn-warning" data-dismiss="modal">
+                        <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                        Ocultar detalle
+                      </button>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
     </section>
     <!-- /.content -->
@@ -145,27 +244,71 @@
         },
         props: ['solicitudes'],
         methods:{
-          // Cambiar estado del encargado confirmnaod con sweetalert
-          cambiarestado(){
-                
+          // eliminar solicitud confirmnaod con sweetalert
+          eliminarSolicitud(infoServicio){
+            if(infoServicio.estado == 'En espera'){
+                // mensaje de confirmacion
+                Swal.fire({
+                  title: '¿Esta seguro que desea eliminar la solicitud?',
+                  text: "Al eliminarla deberá volver a enviar la solicitud al proyecto",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Si, eliminar',
+                  cancelButtonText: 'No, cancelar'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      // modificando el estado al confirmar
+                      this.$inertia.delete(route('solicitudesestudiante.destroy', infoServicio.idSolicitud));
+                      Swal.fire(
+                      '!Desactivado!',
+                      'La solicitud se eliminó correctamente',
+                      'success'
+                      );
+                      window.location.reload(true);
+                  }
+              })
+            }
           },
-          //carga informacion del encargado seleccionado al formulario del modal
-          mostrarinfo(){
-              
-          }
+          //carga informacion de la solicitud seleccionada al formulario del modal
+            mostrarinfo(infoServicio){
+              this.form.idSolicitud = infoServicio.idSolicitud,
+              this.form.servicio = infoServicio.servicio,
+              this.form.tipo = infoServicio.tipo,
+              this.form.descripcion = infoServicio.descripcion,
+              this.form.institucion = infoServicio.institucion,
+              this.form.rubro = infoServicio.rubro,
+              this.form.ubicacion = infoServicio.ubicacion,
+              this.form.nombreEstudiante = infoServicio.nombreEstudiante,
+              this.form.apellidoEstudiante = infoServicio.apellidoEstudiante,
+              this.form.fecha = infoServicio.fecha,
+              this.form.estado = infoServicio.estado,
+              this.form.justificacion = infoServicio.justificacion
+            }
         }, 
         //Data utilizada
         data(){
           return{
             
-            form: {
-              
+            form:{
+              idSolicitud: null,
+              servicio: '',
+              tipo: '',
+              descripcion: '',
+              institucion: '',
+              rubro: '',
+              ubicacion: '',
+              nombreEstudiante: '',
+              apellidoEstudiante: '',
+              fecha: '',
+              estado: '',
+              justificacion: ''
             }
           }
         }, 
         mounted(){
-          // Llena las facultades y encargados al cargar pagina
-          
+                    
         }
     }
 </script>
