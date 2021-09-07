@@ -6,9 +6,9 @@
   </div> -->
     <slot name="header"></slot>
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-dark">
+    <nav class="main-header navbar navbar-expand navbar-dark ">
         <!-- Left navbar links -->
-        <ul class="navbar-nav">
+        <ul class="navbar-nav col-sm-12">
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
@@ -23,19 +23,22 @@
                 </form>
             </div>
             <template v-else>
-              <inertia-link :href="route('login')" class="btn btn-success">
-                Iniciar Sesión
-              </inertia-link>
+                <div class=" col-sm-12">
+                    <div class="button-log">
+                        <inertia-link :href="route('login')" class="btn btn-success">
+                            Iniciar Sesión
+                        </inertia-link>
 
 
-              <button type="button" class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
-                Registrase
-              </button>
-
-            </template>
-
-
-            
+                        <button type="button" class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
+                            Registrarse
+                        </button>
+                    </div>
+                </div>
+                <div ng-show="base_view" class="delete_right"
+	style="top: 54px; left: 0px;width: 70%; margin-top: 2%;margin-left: 22%;margin-right: 10%; background-color: #F7F4F4;   -webkit-box-shadow: 0 8px 20px rgba(100, 100, 100, 0.85); z-index: 10;">
+    <a class="delete_right"></a></div>
+            </template>            
         </ul>
     </nav>
     <!-- /.navbar -->

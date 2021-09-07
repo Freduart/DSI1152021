@@ -82,4 +82,4 @@ Route::get('credenciales', function (){
 });
 
 //Ruta de peticiones
-Route::resource('peticiones', PeticionController::class)->middleware(['auth:sanctum','verified']);
+Route::apiResource('peticiones', PeticionController::class)->middleware(['auth:sanctum','verified']);

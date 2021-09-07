@@ -21,7 +21,7 @@
             </div>
             <div class="col-md-4">
               <inertia-link type="button" class="btn btn-success float-right mt-2"  
-              :href="route('encargadosescuela.create')">
+              :href="route('peticiones.store')">
                 <i class="fas fa-plus"></i> Añadir petición
               </inertia-link>
             </div>              
