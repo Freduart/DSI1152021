@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Estudiante;
+use App\Models\Solicitud;
 
 class SolicitudController extends Controller
 {
@@ -32,17 +33,20 @@ class SolicitudController extends Controller
 
                 // consulta de tabla
                 $solicitudes = DB::table('solicitudes')
-                ->select('tipos_servicio_social.nombre_tipo_servicio as nombre', 'instituciones.nombre_institucion as institucion', 'solicitudes.estado_solicitud as estado')
+                ->select('solicitudes.id as idSolicitud', 'peticiones.descripcion_peticion as descripcion', 'peticiones.nombre_peticion as servicio','tipos_servicio_social.nombre_tipo_servicio as tipo', 'instituciones.nombre_institucion as institucion', 'instituciones.rubro_institucion as rubro','instituciones.ubicacion_institucion as ubicacion', 'estudiantes.nombre_estudiante as nombreEstudiante', 'estudiantes.apellido_estudiante as apellidoEstudiante','solicitudes.fecha_solicitud as fecha', 'solicitudes.estado_solicitud as estado', 'solicitudes.justificacion_solicitud as justificacion')
                 ->join('proyectos_sociales', 'proyectos_sociales.id', '=', 'solicitudes.proyecto_social_id')
                 ->join('peticiones', 'peticiones.id', '=', 'proyectos_sociales.peticion_id')
                 ->join('tipos_servicio_social', 'tipos_servicio_social.id', '=', 'peticiones.tipo_servicio_social_id')
                 ->join('instituciones', 'instituciones.id', '=', 'peticiones.institucion_id')
-                ->where('estudiante_id', '=', $idEstudiante)
+                ->join('estudiantes', 'estudiantes.id', '=', 'solicitudes.estudiante_id')
+                ->where('solicitudes.estudiante_id', '=', $idEstudiante)
                 ->get();
-                return Inertia::render('Components/Solicitudes/SolicitudesEstudiante', ['solicitudes' => $solicitudes, 'id' => $idEstudiante]);
+                return Inertia::render('Components/Solicitudes/SolicitudesEstudiante', ['solicitudes' => $solicitudes]);
+            } else {
+                return Redirect::route('dashboard');
             }
         } else {
-            return Redirect::route('dashboard');
+            return Redirect::route('login');
         }
     }
 
@@ -110,5 +114,27 @@ class SolicitudController extends Controller
     public function destroy($id)
     {
         //
+        // validando que el usuario ha iniciado sesion
+        if(Auth::check()){            
+            // validando el rol del usuario logeado
+            if (Auth::user()->hasRole('Estudiante')) {
+
+                // obteniendo el id del usuario logeado
+                $idUsuario = Auth::id();
+
+                // obteniendo el id del estudiante logeado
+                $estudiante = Estudiante::where('user_id', '=', $idUsuario)->firstOrFail();
+                $idEstudiante = $estudiante->id;
+
+                // obteniendo la solicitud a eliminar
+                $solicitud=Solicitud::find($id);
+
+                // comparando el estudiante registrado con el dueño de la solicitud
+                if($solicitud->estudiante_id == $idEstudiante){
+                    $solicitud->delete();
+                }
+            }
+        }
+        return "<script>alert('Sipi');</script>";
     }
 }
