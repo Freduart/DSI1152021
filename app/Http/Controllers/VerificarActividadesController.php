@@ -17,4 +17,9 @@ class VerificarActividadesController extends Controller
     return Inertia::render("Components/VerificarActividades/VerificarActividades",['actividades' => $actividades]);
 
     }
+
+    public function update(Request $request, $actividades){
+        $actividades=Actividad::find($actividades);
+        $actividades->verificado = "0";
+    }
 }
