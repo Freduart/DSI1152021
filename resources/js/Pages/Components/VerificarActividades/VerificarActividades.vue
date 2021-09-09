@@ -1,319 +1,344 @@
 <template>
-<div class="wrapper">
-
-  <!-- Preloader -->
-  <!-- <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div> -->
-
-   <Base>
+  <div class="wrapper">
+   <!-- Navbar -->
+    <Base>
       <template v-slot:header></template>
     </Base> 
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="ml-3">Verificacion de las actividades del estudiante</h1>
-          </div><!-- /.col -->          
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <section class="content">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
         <div class="container-fluid">
-            <!-- Main row -->
-            <div class="row">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0">Verificación de actividades</h1>
+            </div><!-- /.col -->          
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div><!-- /.content-header -->
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <!-- Main row -->
+          <div class="row">
             <!-- Left col -->
             <section class="col-lg-12 connectedSortable">
-                <!-- TO DO List -->
-                <!-- Ejemplo de como podria ser una tabla pero se tendria que añadir al width del 100% -->
+              <!-- TO DO List -->
               <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title mt-3 mb-3 ml-2">
-                    <i class="ion ion-clipboard mr-1"></i>
-                    Listado de actividades del estudiante
+                    <h3 class="card-title">
+                      <i class="ion ion-clipboard mr-1"></i>
+                        Lista de Actividades de los estudiantes
                     </h3>
-                   
-                    
                 </div>
                 <!-- /.card-header -->
-                <!--<div class="card-body" v-if="encargadosFFiltrados.length != 0">-->
+                <div class="card-body">
                   <ul class="todo-list" data-widget="todo-list">
                     <li>
-                      <!-- todo text -->
-                      <!-- tabla de los encargados de acuerdo al estado -->
-                      <table class="table table-hover text-center">
+                      <!--Tabla donde apareceran todos las actividades-->
+                      <table class="table table-hover text-center" width="500" style="font-size: 20px">
                         <thead class="thead-dark">
-                            <tr>
-                              <th scope='col'>Código</th>
-                              <th scope="col">Nombre actividad</th>
-                              <th scope="col">Fecha de la actividad</th>
-                              <th scope="col">Total de horas</th>
-                              <th scope="col" width="15%"></th>
-                            </tr>
+                          <tr>
+                            <th scope="col">Codigo</th>
+                            <th scope="col">Nombre de la Actividad</th>
+                            <th scope="col">Acción</th>
+                          </tr>
                         </thead>
+
                         <tbody>
-                            <!-- cargando datos en la tabla -->
-                            <tr class="table-secondary" scope="row" v-for="(encargado, index) in encargadosFFiltrados" :key="index">
-                                
-                                <td>{{ encargado.codigo_encargado_facultad }}</td>
-                                <td>{{ encargado.nombre_encargado_facultad }} {{encargado.apellido_encargado_facultad }}</td>
-                                <td>{{ encargado.nombre_facultad }}</td>
-                                <td>{{ encargado.estado_encargado_facultad }}</td>
-                                <td>
-                                <!-- General tools such as edit or delete-->
-                                    <div class="tools">
-                                        <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarinfo(encargado)" title="Ver informacion del encargado"></jet-button>
-                                        <inertia-link class="fas fa-edit" title="Editar encargado" :href="route('encargadosfacultad.edit', encargado.idEncargado)"></inertia-link>
-                                        <jet-button  v-if="encargado.estado_encargado_facultad == 'Activo'" class="fas fa-arrow-alt-circle-down" title="Dar de baja a encargado" method="delete" v-on:click="cambiarestado(encargado)"></jet-button>     
-                                        <jet-button v-else class="fas fa-arrow-alt-circle-up" title="Activar a encargado" method="delete" v-on:click="cambiarestado(encargado)"></jet-button>
-                                    </div>
-                                </td>
-                            </tr>
+                          <tr class="table-secondary" scope="row" v-for="(actividad, index) in actividadesFiltradas" :key="index">
+                            <!--Aqui devuelven los datos que se mostraran en pantalla -->
+                            <td>{{ actividad.id }}</td>
+                            <td>{{ actividad.nombre_actividad }}</td>
+                            <td>
+                              <div class="flex justify-center">      
+                                <!--boton verificar-->
+                                <button class="btn btn-success" v-on:click="mostrarDatos(actividad)" data-toggle="modal" data-target="#verificar">
+                                  <i>Verificar</i>
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
                         </tbody>
                       </table>
-                     
                     </li>
                   </ul>
-                <!--</div>-->
-               
-                <!-- /.card-body -->
-                <!--<div class="card-footer clearfix">
-                    
-                </div>-->
                 </div>
-                <!-- /.card -->
-            </section>
-            <!-- /.Left col -->
-            <!-- right col (We are only adding the ID to make the widgets sortable)-->
-            <section class="col-lg-5 connectedSortable">            
-                <!-- /.card -->
-            </section>
-            <!-- right col -->
-            </div>
-            <!-- /.row (main row) -->
+              </div>
+            </section><!-- /.Left col -->
+          </div><!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
-
-        <!-- Modal de la informacion del encargado -->
-        <div class="modal fade" id="verInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                  <!-- <h5 class="modal-title" id="exampleModalLabel">{{ verDetalleForm.nombre_estudiante }} {{ verDetalleForm.apellido_estudiante }}</h5> -->
-                  <h3 class="modal-title text-primary">{{ form.nombre_encargado_facultad }} {{ form.apellido_encargado_facultad }}</h3>
-                  <span class="d-flex flex-row-reverse bd-highlight col">
-                      
-                      <button class="btn btn-dark text-light text-lg" style="cursor: default;">
-                          {{ form.codigo_encargado_facultad }}                   
-                      </button>    
-                      <h5 class="mt-2 mr-2"><strong>Codigo:</strong></h5> 
-                      <!-- <h3 class="modal-title text-primary border rounded-lg mx-4">{{ verDetalleForm.carnet_estudiante }} </h3> -->
-                  </span>
-                  <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                  </button> -->
-              </div>
-              <div class="modal-body">
-                  
-                <div>
-                  <div class="row">
-                    <div class="col">
-                      <h5 class=""><strong>Correo: </strong>{{ form.correo_encargado_facultad }}</h5>
-                    </div>
-                    <div class="col-4">
-                      <h5 class=""><strong>Teléfono: </strong>{{ form.telefono_encargado_facultad }}</h5>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col">
-                      <h5 class=""><strong>DUI: </strong>{{ form.dui_encargado_facultad }}</h5>
-                    </div>
-                    <div class="col">
-                      <h5 class=""></h5>
-                    </div>
-                  </div>
-                  
-                  <div class="">
-                    <div class="">
-                      <h5 class=""><strong>Facultad: </strong>{{ form.nombre_facultad }}</h5>
-                    </div>
-                    <div class="row">
-                      <div>
-                        <span class="d-flex flex-row-reverse bd-highlight col">
-                          <h5 class=""><strong>Estado:  </strong>
-                            <button v-if="form.estado_encargado_facultad == 'Activo'" class="btn btn-primary" disabled>{{ form.estado_encargado_facultad }}</button>
-                            <button v-else-if="form.estado_encargado_facultad == 'Inactivo'" class="btn btn-danger" disabled>{{ form.estado_encargado_facultad }}</button>
-                            </h5>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>  
-                <hr class="mb-1"/>
-              </div>
-              <div class="mb-4">
-                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button> -->
-                  <div class="d-flex justify-content-center">
-                      <button class="btn btn-warning" data-dismiss="modal">
-                        <i class="fa fa-eye-slash" aria-hidden="true"></i>
-                        Ocultar detalle
-                      </button>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-    </section>
-    <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->  
+      </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
   </div>
+
+  <!-- Modal para la verificación de las actividades de los estudiantes-->
+  <div class="modal fade" id="verificar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <!--Contenido de la modal-->
+      <div class="modal-content">
+        <!--Encabezado de la modal-->
+        <div class="modal-header">
+          <!--Título de la modal-->
+          <h5 class="modal-title" id="exampleModalLabel">Verificar actividad</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div><!--Fin del encabezado-->
+        <!--Cuerpo de la modal-->
+        <div class="modal-body">
+          <div class="card-body">
+            <!--Primera fila de la modal-->
+            <div class="row">
+              <!--Primera columna de la fila-->
+              <div class="col">
+                <div class="form-group">
+                  <jet-label for="id_actividad" value="Código de la actividad" />
+                  <jet-input id="id_actividad" type="text" readonly="readonly" v-model="form.id" required autofocus autocomplete="id_actividad"/>
+                </div>
+              </div><!--Fin de la primera columna-->
+              <!--Segunda columna de la fila-->
+              <div class="col">
+                <div class="form-group">
+                  <jet-label for="bitacora_id" value="Código de bitácora" />
+                  <jet-input id="bitacora_id" type="text" readonly="readonly" v-model="form.bitacora_id" required autofocus autocomplete="bitacora_id"/>
+                </div>
+              </div><!--Fin de la segunda columna-->
+            </div><!--Fin de la primera fila-->
+
+            <!--Segunda fila-->
+            <div class="row">
+              <!--Primera columna de la fila-->
+              <div class="col">
+                <div class="form-group">
+                  <jet-label for="nombre_actividad" value="Nombre de la actividad" />
+                  <jet-input id="nombre_actividad" type="text" readonly="readonly" v-model="form.nombre_actividad" required autofocus autocomplete="nombre_actividad"/>
+                </div>
+              </div><!--Fin de la primera columna-->
+            </div><!--Fin de la segunda fila-->
+
+            <!--Tercera fila de la modal-->
+            <div class="row">
+              <!--Primera columna de la fila-->
+              <div class="col">
+                <div class="form-group">
+                  <jet-label for="fecha_actividad" value="Fecha de la actividad" />
+                  <jet-input id="fecha_actividad" type="text" readonly="readonly" v-model="form.fecha_actividad" required autofocus autocomplete="fecha_actividad"/>
+                </div>
+              </div><!--Fin de la primera columna-->
+              <!--Segunda columna de la fila-->
+              <div class="col">
+                <div class="form-group">
+                  <jet-label for="total_horas" value="Total de horas en la actividad" />
+                  <jet-input id="total_horas" type="text" readonly="readonly" v-model="form.total_horas" required autofocus autocomplete="total_horas"/>
+                </div>
+              </div><!--Fin de la segunda columna-->
+            </div><!--Fin de la tercera fila-->
+
+          </div><!-- Fin card body-->
+
+          <!--Sección de botones-->
+          <div class="card-footer clearfix">
+              <div class="d-flex justify-content-center align-items-baseline">
+                <!--Fila de los botones-->
+                <div class="row">
+                  <!--Primera columna-->
+                  <div class="col">
+                    <!--boton de verificación de actividad-->
+                    <button v-if="actividad.verificado == '0'" class="btn btn-warning float-center" title="Verificar actividad" v-on:click="verificacion(formUp)">
+                      <i class="fas"></i>Verificar
+                    </button>
+                    <button v-else class="btn btn-warning float-cneter" title="Verificar actividad" v-on:click="verificacion(formUp)">
+                      <i class="fas"></i>Verificar
+                    </button>
+                  </div><!--Fin primera columna-->
+                  <!--Segunda columna-->
+                  <div class="col">
+                    <!--boton atras-->
+                    <button :href="route('verificaractividades.index')" class="btn btn-dark float-center" title="Atras" data-dismiss="modal">
+                      <i class="fas"></i>Atrás
+                    </button>
+                  </div><!--Fin segunda columna-->
+                </div><!--Fin de la fila de los botones-->
+              </div>
+          </div>
+          <!--Fin de sección de botones-->
+
+        </div><!--Fin cuerpo de la modal-->
+      </div><!--Fin contenido de la modal-->
+    </div>
+  </div>
+
 </template>
 
 <script>
+    import JetNavLink from '@/Jetstream/NavLink'
+    import JetDropdownLink from '@/Jetstream/DropdownLink'
+    import JetInput from '@/Jetstream/Input'
+    import JetLabel from '@/Jetstream/Label'
+    import JetButton from '@/Jetstream/Button'
+    import Label from '../../../Jetstream/Label.vue'
+    import Button from '../../../Jetstream/Button.vue'
 
     import Base from "@/Pages/Base.vue";
-    import JetAuthenticationCard from '@/Jetstream/AuthenticationCard'
-    import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo'
-    import JetButton from '@/Jetstream/Button'
-    import JetInput from '@/Jetstream/Input'
-    import JetCheckbox from "@/Jetstream/Checkbox";
-    import JetLabel from '@/Jetstream/Label'
-    import JetValidationErrors from '@/Jetstream/ValidationErrors'
-
 
     export default {
         components:{
-          JetAuthenticationCard,
-          JetAuthenticationCardLogo,
-          JetInput,
-          JetCheckbox,
-          JetLabel,
-          JetValidationErrors,
-          Base
+            JetNavLink,
+            JetDropdownLink,
+            JetInput,
+            JetLabel,
+            //JetButton,
+            Base
         },
-        props: ['encargadosF', 'facultades'],
+        props:['actividades'],
         methods:{
-            // Función para fitrar las facultades de acuerdo a la facultad seleccionada 
-            filtrarByEstado(event){
-                this.encargadosFFiltrados.splice(0, this.encargadosFFiltrados.length); //limpia estructura de las facultades de los encargados por estado
-                //console.log(event.target.value);
-                var estadoText= "Activo";
-                if (event.target.value == 0){
-                    estadoText = "Inactivo";
-                }
-                this.encargadosF.forEach(element => {
-                    if(element.estado_encargado_facultad == estadoText){
+            logout() {
+                this.$inertia.post(route('logout'));
+            },
+            filtrarByActividad(id){
+                this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
+                console.log(id);
+                this.actividades.forEach(element => {
+                    if(element.bitacora_id == id){
                         console.log(element);
-                        this.encargadosFFiltrados.push(element); //llenado de los encargados de acuerdo al estado
+                        this.actividadesFiltradas.push(element);
                     }
                 });
-            }, 
-            // Cambiar estado del encargado confirmnaod con sweetalert
-            cambiarestado(encargado){
-                if(encargado.estado_encargado_facultad == 'Activo'){
-                    // mensaje de confirmacion
-                    Swal.fire({
-                      title: '¿Esta seguro que desea desactivar al encargado?',
-                      text: "El encargado " + encargado.nombre_encargado_facultad + " " + encargado.apellido_encargado_facultad + " con codigo " + encargado.codigo_encargado_facultad +" no podrá iniciar sesión mientras este desactivado.",
-                      icon: 'warning',
-                      showCancelButton: true,
-                      confirmButtonColor: '#3085d6',
-                      cancelButtonColor: '#d33',
-                      confirmButtonText: 'Si, desactivar',
-                      cancelButtonText: 'No, cancelar'
-                  }).then((result) => {
-                      if (result.isConfirmed) {
-                          // modificando el estado al confirmar
-                          this.$inertia.delete(route('encargadosfacultad.destroy', encargado.idEncargado));
-                          Swal.fire(
-                          '!Desactivado!',
-                          'El encargado se desactivó correctamente',
-                          'success'
-                          );
-                          window.location.reload(true);
-                      }
-                  })
-                } else {
-                  // mensaje de confirmacion
-                  Swal.fire({
-                      title: '¿Esta seguro que desea activar al encargado?',
-                      text: "El encargado " + encargado.nombre_encargado_facultad + " " + encargado.apellido_encargado_facultad + " con codigo " + encargado.codigo_encargado_facultad +" se habilitará y podrá iniciar sesión.",
-                      icon: 'warning',
-                      showCancelButton: true,
-                      confirmButtonColor: '#3085d6',
-                      cancelButtonColor: '#d33',
-                      confirmButtonText: 'Si, activar',
-                      cancelButtonText: 'No, cancelar'
-                  }).then((result) => {
-                      if (result.isConfirmed) {
-                          // modificando el estado al confirmar
-                          this.$inertia.delete(route('encargadosfacultad.destroy', encargado.idEncargado));
-                          Swal.fire(
-                          '!Activado!',
-                          'El encargado se activó correctamente',
-                          'success'
-                          );
-                          window.location.reload(true);
-                      }
-                  })
+                console.log(this.actividadesFiltradas);
+                if(id == '0'){
+                    this.actividades.forEach(element => {
+                        this.acividadesFiltradas.push(element);
+                        // this.mostrarMensajeSuccess();
+                    })     
                 }
+            },
+            /*mostrarMensajeSuccess(){
+                    Swal.fire({
+                        title: 'Se ha guardado con éxito',
+                        text: 'Actualice la página para ver los cambios',
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                    });*/
+            //},
+            /*submit(){
+                console.log(this.form);
+                    this.mostrarMensajeSuccess();
+                this.form.post(this.route('actividades.store'));
+                this.form.id='';
+                this.form.nombre_actividad='';
+                this.form.fecha_actividad=''
+                this.form.total_horas='';
+            },*/
+            //Muestra mensaje cuando se actualiza los campos
+            /*submitUpdate(form){
+                console.log(this.formUp);
+                console.log(form);
+                Swal.fire({
+                    title: 'Se ha actualizado la actividad ' + form.nombre_actividad,
+                    text: 'Actualice la página para ver los cambios',
+                    icon: 'success',
+                    iconColor: '#FF8000',
+                    confirmButtonText: 'Aceptar',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+                this.$inertia.put(route("actividades.update",form.id), this.formUp);
+            },*/
+            //Muestra mmensaje cuando se borra los campos
+            /*mostrarMensajeDelete(actividad){
+                this.borrado = true;
+                Swal.fire({
+                    title: 'Se ha borrado la actividad ' + actividad.nombre_actividad,
+                    text: 'Actualice la página para ver los cambios',
+                    iconColor: '#CB3234',
+                    icon: 'warning',
+                    confirmButtonText: 'Aceptar',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+            },*/
+            
+            /*mostrarMensajeUpdate(actividad){
+                console.log(actividad);
+                this.formUp.id = actividad.id;
+                this.formUp.nombre_actividad = actividad.nombre_actividad;
+                this.formUp.fecha_actividad = actividad.fecha_actividad;
+                this.formUp.total_horas = actividad.total_horas;
+                console.log(this.formUp);
+            },*/
+
+            //carga informacion de la actividad seleccionada al formulario del modal
+            mostrarDatos(actividad){
+              this.form.id = actividad.id,
+              this.form.nombre_actividad = actividad.nombre_actividad,
+              this.form.fecha_actividad = actividad.fecha_actividad,
+              this.form.total_horas = actividad.total_horas,
+              this.form.verificado = actividad.verificado
                 
             },
-            //carga informacion del encargado seleccionado al formulario del modal
-            mostrarinfo(encargado){
-              this.form.codigo_encargado_facultad = encargado.codigo_encargado_facultad,
-              this.form.nombre_encargado_facultad = encargado.nombre_encargado_facultad,
-              this.form.apellido_encargado_facultad = encargado.apellido_encargado_facultad,
-              this.form.correo_encargado_facultad = encargado.correo_encargado_facultad,
-              this.form.nombre_facultad = encargado.nombre_facultad,
-              this.form.estado_encargado_facultad = encargado.estado_encargado_facultad,
-              this.form.user_id= null,
-              this.form.dui_encargado_facultad = encargado.dui_encargado_facultad,
-              this.form.telefono_encargado_facultad = encargado.telefono_encargado_facultad
+
+            verificacion(actividad){
+              if(actividad.verificado == "0"){
+                Swal.fire({
+                  title:'¿Está seguro que desea dar por verificada la actividad?',
+                  text: "Código " + actividad.id + " Nombre de actividad" + actividad.nombre_actividad,
+                  icon:'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Si, dar por verificada',
+                  cancelButtonText: 'No, cancelar'
+                }).then((result)=>{
+                  if(result.isConfirmed){
+                    this.$inertia.put(route('verificaractividad.update', actividad.id), this.formUp);
+                    Swal.fire(
+                      '!Verificada',
+                      'La actividad a sido verificada correctamente',
+                      'success'
+                    );
+                    window.location.reload(true);
+                  }
+                })
+              }
             }
-        }, 
-        //Data utilizada
+           
+        },    
         data(){
-          return{
-            encargadosFFiltrados:[],
-            form:{
-              codigo_encargado_facultad: '',
-              nombre_encargado_facultad: '',
-              apellido_encargado_facultad: '',
-              correo_encargado_facultad: '',
-              facultad_id: '',
-              estado_encargado_facultad: 'Activo',
-              user_id: null,
-              dui_encargado_facultad: '',
-              telefono_encargado_facultad: ''
-            }
-          }
-        }, 
-        mounted(){
-            // Llena los encargados al cargar pagina
-            this.encargadosF.forEach(element => {
-                if (element.estado_encargado_facultad == 'Activo'){
-                    this.encargadosFFiltrados.push(element);
+            return{
+                actividad:0,
+                actividadesFiltradas:[],
+                successGuardado:false,
+                //formularioNuevaCarrera:false,
+                form: this.$inertia.form({
+                    id:'',
+                    nombre_actividad:'',
+                    fecha_actividad:'',
+                    total_horas:'',
+                    verificado:'0',
+                    }),
+                formUp: this.$inertia.form({
+                    id:'',
+                    nombre_actividad:'',
+                    fecha_actividad:'',
+                    total_horas:'',
+                    verificado:'0',
+                    }),
                 }
+            },        
+        mounted(){
+            this.actividades.forEach(element => {
+                this.actividadesFiltradas.push(element);
             }),
+            // this.mostrarMensajeSuccess();
             this.successGuardado = false;        
-        }, 
+        },
     }
 </script>
