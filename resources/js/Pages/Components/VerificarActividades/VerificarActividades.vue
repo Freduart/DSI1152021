@@ -313,7 +313,7 @@
                   cancelButtonText: 'No, cancelar'
                 }).then((result)=>{
                   if(result.isConfirmed){
-                    this.$inertia.put(route('verificaractividad.update', actividad.id), this.formUp);
+                    this.$inertia.put(route('verificaractividades.update', actividad.id), this.formUp);
                     Swal.fire(
                       '!Verificada',
                       'La actividad a sido verificada correctamente',

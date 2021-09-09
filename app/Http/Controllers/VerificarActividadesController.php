@@ -23,9 +23,9 @@ class VerificarActividadesController extends Controller
     {
         $actividad=Actividad::find($actividades);
         $actividad->verificado = "1";
-        $contra = "adminadmin";
-        $data = $request->input();
+       // $contra = "adminadmin";
+       $data = $request->input();
         $actividad->save();
-        return Redirect::route('verificaractividad.index');
+        return Redirect::route('verificaractividades.index');
     }
 }

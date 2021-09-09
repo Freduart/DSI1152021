@@ -20004,7 +20004,7 @@ __webpack_require__.r(__webpack_exports__);
           cancelButtonText: 'No, cancelar'
         }).then(function (result) {
           if (result.isConfirmed) {
-            _this2.$inertia.put(route('verificaractividad.update', actividad.id), _this2.formUp);
+            _this2.$inertia.put(route('verificaractividades.update', actividad.id), _this2.formUp);
 
             Swal.fire('!Verificada', 'La actividad a sido verificada correctamente', 'success');
             window.location.reload(true);
