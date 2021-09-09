@@ -329,58 +329,6 @@ import Button from '../../Jetstream/Button.vue'
                 });
                 console.log(this.estudiantesFiltrados);
             }, 
-            /*filtrarEstudiantes(id){
-                this.estudiantesFiltradas.splice(0, this.estudiantesFiltradas.length);
-                console.log(id);
-                this.estudiantes.forEach(element => {
-                    if(element.estudiante_id == id){
-                        console.log(element);
-                        this.estudiantesFiltradas.push(element);
-                    }
-                });
-                console.log(this.estudiantesFiltradas);
-                if(id == '0'){
-                    this.estudiantes.forEach(element => {
-                        this.estudiantesFiltradas.push(element);
-                    })     
-                }
-            },*/
-
-
-            /*cambiarEstado(estudiante){
-                console.log(estudiante);
-                console.log(estudiante.estado_estudiante);
-                if(estudiante.estado_estudiante == 'En Espera'){
-                    // carrera.estado_carrera = 'Inactivo';
-                    this.formUp.estado_estudiante = 'Realizando Servicio'; 
-                    Swal.fire({
-                        title: 'El estudiante esta realizando Su Servicio ' + estudiante.nombre_estudiante,
-                        text: 'Actualice la página para ver los cambios',
-                        icon: 'warning',
-                        iconColor: '#FF8000',
-                        confirmButtonText: 'Aceptar',
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                    });
-
-                }
-                else if(estudiante.estado_estudiante == 'Realizando Servicio'){
-                    // carrera.estado_carrera = 'Activo';
-                    this.formUp.estado_estudiante = 'Inactivo';
-                    Swal.fire({
-                        title: 'Se ha inactivado el estudiante ' + estudiante.nombre_estudiante,
-                        text: 'Actualice la página para ver los cambios',
-                        icon: 'success',
-                        confirmButtonText: 'Aceptar',
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                    });
-                }
-                this.$inertia.put(route("estudiantes.update",estudiante.id), this.formUp);
-                // this.submitUpdate(this.formUp);
-            },*/
 
             cambiarestado(estudiante){
                 //this.borrado = true;
@@ -407,30 +355,6 @@ import Button from '../../Jetstream/Button.vue'
                       }
                   })
                 }
-                 /*else {
-                  Swal.fire({
-                      title: '¿Esta seguro que desea activar al encargado?',
-                      text: "El encargado " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante +" se habilitará y podrá iniciar sesión.",
-                      icon: 'warning',
-                      showCancelButton: true,
-                      confirmButtonColor: '#3085d6',
-                      cancelButtonColor: '#d33',
-                      confirmButtonText: 'Si, activar',
-                      cancelButtonText: 'No, cancelar'
-                  }).then((result) => {
-                      if (result.isConfirmed) {
-                          
-                          this.$inertia.delete(route('verificarcuenta.destroy', estudiante.id));
-                          Swal.fire(
-                          '!Activado!',
-                          'El estudiante se activó correctamente',
-                          'success'
-                          );
-                          window.location.reload(true);
-                      }
-                  })
-                }*/
-                
             },
             changestatus(estudiante){
                 //this.borrado = true;
@@ -457,30 +381,6 @@ import Button from '../../Jetstream/Button.vue'
                       }
                   })
                 }
-                 /*else {
-                  Swal.fire({
-                      title: '¿Esta seguro que desea activar al encargado?',
-                      text: "El encargado " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante +" se habilitará y podrá iniciar sesión.",
-                      icon: 'warning',
-                      showCancelButton: true,
-                      confirmButtonColor: '#3085d6',
-                      cancelButtonColor: '#d33',
-                      confirmButtonText: 'Si, activar',
-                      cancelButtonText: 'No, cancelar'
-                  }).then((result) => {
-                      if (result.isConfirmed) {
-                          
-                          this.$inertia.delete(route('verificarcuenta.destroy', estudiante.id));
-                          Swal.fire(
-                          '!Activado!',
-                          'El estudiante se activó correctamente',
-                          'success'
-                          );
-                          window.location.reload(true);
-                      }
-                  })
-                }*/
-                
             },
 
             submitUpdate(form){

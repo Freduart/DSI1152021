@@ -147,20 +147,30 @@
                   <!--Primera columna-->
                   <div class="col">
                     <!--boton de verificación de actividad-->
-                    <button v-if="actividad.verificado == '0'" class="btn btn-warning float-center" title="Verificar actividad" v-on:click="verificacion(formUp)">
+                    <button v-if="actividad.verificado == '0'" class="btn btn-warning float-center" title="Verificar actividad" v-on:click="verificacion(form)">
                       <i class="fas"></i>Verificar
                     </button>
-                    <button v-else class="btn btn-warning float-cneter" title="Verificar actividad" v-on:click="verificacion(formUp)">
+                    <button v-else class="btn btn-warning float-cneter" title="Verificar actividad" v-on:click="verificacion(form)">
                       <i class="fas"></i>Verificar
                     </button>
                   </div><!--Fin primera columna-->
                   <!--Segunda columna-->
                   <div class="col">
+                    <!--boton de verificación de actividad-->
+                    <button v-if="actividad.verificado == '0'" class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Noverificacion(form)">
+                      <i class="fas"></i>Reportar
+                    </button>
+                    <button v-else class="btn btn-danger float-cneter" title="Verificar actividad" v-on:click="Noverificacion(form)">
+                      <i class="fas"></i>Reportar
+                    </button>
+                  </div><!--Fin Segunda columna-->
+                  <!--Tercera columna-->
+                  <div class="col">
                     <!--boton atras-->
                     <button :href="route('verificaractividades.index')" class="btn btn-dark float-center" title="Atras" data-dismiss="modal">
                       <i class="fas"></i>Atrás
                     </button>
-                  </div><!--Fin segunda columna-->
+                  </div><!--Fin Tercera columna-->
                 </div><!--Fin de la fila de los botones-->
               </div>
           </div>
@@ -198,6 +208,21 @@
             logout() {
                 this.$inertia.post(route('logout'));
             },
+            /*filtrarByActividad(event){
+              this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
+              console.log(event.target.value);
+              var verificadoText= "0";
+              if (event.target.value == 0){
+                verificadoText= "1";
+              }
+              this.actividad.forEach(element =>{
+                if(element.verificado=verificadoText){
+                  console.log(element);
+                  this.actividadesFiltradas.push(element);
+                }
+              });
+              console.log(this.actividadesFiltradas);
+            },*/
             filtrarByActividad(id){
                 this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
                 console.log(id);
@@ -275,18 +300,8 @@
                 console.log(this.formUp);
             },*/
 
-            //carga informacion de la actividad seleccionada al formulario del modal
-            mostrarDatos(actividad){
-              this.form.id = actividad.id,
-              this.form.nombre_actividad = actividad.nombre_actividad,
-              this.form.fecha_actividad = actividad.fecha_actividad,
-              this.form.total_horas = actividad.total_horas,
-              this.form.verificado = actividad.verificado
-                
-            },
-
             verificacion(actividad){
-              if(actividad.verificado == "0"){
+              if(actividad.verificado == '0'){
                 Swal.fire({
                   title:'¿Está seguro que desea dar por verificada la actividad?',
                   text: "Código " + actividad.id + " Nombre de actividad" + actividad.nombre_actividad,
@@ -308,8 +323,41 @@
                   }
                 })
               }
+            },
+
+            Noverificacion(actividad){
+              if(actividad.verificado == '0'){
+                Swal.fire({
+                  title:'¿Está seguro que desea reportar la actividad?',
+                  text: "Código " +actividad.id + " Nombre de actividad " +actividad.nombre_actividad,
+                  icon:'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Aceptar',
+                  cancelButtonText: 'No, cancelar'
+                }).then((result)=>{
+                  if(result.isConfirmed){
+                    //this.$inertia.put(route('verificaractividad.update', actividad.id), this.formUp);
+                    Swal.fire(
+                      '!Reportada',
+                      'La actividad ha sido reportada correctamente',
+                      'success'
+                    );
+                    window.location.reload(true);
+                  }
+                })
+              }
+            },
+
+            //carga informacion de la actividad seleccionada al formulario del modal
+            mostrarDatos(actividad){
+              this.form.id = actividad.id,
+              this.form.nombre_actividad = actividad.nombre_actividad,
+              this.form.fecha_actividad = actividad.fecha_actividad,
+              this.form.total_horas = actividad.total_horas,
+              this.form.verificado = actividad.verificado
             }
-           
         },    
         data(){
             return{

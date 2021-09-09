@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Actividad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class VerificarActividadesController extends Controller
@@ -13,13 +14,18 @@ class VerificarActividadesController extends Controller
     {
    
         //Se obtienen todos los campos de tabla actividad
-    $actividades = Actividad::all();
+    $actividades = Actividad::where('verificado', '=', '0')->get();
     return Inertia::render("Components/VerificarActividades/VerificarActividades",['actividades' => $actividades]);
 
     }
 
-    public function update(Request $request, $actividades){
-        $actividades=Actividad::find($actividades);
-        $actividades->verificado = "0";
+    public function update(Request $request, $actividades)
+    {
+        $actividad=Actividad::find($actividades);
+        $actividad->verificado = "1";
+        $contra = "adminadmin";
+        $data = $request->input();
+        $actividad->save();
+        return Redirect::route('verificaractividad.index');
     }
 }

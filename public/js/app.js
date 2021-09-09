@@ -19770,6 +19770,22 @@ __webpack_require__.r(__webpack_exports__);
     logout: function logout() {
       this.$inertia.post(route('logout'));
     },
+
+    /*filtrarByActividad(event){
+      this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
+      console.log(event.target.value);
+      var verificadoText= "0";
+      if (event.target.value == 0){
+        verificadoText= "1";
+      }
+      this.actividad.forEach(element =>{
+        if(element.verificado=verificadoText){
+          console.log(element);
+          this.actividadesFiltradas.push(element);
+        }
+      });
+      console.log(this.actividadesFiltradas);
+    },*/
     filtrarByActividad: function filtrarByActividad(id) {
       var _this = this;
 
@@ -19854,14 +19870,10 @@ __webpack_require__.r(__webpack_exports__);
         this.formUp.total_horas = actividad.total_horas;
         console.log(this.formUp);
     },*/
-    //carga informacion de la actividad seleccionada al formulario del modal
-    mostrarDatos: function mostrarDatos(actividad) {
-      this.form.id = actividad.id, this.form.nombre_actividad = actividad.nombre_actividad, this.form.fecha_actividad = actividad.fecha_actividad, this.form.total_horas = actividad.total_horas, this.form.verificado = actividad.verificado;
-    },
     verificacion: function verificacion(actividad) {
       var _this2 = this;
 
-      if (actividad.verificado == "0") {
+      if (actividad.verificado == '0') {
         Swal.fire({
           title: '¿Está seguro que desea dar por verificada la actividad?',
           text: "Código " + actividad.id + " Nombre de actividad" + actividad.nombre_actividad,
@@ -19880,6 +19892,30 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       }
+    },
+    Noverificacion: function Noverificacion(actividad) {
+      if (actividad.verificado == '0') {
+        Swal.fire({
+          title: '¿Está seguro que desea reportar la actividad?',
+          text: "Código " + actividad.id + " Nombre de actividad " + actividad.nombre_actividad,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Aceptar',
+          cancelButtonText: 'No, cancelar'
+        }).then(function (result) {
+          if (result.isConfirmed) {
+            //this.$inertia.put(route('verificaractividad.update', actividad.id), this.formUp);
+            Swal.fire('!Reportada', 'La actividad ha sido reportada correctamente', 'success');
+            window.location.reload(true);
+          }
+        });
+      }
+    },
+    //carga informacion de la actividad seleccionada al formulario del modal
+    mostrarDatos: function mostrarDatos(actividad) {
+      this.form.id = actividad.id, this.form.nombre_actividad = actividad.nombre_actividad, this.form.fecha_actividad = actividad.fecha_actividad, this.form.total_horas = actividad.total_horas, this.form.verificado = actividad.verificado;
     }
   },
   data: function data() {
@@ -19975,57 +20011,6 @@ __webpack_require__.r(__webpack_exports__);
       });
       console.log(this.estudiantesFiltrados);
     },
-
-    /*filtrarEstudiantes(id){
-        this.estudiantesFiltradas.splice(0, this.estudiantesFiltradas.length);
-        console.log(id);
-        this.estudiantes.forEach(element => {
-            if(element.estudiante_id == id){
-                console.log(element);
-                this.estudiantesFiltradas.push(element);
-            }
-        });
-        console.log(this.estudiantesFiltradas);
-        if(id == '0'){
-            this.estudiantes.forEach(element => {
-                this.estudiantesFiltradas.push(element);
-            })     
-        }
-    },*/
-
-    /*cambiarEstado(estudiante){
-        console.log(estudiante);
-        console.log(estudiante.estado_estudiante);
-        if(estudiante.estado_estudiante == 'En Espera'){
-            // carrera.estado_carrera = 'Inactivo';
-            this.formUp.estado_estudiante = 'Realizando Servicio'; 
-            Swal.fire({
-                title: 'El estudiante esta realizando Su Servicio ' + estudiante.nombre_estudiante,
-                text: 'Actualice la página para ver los cambios',
-                icon: 'warning',
-                iconColor: '#FF8000',
-                confirmButtonText: 'Aceptar',
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                showConfirmButton: false,
-            });
-          }
-        else if(estudiante.estado_estudiante == 'Realizando Servicio'){
-            // carrera.estado_carrera = 'Activo';
-            this.formUp.estado_estudiante = 'Inactivo';
-            Swal.fire({
-                title: 'Se ha inactivado el estudiante ' + estudiante.nombre_estudiante,
-                text: 'Actualice la página para ver los cambios',
-                icon: 'success',
-                confirmButtonText: 'Aceptar',
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                showConfirmButton: false,
-            });
-        }
-        this.$inertia.put(route("estudiantes.update",estudiante.id), this.formUp);
-        // this.submitUpdate(this.formUp);
-    },*/
     cambiarestado: function cambiarestado(estudiante) {
       var _this2 = this;
 
@@ -20050,30 +20035,6 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       }
-      /*else {
-       Swal.fire({
-           title: '¿Esta seguro que desea activar al encargado?',
-           text: "El encargado " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante +" se habilitará y podrá iniciar sesión.",
-           icon: 'warning',
-           showCancelButton: true,
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           confirmButtonText: 'Si, activar',
-           cancelButtonText: 'No, cancelar'
-       }).then((result) => {
-           if (result.isConfirmed) {
-               
-               this.$inertia.delete(route('verificarcuenta.destroy', estudiante.id));
-               Swal.fire(
-               '!Activado!',
-               'El estudiante se activó correctamente',
-               'success'
-               );
-               window.location.reload(true);
-           }
-       })
-      }*/
-
     },
     changestatus: function changestatus(estudiante) {
       //this.borrado = true;
@@ -20096,30 +20057,6 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       }
-      /*else {
-       Swal.fire({
-           title: '¿Esta seguro que desea activar al encargado?',
-           text: "El encargado " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante +" se habilitará y podrá iniciar sesión.",
-           icon: 'warning',
-           showCancelButton: true,
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           confirmButtonText: 'Si, activar',
-           cancelButtonText: 'No, cancelar'
-       }).then((result) => {
-           if (result.isConfirmed) {
-               
-               this.$inertia.delete(route('verificarcuenta.destroy', estudiante.id));
-               Swal.fire(
-               '!Activado!',
-               'El estudiante se activó correctamente',
-               'success'
-               );
-               window.location.reload(true);
-           }
-       })
-      }*/
-
     },
     submitUpdate: function submitUpdate(form) {
       console.log(this.formUp);
@@ -30101,7 +30038,27 @@ var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Atrás ");
+var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Reportar ");
+
+var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fas"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Reportar ");
+
+var _hoisted_48 = {
+  "class": "col"
+};
+
+var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fas"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Atrás ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Base = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Base");
@@ -30223,23 +30180,37 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "btn btn-warning float-center",
     title: "Verificar actividad",
     onClick: _cache[6] || (_cache[6] = function ($event) {
-      return $options.verificacion($data.formUp);
+      return $options.verificacion($data.form);
     })
   }, [_hoisted_39, _hoisted_40])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 1,
     "class": "btn btn-warning float-cneter",
     title: "Verificar actividad",
     onClick: _cache[7] || (_cache[7] = function ($event) {
-      return $options.verificacion($data.formUp);
+      return $options.verificacion($data.form);
     })
-  }, [_hoisted_41, _hoisted_42]))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin primera columna"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Segunda columna"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("boton atras"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  }, [_hoisted_41, _hoisted_42]))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin primera columna"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Segunda columna"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("boton de verificación de actividad"), $data.actividad.verificado == '0' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+    key: 0,
+    "class": "btn btn-danger float-center",
+    title: "Verificar actividad",
+    onClick: _cache[8] || (_cache[8] = function ($event) {
+      return $options.Noverificacion($data.form);
+    })
+  }, [_hoisted_44, _hoisted_45])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+    key: 1,
+    "class": "btn btn-danger float-cneter",
+    title: "Verificar actividad",
+    onClick: _cache[9] || (_cache[9] = function ($event) {
+      return $options.Noverificacion($data.form);
+    })
+  }, [_hoisted_46, _hoisted_47]))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin Segunda columna"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Tercera columna"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("boton atras"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     href: _ctx.route('verificaractividades.index'),
     "class": "btn btn-dark float-center",
     title: "Atras",
     "data-dismiss": "modal"
-  }, [_hoisted_44, _hoisted_45], 8
+  }, [_hoisted_49, _hoisted_50], 8
   /* PROPS */
-  , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin segunda columna")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin de la fila de los botones")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin de sección de botones")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin cuerpo de la modal")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin contenido de la modal")])])], 64
+  , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin Tercera columna")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin de la fila de los botones")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin de sección de botones")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin cuerpo de la modal")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin contenido de la modal")])])], 64
   /* STABLE_FRAGMENT */
   );
 }
