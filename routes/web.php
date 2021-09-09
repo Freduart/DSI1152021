@@ -13,6 +13,7 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\SolicitudesController;
 use App\Http\Controllers\ActividadesController;
+use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\VerificarActividadesController;
 
 use Illuminate\Foundation\Application;
@@ -76,13 +77,14 @@ Route::resource('verificarcuenta', VerificarCuentaController::class)->middleware
 Route::resource('instituciones', InstitucionController::class)->middleware(['auth:sanctum','verified']);
 Route::resource('actividades', ActividadesController::class)->middleware(['auth:sanctum','verified']);
 
+
 Route::resource('solicitudesestudiante', SolicitudController::class)->middleware(['auth:sanctum','verified']);
 
 Route::resource('solicitudes', SolicitudesController::class)->middleware(['auth:sanctum','verified']);
 
 Route::resource('verificaractividades', VerificarActividadesController::class)->middleware(['auth:sanctum','verified']);
 
-
+Route::resource('bitacora', BitacoraController::class)->middleware(['auth:sanctum','verified']);
 
 //Route::delete('verificarcuenta/{id}', [VerificarCuentaController::class, 'id'])->name('verificarcuenta.eliminar');
 Route::get('credenciales', function (){
