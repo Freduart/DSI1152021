@@ -171,6 +171,8 @@
                             </inertia-link>
                     </li>
 
+                    
+
                     <!-- https://es.vuejs.org/v2/guide/conditional.html -->
                     <!-- https://www.npmjs.com/package/laravel-permission-to-vuejs -->
                     <li v-if="is('Estudiante')" class="nav-item">

@@ -34,18 +34,40 @@
                     <i class="ion ion-clipboard mr-1"></i>
                     Lista de Actividades
                     </h3>
+                          <br>
+                     
+                          <div class="row">
 
-                     <!--Boton para añadir facultades-->
-                            <button type="button" class="btn btn-success float-right mt-2" data-toggle="modal" data-target="#añadirActividad">
-                            <i class="fas fa-plus"></i> Añadir Actividad</button> 
-                            <br> <br>
+                            <!--Boton para VISTA DE BITACORA-->
+                           
+                                <div class="col">
+                                        <div class="form-group">
+                                          <inertia-link type="button" class="btn btn-success float-left mt-2"  :href="route('bitacora.index')">
+                                          <i class="fas fa-plus"></i> Visualizar Bitacora</inertia-link>
+
+
+
+                                        </div>
+                                </div>
+
+                                <!--Boton para añadir actividades-->
+                            <div class="col">
+                                <div class="form-group">
+                                  <button type="button" class="btn btn-success float-right mt-2" data-toggle="modal" data-target="#añadirActividad">
+                                  <i class="fas fa-plus"></i> Añadir Actividad</button> 
+                               </div>
+
+                            </div>
+
+                            </div>
+                            
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
                            
-                                <!--Tabla donde apareceran todos las facultades-->
+                                <!--Tabla donde apareceran todos las actividadess-->
                                 <table class="table table-hover text-center" width="500" style="font-size: 20px">
                                     <thead class="thead-dark">
                                         <tr> 
@@ -120,13 +142,13 @@
 
 
 
-<!-- Modal Insertar los datos de las facultades desde el boton añadir-->
-<div class="modal fade" id="añadirActividad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Añadir Actividad</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <!-- Modal Insertar los datos de las facultades desde el boton añadir-->
+  <div class="modal fade" id="añadirActividad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLabel">Añadir Actividad</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -138,36 +160,25 @@
                     <div class="row">
                       <div class="col">
                         <div class="form-group">
-                                <jet-label for="id" value="Codigo" />
-                                 <jet-input id="id" type="text" v-model="formUp.id" required autofocus autocomplete="off"/>
+                            <jet-label for="id" value="Codigo" />
+                            <jet-input id="id" type="text" v-model="form.id" required autofocus autocomplete="off"/>
                         </div>
                       </div>
                       <div class="col">
-                            <div class="form-group">
-                                <jet-label for="nombre_actividad" value="Nombre de la actividad" />
-                                <jet-input id="nombre_actividad" type="text" v-model="formUp.nombre_actividad" required autofocus autocomplete="off"/>
-                            </div>
+                        <div class="form-group">
+                            <jet-label for="nombre_actividad" value="Nombre de la Actividad" />
+                            <jet-input id="nombre_actividad" type="text" v-model="form.nombre_actividad" required autofocus autocomplete="off"/>
+                        </div>
                       </div>
                     </div>
 
-                <!-- Date dd/mm/yyyy -->
-                <div class="form-group">
-                  <label>Date masks:</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
-                    <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
-                  </div>
-                  <!-- /.input group -->
-                </div>
+                                            
 
                     <div class="row">
                       <div class="col">
                         <div class="form-group">
                             <jet-label for="fecha_actividad" value="Fecha de la actividad" />
-                            <jet-input id="fecha_actividad" type="text" v-model="form.fecha_actividad" required autofocus autocomplete="off"/>
+                            <jet-input id="fecha_actividad" type="date" placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" v-model="form.fecha_actividad" required autofocus autocomplete="off"/>
                         </div>
                       </div>
                       <div class="col">
@@ -177,6 +188,8 @@
                         </div>
                       </div>
                     </div>
+
+
                     <br>
                     <br>
 
@@ -210,9 +223,9 @@
  
         </form>
         </div>
+      </div>
     </div>
-  </div>
-</div><!--Final Modal Insertar actividades-->
+  </div><!--Final Modal Insertar actividades-->
 
 
 
@@ -257,7 +270,7 @@
 
                         <div class="form-group">
                                 <jet-label for="fecha_actividad" value="Fecha de la Actividad" />
-                                <jet-input id="fecha_actividad" type="text" v-model="formUp.fecha_actividad" required autofocus autocomplete="off" :value="this.formUp.fecha_actividad"/>
+                                <jet-input id="fecha_actividad" type="date" placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" v-model="formUp.fecha_actividad" required autofocus autocomplete="off" :value="this.formUp.fecha_actividad"/>
                          </div>
                       </div>
                       <div class="col">
@@ -389,7 +402,7 @@
 
 
 
-
+<!--<script src="/path/to/dist/jquery.inputmask.min.js"></script>-->
 
 
 <script>
@@ -400,6 +413,7 @@
     import JetButton from '@/Jetstream/Button'
     import Label from '../../../Jetstream/Label.vue'
     import Button from '../../../Jetstream/Button.vue'
+   // import Inputmask from"inputmask";
 
     import Base from "@/Pages/Base.vue";
 
@@ -536,7 +550,8 @@
         },
     }
 
-   
+   //Datemask dd/mm/yyyy
+   // $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
 
    
 
