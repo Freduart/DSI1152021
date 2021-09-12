@@ -32,7 +32,7 @@
                 <div class="card-header">
                     <h3 class="card-title">
                     <i class="ion ion-clipboard mr-1"></i>
-                    Lista de Actividades verificadas y no verificadas
+                    Lista de Actividades
                     </h3>
 
                     
@@ -50,7 +50,7 @@
                                         <th scope="col">Codigo</th>
                                         <th scope="col">Nombre de la Actividadd</th>
                                         <th scope="col">Fecha de la actividad</th>
-                                        <th scope="col">Verificado</th>
+                                        <th scope="col">Verificación de la actividad</th>
                                         <th scope="col"></th>
                                         </tr>
                                     </thead>
@@ -61,7 +61,14 @@
                                             <td>{{ actividad.id }}</td>
                                             <td>{{ actividad.nombre_actividad }}</td>
                                             <td>{{ actividad.fecha_actividad }}</td>
-                                            <td>{{ actividad.verificado }}</td>
+                                            <td>
+                                              <button v-if="actividad.verificado == '1'" class="btn btn-info" style="cursor: default;">
+                                                <i>Aceptada</i>
+                                              </button>
+                                              <button v-if="actividad.verificado == '0'" class="btn btn-danger" style="cursor: default;">
+                                                <i>Reportada</i>
+                                              </button>
+                                            </td>
                                             <td>
                                             <!-- Botones para edit or delete-->
                                                  <div class="tools">
@@ -173,7 +180,15 @@
 
               <div class="row">
                 <div class="col">
-                <h5><strong>Verificado: </strong>{{ form.verificado }}</h5>
+                  <h5><strong>La actividad fue: </strong></h5>
+                </div>
+                <div class="col">
+                  <button v-if="form.verificado == '1'" class="btn btn-info" style="cursor: default;">
+                    <i>Aceptada</i>
+                  </button>
+                  <button v-if="form.verificado == '0'" class="btn btn-danger" style="cursor: default;">
+                    <i>Reportada</i>
+                  </button>
                 </div>
               </div>
 

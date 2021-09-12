@@ -365,11 +365,11 @@
                 </div>
               </div>
 
-              <div class="row">
+              <!--<div class="row">
                 <div class="col">
                 <h5><strong>Verificado: </strong>{{ form.verificado }}</h5>
                 </div>
-              </div>
+              </div>-->
 
               <!--<div class="row">
                 <div>

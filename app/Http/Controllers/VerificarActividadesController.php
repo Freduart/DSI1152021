@@ -23,8 +23,17 @@ class VerificarActividadesController extends Controller
     {
         $actividad=Actividad::find($actividades);
         $actividad->verificado = "1";
-       // $contra = "adminadmin";
-       $data = $request->input();
+        // $contra = "adminadmin";
+        $data = $request->input();
+        $actividad->save();
+        return Redirect::route('verificaractividades.index');
+    }
+
+    public function report(Request $request, $actividades)
+    {
+        $actividad=Actividad::find($actividades);
+        $actividad->verificado="2";
+        $data = $request->input();
         $actividad->save();
         return Redirect::route('verificaractividades.index');
     }

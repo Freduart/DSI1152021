@@ -148,19 +148,19 @@
                   <div class="col">
                     <!--boton de verificación de actividad-->
                     <button v-if="actividad.verificado == '0'" class="btn btn-warning float-center" title="Verificar actividad" v-on:click="verificacion(form)">
-                      <i class="fas"></i>Verificar
+                      <i class="fas"></i>Aceptar
                     </button>
                     <button v-else class="btn btn-warning float-cneter" title="Verificar actividad" v-on:click="verificacion(form)">
-                      <i class="fas"></i>Verificar
+                      <i class="fas"></i>Aceptar
                     </button>
                   </div><!--Fin primera columna-->
                   <!--Segunda columna-->
                   <div class="col">
-                    <!--boton de verificación de actividad-->
-                    <button v-if="actividad.verificado == '0'" class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Noverificacion(form)">
+                    <!--boton de reportar actividad-->
+                    <button v-if="actividad.verificado == '0'" class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Reportar(form)">
                       <i class="fas"></i>Reportar
                     </button>
-                    <button v-else class="btn btn-danger float-cneter" title="Verificar actividad" v-on:click="Noverificacion(form)">
+                    <button v-else class="btn btn-danger float-cneter" title="Verificar actividad" v-on:click="Reportar(form)">
                       <i class="fas"></i>Reportar
                     </button>
                   </div><!--Fin Segunda columna-->
@@ -240,66 +240,8 @@
                     })     
                 }
             },
-            /*mostrarMensajeSuccess(){
-                    Swal.fire({
-                        title: 'Se ha guardado con éxito',
-                        text: 'Actualice la página para ver los cambios',
-                        icon: 'success',
-                        confirmButtonText: 'Aceptar',
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                    });*/
-            //},
-            /*submit(){
-                console.log(this.form);
-                    this.mostrarMensajeSuccess();
-                this.form.post(this.route('actividades.store'));
-                this.form.id='';
-                this.form.nombre_actividad='';
-                this.form.fecha_actividad=''
-                this.form.total_horas='';
-            },*/
-            //Muestra mensaje cuando se actualiza los campos
-            /*submitUpdate(form){
-                console.log(this.formUp);
-                console.log(form);
-                Swal.fire({
-                    title: 'Se ha actualizado la actividad ' + form.nombre_actividad,
-                    text: 'Actualice la página para ver los cambios',
-                    icon: 'success',
-                    iconColor: '#FF8000',
-                    confirmButtonText: 'Aceptar',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    showConfirmButton: false,
-                });
-                this.$inertia.put(route("actividades.update",form.id), this.formUp);
-            },*/
-            //Muestra mmensaje cuando se borra los campos
-            /*mostrarMensajeDelete(actividad){
-                this.borrado = true;
-                Swal.fire({
-                    title: 'Se ha borrado la actividad ' + actividad.nombre_actividad,
-                    text: 'Actualice la página para ver los cambios',
-                    iconColor: '#CB3234',
-                    icon: 'warning',
-                    confirmButtonText: 'Aceptar',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    showConfirmButton: false,
-                });
-            },*/
-            
-            /*mostrarMensajeUpdate(actividad){
-                console.log(actividad);
-                this.formUp.id = actividad.id;
-                this.formUp.nombre_actividad = actividad.nombre_actividad;
-                this.formUp.fecha_actividad = actividad.fecha_actividad;
-                this.formUp.total_horas = actividad.total_horas;
-                console.log(this.formUp);
-            },*/
-
+          
+          //Metodo para la verificación de la actividad
             verificacion(actividad){
               if(actividad.verificado == '0'){
                 Swal.fire({
@@ -325,7 +267,8 @@
               }
             },
 
-            Noverificacion(actividad){
+            // Método para reportar la actividad
+            Reportar(actividad){
               if(actividad.verificado == '0'){
                 Swal.fire({
                   title:'¿Está seguro que desea reportar la actividad?',
@@ -338,7 +281,7 @@
                   cancelButtonText: 'No, cancelar'
                 }).then((result)=>{
                   if(result.isConfirmed){
-                    //this.$inertia.put(route('verificaractividad.update', actividad.id), this.formUp);
+                    //this.$inertia.put(route('verificaractividades.report', actividad.id), this.formUp);
                     Swal.fire(
                       '!Reportada',
                       'La actividad ha sido reportada correctamente',
