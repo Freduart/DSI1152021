@@ -12,7 +12,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Verificación de actividades</h1>
+              <h1 class="m-0">Finalizar Actividades</h1>
             </div><!-- /.col -->          
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -30,17 +30,8 @@
                 <div class="card-header">
                     <h3 class="card-title">
                       <i class="ion ion-clipboard mr-1"></i>
-                        Lista de Actividades de los estudiantes
+                        Lista de Actividades aprobadas
                     </h3>
-                    <br>
-                              <!--Boton para finalizar actividades-->
-                           
-                                <div class="col">
-                                        <div class="form-group">
-                                          <inertia-link type="button" class="btn btn-success float-left mt-2"  :href="route('finalizaractividades.index')">
-                                          <i class="fa fa-check-square"></i> Finalizar Actividades</inertia-link>
-                                        </div>
-                                </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -52,6 +43,7 @@
                           <tr>
                             <th scope="col">Codigo</th>
                             <th scope="col">Nombre de la Actividad</th>
+                            <th scope="col">Estado de la actividad</th>
                             <th scope="col">Acción</th>
                           </tr>
                         </thead>
@@ -61,13 +53,18 @@
                             <!--Aqui devuelven los datos que se mostraran en pantalla -->
                             <td>{{ actividad.id }}</td>
                             <td>{{ actividad.nombre_actividad }}</td>
+                                            <td>
+                                              <button v-if="actividad.verificado == '1'" class="btn btn-info" style="cursor: default;">
+                                                <i>Aceptada</i>
+                                              </button>
+                                              
+                                            </td>
                             <td>
-                              <div class="flex justify-center">      
-                                <!--boton verificar-->
+                              <!--<div class="flex justify-center">      
                                 <button class="btn btn-success" v-on:click="mostrarDatos(actividad)" data-toggle="modal" data-target="#verificar">
                                   <i>Verificar</i>
                                 </button>
-                              </div>
+                              </div>-->
                             </td>
                           </tr>
                         </tbody>

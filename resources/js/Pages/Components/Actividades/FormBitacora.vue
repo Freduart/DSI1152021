@@ -50,7 +50,7 @@
                                         <th scope="col">Codigo</th>
                                         <th scope="col">Nombre de la Actividadd</th>
                                         <th scope="col">Fecha de la actividad</th>
-                                        <th scope="col">Verificación de la actividad</th>
+                                        <th scope="col">Estado de la actividad</th>
                                         <th scope="col"></th>
                                         </tr>
                                     </thead>

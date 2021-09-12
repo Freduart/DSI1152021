@@ -43,7 +43,7 @@
                                 <div class="col">
                                         <div class="form-group">
                                           <inertia-link type="button" class="btn btn-success float-left mt-2"  :href="route('bitacora.index')">
-                                          <i class="fas fa-plus"></i> Visualizar Bitacora</inertia-link>
+                                          <i class="fa fa-eye"></i> Visualizar Bitacora</inertia-link>
 
 
 
