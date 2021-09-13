@@ -44,7 +44,7 @@
                             <th scope="col">Codigo</th>
                             <th scope="col">Nombre de la Actividad</th>
                             <th scope="col">Estado de la actividad</th>
-                            <th scope="col">Acción</th>
+                            <th scope="col"> </th>
                           </tr>
                         </thead>
 
@@ -60,11 +60,11 @@
                                               
                                             </td>
                             <td>
-                              <!--<div class="flex justify-center">      
-                                <button class="btn btn-success" v-on:click="mostrarDatos(actividad)" data-toggle="modal" data-target="#verificar">
-                                  <i>Verificar</i>
-                                </button>
-                              </div>-->
+                              <!-- checkbox -->
+                             <div  class="icheck-primary d-inline ml-2">
+                                <input type="checkbox" value="" name="todo1" id="todoCheck1" style="width:20px;height:20px;">
+                                  <label for="todoCheck1-sm"></label>
+                                </div>
                             </td>
                           </tr>
                         </tbody>

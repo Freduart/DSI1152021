@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Solicitud;
 use App\Models\Estudiante;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -13,12 +14,24 @@ class SolicitudesController extends Controller
     //
     public function index()
     {
-   
-    $solicitudes = Estudiante::join('solicitudes', 'solicitudes.estudiante_id', '=', 'estudiantes.id')
-    ->select('*')->get();
-        //Se obtienen todos los campos de tabla Solicitudes
+
+        $solicitudes = DB::table('solicitudes')
+        ->select('solicitudes.id', 'estudiantes.nombre_estudiante', 'estudiantes.apellido_estudiante','solicitudes.fecha_solicitud', 'solicitudes.estado_solicitud', 'solicitudes.justificacion_solicitud')
+        ->join('estudiantes', 'estudiantes.id', '=', 'solicitudes.estudiante_id')
+        ->where('solicitudes.estado_solicitud', '=', 'En Espera')
+        ->get();
+     /* //Se obtienen todos los campos de tabla estudiante
     $estudiantes = Estudiante::all();
-    return Inertia::render("Components/EvaluarSolicitudes/Solicitudes",['solicitudes' => $solicitudes, 'estudiantes' => $estudiantes]);
+    $solicitudes = Solicitud::join('solicitudes', 'solicitudes.estudiante_id', '=', 'estudiantes.id')
+    
+    ->where('estado_solicitud', '=', 'En espera')
+    ->get();
+        
+     //Obtiene las solicitudes con estado en espera
+     $solicitudes = Solicitud::where('estado_solicitud', '=', 'En espera')->get();*/
+
+
+    return Inertia::render("Components/EvaluarSolicitudes/Solicitudes",['solicitudes' => $solicitudes]);
 
     }
 
