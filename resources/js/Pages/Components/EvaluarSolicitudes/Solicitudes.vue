@@ -187,24 +187,21 @@
                                    <div class="row">
                                        <div class="col">
                                             <div class="form-group">
-                                                <button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-dark float-center" title="Aprobar" v-on:click="cambiarestado(formUp)"> 
+                                                <button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-dark float-center" title="Aceptar solicitud"  v-on:click="cambiarestado(formUp)"> 
                                                  <i class="fas"></i>APROBAR </button>  
 
-                                                 <button v-else class="btn btn-dark float-center" title="Aprobar" v-on:click="cambiarestado(formUp)"> 
+                                                 <button v-else class="btn btn-dark float-center" title="Activar estudiante" v-on:click="cambiarestado(formUp)"> 
                                                  <i class="fas"></i>APROBAR </button>
                                            </div>
                                         </div>
-
+                                            <!--Boton rechazar solicitudes-->
                                         <div class="col">
                                             <div class="form-group">
-                                                <inertia-link v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-warning" title="Desactivar estudiante" method="delete" :href="route('solicitudes.destroy', this.formUp.id)" v-on:click="changestatus(formUp)"> 
+                                                <inertia-link class="btn btn-warning" title="Desactivar estudiante" method="delete" :href="route('solicitudes.destroy', this.formUp.id)" v-on:click="changestatus(formUp)"> 
                                                  <i class="fas"></i>RECHAZAR </inertia-link>  
-
-                                                 <inertia-link v-else class="btn btn-warning" title="Desactivar estudiante" method="delete" :href="route('solicitudes.destroy', this.formUp.id)"  v-on:click="changestatus(formUp)"> 
-                                                 <i class="fas"></i>RECHAZAR </inertia-link>
                                            </div>
                                         </div>
-
+                                                <!--Boton CANCELAR-->
                                         <div class="col">
                                             <div class="form-group">
                                                 <inertia-link :href="route('solicitudes.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
@@ -299,7 +296,7 @@
                   }).then((result) => {
                       if (result.isConfirmed) {
                           //var tipo = 1;
-                          this.$inertia.put(route('solicitudes.update', solicitud.nombre_estudiante), this.formUp);
+                          this.$inertia.put(route('solicitudes.update', solicitud.id), this.formUp);
                           Swal.fire(
                           '!Aprobado!',
                           'El estudiante se aprobo correctamente',
@@ -359,29 +356,7 @@
                       }
                   })
                 }
-                 /*else {
-                  Swal.fire({
-                      title: '¿Esta seguro que desea activar al encargado?',
-                      text: "El encargado " + estudiante.nombre_estudiante + " " + estudiante.apellido_estudiante + " con codigo " + estudiante.carnet_estudiante +" se habilitará y podrá iniciar sesión.",
-                      icon: 'warning',
-                      showCancelButton: true,
-                      confirmButtonColor: '#3085d6',
-                      cancelButtonColor: '#d33',
-                      confirmButtonText: 'Si, activar',
-                      cancelButtonText: 'No, cancelar'
-                  }).then((result) => {
-                      if (result.isConfirmed) {
-                          
-                          this.$inertia.delete(route('verificarcuenta.destroy', estudiante.id));
-                          Swal.fire(
-                          '!Activado!',
-                          'El estudiante se activó correctamente',
-                          'success'
-                          );
-                          window.location.reload(true);
-                      }
-                  })
-                }*/
+                 
                 
             },
 

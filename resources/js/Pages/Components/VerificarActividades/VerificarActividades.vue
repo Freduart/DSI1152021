@@ -167,10 +167,10 @@
                   <!--Segunda columna-->
                   <div class="col">
                     <!--boton de reportar actividad-->
-                    <button v-if="actividad.verificado == '0'" class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Reportar(form)">
+                    <button v-if="actividad.verificado == '0'" class="btn btn-danger float-center" title="Verificar actividad" method="delete" :href="route('verificaractividades.destroy', this.form.id)" v-on:click="Reportar(form)">
                       <i class="fas"></i>Reportar
                     </button>
-                    <button v-else class="btn btn-danger float-cneter" title="Verificar actividad" v-on:click="Reportar(form)">
+                    <button v-else class="btn btn-danger float-cneter" title="Verificar actividad" method="delete" :href="route('verificaractividades.destroy', this.form.id)" v-on:click="Reportar(form)">
                       <i class="fas"></i>Reportar
                     </button>
                   </div><!--Fin Segunda columna-->
