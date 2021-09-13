@@ -21,6 +21,7 @@ class VerificarActividadesController extends Controller
 
     public function update(Request $request, $actividades)
     {
+        //utilizamos el método update para cambiar la verificación de cero a 1
         $actividad=Actividad::find($actividades);
         $actividad->verificado = "1";
         // $contra = "adminadmin";
@@ -29,6 +30,7 @@ class VerificarActividadesController extends Controller
         return Redirect::route('verificaractividades.index');
     }
 
+    //Este método está en prueba
     public function report(Request $request, $actividades)
     {
         $actividad=Actividad::find($actividades);

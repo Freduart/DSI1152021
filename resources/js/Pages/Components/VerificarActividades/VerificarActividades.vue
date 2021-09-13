@@ -28,19 +28,20 @@
               <!-- TO DO List -->
               <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">
-                      <i class="ion ion-clipboard mr-1"></i>
-                        Lista de Actividades de los estudiantes
-                    </h3>
-                    <br>
-                              <!--Boton para finalizar actividades-->
-                           
-                                <div class="col">
-                                        <div class="form-group">
-                                          <inertia-link type="button" class="btn btn-success float-left mt-2"  :href="route('finalizaractividades.index')">
-                                          <i class="fa fa-check-square"></i> Finalizar Actividades</inertia-link>
-                                        </div>
-                                </div>
+                  <h3 class="card-title">
+                    <i class="ion ion-clipboard mr-1"></i>
+                      Lista de Actividades de los estudiantes
+                  </h3>
+                  <br>
+                  
+                  <!--Boton para finalizar actividades-->
+                  <div class="col">
+                    <div class="form-group">
+                      <inertia-link type="button" class="btn btn-success float-left mt-2"  :href="route('finalizaractividades.index')">
+                        <i class="fa fa-check-square"></i> Finalizar Actividades
+                      </inertia-link>
+                    </div>
+                  </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">

@@ -30,7 +30,7 @@
                 <div class="card-header">
                     <h3 class="card-title">
                       <i class="ion ion-clipboard mr-1"></i>
-                        Lista de Actividades aprobadas
+                        Seleccione las actividades que desea finalizar
                     </h3>
                 </div>
                 <!-- /.card-header -->
@@ -44,7 +44,7 @@
                             <th scope="col">Codigo</th>
                             <th scope="col">Nombre de la Actividad</th>
                             <th scope="col">Estado de la actividad</th>
-                            <th scope="col"> </th>
+                            <th scope="col">Seleccionar</th>
                           </tr>
                         </thead>
 
@@ -53,12 +53,11 @@
                             <!--Aqui devuelven los datos que se mostraran en pantalla -->
                             <td>{{ actividad.id }}</td>
                             <td>{{ actividad.nombre_actividad }}</td>
-                                            <td>
-                                              <button v-if="actividad.verificado == '1'" class="btn btn-info" style="cursor: default;">
-                                                <i>Aceptada</i>
-                                              </button>
-                                              
-                                            </td>
+                            <td>
+                              <button v-if="actividad.verificado == '1'" class="btn btn-info" style="cursor: default;">
+                                <i>Aceptada</i>
+                              </button>
+                            </td>
                             <td>
                               <!-- checkbox -->
                              <div  class="icheck-primary d-inline ml-2">
@@ -69,6 +68,11 @@
                           </tr>
                         </tbody>
                       </table>
+                      <div class="card-body">
+                        <button class="btn btn-warning float-cneter" title="Verificar actividad">
+                          <i class="fas"></i>Finalizar actividades
+                        </button>
+                      </div>
                     </li>
                   </ul>
                 </div>
