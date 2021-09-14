@@ -79,6 +79,7 @@
                                             <td v-if="carrera.estado_carrera == 'Activo'">
                                                 <form @submit.prevent="cambiarEstado(carrera)">
                                                     <button type="submit" class="btn btn-success" :class="{ 'text-white-50 bg-green-400': form.processing }">{{ carrera.estado_carrera }}</button>
+                                                    <!-- <jet-button type="button" class="fas fa-info-circle text-green"></jet-button> -->
                                                 </form>          
                                             </td>
                                             <td v-else>
@@ -104,9 +105,9 @@
                                                 
                                                     <div class="tools">
                                                         <!-- <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarinfo(encargado)" title="Ver informacion del encargado"></jet-button> -->
-                                                        <jet-button class="fas fa-edit" title="Editar carrera" v-on:click="mostrarMensajeUpdate(carrera)" data-toggle="modal" data-target="#actualizarCarrera"></jet-button>
-                                                        <jet-button  v-if="carrera.estado_carrera == 'Activo'" class="fas fa-arrow-alt-circle-down" title="Dar de baja a carrera" method="delete" v-on:click="cambiarEstado(carrera)"></jet-button>     
-                                                        <jet-button v-else class="fas fa-arrow-alt-circle-up" title="Activar carrera" method="delete" v-on:click="cambiarEstado(carrera)"></jet-button>
+                                                        <jet-button type="button" class="fas fa-edit text-yellow" title="Editar carrera" v-on:click="mostrarMensajeUpdate(carrera)" data-toggle="modal" data-target="#actualizarCarrera"></jet-button>
+                                                        <jet-button  v-if="carrera.estado_carrera == 'Activo'" class="fas fa-arrow-alt-circle-down text-red" title="Dar de baja a carrera" method="delete" v-on:click="cambiarEstado(carrera)"></jet-button>     
+                                                        <jet-button v-else class="fas fa-arrow-alt-circle-up text-green" title="Activar carrera" method="delete" v-on:click="cambiarEstado(carrera)"></jet-button>
                                                     </div>
                                                 
                                             </td>

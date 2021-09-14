@@ -25,16 +25,16 @@
 
         <div class="form-group">
           <jet-label for="carnet_estudiante" value="Carnet" />
-          <jet-input id="carnet_estudiante" type="text" v-model="form.carnet_estudiante" required />
+          <jet-input id="carnet_estudiante" type="text" v-model="form.carnet_estudiante" required/>
         </div>
 
         <div class="form-group">
           <jet-label for="sexo_estudiante" value="Sexo" />
           <br/>
-          <jet-label for="masculino" value="masculino" />
+          <jet-label for="masculino" value="masculino" class="mx-4"/>
           <input id="masculino" type="radio" v-model="form.sexo_estudiante" value="masculino" name="sexo_estudiante" required aria-label="Radio button for following text input"/>
           <br/>
-          <jet-label for="femenino" value="femenino" />
+          <jet-label for="femenino" value="femenino" class="mx-4"/>
           <input id="femenino" type="radio" v-model="form.sexo_estudiante" value="femenino" name="sexo_estudiante" required aria-label="Radio button for following text input"/>
         </div>
 
@@ -45,17 +45,17 @@
 
         <div class="form-group">
           <jet-label for="telefono_estudiante" value="Telefono" />
-          <jet-input id="telefono_estudiante" type="text" v-model="form.telefono_estudiante" required />
+          <jet-input id="telefono_estudiante" type="text" v-model="form.telefono_estudiante" required/>
         </div>
 
         <div class="form-group">
           <jet-label for="dui_estudiante" value="DUI" />
-          <jet-input id="dui_estudiante" type="text" v-model="form.dui_estudiante" />
+          <jet-input id="dui_estudiante" type="text" v-model="form.dui_estudiante"/>
         </div>
 
         <div class="form-group">
           <jet-label for="nit_estudiante" value="NIT" />
-          <jet-input id="nit_estudiante" type="text" v-model="form.nit_estudiante" />
+          <jet-input id="nit_estudiante" type="text" v-model="form.nit_estudiante"/>
         </div>
 
         <div class="form-group">

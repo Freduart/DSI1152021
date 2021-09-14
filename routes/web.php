@@ -14,6 +14,7 @@ use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\SolicitudesController;
 use App\Http\Controllers\VerificarActividadesController;
 use App\Http\Controllers\ActividadesController;
+use App\Http\Controllers\ServicioSocialController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -80,6 +81,8 @@ Route::resource('solicitudes', SolicitudesController::class)->middleware(['auth:
 Route::resource('verificaractividades', VerificarActividadesController::class)->middleware(['auth:sanctum','verified']);
 
 Route::resource('actividades', ActividadesController::class)->middleware(['auth:sanctum','verified']);
+
+Route::resource('serviciossociales', ServicioSocialController::class)->middleware(['auth:sanctum', 'verified']);
 
 //Route::delete('verificarcuenta/{id}', [VerificarCuentaController::class, 'id'])->name('verificarcuenta.eliminar');
 Route::get('credenciales', function (){
