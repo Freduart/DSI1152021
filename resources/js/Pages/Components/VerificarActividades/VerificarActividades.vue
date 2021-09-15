@@ -110,12 +110,13 @@
                 </div>
               </div><!--Fin de la primera columna-->
               <!--Segunda columna de la fila-->
-              <div class="col">
+              <!--<div class="col">
                 <div class="form-group">
                   <jet-label for="bitacora_id" value="Código de bitácora" />
                   <jet-input id="bitacora_id" type="text" readonly="readonly" v-model="form.bitacora_id" required autofocus autocomplete="bitacora_id"/>
                 </div>
-              </div><!--Fin de la segunda columna-->
+              </div>-->
+              <!--Fin de la segunda columna-->
             </div><!--Fin de la primera fila-->
 
             <!--Segunda fila-->
@@ -157,22 +158,19 @@
                   <!--Primera columna-->
                   <div class="col">
                     <!--boton de verificación de actividad-->
-                    <button v-if="actividad.verificado == '0'" class="btn btn-warning float-center" title="Verificar actividad" v-on:click="verificacion(form)">
+                    <inertia-link class="btn btn-warning" title="Verificar actividad" method="put" :href="route('verificaractividades.update', this.form)" v-on:click="verificacion(form)"> 
                       <i class="fas"></i>Aceptar
-                    </button>
-                    <button v-else class="btn btn-warning float-cneter" title="Verificar actividad" v-on:click="verificacion(form)">
-                      <i class="fas"></i>Aceptar
-                    </button>
+                    </inertia-link>
                   </div><!--Fin primera columna-->
                   <!--Segunda columna-->
                   <div class="col">
                     <!--boton de reportar actividad-->
-                    <button v-if="actividad.verificado == '0'" class="btn btn-danger float-center" title="Verificar actividad" method="delete" :href="route('verificaractividades.destroy', this.form.id)" v-on:click="Reportar(form)">
+                    <inertia-link class="btn btn-danger" title="Verificar actividad" method="delete" :href="route('verificaractividades.destroy', this.form)" v-on:click="Reportar(form)"> 
+                      <i class="fas"></i>Reportar 
+                    </inertia-link>
+                    <!--<button v-else class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Reportar(form)">
                       <i class="fas"></i>Reportar
-                    </button>
-                    <button v-else class="btn btn-danger float-cneter" title="Verificar actividad" method="delete" :href="route('verificaractividades.destroy', this.form.id)" v-on:click="Reportar(form)">
-                      <i class="fas"></i>Reportar
-                    </button>
+                    </button>-->
                   </div><!--Fin Segunda columna-->
                   <!--Tercera columna-->
                   <div class="col">
@@ -253,7 +251,7 @@
           
           //Metodo para la verificación de la actividad
             verificacion(actividad){
-              if(actividad.verificado == '0'){
+              if(actividad.verificado == 'En espera'){
                 Swal.fire({
                   title:'¿Está seguro que desea dar por verificada la actividad?',
                   text: "Código " + actividad.id + " Nombre de actividad" + actividad.nombre_actividad,
@@ -279,7 +277,7 @@
 
             // Método para reportar la actividad
             Reportar(actividad){
-              if(actividad.verificado == '0'){
+              if(actividad.verificado == 'En espera'){
                 Swal.fire({
                   title:'¿Está seguro que desea reportar la actividad?',
                   text: "Código " +actividad.id + " Nombre de actividad " +actividad.nombre_actividad,
@@ -291,7 +289,7 @@
                   cancelButtonText: 'No, cancelar'
                 }).then((result)=>{
                   if(result.isConfirmed){
-                    //this.$inertia.put(route('verificaractividades.report', actividad.id), this.formUp);
+                    //this.$inertia.put(route('verificaractividades.destroy', actividad.id), this.formUp);
                     Swal.fire(
                       '!Reportada',
                       'La actividad ha sido reportada correctamente',
@@ -323,14 +321,14 @@
                     nombre_actividad:'',
                     fecha_actividad:'',
                     total_horas:'',
-                    verificado:'0',
+                    verificado:'En espera',
                     }),
                 formUp: this.$inertia.form({
                     id:'',
                     nombre_actividad:'',
                     fecha_actividad:'',
                     total_horas:'',
-                    verificado:'0',
+                    verificado:'En espera',
                     }),
                 }
             },        

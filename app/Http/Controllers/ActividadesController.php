@@ -13,7 +13,7 @@ class ActividadesController extends Controller
     public function index()
     {
         //$actividades= Actividad::all();
-        $actividades = Actividad::where('verificado','=','0')->get();
+        $actividades = Actividad::where('verificado','=','En espera')->get();
         return Inertia::render("Components/Actividades/Actividades",['actividades' => $actividades]);
     }
      

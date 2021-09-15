@@ -55,7 +55,7 @@
                             <td>{{ actividad.id }}</td>
                             <td>{{ actividad.nombre_actividad }}</td>
                             <td>
-                              <button v-if="actividad.verificado == '1'" class="btn btn-info" style="cursor: default;">
+                              <button v-if="actividad.verificado == 'Aceptada'" class="btn btn-info" style="cursor: default;">
                                 <i>Aceptada</i>
                               </button>
                             </td>
@@ -279,6 +279,7 @@
               }
             },
 
+<<<<<<< HEAD
             // Método para reportar la actividad
             Reportar(actividad){
               if(actividad.verificado == '0'){
@@ -311,6 +312,8 @@
                  todoCheck1.elements[i].checked=1
             },
 
+=======
+>>>>>>> 85c84c93ab018476fbf17c4db4fe2702ab5a08b7
             //carga informacion de la actividad seleccionada al formulario del modal
             mostrarDatos(actividad){
               this.form.id = actividad.id,
