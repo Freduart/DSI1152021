@@ -32,6 +32,7 @@
                       <i class="ion ion-clipboard mr-1"></i>
                         Seleccione las actividades que desea finalizar
                     </h3>
+                    
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -66,6 +67,7 @@
                                 </div>
                             </td>
                           </tr>
+                          <a href="javascript:seleccionar_todo()">Marcar todos</a>
                         </tbody>
                       </table>
                       <div class="card-body">
@@ -301,6 +303,12 @@
                   }
                 })
               }
+            },
+
+            seleccionar_todo(){
+             for (i=0;i<todoCheck1.elements.length;i++)
+                  if(todoCheck1.elements[i].type == "checkbox")
+                 todoCheck1.elements[i].checked=1
             },
 
             //carga informacion de la actividad seleccionada al formulario del modal
