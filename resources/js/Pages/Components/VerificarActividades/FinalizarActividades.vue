@@ -279,7 +279,6 @@
               }
             },
 
-<<<<<<< HEAD
             // Método para reportar la actividad
             Reportar(actividad){
               if(actividad.verificado == '0'){
@@ -312,8 +311,6 @@
                  todoCheck1.elements[i].checked=1
             },
 
-=======
->>>>>>> 85c84c93ab018476fbf17c4db4fe2702ab5a08b7
             //carga informacion de la actividad seleccionada al formulario del modal
             mostrarDatos(actividad){
               this.form.id = actividad.id,
