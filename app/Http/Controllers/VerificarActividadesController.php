@@ -14,7 +14,7 @@ class VerificarActividadesController extends Controller
     {
 
         //Se obtienen todos los campos de tabla actividad
-    $actividades = Actividad::where('verificado', '=', '0')->get();
+    $actividades = Actividad::where('verificado', '=', 'En espera')->get();
     return Inertia::render("Components/VerificarActividades/VerificarActividades",['actividades' => $actividades]);
 
     }
@@ -23,7 +23,7 @@ class VerificarActividadesController extends Controller
     {
         //utilizamos el método update para cambiar la verificación de cero a 1
         $actividad=Actividad::find($actividades);
-        $actividad->verificado = "1";
+        $actividad->verificado = "Aceptada";
         // $contra = "adminadmin";
         $data = $request->input();
         $actividad->save();
@@ -40,11 +40,11 @@ class VerificarActividadesController extends Controller
         return Redirect::route('verificaractividades.index');
     }*/
 
-    public function destroy()
+    public function destroy(Request $request, $actividades)
     {
         //utilizamos el método update para cambiar la verificación de cero a 1
         $actividad=Actividad::find($actividades);
-        $actividad->verificado = "2";
+        $actividad->verificado = "Reportada";
         // $contra = "adminadmin";
         $data = $request->input();
         $actividad->save();

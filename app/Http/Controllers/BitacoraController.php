@@ -6,6 +6,7 @@ use App\Models\Actividad;
 use App\Models\Bitacora;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class BitacoraController extends Controller
@@ -14,7 +15,9 @@ class BitacoraController extends Controller
     public function index()
     {
         $bitacoras = Bitacora::all();
-        $actividades= Actividad::all();
+        //$actividades= Actividad::all();
+        $actividades = Actividad::where('verificado', '=', 'Aceptada')
+        ->orWhere('verificado', '=', 'Reportada')->get();
         return Inertia::render("Components/Actividades/FormBitacora",['actividades' => $actividades]);
     }
 }

@@ -62,11 +62,14 @@
                                             <td>{{ actividad.nombre_actividad }}</td>
                                             <td>{{ actividad.fecha_actividad }}</td>
                                             <td>
-                                              <button v-if="actividad.verificado == '1'" class="btn btn-info" style="cursor: default;">
+                                              <button v-if="actividad.verificado == 'Aceptada'" class="btn btn-info" style="cursor: default;">
                                                 <i>Aceptada</i>
                                               </button>
-                                              <button v-if="actividad.verificado == '0'" class="btn btn-danger" style="cursor: default;">
+                                              <button v-if="actividad.verificado == 'Reportada'" class="btn btn-danger" style="cursor: default;">
                                                 <i>Reportada</i>
+                                              </button>
+                                              <button v-if="actividad.verificado == 'En espera'" class="btn btn-primary" style="cursor: default;">
+                                                <i>En espera</i>
                                               </button>
                                             </td>
                                             <td>
@@ -183,10 +186,10 @@
                   <h5><strong>La actividad fue: </strong></h5>
                 </div>
                 <div class="col">
-                  <button v-if="form.verificado == '1'" class="btn btn-info" style="cursor: default;">
+                  <button v-if="form.verificado == 'Aceptada'" class="btn btn-info" style="cursor: default;">
                     <i>Aceptada</i>
                   </button>
-                  <button v-if="form.verificado == '0'" class="btn btn-danger" style="cursor: default;">
+                  <button v-if="form.verificado == 'Reportada'" class="btn btn-danger" style="cursor: default;">
                     <i>Reportada</i>
                   </button>
                 </div>

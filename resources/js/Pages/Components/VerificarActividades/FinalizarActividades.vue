@@ -54,7 +54,7 @@
                             <td>{{ actividad.id }}</td>
                             <td>{{ actividad.nombre_actividad }}</td>
                             <td>
-                              <button v-if="actividad.verificado == '1'" class="btn btn-info" style="cursor: default;">
+                              <button v-if="actividad.verificado == 'Aceptada'" class="btn btn-info" style="cursor: default;">
                                 <i>Aceptada</i>
                               </button>
                             </td>
@@ -269,32 +269,6 @@
                     Swal.fire(
                       '!Verificada',
                       'La actividad a sido verificada correctamente',
-                      'success'
-                    );
-                    window.location.reload(true);
-                  }
-                })
-              }
-            },
-
-            // Método para reportar la actividad
-            Reportar(actividad){
-              if(actividad.verificado == '0'){
-                Swal.fire({
-                  title:'¿Está seguro que desea reportar la actividad?',
-                  text: "Código " +actividad.id + " Nombre de actividad " +actividad.nombre_actividad,
-                  icon:'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Aceptar',
-                  cancelButtonText: 'No, cancelar'
-                }).then((result)=>{
-                  if(result.isConfirmed){
-                    //this.$inertia.put(route('verificaractividades.report', actividad.id), this.formUp);
-                    Swal.fire(
-                      '!Reportada',
-                      'La actividad ha sido reportada correctamente',
                       'success'
                     );
                     window.location.reload(true);
