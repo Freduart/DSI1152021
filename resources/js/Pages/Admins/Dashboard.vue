@@ -21,7 +21,7 @@
             </div>
             <div class="col-md-4">
               <inertia-link type="button" class="btn btn-success float-right mt-2"  
-              :href="route('peticiones.store')">
+              :href="route('tipoServicio.index')">
                 <i class="fas fa-plus"></i> Añadir petición
               </inertia-link>
             </div>              

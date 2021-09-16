@@ -133,12 +133,12 @@
                     </li>
 
                         <!-- Tag para las peticiones -->
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <inertia-link :href="route('peticiones.index')" class="nav-link">
                             <i class="fas fa-key nav-icon"></i>
                             <p>Peticiones de servicio social</p>
                             </inertia-link>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>            
             </ul>

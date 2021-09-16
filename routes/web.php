@@ -11,6 +11,7 @@ use App\Http\Controllers\VerificarCuentaController;
 use App\Http\Controllers\InstitucionController;
 use App\Http\Controllers\PeticionController;
 use App\Http\Controllers\RolController;
+use App\Http\Controllers\TipoServicioController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -82,4 +83,8 @@ Route::get('credenciales', function (){
 });
 
 //Ruta de peticiones
-Route::apiResource('peticiones', PeticionController::class)->middleware(['auth:sanctum','verified']);
+// Route::resource('facultades', FacultadController::class)->middleware(['auth:sanctum','verified']);
+Route::resource('tipoServicio', TipoServicioController::class)->only([
+  'index','store','update','destroy'
+]);
+// Route::apiResource('peticiones', PeticionController::class)->middleware(['auth:sanctum','verified']);
