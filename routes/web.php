@@ -16,6 +16,7 @@ use App\Http\Controllers\ActividadesController;
 use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\VerificarActividadesController;
 use App\Http\Controllers\FinalizarActividadesController;
+use App\Http\Controllers\EstablecerHAController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -84,6 +85,8 @@ Route::resource('solicitudesestudiante', SolicitudController::class)->middleware
 Route::resource('solicitudes', SolicitudesController::class)->middleware(['auth:sanctum','verified']);
 
 Route::resource('verificaractividades', VerificarActividadesController::class)->middleware(['auth:sanctum','verified']);
+
+Route::resource('establecerha', EstablecerHAController::class)->middleware(['auth:sanctum','verified']);
 
 Route::resource('finalizaractividades', FinalizarActividadesController::class)->middleware(['auth:sanctum','verified']);
 

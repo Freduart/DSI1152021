@@ -173,7 +173,7 @@
                     </li>
 
                     <li class="nav-item">
-                            <inertia-link :href="route('verificaractividades.index')" class="nav-link">
+                            <inertia-link :href="route('establecerha.index')" class="nav-link">
                             <i class="nav-icon fa fa-clipboard "></i>
                             <p>Establecer cantidad de Horas y Alumnos</p>
                             </inertia-link>

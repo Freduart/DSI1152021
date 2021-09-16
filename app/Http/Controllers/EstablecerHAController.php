@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Peticion;
 use App\Models\ProyectoSocial;
 use App\Models\TipoServicioSocial;
 use App\Models\Carrera;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class EstablecerHAController extends Controller
 {
@@ -21,4 +21,15 @@ class EstablecerHAController extends Controller
     ->join('estudiantes', 'estudiantes.id', '=', 'solicitudes.estudiante_id')
     ->where('solicitudes.estudiante_id', '=', $idEstudiante)
     ->get();*/
+    public function index(){
+    $servicios = ProyectoSocial::join('peticiones','proyectos_sociales.peticion_id', '=', 'peticiones.id')
+    ->join('carreras', 'peticiones.carrera_id', '=', 'carreras.id')
+    ->join('facultades', 'carreras.facultad_id', '=', 'facultades.id')
+    ->join('tipos_servicio_social', 'peticiones.tipo_servicio_social_id', '=', 'tipos_servicio_social.id')
+    ->join('instituciones', 'peticiones.institucion_id', '=','instituciones.id')
+    ->get();
+    $tipos = TipoServicioSocial::select('nombre_tipo_servicio')->get();
+    $carreras = Carrera::select('nombre_carrera')->get();            
+    return Inertia::render('Components/EstablecerH-A/EstablecerHA', ['servicios' => $servicios, 'tipos' => $tipos, 'carreras' => $carreras]);            
+        }
 }

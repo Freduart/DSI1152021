@@ -13,7 +13,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Gestion de actividades</h1>
+            <h1 class="m-0">Establecer Cantidad de Horas y Alumnos</h1>
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -32,34 +32,10 @@
                 <div class="card-header">
                     <h3 class="card-title">
                     <i class="ion ion-clipboard mr-1"></i>
-                    Lista de Actividades
+                    Lista de Servicios Sociales
                     </h3>
                           <br>
                      
-                          <div class="row">
-
-                            <!--Boton para VISTA DE BITACORA-->
-                           
-                                <div class="col">
-                                        <div class="form-group">
-                                          <inertia-link type="button" class="btn btn-success float-left mt-2"  :href="route('bitacora.index')">
-                                          <i class="fa fa-eye"></i> Visualizar Bitacora</inertia-link>
-
-
-
-                                        </div>
-                                </div>
-
-                                <!--Boton para añadir actividades-->
-                            <div class="col">
-                                <div class="form-group">
-                                  <button type="button" class="btn btn-success float-right mt-2" data-toggle="modal" data-target="#añadirActividad">
-                                  <i class="fas fa-plus"></i> Añadir Actividad</button> 
-                               </div>
-
-                            </div>
-
-                            </div>
                             
                 </div>
                 <!-- /.card-header -->
@@ -67,28 +43,33 @@
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
                            
-                                <!--Tabla donde apareceran todos las actividadess-->
+                                <!--Tabla donde apareceran todos los servicios sociales-->
                                 <table class="table table-hover text-center" width="500" style="font-size: 20px">
                                     <thead class="thead-dark">
                                         <tr> 
-                                        <!-- <th scope='col'>Código</th> -->
-                                        <th scope="col">Codigo</th>
-                                        <th scope="col">Nombre de la Actividadd</th>
-                                        <th scope="col">Fecha de la actividad</th>
+                                        <th scope='col'>Institucion</th>
+                                        <th scope="col">Tipo de servicio</th>
+                                        <th scope="col">Carrera</th>
+                                        <th scope="col">Estado</th>
                                         <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="table-secondary" scope="row" v-for="(actividad, index) in actividadesFiltradas" :key="index">
+                                        <tr class="table-secondary" scope="row" v-for="(servicio, index) in serviciosFiltrados" :key="index">
                                             
                                             <!--Aqui devuelven los datos que se mostraran en pantalla -->
-                                            <td>{{ actividad.id }}</td>
-                                            <td>{{ actividad.nombre_actividad }}</td>
-                                            <td>{{ actividad.fecha_actividad }}</td>
+                                            <td>{{ servicio.nombre_institucion }}</td>
+                                            <td>{{ servicio.nombre_tipo_servicio}}</td>
+                                            <td>{{ servicio.nombre_carrera }}</td>
     
                                             <td>
                                             <!-- Botones para edit or delete-->
                                                 <div class="tools">
+
+                                                     <!--BOTON DE AGREGAR -->
+                                                     <jet-button :href="route('actividades.update', servicio.id)" data-toggle="modal" 
+                                                    data-target="#añadirCantidad" title="Agregar cantidad de hora y alumnos"> <i class="fa fa-plus-circle" style='color:#30bd21'></i> </jet-button>
+                                                   
                                                     
                                                     <!-- BOTON DE VER INFORMACION -->
                                                         <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarinfo(actividad)" title="Ver mas informacion de la actividad"></jet-button>
@@ -98,10 +79,7 @@
                                                     <jet-button :href="route('actividades.update', actividad.id)" v-on:click="mostrarMensajeUpdate(actividad)" data-toggle="modal" 
                                                     data-target="#modificarActividad" title="Editar Actividad"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>
 
-                                                    <!--BOTON DE ELIMINAR -->
-                                                    <inertia-link class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a actividad" method="delete"
-                                                    :href="route('actividades.destroy', actividad.id)"
-                                                    v-on:click="mostrarMensajeDelete(actividad)"></inertia-link>
+                                                   
                                                           
                                                 </div>
                                             </td>
@@ -142,12 +120,12 @@
 
 
 
-  <!-- Modal Insertar los datos de las actividades desde el boton añadir-->
-  <div class="modal fade" id="añadirActividad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- Modal Insertar las cantidades desde el boton añadir-->
+  <div class="modal fade" id="añadirCantidad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-           <h5 class="modal-title" id="exampleModalLabel">Añadir Actividad</h5>
+           <h5 class="modal-title" id="exampleModalLabel">Establecer Cantidad de Horas y Alumnos</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -157,38 +135,27 @@
         <!-- MUESTRA EN PANTALLA LOS CAMPOS A INGRESAR-->
         <form @submit.prevent="submit">
                 <div class="card-body">
-                    <div class="row">
-                      <div class="col">
-                        <div class="form-group">
-                            <jet-label for="id" value="Codigo" />
-                            <jet-input id="id" type="text" v-model="form.id" required autofocus autocomplete="off"/>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="form-group">
-                            <jet-label for="nombre_actividad" value="Nombre de la Actividad" />
-                            <jet-input id="nombre_actividad" type="text" v-model="form.nombre_actividad" required autofocus autocomplete="off"/>
-                        </div>
-                      </div>
+                    <div class="d-flex justify-content-center align-items-baseline">
+                            <div class="form-group">
+                                 <h5 class=""><strong>Tipo de servicio </strong>{{ form.nombre_tipo_servicio }}</h5>
+                            </div>
                     </div>
-
-                                            
-
                     <div class="row">
                       <div class="col">
                         <div class="form-group">
-                            <jet-label for="fecha_actividad" value="Fecha de la actividad" />
-                            <jet-input id="fecha_actividad" type="date" placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" v-model="form.fecha_actividad" required autofocus autocomplete="off"/>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="form-group">
-                            <jet-label for="total_horas" value="Total de horas" />
+                            <jet-label for="total_horas" value="Numero de horas para el servicio social" />
                             <jet-input id="total_horas" type="text" v-model="form.total_horas" required autofocus autocomplete="off"/>
                         </div>
                       </div>
                     </div>
-
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                            <jet-label for="total_horas" value="Cantidad de alumnos en el servicio social" />
+                            <jet-input id="total_horas" type="text" v-model="form.total_horas" required autofocus autocomplete="off"/>
+                        </div>
+                      </div>
+                    </div>
 
                     <br>
                     <br>
@@ -225,7 +192,7 @@
         </div>
       </div>
     </div>
-  </div><!--Final Modal Insertar actividades-->
+  </div><!--Final Modal Insertar cantidades-->
 
 
 
@@ -365,22 +332,7 @@
                 </div>
               </div>
 
-              <!--<div class="row">
-                <div class="col">
-                <h5><strong>Verificado: </strong>{{ form.verificado }}</h5>
-                </div>
-              </div>-->
-
-              <!--<div class="row">
-                <div>
-                  <span class="d-flex flex-row-reverse bd-highlight col">
-                    <h5 class=""><strong>Estado:  </strong>
-                      <button v-if="form.estado_encargado_escuela == 'Activo'" class="btn btn-primary" disabled>{{ form.estado_encargado_escuela }}</button>
-                      <button v-else-if="form.estado_encargado_escuela == 'Inactivo'" class="btn btn-danger" disabled>{{ form.estado_encargado_escuela }}</button>
-                      </h5>
-                  </span>
-                </div>
-              </div>-->
+              
 
             </div>  
             <hr class="mb-1"/>
@@ -395,14 +347,12 @@
           </div>
         </div>
       </div>
-    </div> <!--MODAL DE INFORMACION DE LA ACTIVIDAD -->
+    </div> <!--MODAL DE INFORMACION PARA ESTABLECER CANTIDADES -->
 
 
 </template>
 
 
-
-<!--<script src="/path/to/dist/jquery.inputmask.min.js"></script>-->
 
 
 <script>
@@ -413,7 +363,6 @@
     import JetButton from '@/Jetstream/Button'
     import Label from '../../../Jetstream/Label.vue'
     import Button from '../../../Jetstream/Button.vue'
-   // import Inputmask from"inputmask";
 
     import Base from "@/Pages/Base.vue";
 
@@ -426,28 +375,28 @@
             //JetButton,
             Base
         },
-        props:['actividades'],
+        props:['servicios'],
         methods:{
             logout() {
                 this.$inertia.post(route('logout'));
             },
-            filtrarByActividad(id){
-                this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
+            /*filtrarByActividad(id){
+                this.serviciosFiltrados.splice(0, this.serviciosFiltrados.length);
                 console.log(id);
                 this.actividades.forEach(element => {
                     if(element.bitacora_id == id){
                         console.log(element);
-                        this.actividadesFiltradas.push(element);
+                        this.serviciosFiltrados.push(element);
                     }
                 });
-                console.log(this.actividadesFiltradas);
+                console.log(this.serviciosFiltrados);
                 if(id == '0'){
                     this.actividades.forEach(element => {
-                        this.acividadesFiltradas.push(element);
+                        this.serviciosFiltrados.push(element);
                         // this.mostrarMensajeSuccess();
                     })     
                 }
-            },
+            },*/
             mostrarMensajeSuccess(){
                     Swal.fire({
                         title: 'Se ha guardado con éxito',
@@ -461,19 +410,17 @@
             },
             submit(){
                 console.log(this.form);
-                    this.mostrarMensajeSuccess();
+                this.mostrarMensajeSuccess();
                 this.form.post(this.route('actividades.store'));
-                this.form.id='';
-                this.form.nombre_actividad='';
-                this.form.fecha_actividad=''
-                this.form.total_horas='';
+                this.form.numero_horas='';
+                this.form.cantidad_estudiantes='';
             },
             //Muestra mensaje cuando se actualiza los campos
             submitUpdate(form){
                 console.log(this.formUp);
                 console.log(form);
                 Swal.fire({
-                    title: 'Se ha actualizado la actividad ' + form.nombre_actividad,
+                    title: 'Se ha actualizado los datos ',
                     text: 'Actualice la página para ver los cambios',
                     icon: 'success',
                     iconColor: '#FF8000',
@@ -485,7 +432,7 @@
                 this.$inertia.put(route("actividades.update",form.id), this.formUp);
             },
             //Muestra mmensaje cuando se borra los campos
-            mostrarMensajeDelete(actividad){
+            /*mostrarMensajeDelete(actividad){
                 this.borrado = true;
                 Swal.fire({
                     title: 'Se ha borrado la actividad ' + actividad.nombre_actividad,
@@ -497,62 +444,64 @@
                     allowOutsideClick: false,
                     showConfirmButton: false,
                 });
-            },
+            },*/
             
-            mostrarMensajeUpdate(actividad){
-                console.log(actividad);
-                this.formUp.id = actividad.id;
-                this.formUp.nombre_actividad = actividad.nombre_actividad;
-                this.formUp.fecha_actividad = actividad.fecha_actividad;
-                this.formUp.total_horas = actividad.total_horas;
+            mostrarMensajeUpdate(servicio){
+                console.log(servicio);
+              this.formUp.nombre_tipo_servicio = servicio.nombre_tipo_servicio,
+              this.formUp.nombre_institucion = servicio.nombre_institucion,
+              this.formUp.numero_horas = servicio.numero_horas,
+              this.formUp.nombre_carrera = servicio.nombre_carrera,
+              this.formUp.nombre_facultad = servicio.nombre_facultad,
+              this.formUp.cantidad_estudiantes=servicio.cantidad_estudiantes
                 console.log(this.formUp);
             },
 
-            //carga informacion de la actividad seleccionada al formulario del modal
-            mostrarinfo(actividad){
-              this.form.id = actividad.id,
-              this.form.nombre_actividad = actividad.nombre_actividad,
-              this.form.fecha_actividad = actividad.fecha_actividad,
-              this.form.total_horas = actividad.total_horas,
-              this.form.verificado = actividad.verificado
-                
+            //carga informacion del servicio social seleccionado al formulario del modal
+            mostrarinfo(servicio){
+              this.form.nombre_tipo_servicio = servicio.nombre_tipo_servicio,
+              this.form.nombre_institucion = servicio.nombre_institucion,
+              this.form.numero_horas = servicio.numero_horas,
+              this.form.nombre_carrera = servicio.nombre_carrera,
+              this.form.nombre_facultad = servicio.nombre_facultad,
+              this.form.cantidad_estudiantes=servicio.cantidad_estudiantes
             }
            
         },    
         data(){
             return{
                 actividad:0,
-                actividadesFiltradas:[],
+                serviciosFiltrados:[],
                 successGuardado:false,
-                //formularioNuevaCarrera:false,
+                
                 form: this.$inertia.form({
-                    id:'',
-                    nombre_actividad:'',
-                    fecha_actividad:'',
-                    total_horas:'',
-                    verificado:'0',
+                    numero_horas:'',
+                    estado_proyecto_social:'',
+                    cantidad_estudiantes:'',
+                    nombre_carrera:'',
+                    nombre_tipo_servicio:'',
+                    nombre_facultad:'',
+                    nombre_institucion:'',
                     }),
                 formUp: this.$inertia.form({
-                    id:'',
-                    nombre_actividad:'',
-                    fecha_actividad:'',
-                    total_horas:'',
-                    verificado:'0',
+                    numero_horas:'',
+                    estado_proyecto_social:'',
+                    cantidad_estudiantes:'',
+                    nombre_carrera:'',
+                    nombre_tipo_servicio:'',
+                    nombre_facultad:'',
+                    nombre_institucion:'',
                     }),
                 }
             },        
         mounted(){
-            this.actividades.forEach(element => {
-                this.actividadesFiltradas.push(element);
+            this.servicios.forEach(element => {
+                this.serviciosFiltrados.push(element);
             }),
             // this.mostrarMensajeSuccess();
             this.successGuardado = false;        
         },
     }
 
-   //Datemask dd/mm/yyyy
-   // $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-
-   
 
 </script>
