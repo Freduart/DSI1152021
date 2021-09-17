@@ -91,6 +91,6 @@ Route::get('credenciales', function (){
     'contrasena' => 'contra'
   ];
   //$correo = new CredencialesMailable;
-  Mail::to('jganuzaramírez@gmail.com')->send(new CredencialesMailable($details));
+  Mail::to('jganuzaramirez@gmail.com')->send(new CredencialesMailable($details));
   return "mensaje enviado";
 });
