@@ -22075,15 +22075,23 @@ __webpack_require__.r(__webpack_exports__);
 
       if (id == '0') {
         this.tipoServicioSocial.forEach(function (element) {
-          _this.tipoServicioFiltrados.push(element); // this.mostrarMensajeSuccess();
-
+          _this.tipoServicioFiltrados.push(element);
         });
       }
     },
-    submit: function submit(form) {
+    success: function success() {
+      Swal.fire('Guardado con exito!', 'El tipo de servicio social se agrego correctamente', 'success');
+    },
+    submit: function submit() {
       this.form.post(this.route('tipoServicio.store'));
       this.form.nombre_tipo_servicio = '';
-      windows.location.reload(true);
+      this.success();
+      window.location.reload(true);
+    },
+    submitUpdate: function submitUpdate(form) {
+      Swal.fire('¡Guardado con exito!', 'El tipo de servicio social se actualizo correctamente', 'success');
+      this.$inertia.patch(route("tipoServicio.update", form.id), this.formUp);
+      window.location.reload(true);
     },
     deleteTipoServicio: function deleteTipoServicio(tipoSerivicioSocial) {
       var _this2 = this;
@@ -22104,27 +22112,29 @@ __webpack_require__.r(__webpack_exports__);
           window.location.reload(true);
         }
       });
-    } // async listar(){
-    //   const res=await axios.get('/tipoServicio');
-    //   this.tipoServicioFiltrados=res.data
-    // }
-
+    },
+    //Cargo la informacion del formulario 
+    mostrarMensajeUpdate: function mostrarMensajeUpdate(tipoServicioSocial) {
+      this.formUp.nombre_tipo_servicio = tipoServicioSocial.nombre_tipo_servicio;
+      this.formUp.id = tipoServicioSocial.id;
+    }
   },
-  setup: function setup() {},
   data: function data() {
     return {
       tipoServicio: 0,
       tipoServicioFiltrados: [],
       successGuardado: false,
+      //Este se utiliza a la hora de agregar un tipoServicio
       form: this.$inertia.form({
+        nombre_tipo_servicio: ''
+      }),
+      //Este se utiliza a la hora de actualizar un tipoServicio
+      formUp: this.$inertia.form({
         nombre_tipo_servicio: '',
         id: ''
       })
     };
   },
-  // created(){
-  //   this.listar();
-  // },
   mounted: function mounted() {
     var _this3 = this;
 
@@ -30790,7 +30800,81 @@ var _hoisted_32 = {
 
 var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Cancelar");
 
+var _hoisted_34 = {
+  "class": "modal fade",
+  id: "updateTipoServicio",
+  tabindex: "-1",
+  role: "dialog",
+  "aria-labelledby": "exampleModalLabel",
+  "aria-hidden": "true"
+};
+var _hoisted_35 = {
+  "class": "modal-dialog",
+  role: "document"
+};
+var _hoisted_36 = {
+  "class": "modal-content"
+};
+
+var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "modal-header"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
+  "class": "modal-title",
+  id: "exampleModalLabel"
+}, "Modificar Tipo de Servicio Social"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "button",
+  "class": "close",
+  "data-dismiss": "modal",
+  "aria-label": "Close"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "aria-hidden": "true"
+}, "×")])], -1
+/* HOISTED */
+);
+
+var _hoisted_38 = {
+  "class": "modal-body"
+};
+var _hoisted_39 = {
+  "class": "form-group"
+};
+var _hoisted_40 = {
+  "class": "d-flex justify-content-center align-items-baseline"
+};
+var _hoisted_41 = {
+  "class": "row"
+};
+var _hoisted_42 = {
+  "class": "col"
+};
+var _hoisted_43 = {
+  "class": "form-group"
+};
+var _hoisted_44 = {
+  "class": "mt-12"
+};
+
+var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fas"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Guardar ");
+
+var _hoisted_47 = [_hoisted_45, _hoisted_46];
+var _hoisted_48 = {
+  "class": "col"
+};
+var _hoisted_49 = {
+  "class": "form-group"
+};
+
+var _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Cancelar");
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _this = this;
+
   var _component_Base = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Base");
 
   var _component_jet_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-button");
@@ -30820,7 +30904,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Botones para edit or delete"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para editar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
       href: _ctx.route('tipoServicio.update', tipos.id),
       "data-toggle": "modal",
-      "data-target": "#addTipoServicio",
+      onClick: function onClick($event) {
+        return $options.mostrarMensajeUpdate(tipos);
+      },
+      "data-target": "#updateTipoServicio",
       title: "Tipo servicio social"
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -30831,7 +30918,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
     }, 1032
     /* PROPS, DYNAMIC_SLOTS */
-    , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <jet-button :href=\"route('tipoServicio.update', tipos.id)\" v-on:click=\"mostrarMensajeUpdate(facultad)\" data-toggle=\"modal\"  \n                                  data-target=\"#modificarFacultad\" title=\"Editar Facultad\"> <i class=\"fas fa-edit\" style='color:#007bff'></i> </jet-button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para eliminar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+    , ["href", "onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para eliminar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
       "class": "fas fa-arrow-alt-circle-down",
       style: {
         "color": "#dc3545"
@@ -30846,7 +30933,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["onClick"])])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Card Body ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Card ")])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal para insertar y modificar un tipo de servicio "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal Header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Modal Header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal Body "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+  ))])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Card Body ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Card ")])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal para insertar un tipo de servicio "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal Header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Modal Header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal Body "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     onSubmit: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.submit && $options.submit.apply($options, arguments);
     }, ["prevent"]))
@@ -30887,7 +30974,52 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["href"])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of action buttons ")], 32
   /* HYDRATE_EVENTS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Modal Body ")])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Final Modal Insertar facultades")], 64
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Modal Body ")])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Final Modal Insertar facultades"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal para actualizar un tipo de servicio "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal Header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Modal Header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal Body "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+    onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+      return $options.submitUpdate(_this.formUp);
+    }, ["prevent"]))
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+    "for": "nombre_tipo_servicio",
+    value: "Tipo de servicio social"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
+    id: "nombre_tipo_servicio",
+    type: "text",
+    modelValue: $data.formUp.nombre_tipo_servicio,
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.formUp.nombre_tipo_servicio = $event;
+    }),
+    required: "",
+    autofocus: "",
+    autocomplete: "off",
+    value: this.formUp.nombre_tipo_servicio
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "value"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Action buttons "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["btn btn-dark float-center", {
+      'text-white-50 bg-green-400': $data.formUp.processing
+    }]),
+    onClick: _cache[3] || (_cache[3] = function ($event) {
+      return _ctx.updateTipo(_this.formUp);
+    })
+  }, _hoisted_47, 2
+  /* CLASS */
+  )])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
+    href: _ctx.route('tipoServicio.index'),
+    type: "button",
+    "class": "btn btn-danger float-center",
+    "data-dismiss": "modal"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_50];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["href"])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of action buttons ")], 32
+  /* HYDRATE_EVENTS */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Modal Body ")])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Fin del modal de actualizar ")], 64
   /* STABLE_FRAGMENT */
   );
 }

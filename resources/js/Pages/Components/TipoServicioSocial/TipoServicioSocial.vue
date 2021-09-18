@@ -65,10 +65,8 @@
                             <!-- Botones para edit or delete-->
                                 <div class="tools">
                                   <!-- Boton para editar -->
-                                  <jet-button :href="route('tipoServicio.update', tipos.id)"  data-toggle="modal" 
-                                  data-target="#addTipoServicio" title="Tipo servicio social"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>
-                                  <!-- <jet-button :href="route('tipoServicio.update', tipos.id)" v-on:click="mostrarMensajeUpdate(facultad)" data-toggle="modal"  
-                                  data-target="#modificarFacultad" title="Editar Facultad"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button> -->
+                                  <jet-button :href="route('tipoServicio.update', tipos.id)"  data-toggle="modal" v-on:click="mostrarMensajeUpdate(tipos)"
+                                  data-target="#updateTipoServicio" title="Tipo servicio social"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>                                  
 
                                   <!-- Boton para eliminar -->
                                   <jet-button class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Eliminar tipo de servicio social" method="delete" 
@@ -91,7 +89,7 @@
     </div>
   </div>
 
-  <!-- Modal para insertar y modificar un tipo de servicio -->
+  <!-- Modal para insertar un tipo de servicio -->
   <div class="modal fade" id="addTipoServicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
 
@@ -143,6 +141,60 @@
     </div>
   </div>
   <!--Final Modal Insertar facultades-->
+
+  <!-- Modal para actualizar un tipo de servicio -->
+  <div class="modal fade" id="updateTipoServicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+      <!-- Modal Header -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modificar Tipo de Servicio Social</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!-- End of Modal Header -->
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+
+          <form @submit.prevent="submitUpdate(this.formUp)">
+              <div class="form-group">
+                  <jet-label for="nombre_tipo_servicio" value="Tipo de servicio social" />
+                  <jet-input id="nombre_tipo_servicio" type="text" v-model="formUp.nombre_tipo_servicio" required autofocus autocomplete="off" :value="this.formUp.nombre_tipo_servicio"/>
+              </div>
+
+              <!-- Action buttons -->
+              <div class="d-flex justify-content-center align-items-baseline">
+                  <div class="row">
+                      <div class="col">
+                          <div class="form-group">
+                              <div class="mt-12">
+                                  <button class="btn btn-dark float-center" :class="{ 'text-white-50 bg-green-400': formUp.processing }" v-on:click="updateTipo(this.formUp)">
+                                  <i class="fas"></i>Guardar                                  
+                                  </button>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col">
+                          <div class="form-group">
+                              <inertia-link :href="route('tipoServicio.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
+                              Cancelar</inertia-link>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- End of action buttons -->
+
+          </form>
+        </div>
+        <!-- End of Modal Body -->
+
+      </div>
+    </div>
+  </div>
+  <!-- Fin del modal de actualizar -->
 </template>
 
 <script>
@@ -181,16 +233,34 @@ export default {
         });        
         if(id == '0'){
           this.tipoServicioSocial.forEach(element => {
-              this.tipoServicioFiltrados.push(element);
-              // this.mostrarMensajeSuccess();
+              this.tipoServicioFiltrados.push(element);              
           })     
         }
     }, 
 
-    submit(form){
+    success(){
+      Swal.fire(
+          'Guardado con exito!',
+          'El tipo de servicio social se agrego correctamente',
+          'success'
+        );
+    },
+
+    submit(){
       this.form.post(this.route('tipoServicio.store'));
       this.form.nombre_tipo_servicio='';
-      windows.location.reload(true);
+      this.success();
+      window.location.reload(true);      
+    },
+
+    submitUpdate(form){
+      Swal.fire(
+        '¡Guardado con exito!',
+        'El tipo de servicio social se actualizo correctamente',
+        'success'
+      );
+      this.$inertia.patch(route("tipoServicio.update",form.id), this.formUp);      
+      window.location.reload(true);
     },
 
     deleteTipoServicio(tipoSerivicioSocial){
@@ -213,33 +283,34 @@ export default {
           window.location.reload(true);
         }
       })
+    },
+
+    //Cargo la informacion del formulario 
+    mostrarMensajeUpdate(tipoServicioSocial){
+      this.formUp.nombre_tipo_servicio=tipoServicioSocial.nombre_tipo_servicio;
+      this.formUp.id=tipoServicioSocial.id;
     }
     
-
-    // async listar(){
-    //   const res=await axios.get('/tipoServicio');
-    //   this.tipoServicioFiltrados=res.data
-    // }
   },
 
-  setup() {
-    
-  },
   data(){
     return{
       tipoServicio:0,
       tipoServicioFiltrados:[],
       successGuardado:false,
+
+      //Este se utiliza a la hora de agregar un tipoServicio
       form: this.$inertia.form({
+        nombre_tipo_servicio:'',        
+      }),
+
+      //Este se utiliza a la hora de actualizar un tipoServicio
+      formUp: this.$inertia.form({
         nombre_tipo_servicio:'',
         id:'',
-      }),
+      })
     }
   },
-
-  // created(){
-  //   this.listar();
-  // },
 
   mounted(){
     this.tipoServicioSocial.forEach(element =>{
