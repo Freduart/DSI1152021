@@ -35,26 +35,25 @@
                     <i class="ion-clipboard ion mr-1"></i>
                     Tipo de servicio social
                   </h3>
+                  <!--Boton para añadir facultades-->
+                  <button type="button" class="btn btn-success float-right mb-8" data-toggle="modal" data-target="#addTipoServicio">
+                    <i class="fas fa-plus"></i> Añadir Tipo servicio social</button> 
                 </div>
                 <!-- End of Card Header -->
-              </div>
-
-              <!-- Card Body -->
-              <div class="card-body">
-                <ul class="todo-list" data-widget="todo-list">
-                  <li>
-                    <!--Boton para añadir facultades-->
-                    <button type="button" class="btn btn-success mb-8" data-toggle="modal" data-target="#añadirTipoServicio">
-                    <i class="fas fa-plus"></i> Añadir Tipo servicio social</button> 
-                    <hr>
-                    <!--Tabla donde apareceran todos las facultades-->
+                
+                <!-- Card Body -->
+                <div class="card-body">
+                  <ul class="todo-list" data-widget="todo-list">
+                    <li>                    
+                      <hr>
+                      <!--Tabla donde apareceran todos las facultades-->
                       <table class="table table-hover text-center" width="500" style="font-size: 20px">
                         <thead class="thead-dark">
                             <tr> 
                             <!-- <th scope='col'>Código</th> -->
                             <th scope="col">#</th>
                             <th scope="col">Tipo de servicio social</th>
-                            <th scope="col">Opciones</th>
+                            <th scope="col" width="15%"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -72,17 +71,19 @@
                                   data-target="#modificarFacultad" title="Editar Facultad"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button> -->
 
                                   <!-- Boton para eliminar -->
-                                  <inertia-link class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Eliminar tipo de servicio social" method="delete"
-                                  :href="route('tipoServicio.destroy', tipos.id)"
-                                  v-on:click="deleteTipoServicio(tipos)"></inertia-link>
+                                  <jet-button class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Eliminar tipo de servicio social" method="delete" 
+                                  v-on:click="deleteTipoServicio(tipos)"></jet-button>
                                 </div>
                             </td>
                           </tr>
                         </tbody>
                       </table>
-                  </li>
-                </ul>
-              </div>              
+                    </li>
+                  </ul>
+                </div>     
+                <!-- End of Card Body -->
+              </div>  
+              <!-- End of Card -->      
             </section>
           </div>
         </div>
@@ -93,6 +94,8 @@
   <!-- Modal para insertar y modificar un tipo de servicio -->
   <div class="modal fade" id="addTipoServicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
+
+      <!-- Modal Header -->
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Añadir Tipo de Servicio Social</h5>
@@ -100,38 +103,42 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          
+        <!-- End of Modal Header -->
 
-          <!-- <form @submit.prevent="submit">
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form @submit.prevent="submit">
               <div class="form-group">
                   <jet-label for="nombre_tipo_servicio" value="Tipo de servicio social" />
-                  <jet-input id="nombre_tipo_servicio" type="text" v-model="form." required autofocus autocomplete="off"/>
+                  <jet-input id="nombre_tipo_servicio" type="text" v-model="form.nombre_tipo_servicio" required autofocus autocomplete="off"/>
               </div>
+
+              <!-- Action buttons -->
               <div class="d-flex justify-content-center align-items-baseline">
                   <div class="row">
                       <div class="col">
                           <div class="form-group">
                               <div class="mt-12">
                                   <button class="btn btn-dark float-center" :class="{ 'text-white-50 bg-green-400': form.processing }" >
-                                  <i class="fas"></i>Guardar
-                                  <i class="fas fa-save"></i>  Guardar Facultad 
+                                  <i class="fas"></i>Guardar                                  
                                   </button>
                               </div>
                           </div>
                       </div>
                       <div class="col">
                           <div class="form-group">
-                              <inertia-link :href="route('facultades.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
+                              <inertia-link :href="route('tipoServicio.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
                               Cancelar</inertia-link>
                           </div>
                       </div>
                   </div>
               </div>
-      
-  
-          </form> -->
-          </div>
+              <!-- End of action buttons -->
+
+          </form>
+        </div>
+        <!-- End of Modal Body -->
+
       </div>
     </div>
   </div>
@@ -178,18 +185,34 @@ export default {
               // this.mostrarMensajeSuccess();
           })     
         }
+    }, 
+
+    submit(form){
+      this.form.post(this.route('tipoServicio.store'));
+      this.form.nombre_tipo_servicio='';
+      windows.location.reload(true);
     },
 
     deleteTipoServicio(tipoSerivicioSocial){
       Swal.fire({
-      title: '¿Esta seguro que desea eliminar este tipo de servicio?',      
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, eliminar',
-      cancelButtonText: 'No, cancelar'      
-      });
+        title: '¿Esta seguro que desea eliminar este tipo de servicio?',      
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, eliminar',
+        cancelButtonText: 'No, cancelar'      
+      }).then((result) =>{
+        if(result.isConfirmed){
+          this.$inertia.delete(route('tipoServicio.destroy', tipoSerivicioSocial.id));
+          Swal.fire(
+            '¡Eliminado!',
+            'El tipo de servicio social se elimino correctamente',
+            'success'
+          );
+          window.location.reload(true);
+        }
+      })
     }
     
 
@@ -207,6 +230,10 @@ export default {
       tipoServicio:0,
       tipoServicioFiltrados:[],
       successGuardado:false,
+      form: this.$inertia.form({
+        nombre_tipo_servicio:'',
+        id:'',
+      }),
     }
   },
 

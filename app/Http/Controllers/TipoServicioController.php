@@ -16,7 +16,7 @@ class TipoServicioController extends Controller
      */
     public function index()
     {
-        //
+        //Lista los tipos de servicios
         $tipoServicioSociales=TipoServicioSocial::all();
         return Inertia::render("Components/TipoServicioSocial/TipoServicioSocial",['tipoServicioSocial'=>$tipoServicioSociales]);
     }
@@ -39,7 +39,7 @@ class TipoServicioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Crea al nuevo tipo de servicio
         TipoServicioSocial::create($request->all());
         return Redirect::route('tipoServicio.index');
     }
@@ -75,7 +75,7 @@ class TipoServicioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //Actualiza al tipo de servicio
         $tipoServicioSocial=TipoServicioSocial::find($id);
         $tipoServicioSocial->update($request->all());
         return Redirect::route('tipoServicio.index');
@@ -89,6 +89,7 @@ class TipoServicioController extends Controller
      */
     public function destroy($id)
     {
+        //Elimina al tipo de servicio
         $tipoServicioSocial=TipoServicioSocial::find($id);
         $tipoServicioSocial->delete();
         return Redirect::route('tipoServicio.index');
