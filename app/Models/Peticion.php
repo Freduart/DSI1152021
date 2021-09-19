@@ -10,6 +10,20 @@ class Peticion extends Model
     protected $table = 'peticiones';
     use HasFactory;
 
+    protected $fillable =[
+        'id',
+        'cantidad_estudiantes',
+        'nombre_peticion',
+        'ubicacion_Actividades',
+        'fecha_peticion',
+        'otros_tipo_servicio',
+        'estado_peticion',
+        'correo_peticion',
+        'carrera_id',
+        'tipo_servicio_social_id',
+        'institucion_id',
+    ];
+
     //Relacion muchos a uno con carreras
     public function carreras(){
         return $this->belongsTo('App\Models\Carrera');

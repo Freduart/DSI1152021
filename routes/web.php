@@ -12,9 +12,12 @@ use App\Http\Controllers\InstitucionController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\SolicitudesController;
-use App\Http\Controllers\VerificarActividadesController;
 use App\Http\Controllers\ActividadesController;
-use App\Http\Controllers\ServicioSocialController;
+use App\Http\Controllers\BitacoraController;
+use App\Http\Controllers\VerificarActividadesController;
+use App\Http\Controllers\FinalizarActividadesController;
+use App\Http\Controllers\EstablecerHAController;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -74,15 +77,20 @@ Route::resource('encargadosescuela', EncargadoEscuelaController::class)->middlew
 
 Route::resource('verificarcuenta', VerificarCuentaController::class)->middleware(['auth:sanctum','verified']);
 Route::resource('instituciones', InstitucionController::class)->middleware(['auth:sanctum','verified']);
+Route::resource('actividades', ActividadesController::class)->middleware(['auth:sanctum','verified']);
+
+
 Route::resource('solicitudesestudiante', SolicitudController::class)->middleware(['auth:sanctum','verified']);
 
 Route::resource('solicitudes', SolicitudesController::class)->middleware(['auth:sanctum','verified']);
 
 Route::resource('verificaractividades', VerificarActividadesController::class)->middleware(['auth:sanctum','verified']);
 
-Route::resource('actividades', ActividadesController::class)->middleware(['auth:sanctum','verified']);
+Route::resource('establecerha', EstablecerHAController::class)->middleware(['auth:sanctum','verified']);
 
-Route::resource('serviciossociales', ServicioSocialController::class)->middleware(['auth:sanctum', 'verified']);
+Route::resource('finalizaractividades', FinalizarActividadesController::class)->middleware(['auth:sanctum','verified']);
+
+Route::resource('bitacora', BitacoraController::class)->middleware(['auth:sanctum','verified']);
 
 //Route::delete('verificarcuenta/{id}', [VerificarCuentaController::class, 'id'])->name('verificarcuenta.eliminar');
 Route::get('credenciales', function (){
@@ -91,6 +99,6 @@ Route::get('credenciales', function (){
     'contrasena' => 'contra'
   ];
   //$correo = new CredencialesMailable;
-  Mail::to('jganuzaramirez@gmail.com')->send(new CredencialesMailable($details));
+  Mail::to('jganuzaramírez@gmail.com')->send(new CredencialesMailable($details));
   return "mensaje enviado";
 });

@@ -159,19 +159,25 @@
 
                     <li class="nav-item">
                             <inertia-link :href="route('verificaractividades.index')" class="nav-link">
-                            <i class="nav-icon fa fa-check-square"></i>
+                            <i class="nav-icon fa fa-clipboard "></i>
                             <p>Verificar Actividades</p>
                             </inertia-link>
                     </li>
 
+<!-- fa fa-check-square--->
                     <li class="nav-item">
                             <inertia-link :href="route('actividades.index')" class="nav-link">
                             <i class="nav-icon fa fa-list-alt"></i>
-                            <p>Actividades</p>
+                            <p> Mis Actividades</p>
                             </inertia-link>
                     </li>
 
-
+                    <li class="nav-item">
+                            <inertia-link :href="route('establecerha.index')" class="nav-link">
+                            <i class="nav-icon fa fa-clipboard "></i>
+                            <p>Establecer cantidad de Horas y Alumnos</p>
+                            </inertia-link>
+                    </li>
 
                     <!-- https://es.vuejs.org/v2/guide/conditional.html -->
                     <!-- https://www.npmjs.com/package/laravel-permission-to-vuejs -->
