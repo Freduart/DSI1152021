@@ -17,6 +17,7 @@ use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\VerificarActividadesController;
 use App\Http\Controllers\FinalizarActividadesController;
 use App\Http\Controllers\EstablecerHAController;
+use App\Http\Controllers\PeticionController;
 use App\Http\Controllers\TipoServicioController;
 
 
@@ -108,5 +109,10 @@ Route::get('credenciales', function (){
 
 //Ruta para el tipo de servicio social
 Route::resource('tipoServicio', TipoServicioController::class)->only([
+  'index','store','update','destroy'
+]);
+
+//Ruta de las peticiones
+Route::resource('peticion', PeticionController::class)->only([
   'index','store','update','destroy'
 ]);

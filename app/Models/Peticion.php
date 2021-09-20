@@ -12,6 +12,7 @@ class Peticion extends Model
 
     protected $fillable = [
         'cantidad_estudiantes',
+        'nombre_peticion',
         'descripcion_peticion',
         'ubicacion_actividades',
         'fecha_peticion',
