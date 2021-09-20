@@ -6,12 +6,29 @@
   </div> -->
     <slot name="header"></slot>
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-dark ">
+    <nav class="main-header navbar navbar-expand navbar-dark">
         <!-- Left navbar links -->
-        <ul class="navbar-nav col-sm-12">
+        <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
+
+            
+            <!-- <li class="nav-item d-none d-sm-inline-block mx-4">
+                <a href="index3.html" class="nav-link">Home</a>
+                <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    Inicio
+                </jet-nav-link>
+            </li> -->
+
+            <!-- <form @submit.prevent="logout">
+                <li class="d-flex flex-row-reverse bd-highlight col"> 
+                    <button class="btn btn-primary d-flex flex-row-reverse bd-highlight col" as="button"> 
+                        Cerrar Sesión
+                    </button>
+                </li> 
+            </form>   -->
 
             <div v-if="$page.props.user">
                 <form @submit.prevent="logout">
@@ -23,22 +40,22 @@
                 </form>
             </div>
             <template v-else>
-                <div class=" col-sm-12">
-                    <div class="button-log">
-                        <inertia-link :href="route('login')" class="btn btn-success">
-                            Iniciar Sesión
-                        </inertia-link>
+              <inertia-link :href="route('login')" class="btn btn-success">
+                Iniciar Sesión
+              </inertia-link>
+              
+              <!-- <inertia-link v-if="canRegister" :href="route('estudiantes.create')" class="ml-4 text-muted">
+                Registrarse
+              </inertia-link>  -->
+
+              <button type="button" class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
+                Registrase
+              </button>
+
+            </template>
 
 
-                        <button type="button" class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
-                            Registrarse
-                        </button>
-                    </div>
-                </div>
-                <div ng-show="base_view" class="delete_right"
-	style="top: 54px; left: 0px;width: 70%; margin-top: 2%;margin-left: 22%;margin-right: 10%; background-color: #F7F4F4;   -webkit-box-shadow: 0 8px 20px rgba(100, 100, 100, 0.85); z-index: 10;">
-    <a class="delete_right"></a></div>
-            </template>            
+            
         </ul>
     </nav>
     <!-- /.navbar -->
@@ -74,6 +91,7 @@
                         </inertia-link>
                     </li>
                     <li class="nav-item">
+                        <!--<a v-if="is('Estudiante')" href="#" class="nav-link">-->
                         <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-id-card"></i>
                         <p>
@@ -132,13 +150,59 @@
                             </inertia-link>
                     </li>
 
-                        <!-- Tag para las peticiones -->
-                        <!-- <li class="nav-item">
-                            <inertia-link :href="route('peticiones.index')" class="nav-link">
-                            <i class="fas fa-key nav-icon"></i>
-                            <p>Peticiones de servicio social</p>
+                    <li class="nav-item">
+                            <inertia-link :href="route('solicitudes.index')" class="nav-link">
+                            <i class="nav-icon fas fa-edit"></i>
+                            <p>Evaluacion de Solicitudes</p>
                             </inertia-link>
-                        </li> -->
+                    </li>
+
+                    <li class="nav-item">
+                            <inertia-link :href="route('verificaractividades.index')" class="nav-link">
+                            <i class="nav-icon fa fa-clipboard "></i>
+                            <p>Verificar Actividades</p>
+                            </inertia-link>
+                    </li>
+
+<!-- fa fa-check-square--->
+                    <li class="nav-item">
+                            <inertia-link :href="route('actividades.index')" class="nav-link">
+                            <i class="nav-icon fa fa-list-alt"></i>
+                            <p> Mis Actividades</p>
+                            </inertia-link>
+                    </li>
+                    <li class="nav-item">
+                            <inertia-link :href="route('establecerha.index')" class="nav-link">
+                            <i class="nav-icon fa fa-clipboard "></i>
+                            <p>Establecer cantidad de Horas y Alumnos</p>
+                            </inertia-link>
+                    </li>
+                    <!-- https://es.vuejs.org/v2/guide/conditional.html -->
+                    <!-- https://www.npmjs.com/package/laravel-permission-to-vuejs -->
+                    <li v-if="is('Estudiante')" class="nav-item">
+                            <inertia-link :href="route('solicitudesestudiante.index')" class="nav-link">
+                            <i class="fas fa-paper-plane nav-icon"></i>
+                            <p>Mis solicitudes</p>
+                            </inertia-link>
+                    </li>
+                    
+                    <li class="nav-item">
+                            <inertia-link :href="route('serviciossociales.index')" class="nav-link">
+                            <i class="fa fa-th-large nav-icon"></i>
+                            <p>Servicios Sociales</p>
+                            </inertia-link>
+                    </li>
+
+                    <!-- Cuando es un solo elemento -->
+                    <!-- <li class="nav-item">
+                        <a href="pages/gallery.html" class="nav-link">
+                        <i class="nav-icon far fa-image"></i>
+                        <p>
+                            Gallery
+                        </p>
+                        </a>
+                    </li> -->
+
                     </ul>
                 </li>            
             </ul>
@@ -154,10 +218,8 @@
 </template>
 
 <script>
-
     import JetNavLink from '@/Jetstream/NavLink'
     import JetDropdownLink from '@/Jetstream/DropdownLink'
-
     export default {
         components:{
             name: 'menu',
@@ -179,35 +241,6 @@
             }
         },
         mounted(){
-            /*$(".nav li").on("click", function(){
-              $(".nav").find(".active").removeClass("active");
-              $(this).addClass("active");
-            });*/
-            
-          /*$(function() {
-  
-            // elementos de la lista
-            var menues = $(".nav li a"); 
-            var menues2 = $(".nav li"); 
-
-            // manejador de click sobre todos los elementos
-            menues.click(function() {
-              // eliminamos active de todos los elementos
-              menues.removeClass("active");
-              // activamos el elemento clicado.
-              $(this).addClass("active");
-            });
-
-            menues2.click(function() {
-              // eliminamos active de todos los elementos
-              menues.removeClass("menu-is-opening");
-              menues.removeClass("menu-open");
-              // activamos el elemento clicado.
-              $(this).addClass("menu-is-opening");
-              $(this).addClass("menu-open");
-            });
-
-          });*/
           
         }
     }   
