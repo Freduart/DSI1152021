@@ -48,6 +48,14 @@ class EstudianteController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
+        $request->validate([
+            'carnet_estudiante' => 'required|unique:estudiantes|regex:/[a-zA-Z]{2}[0-9]{5}/i|size:7',
+            'correo_estudiante' => 'required|unique:estudiantes|regex:/^.+@.+$/i',
+            'dui_estudiante' => 'required|unique:estudiantes|regex:/[0-9]{8}-[0-9]/i|size:10',
+            'nit_estudiante' => 'required|unique:estudiantes|regex:/[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]/i|size:17',
+            'telefono_estudiante' => 'required|unique:estudiantes|regex:/[0-9]{4}(-)?[0-9]{4}/i',
+        ]);
+
         $carrera = Carrera::find($request->carrera_id);
         
         Estudiante::create($request->all());
@@ -58,9 +66,11 @@ class EstudianteController extends Controller
         // return $estudiante;
         // return $porcentaje;
         $estudiante->porcentaje_aprobacion = $porcentaje;
+        $estudiante->carnet_estudiante = strtoupper($estudiante->carnet_estudiante);
         $estudiante->save();
         
-        return Inertia::render('Admins/Dashboard');    
+        // return Inertia::render('Dashboard');  
+        return Redirect::route("dashboard");  
         // return Inertia::render('Welcome');
     }
 

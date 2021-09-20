@@ -31,6 +31,12 @@
         <!-- Scripts para SweetAlerts -->
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="sweetalert2.all.min.js"></script>
+        <script type="text/javascript">
+            window.Laravel = {
+                csrfToken: "{{ csrf_token() }}",
+                jsPermissions: {!! auth()->check()?auth()->user()->jsPermissions():null !!}
+            }
+        </script>
     </head>
     <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
         @inertia

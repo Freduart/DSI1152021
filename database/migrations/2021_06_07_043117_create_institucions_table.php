@@ -15,6 +15,7 @@ class CreateInstitucionsTable extends Migration
     {
         Schema::create('instituciones', function (Blueprint $table) {
             $table->id('id');
+            $table->unsignedBigInteger('user_id')->nullable()->unique();
             $table->string('nombre_institucion', 30);
             $table->string('contacto_institucion', 50);
             $table->string('correo_institucion', 50)->unique();
@@ -22,6 +23,8 @@ class CreateInstitucionsTable extends Migration
             $table->string('ubicacion_institucion', 150);
             $table->string('rubro_institucion', 100);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
