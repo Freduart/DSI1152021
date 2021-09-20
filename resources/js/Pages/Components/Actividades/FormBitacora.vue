@@ -68,9 +68,6 @@
                                               <button v-if="actividad.verificado == 'Reportada'" class="btn btn-danger" style="cursor: default;">
                                                 <i>Reportada</i>
                                               </button>
-                                              <button v-if="actividad.verificado == 'En espera'" class="btn btn-primary" style="cursor: default;">
-                                                <i>En espera</i>
-                                              </button>
                                             </td>
                                             <td>
                                             <!-- Botones para edit or delete-->

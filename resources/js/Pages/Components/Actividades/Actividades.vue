@@ -530,14 +530,14 @@
                     nombre_actividad:'',
                     fecha_actividad:'',
                     total_horas:'',
-                    verificado:'0',
+                    verificado:'En espera',
                     }),
                 formUp: this.$inertia.form({
                     id:'',
                     nombre_actividad:'',
                     fecha_actividad:'',
                     total_horas:'',
-                    verificado:'0',
+                    verificado:'En espera',
                     }),
                 }
             },        
