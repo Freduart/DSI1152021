@@ -188,6 +188,13 @@
                             </inertia-link>
                     </li>
                     
+                    <li class="nav-item">
+                            <inertia-link :href="route('serviciossociales.index')" class="nav-link">
+                            <i class="fa fa-th-large nav-icon"></i>
+                            <p>Servicios Sociales</p>
+                            </inertia-link>
+                    </li>
+
                     <!-- Cuando es un solo elemento -->
                     <!-- <li class="nav-item">
                         <a href="pages/gallery.html" class="nav-link">
