@@ -17,6 +17,8 @@ use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\VerificarActividadesController;
 use App\Http\Controllers\FinalizarActividadesController;
 use App\Http\Controllers\EstablecerHAController;
+use App\Http\Controllers\TipoServicioController;
+
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -102,3 +104,9 @@ Route::get('credenciales', function (){
   Mail::to('jganuzaramírez@gmail.com')->send(new CredencialesMailable($details));
   return "mensaje enviado";
 });
+
+
+//Ruta para el tipo de servicio social
+Route::resource('tipoServicio', TipoServicioController::class)->only([
+  'index','store','update','destroy'
+]);
