@@ -17,6 +17,7 @@ use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\VerificarActividadesController;
 use App\Http\Controllers\FinalizarActividadesController;
 use App\Http\Controllers\EstablecerHAController;
+use App\Http\Controllers\ServicioSocialController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -91,6 +92,8 @@ Route::resource('establecerha', EstablecerHAController::class)->middleware(['aut
 Route::resource('finalizaractividades', FinalizarActividadesController::class)->middleware(['auth:sanctum','verified']);
 
 Route::resource('bitacora', BitacoraController::class)->middleware(['auth:sanctum','verified']);
+
+Route::resource('serviciossociales', ServicioSocialController::class)->middleware(['auth:sanctum', 'verified']);
 
 //Route::delete('verificarcuenta/{id}', [VerificarCuentaController::class, 'id'])->name('verificarcuenta.eliminar');
 Route::get('credenciales', function (){
