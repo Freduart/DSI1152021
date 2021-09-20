@@ -10,6 +10,12 @@ class TipoServicioSocial extends Model
     protected $table = "tipos_servicio_social";
     use HasFactory;
 
+    protected $fillable =[
+        'id',
+        'nombre_tipo_servicio',
+
+    ];
+
     //Relación muchos a muchos con carreras
     public function carreras(){
         return $this->belongsToMany('App\Models\Carrera');

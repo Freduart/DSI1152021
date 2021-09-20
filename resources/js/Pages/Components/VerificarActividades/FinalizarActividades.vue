@@ -12,7 +12,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Verificación de actividades</h1>
+              <h1 class="m-0">Finalizar Actividades</h1>
             </div><!-- /.col -->          
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -28,20 +28,11 @@
               <!-- TO DO List -->
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="ion ion-clipboard mr-1"></i>
-                      Lista de Actividades de los estudiantes
-                  </h3>
-                  <br>
-                  
-                  <!--Boton para finalizar actividades-->
-                  <div class="col">
-                    <div class="form-group">
-                      <inertia-link type="button" class="btn btn-success float-left mt-2"  :href="route('finalizaractividades.index')">
-                        <i class="fa fa-check-square"></i> Finalizar Actividades
-                      </inertia-link>
-                    </div>
-                  </div>
+                    <h3 class="card-title">
+                      <i class="ion ion-clipboard mr-1"></i>
+                        Seleccione las actividades que desea finalizar
+                    </h3>
+                    
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -53,7 +44,8 @@
                           <tr>
                             <th scope="col">Codigo</th>
                             <th scope="col">Nombre de la Actividad</th>
-                            <th scope="col">Acción</th>
+                            <th scope="col">Estado de la actividad</th>
+                            <th scope="col">Seleccionar</th>
                           </tr>
                         </thead>
 
@@ -63,16 +55,26 @@
                             <td>{{ actividad.id }}</td>
                             <td>{{ actividad.nombre_actividad }}</td>
                             <td>
-                              <div class="flex justify-center">      
-                                <!--boton verificar-->
-                                <button class="btn btn-success" v-on:click="mostrarDatos(actividad)" data-toggle="modal" data-target="#verificar">
-                                  <i>Verificar</i>
-                                </button>
-                              </div>
+                              <button v-if="actividad.verificado == 'Aceptada'" class="btn btn-info" style="cursor: default;">
+                                <i>Aceptada</i>
+                              </button>
+                            </td>
+                            <td>
+                              <!-- checkbox -->
+                             <div  class="icheck-primary d-inline ml-2">
+                                <input type="checkbox" value="" name="todo1" id="todoCheck1" style="width:20px;height:20px;">
+                                  <label for="todoCheck1-sm"></label>
+                                </div>
                             </td>
                           </tr>
+                          <a href="javascript:seleccionar_todo()">Marcar todos</a>
                         </tbody>
                       </table>
+                      <div class="card-body">
+                        <button class="btn btn-warning float-cneter" title="Verificar actividad">
+                          <i class="fas"></i>Finalizar actividades
+                        </button>
+                      </div>
                     </li>
                   </ul>
                 </div>
@@ -110,13 +112,12 @@
                 </div>
               </div><!--Fin de la primera columna-->
               <!--Segunda columna de la fila-->
-              <!--<div class="col">
+              <div class="col">
                 <div class="form-group">
                   <jet-label for="bitacora_id" value="Código de bitácora" />
                   <jet-input id="bitacora_id" type="text" readonly="readonly" v-model="form.bitacora_id" required autofocus autocomplete="bitacora_id"/>
                 </div>
-              </div>-->
-              <!--Fin de la segunda columna-->
+              </div><!--Fin de la segunda columna-->
             </div><!--Fin de la primera fila-->
 
             <!--Segunda fila-->
@@ -158,19 +159,22 @@
                   <!--Primera columna-->
                   <div class="col">
                     <!--boton de verificación de actividad-->
-                    <inertia-link class="btn btn-warning" title="Verificar actividad" method="put" :href="route('verificaractividades.update', this.form)" v-on:click="verificacion(form)"> 
+                    <button v-if="actividad.verificado == '0'" class="btn btn-warning float-center" title="Verificar actividad" v-on:click="verificacion(form)">
                       <i class="fas"></i>Aceptar
-                    </inertia-link>
+                    </button>
+                    <button v-else class="btn btn-warning float-cneter" title="Verificar actividad" v-on:click="verificacion(form)">
+                      <i class="fas"></i>Aceptar
+                    </button>
                   </div><!--Fin primera columna-->
                   <!--Segunda columna-->
                   <div class="col">
                     <!--boton de reportar actividad-->
-                    <inertia-link class="btn btn-danger" title="Verificar actividad" method="delete" :href="route('verificaractividades.destroy', this.form)" v-on:click="Reportar(form)"> 
-                      <i class="fas"></i>Reportar 
-                    </inertia-link>
-                    <!--<button v-else class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Reportar(form)">
+                    <button v-if="actividad.verificado == '0'" class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Reportar(form)">
                       <i class="fas"></i>Reportar
-                    </button>-->
+                    </button>
+                    <button v-else class="btn btn-danger float-cneter" title="Verificar actividad" v-on:click="Reportar(form)">
+                      <i class="fas"></i>Reportar
+                    </button>
                   </div><!--Fin Segunda columna-->
                   <!--Tercera columna-->
                   <div class="col">
@@ -251,7 +255,7 @@
           
           //Metodo para la verificación de la actividad
             verificacion(actividad){
-              if(actividad.verificado == 'En espera'){
+              if(actividad.verificado == '0'){
                 Swal.fire({
                   title:'¿Está seguro que desea dar por verificada la actividad?',
                   text: "Código " + actividad.id + " Nombre de actividad" + actividad.nombre_actividad,
@@ -277,7 +281,7 @@
 
             // Método para reportar la actividad
             Reportar(actividad){
-              if(actividad.verificado == 'En espera'){
+              if(actividad.verificado == '0'){
                 Swal.fire({
                   title:'¿Está seguro que desea reportar la actividad?',
                   text: "Código " +actividad.id + " Nombre de actividad " +actividad.nombre_actividad,
@@ -289,7 +293,7 @@
                   cancelButtonText: 'No, cancelar'
                 }).then((result)=>{
                   if(result.isConfirmed){
-                    //this.$inertia.put(route('verificaractividades.destroy', actividad.id), this.formUp);
+                    //this.$inertia.put(route('verificaractividades.report', actividad.id), this.formUp);
                     Swal.fire(
                       '!Reportada',
                       'La actividad ha sido reportada correctamente',
@@ -299,6 +303,12 @@
                   }
                 })
               }
+            },
+
+            seleccionar_todo(){
+             for (i=0;i<todoCheck1.elements.length;i++)
+                  if(todoCheck1.elements[i].type == "checkbox")
+                 todoCheck1.elements[i].checked=1
             },
 
             //carga informacion de la actividad seleccionada al formulario del modal
@@ -321,14 +331,14 @@
                     nombre_actividad:'',
                     fecha_actividad:'',
                     total_horas:'',
-                    verificado:'En espera',
+                    verificado:'0',
                     }),
                 formUp: this.$inertia.form({
                     id:'',
                     nombre_actividad:'',
                     fecha_actividad:'',
                     total_horas:'',
-                    verificado:'En espera',
+                    verificado:'0',
                     }),
                 }
             },        
