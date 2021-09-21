@@ -18,4 +18,17 @@ class FinalizarActividadesController extends Controller
     $actividades = Actividad::where('verificado', '=', 'Aceptada')->get();
     return Inertia::render("Components/VerificarActividades/FinalizarActividades",['actividades' => $actividades]);
     }
+    
+    //utilizaremos el método update para cambiar el verificado de la actividad
+    public function update(Request $request, $actividades)
+    {
+        $actividad=Actividad::find($actividades);
+        //cambiamos el verificado de Aceptada a Finalizada
+        $actividad->verificado = "Finalizada";
+        $data = $request->input();
+        //Guardamos los cambios
+        $actividad->save();
+        //retornamos a la vista de finalizar actividades
+        return Redirect::route('finalizaractividades.index');
+    }
 }

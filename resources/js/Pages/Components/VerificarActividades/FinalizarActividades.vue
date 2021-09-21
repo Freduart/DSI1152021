@@ -28,24 +28,31 @@
               <!-- TO DO List -->
               <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">
-                      <i class="ion ion-clipboard mr-1"></i>
-                        Seleccione las actividades que desea finalizar
-                    </h3>
-                    
+                  <h3 class="card-title">
+                    <i class="ion ion-clipboard mr-1"></i>
+                    Seleccione las actividades que desea finalizar
+                  </h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                  <div class="col">
+                    <strong>Seleccionar todo: &nbsp; </strong>
+                    <!-- CheckBox para poder seleccionar todas las actividades a la vez-->
+                    <input type="checkbox" style="width:20px;height:20px;" id="chkCheckAll">
+                  </div>
+                </div>
+                <div class="card-body">
                   <ul class="todo-list" data-widget="todo-list">
                     <li>
-                      <!--Tabla donde apareceran todos las actividades-->
+                      <!--Tabla donde apareceran todos las actividades aceptadas-->
                       <table class="table table-hover text-center" width="500" style="font-size: 20px">
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">Codigo</th>
                             <th scope="col">Nombre de la Actividad</th>
                             <th scope="col">Estado de la actividad</th>
-                            <th scope="col">Seleccionar</th>
+                            <th scope="col">Seleccionar actividad</th>
+                            <th scope="col"></th>
                           </tr>
                         </thead>
 
@@ -55,22 +62,29 @@
                             <td>{{ actividad.id }}</td>
                             <td>{{ actividad.nombre_actividad }}</td>
                             <td>
+                              <!-- se coloca un botón no funcional solo para mostrar si la actividad ha sido aceptada-->
                               <button v-if="actividad.verificado == 'Aceptada'" class="btn btn-info" style="cursor: default;">
                                 <i>Aceptada</i>
                               </button>
                             </td>
                             <td>
-                              <!-- checkbox -->
+                              <!-- checkbox en cada fila de las actividades aceptadas-->
                              <div  class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo1" id="todoCheck1" style="width:20px;height:20px;">
+                                <input type="checkbox" class="checkBoxClass" value="" name="todo1" id="todoCheck1" style="width:20px;height:20px;">
                                   <label for="todoCheck1-sm"></label>
                                 </div>
                             </td>
+                            <td>
+                              <div class="tools">
+                                <!--Botón para ver el detalle de la actividad-->
+                                <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarDatos(actividad)" title="Ver mas informacion de la actividad"></jet-button>
+                              </div>
+                            </td>
                           </tr>
-                          <a href="javascript:seleccionar_todo()">Marcar todos</a>
                         </tbody>
                       </table>
                       <div class="card-body">
+                        <!--Botón para finalizar las actividades seleccionadas con checkbox-->
                         <button class="btn btn-warning float-cneter" title="Verificar actividad">
                           <i class="fas"></i>Finalizar actividades
                         </button>
@@ -86,17 +100,17 @@
     </div><!-- /.content-wrapper -->
   </div>
 
-  <!-- Modal para la verificación de las actividades de los estudiantes-->
-  <div class="modal fade" id="verificar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- Modal para la verificación de las actividades aceptadas de los estudiantes-->
+  <div class="modal fade" id="verInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <!--Contenido de la modal-->
       <div class="modal-content">
         <!--Encabezado de la modal-->
         <div class="modal-header">
           <!--Título de la modal-->
-          <h5 class="modal-title" id="exampleModalLabel">Verificar actividad</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Información de la actividad</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
           </button>
         </div><!--Fin del encabezado-->
         <!--Cuerpo de la modal-->
@@ -112,12 +126,13 @@
                 </div>
               </div><!--Fin de la primera columna-->
               <!--Segunda columna de la fila-->
-              <div class="col">
+              <!--<div class="col">
                 <div class="form-group">
                   <jet-label for="bitacora_id" value="Código de bitácora" />
                   <jet-input id="bitacora_id" type="text" readonly="readonly" v-model="form.bitacora_id" required autofocus autocomplete="bitacora_id"/>
                 </div>
-              </div><!--Fin de la segunda columna-->
+              </div>-->
+              <!--Fin de la segunda columna-->
             </div><!--Fin de la primera fila-->
 
             <!--Segunda fila-->
@@ -153,41 +168,20 @@
 
           <!--Sección de botones-->
           <div class="card-footer clearfix">
-              <div class="d-flex justify-content-center align-items-baseline">
-                <!--Fila de los botones-->
-                <div class="row">
-                  <!--Primera columna-->
-                  <div class="col">
-                    <!--boton de verificación de actividad-->
-                    <button v-if="actividad.verificado == '0'" class="btn btn-warning float-center" title="Verificar actividad" v-on:click="verificacion(form)">
-                      <i class="fas"></i>Aceptar
-                    </button>
-                    <button v-else class="btn btn-warning float-cneter" title="Verificar actividad" v-on:click="verificacion(form)">
-                      <i class="fas"></i>Aceptar
-                    </button>
-                  </div><!--Fin primera columna-->
-                  <!--Segunda columna-->
-                  <div class="col">
-                    <!--boton de reportar actividad-->
-                    <button v-if="actividad.verificado == '0'" class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Reportar(form)">
-                      <i class="fas"></i>Reportar
-                    </button>
-                    <button v-else class="btn btn-danger float-cneter" title="Verificar actividad" v-on:click="Reportar(form)">
-                      <i class="fas"></i>Reportar
-                    </button>
-                  </div><!--Fin Segunda columna-->
-                  <!--Tercera columna-->
-                  <div class="col">
-                    <!--boton atras-->
-                    <button :href="route('verificaractividades.index')" class="btn btn-dark float-center" title="Atras" data-dismiss="modal">
-                      <i class="fas"></i>Atrás
-                    </button>
-                  </div><!--Fin Tercera columna-->
-                </div><!--Fin de la fila de los botones-->
-              </div>
+            <div class="d-flex justify-content-center align-items-baseline">
+              <!--Fila de los botones-->
+              <div class="row">
+                <!--Columna-->
+                <div class="col">
+                  <!--boton atras-->
+                  <button :href="route('verificaractividades.index')" class="btn btn-dark float-center" title="Atras" data-dismiss="modal">
+                    <i class="fas"></i>Atrás
+                  </button>
+                </div><!--Fin columna-->
+              </div><!--Fin de la fila de los botones-->
+            </div>
           </div>
           <!--Fin de sección de botones-->
-
         </div><!--Fin cuerpo de la modal-->
       </div><!--Fin contenido de la modal-->
     </div>
@@ -220,21 +214,7 @@
             logout() {
                 this.$inertia.post(route('logout'));
             },
-            /*filtrarByActividad(event){
-              this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
-              console.log(event.target.value);
-              var verificadoText= "0";
-              if (event.target.value == 0){
-                verificadoText= "1";
-              }
-              this.actividad.forEach(element =>{
-                if(element.verificado=verificadoText){
-                  console.log(element);
-                  this.actividadesFiltradas.push(element);
-                }
-              });
-              console.log(this.actividadesFiltradas);
-            },*/
+
             filtrarByActividad(id){
                 this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
                 console.log(id);
@@ -253,7 +233,7 @@
                 }
             },
           
-          //Metodo para la verificación de la actividad
+            //Metodo para la verificación de la actividad
             verificacion(actividad){
               if(actividad.verificado == '0'){
                 Swal.fire({
@@ -305,11 +285,11 @@
               }
             },
 
-            seleccionar_todo(){
+           /* seleccionar_todo(){
              for (i=0;i<todoCheck1.elements.length;i++)
-                  if(todoCheck1.elements[i].type == "checkbox")
+                  if(todoCheck1.elements[i].type == ".checkbox")
                  todoCheck1.elements[i].checked=1
-            },
+            },*/
 
             //carga informacion de la actividad seleccionada al formulario del modal
             mostrarDatos(actividad){
@@ -350,4 +330,12 @@
             this.successGuardado = false;        
         },
     }
+    
+    //función para seleccionar todos los checkbox a la vez
+    $(function(e){
+      $("#chkCheckAll").click(function(){
+        $(".checkBoxClass").prop('checked',$(this).prop('checked'));
+      })
+    });
+
 </script>

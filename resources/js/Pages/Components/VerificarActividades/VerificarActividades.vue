@@ -37,7 +37,7 @@
                   <!--Boton para finalizar actividades-->
                   <div class="col">
                     <div class="form-group">
-                      <inertia-link type="button" class="btn btn-success float-left mt-2"  :href="route('finalizaractividades.index')">
+                      <inertia-link type="button" class="btn btn-success float-left mt-2" :href="route('finalizaractividades.index')">
                         <i class="fa fa-check-square"></i> Finalizar Actividades
                       </inertia-link>
                     </div>
@@ -94,7 +94,7 @@
           <!--Título de la modal-->
           <h5 class="modal-title" id="exampleModalLabel">Verificar actividad</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
           </button>
         </div><!--Fin del encabezado-->
         <!--Cuerpo de la modal-->
@@ -147,43 +147,43 @@
                 </div>
               </div><!--Fin de la segunda columna-->
             </div><!--Fin de la tercera fila-->
-
           </div><!-- Fin card body-->
 
           <!--Sección de botones-->
           <div class="card-footer clearfix">
-              <div class="d-flex justify-content-center align-items-baseline">
-                <!--Fila de los botones-->
-                <div class="row">
-                  <!--Primera columna-->
-                  <div class="col">
-                    <!--boton de verificación de actividad-->
-                    <inertia-link class="btn btn-warning" title="Verificar actividad" method="put" :href="route('verificaractividades.update', this.form)" v-on:click="verificacion(form)"> 
-                      <i class="fas"></i>Aceptar
-                    </inertia-link>
-                  </div><!--Fin primera columna-->
-                  <!--Segunda columna-->
-                  <div class="col">
-                    <!--boton de reportar actividad-->
-                    <inertia-link class="btn btn-danger" title="Verificar actividad" method="delete" :href="route('verificaractividades.destroy', this.form)" v-on:click="Reportar(form)"> 
-                      <i class="fas"></i>Reportar 
-                    </inertia-link>
-                    <!--<button v-else class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Reportar(form)">
-                      <i class="fas"></i>Reportar
-                    </button>-->
-                  </div><!--Fin Segunda columna-->
-                  <!--Tercera columna-->
-                  <div class="col">
-                    <!--boton atras-->
-                    <button :href="route('verificaractividades.index')" class="btn btn-dark float-center" title="Atras" data-dismiss="modal">
-                      <i class="fas"></i>Atrás
-                    </button>
-                  </div><!--Fin Tercera columna-->
-                </div><!--Fin de la fila de los botones-->
-              </div>
+            <div class="d-flex justify-content-center align-items-baseline">
+              <!--Fila de los botones-->
+              <div class="row">
+                <!--Primera columna-->
+                <div class="col">
+                  <!--boton de verificación de actividad-->
+                  <inertia-link class="btn btn-warning" title="Verificar actividad" method="put" :href="route('verificaractividades.update', this.form)" v-on:click="verificacion(form)"> 
+                    <i class="fas"></i>Aceptar
+                  </inertia-link>
+                </div><!--Fin primera columna-->
+
+                <!--Segunda columna-->
+                <div class="col">
+                  <!--boton de reportar actividad-->
+                  <inertia-link class="btn btn-danger" title="Verificar actividad" method="delete" :href="route('verificaractividades.destroy', this.form)" v-on:click="Reportar(form)"> 
+                    <i class="fas"></i>Reportar 
+                  </inertia-link>
+                  <!--<button v-else class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Reportar(form)">
+                    <i class="fas"></i>Reportar
+                  </button>-->
+                </div><!--Fin Segunda columna-->
+
+                <!--Tercera columna-->
+                <div class="col">
+                  <!--boton atras-->
+                  <button :href="route('verificaractividades.index')" class="btn btn-dark float-center" title="Atras" data-dismiss="modal">
+                    <i class="fas"></i>Atrás
+                  </button>
+                </div><!--Fin Tercera columna-->
+              </div><!--Fin de la fila de los botones-->
+            </div>
           </div>
           <!--Fin de sección de botones-->
-
         </div><!--Fin cuerpo de la modal-->
       </div><!--Fin contenido de la modal-->
     </div>
@@ -216,21 +216,7 @@
             logout() {
                 this.$inertia.post(route('logout'));
             },
-            /*filtrarByActividad(event){
-              this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
-              console.log(event.target.value);
-              var verificadoText= "0";
-              if (event.target.value == 0){
-                verificadoText= "1";
-              }
-              this.actividad.forEach(element =>{
-                if(element.verificado=verificadoText){
-                  console.log(element);
-                  this.actividadesFiltradas.push(element);
-                }
-              });
-              console.log(this.actividadesFiltradas);
-            },*/
+
             filtrarByActividad(id){
                 this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
                 console.log(id);
@@ -309,35 +295,37 @@
               this.form.total_horas = actividad.total_horas,
               this.form.verificado = actividad.verificado
             }
-        },    
-        data(){
-            return{
-                actividad:0,
-                actividadesFiltradas:[],
-                successGuardado:false,
-                //formularioNuevaCarrera:false,
-                form: this.$inertia.form({
-                    id:'',
-                    nombre_actividad:'',
-                    fecha_actividad:'',
-                    total_horas:'',
-                    verificado:'En espera',
-                    }),
-                formUp: this.$inertia.form({
-                    id:'',
-                    nombre_actividad:'',
-                    fecha_actividad:'',
-                    total_horas:'',
-                    verificado:'En espera',
-                    }),
-                }
-            },        
-        mounted(){
-            this.actividades.forEach(element => {
-                this.actividadesFiltradas.push(element);
-            }),
-            // this.mostrarMensajeSuccess();
-            this.successGuardado = false;        
-        },
-    }
+    },    
+      
+    data(){
+        return{
+          actividad:0,
+          actividadesFiltradas:[],
+          successGuardado:false,
+          //formularioNuevaCarrera:false,
+          form: this.$inertia.form({
+            id:'',
+            nombre_actividad:'',
+            fecha_actividad:'',
+            total_horas:'',
+            verificado:'En espera',
+          }),
+          formUp: this.$inertia.form({
+            id:'',
+            nombre_actividad:'',
+            fecha_actividad:'',
+            total_horas:'',
+            verificado:'En espera',
+          }),
+        }
+    },        
+    
+    mounted(){
+      this.actividades.forEach(element => {
+        this.actividadesFiltradas.push(element);
+      }),
+      // this.mostrarMensajeSuccess();
+      this.successGuardado = false;        
+    },
+  }
 </script>
