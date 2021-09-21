@@ -22,3 +22,5 @@ mix.js('resources/js/dashboard.js', 'public/js')
 if (mix.inProduction()) {
     mix.version();
 }
+
+mix.disableSuccessNotifications();

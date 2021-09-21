@@ -17,7 +17,9 @@ class InstitucionController extends Controller
      */
     public function index()
     {
-        //
+        //Traemos las instituciones
+        $institucion = Institucion::all();
+        return Inertia::render('Components/Instituciones/instituciones', ['instituciones' => $institucion]);
     }
 
     /**

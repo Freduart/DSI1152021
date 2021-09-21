@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Peticion;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PeticionController extends Controller
 {
@@ -13,7 +15,16 @@ class PeticionController extends Controller
      */
     public function index()
     {
-        //
+        //Obteniendo las carreras
+
+        //Obteniendo el tipo de servicio
+
+        //Obteniendo la institucion
+
+        //Obteniendo las peticiones
+        $peticion=Peticion::all();
+        return Inertia::render('Components/Peticion/ListarPeticion',['peticiones' => $peticion]);
+
     }
 
     /**

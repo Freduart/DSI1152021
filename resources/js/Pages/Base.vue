@@ -193,15 +193,14 @@
                             </inertia-link>
                     </li>
 
-                    <!-- Cuando es un solo elemento -->
-                    <!-- <li class="nav-item">
-                        <a href="pages/gallery.html" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
-                        <p>
-                            Gallery
-                        </p>
-                        </a>
-                    </li> -->
+                    <!-- Boton de instituciones en el slidebar -->
+                    <li class="nav-item">
+                            <inertia-link :href="route('instituciones.index')" class="nav-link">
+                            <i class="fas fa-university nav-icon"></i>
+                            <p>Instituciones</p>
+                            </inertia-link>
+                    </li>
+                    <!-- Fin de boton de instituciones -->
 
                     </ul>
                 </li>            
