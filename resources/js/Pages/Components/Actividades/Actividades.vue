@@ -343,9 +343,6 @@
                 <div class="col">
                   <h5 class=""><strong>Nombre de la actividad: </strong>{{ form.nombre_actividad }}</h5>
                 </div>
-                <!--<div class="col-4">
-                  <h5 class=""><strong>Teléfono: </strong>{{ form.telefono_encargado_escuela }}</h5>
-                </div>-->
               </div>
 
               <div class="row">
@@ -364,23 +361,6 @@
                   <h5 class=""><strong>Total de horas que realizo la actividad: </strong>{{ form.total_horas }}</h5>
                 </div>
               </div>
-
-              <!--<div class="row">
-                <div class="col">
-                <h5><strong>Verificado: </strong>{{ form.verificado }}</h5>
-                </div>
-              </div>-->
-
-              <!--<div class="row">
-                <div>
-                  <span class="d-flex flex-row-reverse bd-highlight col">
-                    <h5 class=""><strong>Estado:  </strong>
-                      <button v-if="form.estado_encargado_escuela == 'Activo'" class="btn btn-primary" disabled>{{ form.estado_encargado_escuela }}</button>
-                      <button v-else-if="form.estado_encargado_escuela == 'Inactivo'" class="btn btn-danger" disabled>{{ form.estado_encargado_escuela }}</button>
-                      </h5>
-                  </span>
-                </div>
-              </div>-->
 
             </div>  
             <hr class="mb-1"/>
@@ -524,20 +504,20 @@
                 actividad:0,
                 actividadesFiltradas:[],
                 successGuardado:false,
-                //formularioNuevaCarrera:false,
+                
                 form: this.$inertia.form({
                     id:'',
                     nombre_actividad:'',
                     fecha_actividad:'',
                     total_horas:'',
-                    verificado:'0',
+                    verificado:'En espera',
                     }),
                 formUp: this.$inertia.form({
                     id:'',
                     nombre_actividad:'',
                     fecha_actividad:'',
                     total_horas:'',
-                    verificado:'0',
+                    verificado:'En espera',
                     }),
                 }
             },        
@@ -549,10 +529,5 @@
             this.successGuardado = false;        
         },
     }
-
-   //Datemask dd/mm/yyyy
-   // $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-
-   
 
 </script>

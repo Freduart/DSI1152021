@@ -24,27 +24,6 @@ class ActividadesController extends Controller
         return Redirect::route('actividades.index');
     }
 
-
-    /*public function bitacora()
-
-    {
-       
-
-         // consulta de tabla
-         $actividades = DB::table('actividades')
-         ->select('actividades.id', 'bitacoras.id', 'bitacoras.total_horas','bitacoras.observaciones_bitacora', 'bitacoras.proyecto_social_id','bitacoras.estudiante_id','actividades.nombre_actividad','actividades.fecha_actividad','actividades.total_horas','actividades.verificado')
-         ->join('proyectos_sociales', 'proyectos_sociales.id', '=', 'bitacoras.proyecto_social_id')
-         ->join('estudiantes', 'estudiantes.id', '=', 'bitacoras.estudiante_id')
-         ->join('bitacoras', 'bitacoras.id', '=', 'actividades.bitacora_id')
-         ->where('bitacoras.estudiante_id', '=', $idEstudiante)
-         ->get();
-
-         return Inertia::render("Components/Actividades/VistaBitacora",['actividades' => $actividades,'bitacoras' => $bitacoras]);
-        
-
-
-    }*/
-
     
      //Metodo para actualizar todos los campos necesarios de la tabla de actividades
     public function update(Request $request, $id)
