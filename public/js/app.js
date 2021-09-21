@@ -22655,6 +22655,10 @@ __webpack_require__.r(__webpack_exports__);
     logout: function logout() {
       this.$inertia.post(route('logout'));
     },
+    // Carga la informacionn de la institucion seleccionada de la lista
+    mostrarInfo: function mostrarInfo(institucion) {
+      this.form.nombre_institucion = institucion.nombre_institucion, this.form.contacto_institucion = institucion.contacto_institucion, this.form.correo_institucion = institucion.correo_institucion, this.form.telefono_institucion = institucion.telefono_institucion, this.form.ubicacion_institucion = institucion.ubicacion_institucion, this.form.rubro_institucion = institucion.rubro_institucion;
+    },
     // filtrarByFacultad(id){
     //     this.tipoServicioFiltrados.splice(0, this.tipoServicioFiltrados.length);        
     //     this.tipoServicioSocial.forEach(element => {
@@ -22715,7 +22719,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      institucionesArray: [] //Este se utiliza a la hora de agregar un tipoServicio
+      // Array para recueprar la lista de instituciones
+      institucionesArray: [],
+      // objeto para recuperar una institucion y mostrar su info
+      form: {
+        nombre_institucion: '',
+        contacto_institucion: '',
+        correo_institucion: '',
+        telefono_institucion: '',
+        ubicacion_institucion: '',
+        rubro_institucion: ''
+      } //Este se utiliza a la hora de agregar un tipoServicio
       // form: this.$inertia.form({
       //   nombre_tipo_servicio:'',        
       // }),
@@ -34564,14 +34578,146 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Botones para edit or delete"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_15 = {
   "class": "tools"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para editar "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <jet-button :href=\"route('tipoServicio.update', tipos.id)\"  data-toggle=\"modal\" v-on:click=\"mostrarMensajeUpdate(tipos)\"\n                                  data-target=\"#updateTipoServicio\" title=\"Tipo servicio social\"> <i class=\"fas fa-edit\" style='color:#007bff'></i> </jet-button>                                   "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para eliminar "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <jet-button class=\"fas fa-arrow-alt-circle-down\" style='color:#dc3545' title=\"Eliminar tipo de servicio social\" method=\"delete\" \n                                  v-on:click=\"deleteTipoServicio(tipos)\"></jet-button> ")])], -1
+};
+var _hoisted_16 = {
+  "class": "modal fade",
+  id: "verInfo",
+  tabindex: "-1",
+  "aria-labelledby": "exampleModalLabel",
+  "aria-hidden": "true"
+};
+var _hoisted_17 = {
+  "class": "modal-dialog modal-lg"
+};
+var _hoisted_18 = {
+  "class": "modal-content"
+};
+var _hoisted_19 = {
+  "class": "modal-header"
+};
+var _hoisted_20 = {
+  "class": "modal-title text-primary"
+};
+var _hoisted_21 = {
+  "class": "d-flex flex-row-reverse bd-highlight col"
+};
+var _hoisted_22 = {
+  "class": "btn btn-dark text-light text-lg",
+  style: {
+    "cursor": "default"
+  }
+};
+
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
+  "class": "mt-2 mr-2"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Codigo:")], -1
+/* HOISTED */
+);
+
+var _hoisted_24 = {
+  "class": "modal-body"
+};
+var _hoisted_25 = {
+  "class": "row"
+};
+var _hoisted_26 = {
+  "class": "col"
+};
+var _hoisted_27 = {
+  "class": ""
+};
+
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Contacto: ", -1
+/* HOISTED */
+);
+
+var _hoisted_29 = {
+  "class": "col-4"
+};
+var _hoisted_30 = {
+  "class": ""
+};
+
+var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Teléfono: ", -1
+/* HOISTED */
+);
+
+var _hoisted_32 = {
+  "class": "row"
+};
+var _hoisted_33 = {
+  "class": "col"
+};
+var _hoisted_34 = {
+  "class": ""
+};
+
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Correo: ", -1
+/* HOISTED */
+);
+
+var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
+  "class": ""
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_37 = {
+  "class": ""
+};
+var _hoisted_38 = {
+  "class": ""
+};
+var _hoisted_39 = {
+  "class": ""
+};
+
+var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Ubicacion: ", -1
+/* HOISTED */
+);
+
+var _hoisted_41 = {
+  "class": "row"
+};
+var _hoisted_42 = {
+  "class": "d-flex flex-row-reverse bd-highlight col"
+};
+var _hoisted_43 = {
+  "class": ""
+};
+
+var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Estado: ", -1
+/* HOISTED */
+);
+
+var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "mb-1"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "mb-4"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n                  <button type=\"button\" class=\"btn btn-primary\">Save changes</button> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "d-flex justify-content-center"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "btn btn-warning",
+  "data-dismiss": "modal"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fa fa-eye-slash",
+  "aria-hidden": "true"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Ocultar detalle ")])])], -1
 /* HOISTED */
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Base = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Base");
+
+  var _component_jet_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-button");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Navbar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Base, null, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -34593,10 +34739,35 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(instituciones.correo_institucion), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <td>{{ tipos.nombre_tipo_servicio }}</td> "), _hoisted_15]);
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <td>{{ tipos.nombre_tipo_servicio }}</td> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Botones para edit or delete"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+      type: "button",
+      "class": "fas fa-info-circle text-green",
+      "data-toggle": "modal",
+      "data-target": "#verInfo",
+      onClick: function onClick($event) {
+        return $options.mostrarInfo(instituciones);
+      },
+      title: "Ver informacion de la institucion"
+    }, null, 8
+    /* PROPS */
+    , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para editar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <jet-button :href=\"route('tipoServicio.update', tipos.id)\"  data-toggle=\"modal\" v-on:click=\"mostrarMensajeUpdate(tipos)\"\n                                  data-target=\"#updateTipoServicio\" title=\"Tipo servicio social\"> <i class=\"fas fa-edit\" style='color:#007bff'></i> </jet-button>                                   "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para eliminar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <jet-button class=\"fas fa-arrow-alt-circle-down\" style='color:#dc3545' title=\"Eliminar tipo de servicio social\" method=\"delete\" \n                                  v-on:click=\"deleteTipoServicio(tipos)\"></jet-button> ")])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Card Body ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Card ")])])])])])]);
+  ))])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Card Body ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Card ")])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Main Content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal de la informacion de la institucion "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <h5 class=\"modal-title\" id=\"exampleModalLabel\">{{ verDetalleForm.nombre_estudiante }} {{ verDetalleForm.apellido_estudiante }}</h5> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.nombre_institucion), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.rubro_institucion), 1
+  /* TEXT */
+  ), _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <h3 class=\"modal-title text-primary border rounded-lg mx-4\">{{ verDetalleForm.carnet_estudiante }} </h3> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_27, [_hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.contacto_institucion), 1
+  /* TEXT */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_30, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.telefono_institucion), 1
+  /* TEXT */
+  )])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_34, [_hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.correo_institucion), 1
+  /* TEXT */
+  )])]), _hoisted_36]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_39, [_hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.ubicacion_institucion), 1
+  /* TEXT */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_43, [_hoisted_44, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.rubro_institucion), 1
+  /* TEXT */
+  )])])])])])]), _hoisted_45]), _hoisted_46])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Fin del modal de informacion de la institucion ")])]);
 }
 
 /***/ }),

@@ -69,6 +69,7 @@
                             <td>
                             <!-- Botones para edit or delete-->
                                 <div class="tools">
+                                  <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarInfo(instituciones)" title="Ver informacion de la institucion"></jet-button>
                                   <!-- Boton para editar -->
                                   <!-- <jet-button :href="route('tipoServicio.update', tipos.id)"  data-toggle="modal" v-on:click="mostrarMensajeUpdate(tipos)"
                                   data-target="#updateTipoServicio" title="Tipo servicio social"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>                                   -->
@@ -91,6 +92,77 @@
           </div>
         </div>
       </section>
+      <!-- End of Main Content -->
+
+      <!-- Modal de la informacion de la institucion -->
+        <div class="modal fade" id="verInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <!-- <h5 class="modal-title" id="exampleModalLabel">{{ verDetalleForm.nombre_estudiante }} {{ verDetalleForm.apellido_estudiante }}</h5> -->
+                  <h3 class="modal-title text-primary">{{ form.nombre_institucion }}</h3>
+                  <span class="d-flex flex-row-reverse bd-highlight col">
+                      
+                      <button class="btn btn-dark text-light text-lg" style="cursor: default;">
+                          {{ form.rubro_institucion }}                   
+                      </button>    
+                      <h5 class="mt-2 mr-2"><strong>Codigo:</strong></h5> 
+                      <!-- <h3 class="modal-title text-primary border rounded-lg mx-4">{{ verDetalleForm.carnet_estudiante }} </h3> -->
+                  </span>                  
+              </div>
+              <div class="modal-body">
+                  
+                <div>
+                  <div class="row">
+                    <div class="col">
+                      <h5 class=""><strong>Contacto: </strong>{{ form.contacto_institucion }}</h5>
+                    </div>
+                    <div class="col-4">
+                      <h5 class=""><strong>Teléfono: </strong>{{ form.telefono_institucion }}</h5>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <h5 class=""><strong>Correo: </strong>{{ form.correo_institucion }}</h5>
+                    </div>
+                    <div class="col">
+                      <h5 class=""></h5>
+                    </div>
+                  </div>
+                  
+                  <div class="">
+                    <div class="">
+                      <h5 class=""><strong>Ubicacion: </strong>{{ form.ubicacion_institucion }}</h5>
+                    </div>
+                    <div class="row">
+                      <div>
+                        <span class="d-flex flex-row-reverse bd-highlight col">
+                          <h5 class=""><strong>Estado:  </strong>
+                            <strong>{{ form.rubro_institucion }}</strong>
+                          </h5>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>  
+                <hr class="mb-1"/>
+              </div>
+              <div class="mb-4">
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button> -->
+                  <div class="d-flex justify-content-center">
+                      <button class="btn btn-warning" data-dismiss="modal">
+                        <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                        Ocultar detalle
+                      </button>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Fin del modal de informacion de la institucion -->
     </div>
   </div>
 </template>
@@ -120,6 +192,16 @@ export default {
   methods:{
     logout() {
       this.$inertia.post(route('logout'));
+    },
+
+    // Carga la informacionn de la institucion seleccionada de la lista
+    mostrarInfo(institucion){
+      this.form.nombre_institucion = institucion.nombre_institucion,
+      this.form.contacto_institucion= institucion.contacto_institucion,
+      this.form.correo_institucion= institucion.correo_institucion,
+      this.form.telefono_institucion= institucion.telefono_institucion,
+      this.form.ubicacion_institucion= institucion.ubicacion_institucion,
+      this.form.rubro_institucion= institucion.rubro_institucion
     },
 
     // filtrarByFacultad(id){
@@ -193,7 +275,17 @@ export default {
 
   data(){
     return{      
+      // Array para recueprar la lista de instituciones
       institucionesArray:[],      
+      // objeto para recuperar una institucion y mostrar su info
+      form:{
+        nombre_institucion:'',
+        contacto_institucion: '',
+        correo_institucion: '',
+        telefono_institucion: '',
+        ubicacion_institucion: '',
+        rubro_institucion: '',
+      }
 
       //Este se utiliza a la hora de agregar un tipoServicio
       // form: this.$inertia.form({
