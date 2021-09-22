@@ -7,6 +7,8 @@ use App\Models\Bitacora;
 use App\Models\Estudiante;
 use App\Models\Carrera;
 use App\Models\Facultad;
+use App\Models\ProyectoSocial;
+use App\Models\Peticion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -21,21 +23,30 @@ class BitacoraController extends Controller
         //$bitacoras = Bitacora::all();
         //$actividades= Actividad::all();
         $actividades = DB::table('actividades')
-        ->select('actividades.id as id', 'actividades.nombre_actividad as nombre', 'actividades.total_horas as thoras',
+        ->select('actividades.id as id', 'actividades.nombre_actividad as nombre_actividad', 'actividades.total_horas as total_horas',
         'actividades.verificado as verificado')
         ->join('bitacoras','bitacoras.id','=','actividades.bitacora_id')
         ->join('proyectos_sociales','proyectos_sociales.id','=','bitacoras.proyecto_social_id')
+        ->join('estudiantes','estudiantes.id','=','bitacoras.estudiante_id')
+        ->join('peticiones','peticiones.id','=','proyectos_sociales.peticion_id')
+        ->join('carreras','carreras.id','=','peticiones.carrera_id')
+        ->join('facultades','facultades.id','=','carreras.facultad_id')
         ->where('verificado', '=', 'Aceptada')
         ->orWhere('verificado', '=', 'Reportada')->get();
 
         //$idUsuario = 2;
+        //Obtenemos el id del usuario logueado
         $idUsuario = Auth::id();
 
-        $estudiante = Estudiante::where('user_id','=', $idUsuario)->firstOrFail();
+        //Obtenemos la carrera del estudiante logueado
+        $estudiante = Estudiante::where('user_id','=', $idUsuario)
+        //el estudiante podrá acceder solamente si está activo
+        ->where('estado_estudiante','=','Activo')->firstOrFail();
         $idCarreraEstudiante = $estudiante->carrera_id;
         $est = $estudiante->nombre_estudiante . ' ' . $estudiante->apellido_estudiante;
         $carnet = $estudiante->carnet_estudiante . ' ';
 
+        //Obtenemos la facultad del estudiante logueado
         $carreraEstudiante = Carrera::find($idCarreraEstudiante);
         $idFacultad = $carreraEstudiante->facultad_id;
         $carrera = $carreraEstudiante->nombre_carrera . ' ';

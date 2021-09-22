@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Actividad;
 use App\Models\Bitacora;
+use App\Models\ProyectoSocial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
