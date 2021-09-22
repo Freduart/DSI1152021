@@ -43,7 +43,7 @@
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">Codigo</th>
-                            <th scope="col">Nombre de la Actividadd</th>
+                            <th scope="col">Nombre de la Actividad</th>
                             <th scope="col">Horas de la Actividad</th>
                             <th scope="col">Estado de la Actividad</th>
                             <th scope="col"></th>

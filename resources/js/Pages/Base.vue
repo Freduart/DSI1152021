@@ -157,18 +157,18 @@
                             </inertia-link>
                     </li>
 
-                    <li class="nav-item">
-                            <inertia-link :href="route('verificaractividades.index')" class="nav-link">
-                            <i class="nav-icon fa fa-clipboard "></i>
-                            <p>Verificar Actividades</p>
-                            </inertia-link>
-                    </li>
-
 <!-- fa fa-check-square--->
                     <li class="nav-item">
                             <inertia-link :href="route('actividades.index')" class="nav-link">
                             <i class="nav-icon fa fa-list-alt"></i>
                             <p> Mis Actividades</p>
+                            </inertia-link>
+                    </li>
+
+                    <li class="nav-item">
+                            <inertia-link :href="route('verificaractividades.index')" class="nav-link">
+                            <i class="nav-icon fa fa-clipboard "></i>
+                            <p>Verificar Actividades</p>
                             </inertia-link>
                     </li>
 
@@ -192,6 +192,13 @@
                             <inertia-link :href="route('serviciossociales.index')" class="nav-link">
                             <i class="fa fa-th-large nav-icon"></i>
                             <p>Servicios Sociales</p>
+                            </inertia-link>
+                    </li>
+
+                    <li class="nav-item">
+                            <inertia-link :href="route('constancia.index')" class="nav-link">
+                            <i class="fa fa-award nav-icon"></i>
+                            <p>Constancia de cumplimiento</p>
                             </inertia-link>
                     </li>
 
