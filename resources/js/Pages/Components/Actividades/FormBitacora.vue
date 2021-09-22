@@ -27,12 +27,43 @@
             <!-- Left col -->
             <section class="col-lg-12 connectedSortable">
               <!-- TO DO List -->
+              <div class="card-body">
+                <div class = "d-flex justify-content-center">
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <div class="col">
+                        <div class = "d-flex justify-content-center">
+                          <h5 class="m-0"><strong> UNIVERSIDAD DE EL SALVADOR </strong></h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class = "d-flex justify-content-center">
+                          <h5 class="m-0"> <strong> {{ $props.facultad }} </strong></h5>
+                         </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class = "d-flex justify-content-center">
+                          <h5 class="m-0"> <strong> {{ $props.carrera }} </strong></h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="ion ion-clipboard mr-1"></i>
-                    Lista de Actividades
-                  </h3>
+                <div class="card-body">
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <h5 class="m-0"> Carnet: &nbsp; </h5> {{ $props.carnet }}
+                    </div>
+                    <div class="row">
+                      <h5 class="m-0">  Nombre: &nbsp; </h5> {{ $props.est }}
+                    </div>
+                  </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -185,7 +216,7 @@
         //JetButton,
         Base
       },
-      props:['actividades'],
+      props:['actividades', 'est', 'carnet', 'carrera', 'facultad'],
       methods:{
         logout() {
           this.$inertia.post(route('logout'));

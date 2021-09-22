@@ -30,17 +30,17 @@
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="ion ion-clipboard mr-1"></i>
-                    Seleccione las actividades que desea finalizar
+                    Lista de actividades aceptadas
                   </h3>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body">
+                <!--<div class="card-body">
                   <div class="col">
-                    <strong>Seleccionar todo: &nbsp; </strong>
+                    <strong>Seleccionar todo: &nbsp; </strong>-->
                     <!-- CheckBox para poder seleccionar todas las actividades a la vez-->
-                    <input type="checkbox" style="width:20px;height:20px;" id="chkCheckAll">
+                    <!--<input type="checkbox" style="width:20px;height:20px;" id="chkCheckAll">
                   </div>
-                </div>
+                </div>-->
                 <div class="card-body">
                   <ul class="todo-list" data-widget="todo-list">
                     <li>
@@ -51,8 +51,8 @@
                             <th scope="col">Codigo</th>
                             <th scope="col">Nombre de la Actividad</th>
                             <th scope="col">Estado de la actividad</th>
-                            <th scope="col">Seleccionar actividad</th>
-                            <th scope="col"></th>
+                            <th scope="col" width="15%">Acción</th>
+                            <!--<th scope="col" width="15%"></th>-->
                           </tr>
                         </thead>
 
@@ -63,32 +63,37 @@
                             <td>{{ actividad.nombre_actividad }}</td>
                             <td>
                               <!-- se coloca un botón no funcional solo para mostrar si la actividad ha sido aceptada-->
-                              <button v-if="actividad.verificado == 'Aceptada'" class="btn btn-info" style="cursor: default;">
+                              <button v-if="actividad.verificado == 'Aceptada'" class="btn btn-success" style="cursor: default;">
                                 <i>Aceptada</i>
                               </button>
+                              <button v-if="actividad.verificado == 'Finalizada'" class="btn btn-primary" style="cursor: default;">
+                                <i>Finalizada</i>
+                              </button>
                             </td>
-                            <td>
+                            <!--<td>-->
                               <!-- checkbox en cada fila de las actividades aceptadas-->
-                             <div  class="icheck-primary d-inline ml-2">
+                              <!--<div  class="icheck-primary d-inline ml-2">
                                 <input type="checkbox" class="checkBoxClass" value="" name="todo1" id="todoCheck1" style="width:20px;height:20px;">
                                   <label for="todoCheck1-sm"></label>
-                                </div>
-                            </td>
+                              </div>-->
+                            <!--</td>-->
                             <td>
                               <div class="tools">
                                 <!--Botón para ver el detalle de la actividad-->
-                                <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarDatos(actividad)" title="Ver mas informacion de la actividad"></jet-button>
+                                <jet-button class="fas fa-arrow-alt-circle-down text-blue" title="Finalizar actividad" method="delete" v-on:click="finalizar(actividad)"></jet-button>
+                                <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarDatos(actividad)" title="Ver más información de la actividad"></jet-button>
+                                
                               </div>
                             </td>
                           </tr>
                         </tbody>
                       </table>
-                      <div class="card-body">
+                      <!--<div class="card-body">-->
                         <!--Botón para finalizar las actividades seleccionadas con checkbox-->
-                        <button class="btn btn-warning float-cneter" title="Verificar actividad">
+                        <!--<button class="btn btn-warning float-cneter" title="Verificar actividad">
                           <i class="fas"></i>Finalizar actividades
                         </button>
-                      </div>
+                      </div>-->
                     </li>
                   </ul>
                 </div>
@@ -233,8 +238,29 @@
                 }
             },
           
-            //Metodo para la verificación de la actividad
-            verificacion(actividad){
+            //Metodo para finalizar la actividad
+            finalizar(actividad){
+            console.log(actividad);
+                console.log(actividad.verificado);
+                if(actividad.verificado == 'Aceptada'){
+                    this.formUp.verificado = 'Finalizada'; 
+                    Swal.fire({
+                        title: 'Se ha finalizado la actividad ' + actividad.nombre_actividad,
+                        text: 'Actualice la página para ver los cambios',
+                        icon: 'warning',
+                        iconColor: '#FF8000',
+                        confirmButtonText: 'Aceptar',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                    });
+                }
+                this.$inertia.put(route("finalizaractividades.update", actividad.id), this.form);
+            },
+
+
+
+            /*verificar(actividad){
               if(actividad.verificado == '0'){
                 Swal.fire({
                   title:'¿Está seguro que desea dar por verificada la actividad?',
@@ -257,33 +283,7 @@
                   }
                 })
               }
-            },
-
-            // Método para reportar la actividad
-            Reportar(actividad){
-              if(actividad.verificado == '0'){
-                Swal.fire({
-                  title:'¿Está seguro que desea reportar la actividad?',
-                  text: "Código " +actividad.id + " Nombre de actividad " +actividad.nombre_actividad,
-                  icon:'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Aceptar',
-                  cancelButtonText: 'No, cancelar'
-                }).then((result)=>{
-                  if(result.isConfirmed){
-                    //this.$inertia.put(route('verificaractividades.report', actividad.id), this.formUp);
-                    Swal.fire(
-                      '!Reportada',
-                      'La actividad ha sido reportada correctamente',
-                      'success'
-                    );
-                    window.location.reload(true);
-                  }
-                })
-              }
-            },
+            },*/
 
            /* seleccionar_todo(){
              for (i=0;i<todoCheck1.elements.length;i++)
@@ -332,10 +332,10 @@
     }
     
     //función para seleccionar todos los checkbox a la vez
-    $(function(e){
-      $("#chkCheckAll").click(function(){
-        $(".checkBoxClass").prop('checked',$(this).prop('checked'));
-      })
-    });
+    //$(function(e){
+      //$("#chkCheckAll").click(function(){
+        //$(".checkBoxClass").prop('checked',$(this).prop('checked'));
+      //})
+    //});
 
 </script>

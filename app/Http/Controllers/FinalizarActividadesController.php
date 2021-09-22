@@ -15,7 +15,9 @@ class FinalizarActividadesController extends Controller
     public function index()
     {
         //Se obtienen todos los campos de tabla actividad
-    $actividades = Actividad::where('verificado', '=', 'Aceptada')->get();
+    $actividades = Actividad::where('verificado', '=', 'Aceptada')
+    ->orWhere('verificado','=','Finalizada')
+    ->get();
     return Inertia::render("Components/VerificarActividades/FinalizarActividades",['actividades' => $actividades]);
     }
     
