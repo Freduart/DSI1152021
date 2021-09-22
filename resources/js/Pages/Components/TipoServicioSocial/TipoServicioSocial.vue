@@ -198,125 +198,122 @@
 </template>
 
 <script>
-   import JetNavLink from '@/Jetstream/NavLink';
-    import JetDropdownLink from '@/Jetstream/DropdownLink';
-    import JetInput from '@/Jetstream/Input';
-    import JetLabel from '@/Jetstream/Label';
-    import JetButton from '@/Jetstream/Button';
-    import Label from '../../../Jetstream/Label.vue';
-    import Button from '../../../Jetstream/Button.vue';
+  import JetNavLink from '@/Jetstream/NavLink';
+  import JetDropdownLink from '@/Jetstream/DropdownLink';
+  import JetInput from '@/Jetstream/Input';
+  import JetLabel from '@/Jetstream/Label';
 
-    import Base from "@/Pages/Base.vue";
+  import Base from "@/Pages/Base.vue";
 
-export default {
-  components:{
-    JetNavLink,
-    JetDropdownLink,
-    JetInput,
-    JetLabel,
-    Base
-  },
-
-  props:['tipoServicioSocial'],
-
-  methods:{
-    logout() {
-      this.$inertia.post(route('logout'));
+  export default {
+    components:{
+      JetNavLink,
+      JetDropdownLink,
+      JetInput,
+      JetLabel,
+      Base
     },
 
-    filtrarByFacultad(id){
-        this.tipoServicioFiltrados.splice(0, this.tipoServicioFiltrados.length);        
-        this.tipoServicioSocial.forEach(element => {
-          if(element.tipo_servicio_social_id == id){              
-              this.tipoServicioFiltrados.push(element);
-          }
-        });        
-        if(id == '0'){
+    props:['tipoServicioSocial'],
+
+    methods:{
+      logout() {
+        this.$inertia.post(route('logout'));
+      },
+
+      filtrarByFacultad(id){
+          this.tipoServicioFiltrados.splice(0, this.tipoServicioFiltrados.length);        
           this.tipoServicioSocial.forEach(element => {
-              this.tipoServicioFiltrados.push(element);              
-          })     
-        }
-    }, 
+            if(element.tipo_servicio_social_id == id){              
+                this.tipoServicioFiltrados.push(element);
+            }
+          });        
+          if(id == '0'){
+            this.tipoServicioSocial.forEach(element => {
+                this.tipoServicioFiltrados.push(element);              
+            })     
+          }
+      }, 
 
-    success(){
-      Swal.fire(
-          'Guardado con exito!',
-          'El tipo de servicio social se agrego correctamente',
-          'success'
-        );
-    },
-
-    submit(){
-      this.form.post(this.route('tipoServicio.store'));
-      this.form.nombre_tipo_servicio='';
-      this.success();
-      window.location.reload(true);      
-    },
-
-    submitUpdate(form){
-      Swal.fire(
-        '¡Guardado con exito!',
-        'El tipo de servicio social se actualizo correctamente',
-        'success'
-      );
-      this.$inertia.patch(route("tipoServicio.update",form.id), this.formUp);      
-      window.location.reload(true);
-    },
-
-    deleteTipoServicio(tipoSerivicioSocial){
-      Swal.fire({
-        title: '¿Esta seguro que desea eliminar este tipo de servicio?',      
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, eliminar',
-        cancelButtonText: 'No, cancelar'      
-      }).then((result) =>{
-        if(result.isConfirmed){
-          this.$inertia.delete(route('tipoServicio.destroy', tipoSerivicioSocial.id));
-          Swal.fire(
-            '¡Eliminado!',
-            'El tipo de servicio social se elimino correctamente',
+      success(){
+        Swal.fire(
+            'Guardado con exito!',
+            'El tipo de servicio social se agrego correctamente',
             'success'
           );
-          window.location.reload(true);
-        }
-      })
+      },
+
+      submit(){
+        this.form.post(this.route('tipoServicio.store'));
+        this.form.nombre_tipo_servicio='';
+        this.success();
+        window.location.reload(true);      
+      },
+
+      submitUpdate(form){
+        Swal.fire(
+          '¡Guardado con exito!',
+          'El tipo de servicio social se actualizo correctamente',
+          'success'
+        );
+        this.$inertia.patch(route("tipoServicio.update",form.id), this.formUp);      
+        window.location.reload(true);
+      },
+
+      deleteTipoServicio(tipoSerivicioSocial){
+        Swal.fire({
+          title: '¿Esta seguro que desea eliminar este tipo de servicio?',      
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, eliminar',
+          cancelButtonText: 'No, cancelar'      
+        }).then((result) =>{
+          if(result.isConfirmed){
+            this.$inertia.delete(route('tipoServicio.destroy', tipoSerivicioSocial.id));
+            Swal.fire(
+              '¡Eliminado!',
+              'El tipo de servicio social se elimino correctamente',
+              'success'
+            );
+            window.location.reload(true);
+          }
+        })
+      },
+
+      //Cargo la informacion del formulario 
+      mostrarMensajeUpdate(tipoServicioSocial){
+        this.formUp.nombre_tipo_servicio=tipoServicioSocial.nombre_tipo_servicio;
+        this.formUp.id=tipoServicioSocial.id;
+      }
+      
     },
 
-    //Cargo la informacion del formulario 
-    mostrarMensajeUpdate(tipoServicioSocial){
-      this.formUp.nombre_tipo_servicio=tipoServicioSocial.nombre_tipo_servicio;
-      this.formUp.id=tipoServicioSocial.id;
-    }
-    
-  },
+    data(){
+      return{
+        tipoServicio:0,
+        tipoServicioFiltrados:[],
+        successGuardado:false,
 
-  data(){
-    return{
-      tipoServicio:0,
-      tipoServicioFiltrados:[],
-      successGuardado:false,
+        //Este se utiliza a la hora de agregar un tipoServicio
+        form: this.$inertia.form({
+          nombre_tipo_servicio:'',        
+        }),
 
-      //Este se utiliza a la hora de agregar un tipoServicio
-      form: this.$inertia.form({
-        nombre_tipo_servicio:'',        
+        //Este se utiliza a la hora de actualizar un tipoServicio
+        formUp: this.$inertia.form({
+          nombre_tipo_servicio:'',
+          id:'',
+        })
+      }
+    },
+
+    mounted(){
+      this.tipoServicioSocial.forEach(element =>{
+        this.tipoServicioFiltrados.push(element);      
       }),
-
-      //Este se utiliza a la hora de actualizar un tipoServicio
-      formUp: this.$inertia.form({
-        nombre_tipo_servicio:'',
-        id:'',
-      })
-    }
-  },
-
-  mounted(){
-    this.tipoServicioSocial.forEach(element =>{
-      this.tipoServicioFiltrados.push(element);      
-    }),
-    this.successGuardado=false;
-  },
-}
+      this.successGuardado=false;
+    },
+  }
 </script>

@@ -33,11 +33,13 @@
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="ion-clipboard ion mr-1"></i>
-                    Instituciones
+                    Listado de Instituciones
                   </h3>
-                  <!--Boton para añadir facultades-->
-                  <!-- <button type="button" class="btn btn-success float-right mb-8" data-toggle="modal" data-target="#addTipoServicio">
-                    <i class="fas fa-plus"></i> Añadir Institucion</button>  -->
+                  <!--Boton para añadir instituciones-->
+                  <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('instituciones.create')">
+                    <i class="fas fa-plus"></i> 
+                     Añadir institucion
+                    </inertia-link>
                 </div>
                 <!-- End of Card Header -->
                 
@@ -64,19 +66,18 @@
                             <td>{{ instituciones.id }}</td>
                             <td>{{ instituciones.nombre_institucion }}</td>
                             <td>{{ instituciones.ubicacion_institucion }}</td>
-                            <td>{{ instituciones.correo_institucion }}</td>
-                            <!-- <td>{{ tipos.nombre_tipo_servicio }}</td> -->
+                            <td>{{ instituciones.correo_institucion }}</td>                            
                             <td>
                             <!-- Botones para edit or delete-->
                                 <div class="tools">
                                   <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarInfo(instituciones)" title="Ver informacion de la institucion"></jet-button>
+                                  
                                   <!-- Boton para editar -->
-                                  <!-- <jet-button :href="route('tipoServicio.update', tipos.id)"  data-toggle="modal" v-on:click="mostrarMensajeUpdate(tipos)"
-                                  data-target="#updateTipoServicio" title="Tipo servicio social"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>                                   -->
+                                  <inertia-link class="fas fa-edit" title="Editar institucion" :href="route('instituciones.edit', instituciones.id)"></inertia-link>                                  
 
                                   <!-- Boton para eliminar -->
-                                  <!-- <jet-button class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Eliminar tipo de servicio social" method="delete" 
-                                  v-on:click="deleteTipoServicio(tipos)"></jet-button> -->
+                                  <jet-button class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Eliminar institucion" method="delete" 
+                                  v-on:click="deleteInstitucion(Instituciones)"></jet-button>
                                 </div>
                             </td>
                           </tr>
@@ -101,14 +102,7 @@
               <div class="modal-header">
                   <!-- <h5 class="modal-title" id="exampleModalLabel">{{ verDetalleForm.nombre_estudiante }} {{ verDetalleForm.apellido_estudiante }}</h5> -->
                   <h3 class="modal-title text-primary">{{ form.nombre_institucion }}</h3>
-                  <span class="d-flex flex-row-reverse bd-highlight col">
-                      
-                      <button class="btn btn-dark text-light text-lg" style="cursor: default;">
-                          {{ form.rubro_institucion }}                   
-                      </button>    
-                      <h5 class="mt-2 mr-2"><strong>Codigo:</strong></h5> 
-                      <!-- <h3 class="modal-title text-primary border rounded-lg mx-4">{{ verDetalleForm.carnet_estudiante }} </h3> -->
-                  </span>                  
+                         
               </div>
               <div class="modal-body">
                   
@@ -138,8 +132,8 @@
                     <div class="row">
                       <div>
                         <span class="d-flex flex-row-reverse bd-highlight col">
-                          <h5 class=""><strong>Estado:  </strong>
-                            <strong>{{ form.rubro_institucion }}</strong>
+                          <h5 class=""><strong>Rubro:  </strong>
+                            {{ form.rubro_institucion }}
                           </h5>
                         </span>
                       </div>
@@ -149,9 +143,7 @@
                 </div>  
                 <hr class="mb-1"/>
               </div>
-              <div class="mb-4">
-                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button> -->
+              <div class="mb-4">                  
                   <div class="d-flex justify-content-center">
                       <button class="btn btn-warning" data-dismiss="modal">
                         <i class="fa fa-eye-slash" aria-hidden="true"></i>
@@ -168,142 +160,85 @@
 </template>
 
 <script>
-   import JetNavLink from '@/Jetstream/NavLink';
-    import JetDropdownLink from '@/Jetstream/DropdownLink';
-    import JetInput from '@/Jetstream/Input';
-    import JetLabel from '@/Jetstream/Label';
-    import JetButton from '@/Jetstream/Button';
-    import Label from '../../../Jetstream/Label.vue';
-    import Button from '../../../Jetstream/Button.vue';
+  import Base from "@/Pages/Base.vue";
+  import JetAuthenticationCard from '@/Jetstream/AuthenticationCard'
+  import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo'
+  import JetButton from '@/Jetstream/Button'
+  import JetInput from '@/Jetstream/Input'  
+  import JetLabel from '@/Jetstream/Label'
+  import JetValidationErrors from '@/Jetstream/ValidationErrors'
 
-    import Base from "@/Pages/Base.vue";
-
-export default {
-  components:{
-    JetNavLink,
-    JetDropdownLink,
-    JetInput,
-    JetLabel,
-    Base
-  },
-
-  props:['instituciones'],
-
-  methods:{
-    logout() {
-      this.$inertia.post(route('logout'));
+  export default {
+    components:{
+      JetAuthenticationCard,
+      JetAuthenticationCardLogo,
+      JetInput,      
+      JetLabel,
+      JetValidationErrors,
+      Base
     },
 
-    // Carga la informacionn de la institucion seleccionada de la lista
-    mostrarInfo(institucion){
-      this.form.nombre_institucion = institucion.nombre_institucion,
-      this.form.contacto_institucion= institucion.contacto_institucion,
-      this.form.correo_institucion= institucion.correo_institucion,
-      this.form.telefono_institucion= institucion.telefono_institucion,
-      this.form.ubicacion_institucion= institucion.ubicacion_institucion,
-      this.form.rubro_institucion= institucion.rubro_institucion
+    props:['instituciones'],
+
+    methods:{
+      logout() {
+        this.$inertia.post(route('logout'));
+      },
+
+      // Carga la informacionn de la institucion seleccionada de la lista
+      mostrarInfo(instituciones){
+        this.form.nombre_institucion = instituciones.nombre_institucion,
+        this.form.contacto_institucion= instituciones.contacto_institucion,
+        this.form.correo_institucion= instituciones.correo_institucion,
+        this.form.telefono_institucion= instituciones.telefono_institucion,
+        this.form.ubicacion_institucion= instituciones.ubicacion_institucion,
+        this.form.rubro_institucion= instituciones.rubro_institucion
+      },
+      
+      // Carga la ruta destroy del controllador de instituciones y muestra un mensaje de confirmacion
+      deleteInstitucion(instituciones){
+        Swal.fire({
+          title: '¿Esta seguro que desea eliminar esta institucion?',      
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, eliminar',
+          cancelButtonText: 'No, cancelar'      
+        }).then((result) =>{
+          if(result.isConfirmed){
+            this.$inertia.delete(route('instituciones.destroy', instituciones.id));            
+            Swal.fire(
+              '¡Eliminado!',
+              'El tipo de servicio social se elimino correctamente',
+              'success'
+            );
+            window.location.reload(true);
+          }
+        })
+      },      
     },
 
-    // filtrarByFacultad(id){
-    //     this.tipoServicioFiltrados.splice(0, this.tipoServicioFiltrados.length);        
-    //     this.tipoServicioSocial.forEach(element => {
-    //       if(element.tipo_servicio_social_id == id){              
-    //           this.tipoServicioFiltrados.push(element);
-    //       }
-    //     });        
-    //     if(id == '0'){
-    //       this.tipoServicioSocial.forEach(element => {
-    //           this.tipoServicioFiltrados.push(element);              
-    //       })     
-    //     }
-    // },     
-
-    success(){
-      Swal.fire(
-          'Guardado con exito!',
-          'El tipo de servicio social se agrego correctamente',
-          'success'
-        );
-    },
-
-    // submit(){
-    //   this.form.post(this.route('tipoServicio.store'));
-    //   this.form.nombre_tipo_servicio='';
-    //   this.success();
-    //   window.location.reload(true);      
-    // },
-
-    // submitUpdate(form){
-    //   Swal.fire(
-    //     '¡Guardado con exito!',
-    //     'El tipo de servicio social se actualizo correctamente',
-    //     'success'
-    //   );
-    //   this.$inertia.patch(route("tipoServicio.update",form.id), this.formUp);      
-    //   window.location.reload(true);
-    // },
-
-    // deleteTipoServicio(tipoSerivicioSocial){
-    //   Swal.fire({
-    //     title: '¿Esta seguro que desea eliminar este tipo de servicio?',      
-    //     icon: 'warning',
-    //     showCancelButton: true,
-    //     confirmButtonColor: '#3085d6',
-    //     cancelButtonColor: '#d33',
-    //     confirmButtonText: 'Si, eliminar',
-    //     cancelButtonText: 'No, cancelar'      
-    //   }).then((result) =>{
-    //     if(result.isConfirmed){
-    //       this.$inertia.delete(route('tipoServicio.destroy', tipoSerivicioSocial.id));
-    //       Swal.fire(
-    //         '¡Eliminado!',
-    //         'El tipo de servicio social se elimino correctamente',
-    //         'success'
-    //       );
-    //       window.location.reload(true);
-    //     }
-    //   })
-    // },
-
-    //Cargo la informacion del formulario 
-    // mostrarMensajeUpdate(tipoServicioSocial){
-    //   this.formUp.nombre_tipo_servicio=tipoServicioSocial.nombre_tipo_servicio;
-    //   this.formUp.id=tipoServicioSocial.id;
-    // }
-    
-  },
-
-  data(){
-    return{      
-      // Array para recueprar la lista de instituciones
-      institucionesArray:[],      
-      // objeto para recuperar una institucion y mostrar su info
-      form:{
-        nombre_institucion:'',
-        contacto_institucion: '',
-        correo_institucion: '',
-        telefono_institucion: '',
-        ubicacion_institucion: '',
-        rubro_institucion: '',
+    data(){
+      return{      
+        // Array para recueprar la lista de instituciones
+        institucionesArray:[],      
+        // objeto para recuperar una institucion y mostrar su info
+        form:{
+          nombre_institucion:'',
+          contacto_institucion: '',
+          correo_institucion: '',
+          telefono_institucion: '',
+          ubicacion_institucion: '',
+          rubro_institucion: '',
+        }
       }
+    },
 
-      //Este se utiliza a la hora de agregar un tipoServicio
-      // form: this.$inertia.form({
-      //   nombre_tipo_servicio:'',        
-      // }),
-
-      //Este se utiliza a la hora de actualizar un tipoServicio
-      // formUp: this.$inertia.form({
-      //   nombre_tipo_servicio:'',
-      //   id:'',
-      // })
-    }
-  },
-
-  mounted(){
-    this.instituciones.forEach(element =>{
-      this.institucionesArray.push(element);      
-    })    
-  },
-}
+    mounted(){
+      this.instituciones.forEach(element =>{
+        this.institucionesArray.push(element);      
+      })    
+    },
+  }
 </script>

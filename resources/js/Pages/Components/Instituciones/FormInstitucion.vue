@@ -11,8 +11,8 @@
       <div class="container-fluid">
         <div class="row justify-content-center mb-2">
           <div class="col-sm-5">
-            <h1 v-if="this.$props.encargadoF.id != null" class="m-2">Modificar encargado de facultad</h1>
-            <h1 v-else class="m-2">Agregar encargado de facultad</h1>
+            <h1 v-if="this.$props.instituciones.id != null" class="m-2">Modificar encargado de facultad</h1>
+            <h1 v-else class="m-2">Agregar Institucion</h1>            
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -26,26 +26,25 @@
             <div class="row justify-content-center my-2">
             <!-- Left col -->
             <section class="col-lg-9 connectedSortable">
-                <!-- TO DO List -->
-                <!-- Ejemplo de como podria ser una tabla pero se tendria que añadir al width del 100% -->
-                <div class="card">
- 
-                <!-- /.card-header -->
+                <!-- TO DO List -->                
+                <div class="card">                
+
+                  <!-- Formulario para la institucion -->
                   <form @submit.prevent="submit">
                     <div class="card-body">
                       <div class="row">
                         <div class="col">
-                          <!-- nombres del encargado -->
+                          <!-- Nombre de la institucion -->
                           <div class="form-group">
-                            <jet-label for="nombre" value="Nombres" />
-                            <jet-input id="nombre" type="text" v-model="form.nombre_encargado_facultad" required autofocus autocomplete="nombre" />
+                            <jet-label for="nombre" value="Nombre" />
+                            <jet-input id="nombre" type="text" v-model="form.nombre_institucion" required autofocus autocomplete="nombre" />
                           </div>
                         </div>
                         <div class="col">
-                          <!-- apellidos del encargado -->
+                          <!-- Contacto de la institucion -->
                           <div class="form-group">
-                            <jet-label for="apellido" value="Apellidos" />
-                            <jet-input id="apellido" type="text" v-model="form.apellido_encargado_facultad" required autofocus autocomplete="apellido" />
+                            <jet-label for="Contacto" value="Contacto" />
+                            <jet-input id="contacto" type="text" v-model="form.contacto_institucion" required autofocus autocomplete="contacto" />
                           </div>
                         </div>
                       </div> 
@@ -53,58 +52,57 @@
                       <div class="row">
                         <div class="col">
                           <div class="form-group">
-                            <!-- correo del encargado -->
+                            <!-- Correo de la institucion -->
                             <jet-label for="correo" value="Correo" />
-                            <jet-input id="correo" type="email" v-model="form.correo_encargado_facultad" required />
+                            <jet-input id="correo" type="email" v-model="form.correo_institucion" required />
                           </div>
                         </div>
                         <div class="col">
-                          <!-- telefono del encargado -->
+                          <!-- Telefono de la institucion -->
                           <div class="form-group">
                             <jet-label for="telefono" value="Telefono" />
-                            <jet-input id="telefono" type="text" v-model="form.telefono_encargado_facultad" required autofocus autocomplete="telefono" />
+                            <jet-input id="telefono" type="text" v-model="form.telefono_institucion" required autofocus autocomplete="telefono" />
                           </div>
                         </div>
                       </div> 
 
                       <div class="row">
                         <div class="col">
-                          <!-- dui del encargado -->
+                          <!-- Ubicacion de la institucion -->
                           <div class="form-group">
-                            <jet-label for="dui" value="Dui" />
-                            <jet-input id="dui" type="text" v-model="form.dui_encargado_facultad" required autofocus autocomplete="dui" />
+                            <jet-label for="ubicacion" value="Ubicacion" />
+                            <jet-input id="ubicacion" type="text" v-model="form.ubicacion_institucion" required autofocus autocomplete="dui" />
                           </div>
                         </div>
                         <div class="col">
-                          <!-- codigo de empleado del encargado -->
+                          <!-- Rubro de la empresa -->
                           <div class="form-group">
-                            <jet-label for="Codigo" value="Codigo empleado" />
-                            <jet-input id="Codigo" type="text" v-model="form.codigo_encargado_facultad" required autofocus autocomplete="Codigo" />
+                            <jet-label for="Rubro" value="Rubro de la empresa" />
+                            <jet-input id="rubro" type="text" v-model="form.rubro_institucion" required autofocus autocomplete="Rubro" />
                           </div>
                         </div>
-                      </div> 
-                      <!-- facultad del encargado -->
-                      <div class="form-group">
-                        <jet-label for="facultad" value="Facultad" />
-                        <br/>
-                        <!-- select para cargar las facultades -->
-                        <select class="custom-select" id="facultad_id" v-model="form.facultad_id" required>
-                          <option disabled value="">Seleccione una facultad</option>
-                          <option v-for="(facultad, index) in facultadesFiltradas" :key="index" :value="facultad.idF">{{ facultad.nombre_facultad }}</option>
-                        </select>
-                      </div>
+                      </div>                       
                       <hr>
                     </div>
 
                     <div class="card-footer clearfix"> 
                       <div class="my-2">
                         <div class="d-flex justify-content-center align-items-baseline">
-                          <!-- botones de accion -->
+                          <!-- botones de accion  -->
                           <jet-button type="submit" class="btn btn-primary float-center" :class="{ 'text-white-50': form.processing }" :disabled="form.processing" >
-                          <i class="fas"></i> Guardar</jet-button>
+                            <inertia-link class="fas fa-edit" title="Editar institucion" :href="route('instituciones.edit', instituciones.id)"></inertia-link>
+                            <i class="fas"></i> 
+                            Guardar
+                          </jet-button>
+
+                          <!-- Espacio entre botones -->
                           <div class="mx-2"></div>
-                          <inertia-link :href="route('encargadosfacultad.index')" type="button" class="btn btn-danger float-center" >
-                          <i class="fas"></i> Cancelar</inertia-link>
+
+                          <inertia-link :href="route('instituciones.index')" type="button" class="btn btn-danger float-center" >
+                            <i class="fas"></i> 
+                            Cancelar
+                          </inertia-link>
+                          <!-- Fin de los botones de accion -->
                         </div>
                       </div>
                     </div>
@@ -151,6 +149,38 @@
       JetLabel,
       JetValidationErrors,
       Base
-    }
+    },
+
+    // La propiedad tiene que ser llamada del mismo modo que en el metodo del controlador
+    props: ['instituciones'],
+
+    data(){
+      return{
+        form: this.$inertia.form({          
+          nombre_institucion: this.$props.instituciones.nombre_institucion,
+          contacto_institucion: this.$props.instituciones.contacto_institucion,
+          correo_institucion: this.$props.instituciones.correo_institucion,
+          telefono_institucion: this.$props.instituciones.telefono_institucion,
+          ubicacion_institucion: this.$props.instituciones.ubicacion_institucion,
+          rubro_institucion: this.$props.instituciones.rubro_institucion,
+        }),
+        institucionesFiltradas:[],
+      }
+    },
+
+
+
+    methods:{
+      submit(){
+        // Se evalua si la institucion tiene un id entonces se ejecutara la ruta de actualizar
+        if(this.$props.instituciones.id != null){
+          this.$inertia.put(route('instituciones.update', this.$props.instituciones.id), this.form);
+        }
+        // Si no tiene un id entonces se ejecuta la ruta de crear
+        else{
+          this.form.post(route('instituciones.store'));
+        }
+      }
+    },
   }
 </script>

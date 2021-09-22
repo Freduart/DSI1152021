@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Institucion;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 use Illuminate\Support\Facades\Redirect;
+use SebastianBergmann\Environment\Console;
 
 class InstitucionController extends Controller
 {
@@ -29,7 +31,17 @@ class InstitucionController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Components/FormInstitucion');
+        // Inicializamos de datos la institucion
+        $institucion = new Institucion();
+        $institucion -> id = null;
+        $institucion -> user_id = '';
+        $institucion -> nombre_institucion = '';
+        $institucion -> contacto_institucion = '';
+        $institucion -> correo_institucion = '';
+        $institucion -> telefono_institucion = '';
+        $institucion -> ubicacion_institucion = '';
+        $institucion -> rubro_institucion = ''; 
+        return Inertia::render('Components/Instituciones/FormInstitucion', ['instituciones' => $institucion]);
     }
 
     /**
@@ -39,10 +51,41 @@ class InstitucionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        // return $request->all();
+    {        
+        // Se le asigna la contraseña
+        $contra = "institucion";
+        // Se obtienen los datos del request
+        $data = $request -> input();
+
+        // Creando la institucion
+        $institucion = new Institucion();
+        $institucion->nombre_institucion = $data['nombre_institucion'];
+        $institucion->contacto_institucion = $data['contacto_institucion'];
+        $institucion->correo_institucion = $data['correo_institucion'];
+        $institucion->telefono_institucion = $data['telefono_institucion'];
+        $institucion->ubicacion_institucion = $data['ubicacion_institucion'];
+        $institucion->rubro_institucion = $data['rubro_institucion'];
+
+        if($institucion->save()){
+					// Creando la institucion y asignandole el rol
+					User::create([
+							'name' => $data['nombre_institucion'],
+							'email' => $data['correo_institucion'],
+							'password' => bcrypt($contra)
+					])->assingRole('Institucion');
+
+					$usuario= User::where('name', '=', $data['nombre_institucion'])->firstOrFail();
+					error_log($usuario);
+					
+					$id=$usuario->id;
+
+					// Asignamos el usuario a la institucion
+					$institucion = Institucion::where('nombre_institucion', '=', $data['correo_institucion'])->firstOrFail();
+					error_log($institucion);
+        }
+
         Institucion::create($request->all());
-        return Redirect::route('dashboard'); 
+        return Redirect::route('instituciones.index'); 
     }
 
     /**
@@ -62,9 +105,11 @@ class InstitucionController extends Controller
      * @param  \App\Models\Institucion  $institucion
      * @return \Illuminate\Http\Response
      */
-    public function edit(Institucion $institucion)
+    public function edit($institucion)
     {
-        //
+        //Obteniendo los datos de las instituciones
+        $institucion = Institucion::find($institucion);
+        return Inertia('Components/Instituciones/FormInstitucion', ['instituciones' => $institucion]);
     }
 
     /**
@@ -74,9 +119,12 @@ class InstitucionController extends Controller
      * @param  \App\Models\Institucion  $institucion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Institucion $institucion)
+    public function update(Request $request, $institucion)
     {
-        //
+        // Necesitamos encontrar a la institucion para poder actualizarlo
+        $institucion = Institucion::find($institucion);
+        $institucion -> update($request -> all());
+        return Redirect::route('instituciones.index');
     }
 
     /**
@@ -85,8 +133,11 @@ class InstitucionController extends Controller
      * @param  \App\Models\Institucion  $institucion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Institucion $institucion)
+    public function destroy($id)
     {
-        //
+        //Elimina la institucion a partir del id de la institucion
+				$instituciones = Institucion::find($id);
+				$instituciones -> delete();
+				return Redirect::route('instituciones.index');
     }
 }
