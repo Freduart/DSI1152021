@@ -39,7 +39,7 @@
                   <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('instituciones.create')">
                     <i class="fas fa-plus"></i> 
                      Añadir institucion
-                    </inertia-link>
+                  </inertia-link>
                 </div>
                 <!-- End of Card Header -->
                 

@@ -11,8 +11,8 @@
       <div class="container-fluid">
         <div class="row justify-content-center mb-2">
           <div class="col-sm-5">
-            <h1 v-if="this.$props.instituciones.id != null" class="m-2">Modificar encargado de facultad</h1>
-            <h1 v-else class="m-2">Agregar Institucion</h1>            
+            <h1 v-if="this.$props.instituciones.id != null" class="m-2">Modificar institucion</h1>
+            <h1 v-else class="m-2">Agregar institucion</h1>            
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -156,19 +156,25 @@
 
     data(){
       return{
+
+        // Esta data esta generando problemas a la hora de querer crear una nueva institucion
         form: this.$inertia.form({          
-          nombre_institucion: this.$props.instituciones.nombre_institucion,
           contacto_institucion: this.$props.instituciones.contacto_institucion,
           correo_institucion: this.$props.instituciones.correo_institucion,
+          nombre_institucion: this.$props.instituciones.nombre_institucion,
+          
+          
           telefono_institucion: this.$props.instituciones.telefono_institucion,
           ubicacion_institucion: this.$props.instituciones.ubicacion_institucion,
-          rubro_institucion: this.$props.instituciones.rubro_institucion,
+          rubro_institucion: this.$props.instituciones.rubro_institucion
         }),
         institucionesFiltradas:[],
       }
     },
 
+    mounted(){
 
+    },
 
     methods:{
       submit(){

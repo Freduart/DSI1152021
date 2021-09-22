@@ -22617,10 +22617,11 @@ __webpack_require__.r(__webpack_exports__);
   props: ['instituciones'],
   data: function data() {
     return {
+      // Esta data esta generando problemas a la hora de querer crear una nueva institucion
       form: this.$inertia.form({
-        nombre_institucion: this.$props.instituciones.nombre_institucion,
         contacto_institucion: this.$props.instituciones.contacto_institucion,
         correo_institucion: this.$props.instituciones.correo_institucion,
+        nombre_institucion: this.$props.instituciones.nombre_institucion,
         telefono_institucion: this.$props.instituciones.telefono_institucion,
         ubicacion_institucion: this.$props.instituciones.ubicacion_institucion,
         rubro_institucion: this.$props.instituciones.rubro_institucion
@@ -22628,6 +22629,7 @@ __webpack_require__.r(__webpack_exports__);
       institucionesFiltradas: []
     };
   },
+  mounted: function mounted() {},
   methods: {
     submit: function submit() {
       // Se evalua si la institucion tiene un id entonces se ejecutara la ruta de actualizar
@@ -22865,10 +22867,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticion/FormPeticion.vue?vue&type=script&lang=js":
-/*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticion/FormPeticion.vue?vue&type=script&lang=js ***!
-  \*********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticiones/FormPeticion.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticiones/FormPeticion.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -23384,25 +23386,11 @@ __webpack_require__.r(__webpack_exports__);
     logout: function logout() {
       this.$inertia.post(route('logout'));
     },
-    filtrarByFacultad: function filtrarByFacultad(id) {
-      var _this = this;
-
-      this.tipoServicioFiltrados.splice(0, this.tipoServicioFiltrados.length);
-      this.tipoServicioSocial.forEach(function (element) {
-        if (element.tipo_servicio_social_id == id) {
-          _this.tipoServicioFiltrados.push(element);
-        }
-      });
-
-      if (id == '0') {
-        this.tipoServicioSocial.forEach(function (element) {
-          _this.tipoServicioFiltrados.push(element);
-        });
-      }
-    },
+    // Mensaje de confirmacion cuando se agrega un nuevo tipo de servicio social
     success: function success() {
       Swal.fire('Guardado con exito!', 'El tipo de servicio social se agrego correctamente', 'success');
     },
+    // Agrega un nuevo tipo de servicio a partir del modal de servicio socia
     submit: function submit() {
       this.form.post(this.route('tipoServicio.store'));
       this.form.nombre_tipo_servicio = '';
@@ -23414,8 +23402,9 @@ __webpack_require__.r(__webpack_exports__);
       this.$inertia.patch(route("tipoServicio.update", form.id), this.formUp);
       window.location.reload(true);
     },
+    // Borra un nuevo tipo de servicio social a partir de la tabla
     deleteTipoServicio: function deleteTipoServicio(tipoSerivicioSocial) {
-      var _this2 = this;
+      var _this = this;
 
       Swal.fire({
         title: '¿Esta seguro que desea eliminar este tipo de servicio?',
@@ -23427,7 +23416,7 @@ __webpack_require__.r(__webpack_exports__);
         cancelButtonText: 'No, cancelar'
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this2.$inertia["delete"](route('tipoServicio.destroy', tipoSerivicioSocial.id));
+          _this.$inertia["delete"](route('tipoServicio.destroy', tipoSerivicioSocial.id));
 
           Swal.fire('¡Eliminado!', 'El tipo de servicio social se elimino correctamente', 'success');
           window.location.reload(true);
@@ -23457,10 +23446,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this2 = this;
 
     this.tipoServicioSocial.forEach(function (element) {
-      _this3.tipoServicioFiltrados.push(element);
+      _this2.tipoServicioFiltrados.push(element);
     }), this.successGuardado = false;
   }
 });
@@ -26665,7 +26654,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" content-wrapper "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
     type: "button",
     "class": "btn btn-success float-right mt-2",
-    href: _ctx.route('tipoServicio.index')
+    href: _ctx.route('peticiones.index')
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_8, _hoisted_9];
@@ -34307,7 +34296,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Content Wrapper. Contains page content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Content Header (Page header) "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [this.$props.instituciones.id != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h1", _hoisted_7, "Modificar encargado de facultad")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h1", _hoisted_8, "Agregar Institucion"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.col ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.row ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.container-fluid ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content-header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Main content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Main row "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Left col "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" TO DO List "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Formulario para la institucion "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Content Wrapper. Contains page content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Content Header (Page header) "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [this.$props.instituciones.id != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h1", _hoisted_7, "Modificar institucion")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h1", _hoisted_8, "Agregar institucion"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.col ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.row ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.container-fluid ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content-header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Main content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Main row "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Left col "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" TO DO List "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Formulario para la institucion "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     onSubmit: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.submit && $options.submit.apply($options, arguments);
     }, ["prevent"]))
@@ -35268,10 +35257,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticion/FormPeticion.vue?vue&type=template&id=79f1e763":
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticion/FormPeticion.vue?vue&type=template&id=79f1e763 ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticiones/FormPeticion.vue?vue&type=template&id=4404a635":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticiones/FormPeticion.vue?vue&type=template&id=4404a635 ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -35504,10 +35493,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticion/ListarPeticion.vue?vue&type=template&id=4718b16e":
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticion/ListarPeticion.vue?vue&type=template&id=4718b16e ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticiones/ListarPeticion.vue?vue&type=template&id=5111f880":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticiones/ListarPeticion.vue?vue&type=template&id=5111f880 ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -82692,35 +82681,9 @@ _ListarEstudiante_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["defa
 
 /***/ }),
 
-/***/ "./resources/js/Pages/Components/Peticion/FormPeticion.vue":
-/*!*****************************************************************!*\
-  !*** ./resources/js/Pages/Components/Peticion/FormPeticion.vue ***!
-  \*****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _FormPeticion_vue_vue_type_template_id_79f1e763__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormPeticion.vue?vue&type=template&id=79f1e763 */ "./resources/js/Pages/Components/Peticion/FormPeticion.vue?vue&type=template&id=79f1e763");
-/* harmony import */ var _FormPeticion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormPeticion.vue?vue&type=script&lang=js */ "./resources/js/Pages/Components/Peticion/FormPeticion.vue?vue&type=script&lang=js");
-
-
-
-_FormPeticion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"].render = _FormPeticion_vue_vue_type_template_id_79f1e763__WEBPACK_IMPORTED_MODULE_0__.render
-/* hot reload */
-if (false) {}
-
-_FormPeticion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"].__file = "resources/js/Pages/Components/Peticion/FormPeticion.vue"
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_FormPeticion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
-
-/***/ }),
-
-/***/ "./resources/js/Pages/Components/Peticion/ListarPeticion.vue":
+/***/ "./resources/js/Pages/Components/Peticiones/FormPeticion.vue":
 /*!*******************************************************************!*\
-  !*** ./resources/js/Pages/Components/Peticion/ListarPeticion.vue ***!
+  !*** ./resources/js/Pages/Components/Peticiones/FormPeticion.vue ***!
   \*******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -82729,14 +82692,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _ListarPeticion_vue_vue_type_template_id_4718b16e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ListarPeticion.vue?vue&type=template&id=4718b16e */ "./resources/js/Pages/Components/Peticion/ListarPeticion.vue?vue&type=template&id=4718b16e");
+/* harmony import */ var _FormPeticion_vue_vue_type_template_id_4404a635__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormPeticion.vue?vue&type=template&id=4404a635 */ "./resources/js/Pages/Components/Peticiones/FormPeticion.vue?vue&type=template&id=4404a635");
+/* harmony import */ var _FormPeticion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormPeticion.vue?vue&type=script&lang=js */ "./resources/js/Pages/Components/Peticiones/FormPeticion.vue?vue&type=script&lang=js");
 
-const script = {}
-script.render = _ListarPeticion_vue_vue_type_template_id_4718b16e__WEBPACK_IMPORTED_MODULE_0__.render
+
+
+_FormPeticion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"].render = _FormPeticion_vue_vue_type_template_id_4404a635__WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
-script.__file = "resources/js/Pages/Components/Peticion/ListarPeticion.vue"
+_FormPeticion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"].__file = "resources/js/Pages/Components/Peticiones/FormPeticion.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_FormPeticion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Components/Peticiones/ListarPeticion.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/Pages/Components/Peticiones/ListarPeticion.vue ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ListarPeticion_vue_vue_type_template_id_5111f880__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ListarPeticion.vue?vue&type=template&id=5111f880 */ "./resources/js/Pages/Components/Peticiones/ListarPeticion.vue?vue&type=template&id=5111f880");
+
+const script = {}
+script.render = _ListarPeticion_vue_vue_type_template_id_5111f880__WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+script.__file = "resources/js/Pages/Components/Peticiones/ListarPeticion.vue"
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (script);
 
@@ -84036,10 +84025,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/Pages/Components/Peticion/FormPeticion.vue?vue&type=script&lang=js":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/Pages/Components/Peticion/FormPeticion.vue?vue&type=script&lang=js ***!
-  \*****************************************************************************************/
+/***/ "./resources/js/Pages/Components/Peticiones/FormPeticion.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/Pages/Components/Peticiones/FormPeticion.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -84047,7 +84036,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FormPeticion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FormPeticion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./FormPeticion.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticion/FormPeticion.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FormPeticion_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./FormPeticion.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticiones/FormPeticion.vue?vue&type=script&lang=js");
  
 
 /***/ }),
@@ -85252,34 +85241,34 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/Pages/Components/Peticion/FormPeticion.vue?vue&type=template&id=79f1e763":
-/*!***********************************************************************************************!*\
-  !*** ./resources/js/Pages/Components/Peticion/FormPeticion.vue?vue&type=template&id=79f1e763 ***!
-  \***********************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FormPeticion_vue_vue_type_template_id_79f1e763__WEBPACK_IMPORTED_MODULE_0__.render)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FormPeticion_vue_vue_type_template_id_79f1e763__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./FormPeticion.vue?vue&type=template&id=79f1e763 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticion/FormPeticion.vue?vue&type=template&id=79f1e763");
-
-
-/***/ }),
-
-/***/ "./resources/js/Pages/Components/Peticion/ListarPeticion.vue?vue&type=template&id=4718b16e":
+/***/ "./resources/js/Pages/Components/Peticiones/FormPeticion.vue?vue&type=template&id=4404a635":
 /*!*************************************************************************************************!*\
-  !*** ./resources/js/Pages/Components/Peticion/ListarPeticion.vue?vue&type=template&id=4718b16e ***!
+  !*** ./resources/js/Pages/Components/Peticiones/FormPeticion.vue?vue&type=template&id=4404a635 ***!
   \*************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ListarPeticion_vue_vue_type_template_id_4718b16e__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FormPeticion_vue_vue_type_template_id_4404a635__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ListarPeticion_vue_vue_type_template_id_4718b16e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ListarPeticion.vue?vue&type=template&id=4718b16e */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticion/ListarPeticion.vue?vue&type=template&id=4718b16e");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FormPeticion_vue_vue_type_template_id_4404a635__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./FormPeticion.vue?vue&type=template&id=4404a635 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticiones/FormPeticion.vue?vue&type=template&id=4404a635");
+
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Components/Peticiones/ListarPeticion.vue?vue&type=template&id=5111f880":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/Pages/Components/Peticiones/ListarPeticion.vue?vue&type=template&id=5111f880 ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ListarPeticion_vue_vue_type_template_id_5111f880__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ListarPeticion_vue_vue_type_template_id_5111f880__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ListarPeticion.vue?vue&type=template&id=5111f880 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Components/Peticiones/ListarPeticion.vue?vue&type=template&id=5111f880");
 
 
 /***/ }),
@@ -85893,10 +85882,10 @@ var map = {
 	"./Components/Instituciones/instituciones.vue": "./resources/js/Pages/Components/Instituciones/instituciones.vue",
 	"./Components/ListarEstudiante": "./resources/js/Pages/Components/ListarEstudiante.vue",
 	"./Components/ListarEstudiante.vue": "./resources/js/Pages/Components/ListarEstudiante.vue",
-	"./Components/Peticion/FormPeticion": "./resources/js/Pages/Components/Peticion/FormPeticion.vue",
-	"./Components/Peticion/FormPeticion.vue": "./resources/js/Pages/Components/Peticion/FormPeticion.vue",
-	"./Components/Peticion/ListarPeticion": "./resources/js/Pages/Components/Peticion/ListarPeticion.vue",
-	"./Components/Peticion/ListarPeticion.vue": "./resources/js/Pages/Components/Peticion/ListarPeticion.vue",
+	"./Components/Peticiones/FormPeticion": "./resources/js/Pages/Components/Peticiones/FormPeticion.vue",
+	"./Components/Peticiones/FormPeticion.vue": "./resources/js/Pages/Components/Peticiones/FormPeticion.vue",
+	"./Components/Peticiones/ListarPeticion": "./resources/js/Pages/Components/Peticiones/ListarPeticion.vue",
+	"./Components/Peticiones/ListarPeticion.vue": "./resources/js/Pages/Components/Peticiones/ListarPeticion.vue",
 	"./Components/Roles": "./resources/js/Pages/Components/Roles.vue",
 	"./Components/Roles.vue": "./resources/js/Pages/Components/Roles.vue",
 	"./Components/ServicioSocial/ListarServicioSocial": "./resources/js/Pages/Components/ServicioSocial/ListarServicioSocial.vue",

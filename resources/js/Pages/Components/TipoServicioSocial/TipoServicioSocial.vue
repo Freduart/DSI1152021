@@ -219,22 +219,9 @@
     methods:{
       logout() {
         this.$inertia.post(route('logout'));
-      },
+      },            
 
-      filtrarByFacultad(id){
-          this.tipoServicioFiltrados.splice(0, this.tipoServicioFiltrados.length);        
-          this.tipoServicioSocial.forEach(element => {
-            if(element.tipo_servicio_social_id == id){              
-                this.tipoServicioFiltrados.push(element);
-            }
-          });        
-          if(id == '0'){
-            this.tipoServicioSocial.forEach(element => {
-                this.tipoServicioFiltrados.push(element);              
-            })     
-          }
-      }, 
-
+      // Mensaje de confirmacion cuando se agrega un nuevo tipo de servicio social
       success(){
         Swal.fire(
             'Guardado con exito!',
@@ -243,6 +230,7 @@
           );
       },
 
+      // Agrega un nuevo tipo de servicio a partir del modal de servicio socia
       submit(){
         this.form.post(this.route('tipoServicio.store'));
         this.form.nombre_tipo_servicio='';
@@ -260,6 +248,7 @@
         window.location.reload(true);
       },
 
+      // Borra un nuevo tipo de servicio social a partir de la tabla
       deleteTipoServicio(tipoSerivicioSocial){
         Swal.fire({
           title: '¿Esta seguro que desea eliminar este tipo de servicio?',      

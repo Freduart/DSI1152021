@@ -34,14 +34,14 @@ class InstitucionController extends Controller
         // Inicializamos de datos la institucion
         $institucion = new Institucion();
         $institucion -> id = null;
-        $institucion -> user_id = '';
-        $institucion -> nombre_institucion = '';
-        $institucion -> contacto_institucion = '';
-        $institucion -> correo_institucion = '';
-        $institucion -> telefono_institucion = '';
-        $institucion -> ubicacion_institucion = '';
-        $institucion -> rubro_institucion = ''; 
-        return Inertia::render('Components/Instituciones/FormInstitucion', ['instituciones' => $institucion]);
+        $institucion -> user_id = null;
+        $institucion -> nombre_institucion = 'h';
+        $institucion -> contacto_institucion = 'h';
+        $institucion -> correo_institucion = 'h';
+        $institucion -> telefono_institucion = 'h';
+        $institucion -> ubicacion_institucion = 'h';
+        $institucion -> rubro_institucion = 'h';         
+        return Inertia::render('Components/Instituciones/FormInstitucion', ['instituciones', $institucion]);
     }
 
     /**
@@ -51,7 +51,8 @@ class InstitucionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
+    {   
+			/* 
         // Se le asigna la contraseña
         $contra = "institucion";
         // Se obtienen los datos del request
@@ -85,7 +86,7 @@ class InstitucionController extends Controller
         }
 
         Institucion::create($request->all());
-        return Redirect::route('instituciones.index'); 
+        return Redirect::route('instituciones.index'); */
     }
 
     /**
@@ -136,8 +137,8 @@ class InstitucionController extends Controller
     public function destroy($id)
     {
         //Elimina la institucion a partir del id de la institucion
-				$instituciones = Institucion::find($id);
-				$instituciones -> delete();
-				return Redirect::route('instituciones.index');
+        $institucion = Institucion::find($id);
+        $institucion -> delete();
+        return Redirect::route('instituciones.index');
     }
 }

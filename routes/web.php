@@ -115,6 +115,4 @@ Route::resource('tipoServicio', TipoServicioController::class)->only([
 ]);
 
 //Ruta de las peticiones
-Route::resource('peticion', PeticionController::class)->only([
-  'index','store','update','destroy'
-]);
+Route::resource('peticiones', PeticionController::class);
