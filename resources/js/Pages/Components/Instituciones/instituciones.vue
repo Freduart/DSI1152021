@@ -77,7 +77,7 @@
 
                                   <!-- Boton para eliminar -->
                                   <jet-button class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Eliminar institucion" method="delete" 
-                                  v-on:click="deleteInstitucion(Instituciones)"></jet-button>
+                                  v-on:click="deleteInstitucion(instituciones)"></jet-button>
                                 </div>
                             </td>
                           </tr>
