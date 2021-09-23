@@ -26,8 +26,8 @@ class PeticionController extends Controller
         ->join('instituciones', 'peticiones.institucion_id', '=', 'instituciones.id')
         ->select('peticiones.id AS idPeticion', 'cantidad_estudiantes', 'nombre_peticion', 'descripcion_peticion', 'ubicacion_actividades', 'fecha_peticion', 'otros_tipo_servicio', 'estado_peticion', 'correo_peticion', 'carrera_id', 'nombre_carrera', 'tipo_servicio_social_id', 'nombre_tipo_servicio', 'institucion_id', 'nombre_institucion')
         ->get();
-        
-        return Inertia::render('Components/Peticiones/ListarPeticion',['peticiones' => $peticion]);
+        $carreras= Carrera::all();
+        return Inertia::render('Components/Peticiones/ListarPeticion',['peticiones' => $peticion, 'carreras' => $carreras]);
 
     }
 
