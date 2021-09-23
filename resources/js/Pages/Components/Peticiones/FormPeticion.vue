@@ -10,9 +10,9 @@
             <div class="row justify-content-center mb-2">
               <div class="col-sm-5">
                 <!-- titulo que cambiará conforme a la accion seleccionada -->
-                <!-- <h1 v-if="this.$props.encargadoE.id != null" class="m-2">Modificar encargado de escuela</h1> -->
+                <!-- <h1 v-if="this.$props.peticiones.id != null" class="m-2">Modificar encargado de escuela</h1> -->
                 <!-- <h1 v-else class="m-2">Agregar encargado de escuela</h1> -->
-                <h1>Agregar Peticion de servicio social</h1>
+                <h1>Peticion de servicio social</h1>
               </div><!-- /.col -->          
             </div><!-- /.row -->
           </div><!-- /.container-fluid -->
@@ -36,53 +36,67 @@
                             <div class="col">
                               <!-- nombres del encargado -->
                               <div class="form-group">
-                                <jet-label for="nombre" value="Nombres" />
-                                <!-- <jet-input id="nombre" type="text" v-model="form.nombre_encargado_escuela" required autofocus autocomplete="nombre" /> -->
-                                <jet-input id="nombre" type="text" required autofocus autocomplete="nombre" />
+                                <jet-label for="titulo" value="Titulo" />
+                                <jet-input id="nombre" type="text" v-model="form.nombre_peticion"  required  />                                
                               </div>
                             </div>
                             <div class="col">
-                              <!-- apellidos del encargado -->
+                              <!-- cantidad estudiantes -->
                               <div class="form-group">
-                                <jet-label for="apellido" value="Apellidos" />
-                                <!-- <jet-input id="apellido" type="text" v-model="form.apellido_encargado_escuela" required autofocus autocomplete="apellido" /> -->
+                                <jet-label for="cantidad" value="Cantidad estudiantes " />
+                                <jet-input id="cantidadEstudiantes" type="number" v-model="form.cantidad_estudiantes" required autofocus autocomplete="cantidad de estudiantes" />
                               </div>
                             </div>
                           </div> 
                               
+                          <!-- Descripcion de peticiones -->
+                          <div class="row col-md-12">                            
+                            <div class="form-group col-md-12">
+                              <jet-label for="descripcion" value="Descripcion de la peticion" />
+                              <jet-input id="descripcion" type="text" v-model="form.descripcion_peticion" required autofocus autocomplete="cantidad de estudiantes" />
+                            </div>
+                          </div>                                                  
+
+                          <!-- Ubicacion de actividades -->
                           <div class="row">
                             <div class="col">
-                              <!-- correo del encargado -->
+                              <!-- Ubicacion -->
                               <div class="form-group">
-                                <jet-label for="correo" value="Correo" />
-                                <!-- <jet-input id="correo" type="email" v-model="form.correo_encargado_escuela" required /> -->
+                                <jet-label for="ubicacion" value="Ubicacion" />
+                                <jet-input id="ubicacion_peticiones" type="text" v-model="form.ubicacion_actividades" required autofocus autocomplete="dui" />
                               </div>
                             </div>
+
+                            <!-- Fecha de la peticion -->
                             <div class="col">
-                              <!-- telefono del encargado -->
+                              <!-- codigo de empleado del encargado -->
                               <div class="form-group">
-                                <jet-label for="telefono" value="Telefono" />
-                                <!-- <jet-input id="telefono" type="text" v-model="form.telefono_encargado_escuela" required autofocus autocomplete="telefono" /> -->
+                                <jet-label for="fecha" value="Fecha de inicio" />
+                                <jet-input id="fecha_peticion" type="date" v-model="form.fecha_peticion" placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" required autofocus autocomplete="off"/>
                               </div>
                             </div>
                           </div> 
 
-                          <div class="row">
-                            <div class="col">
-                              <!-- dui del encargado -->
+                          <div class="row">                            
+                            <!-- Otros tipos de servicio -->
+                            <div class="col">                                
                               <div class="form-group">
-                                <jet-label for="dui" value="Dui" />
-                                <!-- <jet-input id="dui" type="text" v-model="form.dui_encargado_escuela" required autofocus autocomplete="dui" /> -->
+                                <jet-label for="otros" value="Otra especificacion" />
+                                <jet-input id="otros_tipo_servicio" type="text" v-model="form.otros_tipo_servicio"/>
                               </div>
                             </div>
+
                             <div class="col">
-                              <!-- codigo de empleado del encargado -->
-                              <div class="form-group">
-                                <jet-label for="Codigo" value="Codigo empleado" />
-                                <!-- <jet-input id="Codigo" type="text" v-model="form.codigo_encargado_escuela" required autofocus autocomplete="Codigo" /> -->
+                              <!-- Correo peticion -->
+                              <div class="col">                                
+                                <div class="form-group">
+                                  <jet-label for="correo" value="Correo" />
+                                  <jet-input id="correo_peticion" type="email" v-model="form.correo_peticion" required autofocus autocomplete="email" />
+                                </div>
                               </div>
                             </div>
-                          </div> 
+                          </div>
+
                           <div class="row">
                             <div class="col">
                               <!-- facultad del encargado -->
@@ -90,60 +104,87 @@
                                 <jet-label for="facultad" value="Facultad" />
                                 <br/>
                                 <!-- select para cargar las facultades -->
-                                <!-- <select class="custom-select" id="facultad_id" v-model="form.facultad_id" v-on:change="buscarCarreras(form.facultad_id)" required>
+                                <select class="custom-select" id="facultad_id" v-model="form.facultad_id" v-on:change="buscarCarreras(form.facultad_id)" required>
                                   <option disabled value="">Seleccione una facultad</option>
                                   <option v-for="(facultad, index) in facultades" :key="index" :value="facultad.id">{{ facultad.nombre_facultad }}</option>
-                                </select> -->
+                                </select>
                               </div>
                             </div>
                             <div class="col">
                               <!-- escuela del encargado -->
-                              <!-- <div class="form-group" v-if="form.facultad_id != ''">
+                              <div class="form-group" v-if="form.facultad_id != ''">
                                 <jet-label for="carrera" value="Carrera" />
-                                <br/> -->
+                                <br/>
                                 <!-- select para cargar las carreras de la facultad seleccionada -->
-                                <!-- <select class="custom-select" id="carrera_id" v-model="form.carrera_id" required>
+                                <select class="custom-select" id="carrera_id" v-model="form.carrera_id" required>
                                   <option disabled value="">Seleccione una carrera</option>
                                   <option v-for="(carrera, index) in carrerasFiltradas" :key="index" :value="carrera.idC">{{ carrera.nombre_carrera }}</option>
-                                </select> -->
-                              <!-- </div> -->
+                                </select>
+                              </div>
                             </div>
-                          </div> 
+                          </div>
 
-                          <hr>
-                        </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <jet-label for="tipoServicio" value="Tipo de servicio social" />
+                                <br/>
+                                <!-- select para cargar las facultades -->
+                                <select class="custom-select col-md-10" id="tipo_servicio_social_id" v-model="form.tipo_servicio_social_id" required>
+                                  <option disabled value="">Seleccione un tipo de servicio social</option>
+                                  <option v-for="(tipos, index) in tipoServicios" :key="index" :value="tipos.id">{{ tipos.nombre_tipo_servicio }}</option>
+                                </select>
+                                <inertia-link :href="route('tipoServicio.index')" type="button" class="btn btn-success  col-md-2">
+                                  <i class="fas fa-plus"></i> 
+                                </inertia-link>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <jet-label for="institucion" value="Institucion" />
+                                <br/>
+                                <!-- select para cargar las facultades -->
+                                <select class="custom-select col-md-10" id="institucion" v-model="form.institucion_id" required>
+                                  <option disabled value="">Seleccione una institucion</option>
+                                  <option v-for="(institucion, index) in instituciones" :key="index" :value="institucion.id">{{ institucion.nombre_institucion }}</option>
+                                </select>
+                                <inertia-link :href="route('instituciones.create')" type="button" class="btn btn-success col-md-2">
+                                  <i class="fas fa-plus"></i> 
+                                </inertia-link>
+                              </div>
+                            </div>
+                          </div>                          
+                          <hr> 
+                        </div>                       
 
                         <div class="card-footer clearfix"> 
                           <div class="my-2">
                             <div class="d-flex justify-content-center align-items-baseline">
                               <!-- botones de accion -->
-                              <jet-button type="submit" class="btn btn-primary float-center">
+                              <jet-button type="submit" class="btn btn-primary float-center" :class="{ 'text-white-50': form.processing }" :disabled="form.processing">
                               <i class="fas"></i>Guardar</jet-button>
                               <div class="mx-2"></div>
-                              <inertia-link :href="route('encargadosescuela.index')" type="button" class="btn btn-danger float-center" >
+                              <inertia-link :href="route('peticiones.index')" type="button" class="btn btn-danger float-center" >
                               <i class="fas"></i> Cancelar</inertia-link>
                             </div>
                           </div>
                         </div>
                       </form>
-
-
-                    </div>
+                      </div>
                     <!-- /.card -->
-                </section>
-                <!-- /.Left col -->
-                <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                <section class="col-lg-5 connectedSortable">            
-                    <!-- /.card -->
-                </section>
-                <!-- right col -->
-                </div>
-                <!-- /.row (main row) -->
-            </div><!-- /.container-fluid -->
-        </section>      
-      
-      </div>
-  </div>
+                    </section>
+                    <!-- /.Left col -->
+                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                    <section class="col-lg-5 connectedSortable">            
+                        <!-- /.card -->
+                    </section>
+                    <!-- right col -->
+                  </div>
+                  <!-- /.row (main row) -->
+                </div><!-- /.container-fluid -->
+              </section>      
+            </div>
+          </div>
 </template>
 <script>
 import JetAuthenticationCard from '@/Jetstream/AuthenticationCard'
@@ -168,9 +209,76 @@ export default {
     Base
   },
 
-  props:['peticion'],
-  setup() {
-    
+  props:['peticiones', 'facultades', 'idFacultad', 'carreras', 'tipoServicios', 'instituciones'],
+
+  data(){
+    return{
+      form: this.$inertia.form({
+        nombre_peticion: this.$props.peticiones.nombre_peticion,
+        descripcion_peticion: this.$props.peticiones.descripcion_peticion,
+        cantidad_estudiantes: this.$props.peticiones.cantidad_estudiantes,
+        ubicacion_actividades: this.$props.peticiones.ubicacion_actividades,
+        fecha_peticion: this.$props.peticiones.fecha_peticion,
+        otros_tipo_servicio: this.$props.peticiones.otros_tipo_servicio,
+        estado_peticion: this.$props.peticiones.estado_peticion,
+        correo_peticion: this.$props.peticiones.correo_peticion,
+        carrera_id: this.$props.peticiones.carrera_id,
+        facultad_id: this.$props.idFacultad,
+        tipo_servicio_social_id: this.$props.peticiones.tipo_servicio_social_id,
+        institucion_id: this.$props.peticiones.institucion_id,
+      }),
+
+      carrerasFiltradas:[],
+      tiposFiltrados:[],
+      institucionesFiltradas:[],
+
+    }
   },
+
+  methods: {
+
+    submit(){
+      if(this.$props.peticiones.id != null){
+        this.$inertia.put(route('peticiones.update', this.$props.peticiones.id), this.form);
+      }
+      else{
+        this.form.post(route('peticiones.store'));
+      }
+    },
+
+
+    // funcion para cargar las carreras de la facultad seleccionada
+    buscarCarreras(id){
+      this.carrerasFiltradas.length = 0; // vaciar arreglo
+      this.carreras.forEach(carrera => {
+        if(carrera.facultad_id == id){ 
+          this.carrerasFiltradas.push(carrera); // llenar las carreras de la facultad
+        }
+      });
+
+      // compara la facultad seleccionada con la facultad del encargado 
+      if (id == this.$props.idFacultad){
+        this.escuela.forEach(element => {
+          this.carrerasFiltradas.push(element); //agrega la escuela del encargado
+        });
+      }
+    },
+  },
+  
+  mounted(){
+    // funcion para cargar las carreras de las facultades al cargar la pagina
+    if(this.$props.peticiones.id != null){ // validar si es insercion o actualizacion por medio del id
+      var idFac = this.form.facultad_id;  // obteniendo la facultad del encargado
+      this.carreras.forEach(carrera => { 
+        if(carrera.facultad_id == idFac){
+          this.carrerasFiltradas.push(carrera); // llenar las carreras de la facultad
+        }
+      });
+
+      this.escuela.forEach(element => {
+        this.carrerasFiltradas.push(element); //agregar la facultad del encargado al arreglo
+      });      
+    } 
+  }
 }
 </script>

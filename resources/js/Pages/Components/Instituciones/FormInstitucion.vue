@@ -37,14 +37,14 @@
                           <!-- Nombre de la institucion -->
                           <div class="form-group">
                             <jet-label for="nombre" value="Nombre" />
-                            <jet-input id="nombre" type="text" v-model="form.nombre_institucion" required autofocus autocomplete="nombre" />
+                            <jet-input id="nombre_institucion" type="text" v-model="form.nombre_institucion" required autofocus autocomplete="nombre" />
                           </div>
                         </div>
                         <div class="col">
                           <!-- Contacto de la institucion -->
                           <div class="form-group">
                             <jet-label for="Contacto" value="Contacto" />
-                            <jet-input id="contacto" type="text" v-model="form.contacto_institucion" required autofocus autocomplete="contacto" />
+                            <jet-input id="contacto_institucion" type="text" v-model="form.contacto_institucion" required autofocus autocomplete="contacto" />
                           </div>
                         </div>
                       </div> 
@@ -54,14 +54,14 @@
                           <div class="form-group">
                             <!-- Correo de la institucion -->
                             <jet-label for="correo" value="Correo" />
-                            <jet-input id="correo" type="email" v-model="form.correo_institucion" required />
+                            <jet-input id="correo_institucion" type="email" v-model="form.correo_institucion" required />
                           </div>
                         </div>
                         <div class="col">
                           <!-- Telefono de la institucion -->
                           <div class="form-group">
                             <jet-label for="telefono" value="Telefono" />
-                            <jet-input id="telefono" type="text" v-model="form.telefono_institucion" required autofocus autocomplete="telefono" />
+                            <jet-input id="telefono_institucion" type="text" v-model="form.telefono_institucion" required autofocus autocomplete="telefono" />
                           </div>
                         </div>
                       </div> 
@@ -71,14 +71,14 @@
                           <!-- Ubicacion de la institucion -->
                           <div class="form-group">
                             <jet-label for="ubicacion" value="Ubicacion" />
-                            <jet-input id="ubicacion" type="text" v-model="form.ubicacion_institucion" required autofocus autocomplete="dui" />
+                            <jet-input id="ubicacion_institucion" type="text" v-model="form.ubicacion_institucion" required autofocus autocomplete="dui" />
                           </div>
                         </div>
                         <div class="col">
                           <!-- Rubro de la empresa -->
                           <div class="form-group">
                             <jet-label for="Rubro" value="Rubro de la empresa" />
-                            <jet-input id="rubro" type="text" v-model="form.rubro_institucion" required autofocus autocomplete="Rubro" />
+                            <jet-input id="rubro_institucion" type="text" v-model="form.rubro_institucion" required autofocus autocomplete="Rubro" />
                           </div>
                         </div>
                       </div>                       
@@ -156,14 +156,11 @@
 
     data(){
       return{
-
         // Esta data esta generando problemas a la hora de querer crear una nueva institucion
         form: this.$inertia.form({          
           contacto_institucion: this.$props.instituciones.contacto_institucion,
           correo_institucion: this.$props.instituciones.correo_institucion,
           nombre_institucion: this.$props.instituciones.nombre_institucion,
-          
-          
           telefono_institucion: this.$props.instituciones.telefono_institucion,
           ubicacion_institucion: this.$props.instituciones.ubicacion_institucion,
           rubro_institucion: this.$props.instituciones.rubro_institucion

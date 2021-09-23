@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carrera;
+use App\Models\Facultad;
 use App\Models\Institucion;
 use App\Models\Peticion;
 use App\Models\TipoServicioSocial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class PeticionController extends Controller
@@ -38,7 +40,33 @@ class PeticionController extends Controller
      */
     public function create()
     {
-        //
+        // Crea el formulario para crear una peticion de servicio social        
+        $peticion = new Peticion();
+        $peticion->id = null;
+        $peticion->nombre_peticion = '';
+        $peticion->descripcion_peticion = '';
+        $peticion->cantidad_estudiantes = '';
+        $peticion->ubicacion_actividades = '';
+        $peticion->fecha_peticion = '';
+        $peticion->otros_tipo_servicio = '';
+        $peticion->estado_peticion = 'En espera';
+        $peticion->correo_peticion = '';
+        $peticion->carrera_id = '';
+        $peticion->tipo_servicio_social_id = '';
+        $peticion->institucion_id = '';
+        
+        //Info de los select
+        $tipoServicioSociales = TipoServicioSocial::all();
+        $instituciones = Institucion::all();
+        $facultades = Facultad::all();
+
+        //Dependencia de las carreras a partir de la facultad selccionada
+        $carreras = DB::table('carreras')->distinct('nombre_carrera')        
+        ->select('carreras.id AS idC', 'nombre_carrera', 'facultad_id')
+        ->distinct('nombre_carrera')
+        ->get();
+
+        return Inertia::render('Components/Peticiones/FormPeticion',['peticiones' => $peticion, 'carreras' => $carreras, 'tipoServicios' => $tipoServicioSociales, 'instituciones' => $instituciones, 'facultades' => $facultades]);
     }
 
     /**
@@ -49,7 +77,32 @@ class PeticionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Obtenemos la data del request
+        $data = $request->input();
+
+        // Agregamos la nueva peticion
+        // $peticion = new Peticion();
+        // $peticion->cantidad_estudiantes = $data['cantidad_estudiantes'];
+        // $peticion->nombre_peticion = $data['nombre_peticion'];
+        // $peticion->descripcion_peticion = $data['descripcion_peticion'];
+        // $peticion->ubicacion_actividades = $data['ubicacion_actividades'];
+        // $peticion->fecha_peticion = $data['fecha_peticion'];
+        // $peticion->otros_tipo_servicio = $data['otros_tipo_servicio'];
+        // $peticion->estado_peticion = $data['estado_peticion'];
+        // $peticion->correo_peticion = $data['correo_peticion'];
+        // $peticion->carrera_id = $data['carrera_id'];
+        // $peticion->tipo_servicio_social_id = $data['tipo_servicio_social_id'];
+        // $peticion->institucion_id = $data['institucion_id'];
+
+        $tipoServicio = TipoServicioSocial::find($request->tipo_servivio_social_id);
+        $carrera = Carrera::find($request->carrera_id);
+        $institucion = Institucion::find($request->institucion_id);
+
+        Peticion::create($request->all());
+
+        return Redirect::route("dashboard");
+    
+
     }
 
     /**

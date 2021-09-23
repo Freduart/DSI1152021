@@ -36,10 +36,10 @@
                     Listado de peticiones de servicio social
                   </h3>
                   <!--Boton para añadir instituciones-->
-                  <!-- <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('peticiones.create')">
+                  <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('peticiones.create')">
                     <i class="fas fa-plus"></i> 
                      Añadir Peticion
-                  </inertia-link> -->
+                  </inertia-link>
                 </div>
                 <!-- End of Card Header -->
                 
@@ -66,12 +66,12 @@
                             <td>{{ peticiones.nombre_institucion }}</td>
                             <td>{{ peticiones.nombre_peticion }}</td>
                             <td>{{ peticiones.ubicacion_actividades }}</td>
-                            <td>{{ peticiones.nombre_tipo_servicio }}</td>
-                                                     
+                            <td>{{ peticiones.nombre_tipo_servicio }}</td>                                                     
                             <td>
                             <!-- Botones para edit or delete-->
                                 <div class="tools">
-                                  <!-- <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarInfo(instituciones)" title="Ver informacion de la institucion"></jet-button> -->
+                                  <!-- Ver informacion -->
+                                  <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarInfo(instituciones)" title="Ver informacion de la institucion"></jet-button>
                                   
                                   <!-- Boton para editar -->
                                   <!-- <inertia-link class="fas fa-edit" title="Editar institucion" :href="route('instituciones.edit', instituciones.id)"></inertia-link>                                   -->
