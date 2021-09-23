@@ -78,31 +78,9 @@ class PeticionController extends Controller
     public function store(Request $request)
     {
         // Obtenemos la data del request
-        $data = $request->input();
-
-        // Agregamos la nueva peticion
-        // $peticion = new Peticion();
-        // $peticion->cantidad_estudiantes = $data['cantidad_estudiantes'];
-        // $peticion->nombre_peticion = $data['nombre_peticion'];
-        // $peticion->descripcion_peticion = $data['descripcion_peticion'];
-        // $peticion->ubicacion_actividades = $data['ubicacion_actividades'];
-        // $peticion->fecha_peticion = $data['fecha_peticion'];
-        // $peticion->otros_tipo_servicio = $data['otros_tipo_servicio'];
-        // $peticion->estado_peticion = $data['estado_peticion'];
-        // $peticion->correo_peticion = $data['correo_peticion'];
-        // $peticion->carrera_id = $data['carrera_id'];
-        // $peticion->tipo_servicio_social_id = $data['tipo_servicio_social_id'];
-        // $peticion->institucion_id = $data['institucion_id'];
-
-        $tipoServicio = TipoServicioSocial::find($request->tipo_servivio_social_id);
-        $carrera = Carrera::find($request->carrera_id);
-        $institucion = Institucion::find($request->institucion_id);
-
+        // Agregamos la nueva peticion                
         Peticion::create($request->all());
-
         return Redirect::route("dashboard");
-    
-
     }
 
     /**
@@ -125,6 +103,8 @@ class PeticionController extends Controller
     public function edit($id)
     {
         //
+
+        
     }
 
     /**
@@ -145,8 +125,20 @@ class PeticionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($peticion)
     {
-        //
+        //Aca se debe cambiar el estado de las peticiones de servicio social 
+        $peticionF = Peticion::find($peticion);
+        if($peticionF->estado_peticion=="En Espera"){
+            $peticionF->estado_peticion = "Aceptado";
+            $peticionF->save();
+        }else{
+            if($peticionF->estado_peticion=="Aceptado"){
+                $peticionF->estado_peticion="Rechazado";
+                $peticionF->save();
+            }
+        }
+
+        return Redirect::route('peticiones.index');
     }
 }

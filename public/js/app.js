@@ -23021,29 +23021,30 @@ __webpack_require__.r(__webpack_exports__);
     },
     // Carga la informacionn de la institucion seleccionada de la lista
     mostrarInfo: function mostrarInfo(peticiones) {
-      this.form.nombre_institucion = peticiones.nombre_institucion, this.form.contacto_institucion = peticiones.contacto_institucion, this.form.correo_institucion = instituciones.correo_institucion, this.form.telefono_institucion = peticiones.telefono_institucion, this.form.ubicacion_institucion = peticiones.ubicacion_institucion, this.form.rubro_institucion = peticiones.rubro_institucion;
-    } // Carga la ruta destroy del controllador de instituciones y muestra un mensaje de confirmacion
-    // deleteInstitucion(instituciones){
+      this.form.cantidad_estudiantes = peticiones.cantidad_estudiantes, this.form.nombre_peticion = peticiones.nombre_peticion, this.form.descripcion_peticion = peticiones.descripcion_peticion, this.form.ubicacion_actividades = peticiones.ubicacion_actividades, this.form.fecha_peticiones = peticiones.fecha_peticiones, this.form.otros_tipo_servicio = peticiones.otros_tipo_servicio, this.form.estado_peticion = peticiones.estado_peticion, this.form.correo_peticion = peticiones.correo_peticion, this.form.nombre_carrera = peticiones.nombre_carrera, this.form.nombre_tipo_servicio = peticiones.nombre_tipo_servicio, this.form.nombre_institucion = peticiones.nombre_institucion; // this.form.contacto_institucion= peticiones.contacto_institucion,
+      // this.form.correo_institucion= peticiones.correo_institucion,
+      // this.form.telefono_institucion= peticiones.telefono_institucion,        
+      // this.form.rubro_institucion= peticiones.rubro_institucion,
+      // this.form.correo_peticion =peticiones.correo_peticion     
+    } // Cambiar el estado de la peticion
+    // cambiarEstado(peticion){
     //   Swal.fire({
-    //     title: '¿Esta seguro que desea eliminar esta institucion?',      
+    //     title: '¿Que desea hacer con la peticion?',
+    //     text: "La institucion"+ this.peticiones.nombre_institucion + " con la peticion " + this.peticiones.nombre_peticion + " sera eliminada",
     //     icon: 'warning',
     //     showCancelButton: true,
     //     confirmButtonColor: '#3085d6',
     //     cancelButtonColor: '#d33',
-    //     confirmButtonText: 'Si, eliminar',
-    //     cancelButtonText: 'No, cancelar'      
+    //     confirmButtonText: 'Si, desactivar',
+    //     cancelButtonText: 'No, cancelar'
     //   }).then((result) =>{
     //     if(result.isConfirmed){
-    //       this.$inertia.delete(route('instituciones.destroy', instituciones.id));            
+    //       this.$inertia.delete(route('peticiones.destroy', peticion.id));
     //       Swal.fire(
-    //         '¡Eliminado!',
-    //         'El tipo de servicio social se elimino correctamente',
-    //         'success'
-    //       );
-    //       window.location.reload(true);
+    //       )
     //     }
     //   })
-    // },      
+    // }
 
   },
   data: function data() {
@@ -36036,8 +36037,153 @@ var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 var _hoisted_18 = {
   "class": "tools"
 };
+var _hoisted_19 = {
+  "class": "modal fade",
+  id: "verInfo",
+  tabindex: "-1",
+  "aria-labelledby": "exampleModalLabel",
+  "aria-hidden": "true"
+};
+var _hoisted_20 = {
+  "class": "modal-dialog modal-lg"
+};
+var _hoisted_21 = {
+  "class": "modal-content"
+};
+var _hoisted_22 = {
+  "class": "modal-header"
+};
+var _hoisted_23 = {
+  "class": "modal-title",
+  id: "exampleModalLabel"
+};
+var _hoisted_24 = {
+  "class": "modal-title text-primary"
+};
+var _hoisted_25 = {
+  "class": "modal-body"
+};
+var _hoisted_26 = {
+  "class": "row"
+};
+var _hoisted_27 = {
+  "class": "col-md-12"
+};
+var _hoisted_28 = {
+  "class": ""
+};
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"modal fade\" id=\"verInfo\" tabindex=\"-1\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"><div class=\"modal-dialog modal-lg\"><div class=\"modal-content\"><div class=\"modal-header\"><!-- &lt;h5 class=&quot;modal-title&quot; id=&quot;exampleModalLabel&quot;&gt;{{ verDetalleForm.nombre_estudiante }} {{ verDetalleForm.apellido_estudiante }}&lt;/h5&gt; --><!-- &lt;h3 class=&quot;modal-title text-primary&quot;&gt;{{ form.nombre_institucion }}&lt;/h3&gt; --></div><div class=\"modal-body\"><div><div class=\"row\"><div class=\"col\"><!-- &lt;h5 class=&quot;&quot;&gt;&lt;strong&gt;Contacto: &lt;/strong&gt;{{ form.contacto_institucion }}&lt;/h5&gt; --></div><div class=\"col-4\"><!-- &lt;h5 class=&quot;&quot;&gt;&lt;strong&gt;Teléfono: &lt;/strong&gt;{{ form.telefono_institucion }}&lt;/h5&gt; --></div></div><div class=\"row\"><div class=\"col\"><!-- &lt;h5 class=&quot;&quot;&gt;&lt;strong&gt;Correo: &lt;/strong&gt;{{ form.correo_institucion }}&lt;/h5&gt; --></div><div class=\"col\"><h5 class=\"\"></h5></div></div><div class=\"\"><div class=\"\"><!-- &lt;h5 class=&quot;&quot;&gt;&lt;strong&gt;Ubicacion: &lt;/strong&gt;{{ form.ubicacion_institucion }}&lt;/h5&gt; --></div><div class=\"row\"><div><span class=\"d-flex flex-row-reverse bd-highlight col\"><!-- &lt;h5 class=&quot;&quot;&gt;&lt;strong&gt;Rubro:  &lt;/strong&gt;\r\n                            {{ form.rubro_institucion }}\r\n                          &lt;/h5&gt; --></span></div></div></div></div><hr class=\"mb-1\"></div><div class=\"mb-4\"><div class=\"d-flex justify-content-center\"><button class=\"btn btn-warning\" data-dismiss=\"modal\"><i class=\"fa fa-eye-slash\" aria-hidden=\"true\"></i> Ocultar detalle </button></div></div></div></div></div>", 1);
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Descripcion: ", -1
+/* HOISTED */
+);
+
+var _hoisted_30 = {
+  "class": "row"
+};
+var _hoisted_31 = {
+  "class": "col-md-12"
+};
+var _hoisted_32 = {
+  "class": ""
+};
+
+var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Cantidad de estudiantes solicitada: ", -1
+/* HOISTED */
+);
+
+var _hoisted_34 = {
+  "class": "col-md-12"
+};
+var _hoisted_35 = {
+  "class": ""
+};
+
+var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Correo: ", -1
+/* HOISTED */
+);
+
+var _hoisted_37 = {
+  "class": "col-md-12"
+};
+var _hoisted_38 = {
+  "class": ""
+};
+
+var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Ubicacion: ", -1
+/* HOISTED */
+);
+
+var _hoisted_40 = {
+  "class": "col-md-12"
+};
+var _hoisted_41 = {
+  "class": ""
+};
+
+var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Fecha inicio: ", -1
+/* HOISTED */
+);
+
+var _hoisted_43 = {
+  "class": "col-md-12"
+};
+var _hoisted_44 = {
+  "class": ""
+};
+
+var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Mas detalle: ", -1
+/* HOISTED */
+);
+
+var _hoisted_46 = {
+  "class": "col-md-12"
+};
+var _hoisted_47 = {
+  "class": ""
+};
+
+var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Carrera solicitada: ", -1
+/* HOISTED */
+);
+
+var _hoisted_49 = {
+  "class": "col-md-12"
+};
+var _hoisted_50 = {
+  "class": ""
+};
+
+var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Tipo de servicio: ", -1
+/* HOISTED */
+);
+
+var _hoisted_52 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "row"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "d-flex flex-row-reverse bd-highlight col"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <h5 class=\"\"><strong>Rubro:  </strong>\r\n                            {{ form.rubro_institucion }}\r\n                          </h5> ")])])], -1
+/* HOISTED */
+);
+
+var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "mb-1"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_54 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "mb-4"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "d-flex justify-content-center"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "btn btn-warning",
+  "data-dismiss": "modal"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fa fa-eye-slash",
+  "aria-hidden": "true"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Ocultar detalle ")])])], -1
+/* HOISTED */
+);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Base = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Base");
@@ -36084,14 +36230,36 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": "fas fa-info-circle text-green",
       "data-toggle": "modal",
       "data-target": "#verInfo",
-      onClick: _cache[0] || (_cache[0] = function ($event) {
-        return $options.mostrarInfo(_ctx.instituciones);
-      }),
+      onClick: function onClick($event) {
+        return $options.mostrarInfo(peticiones);
+      },
       title: "Ver informacion de la institucion"
-    }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para editar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <inertia-link class=\"fas fa-edit\" title=\"Editar institucion\" :href=\"route('instituciones.edit', instituciones.id)\"></inertia-link>                                   "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para eliminar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <jet-button class=\"fas fa-arrow-alt-circle-down\" style='color:#dc3545' title=\"Eliminar institucion\" method=\"delete\" \r\n                                  v-on:click=\"deleteInstitucion(instituciones)\"></jet-button> ")])])]);
+    }, null, 8
+    /* PROPS */
+    , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para editar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <inertia-link class=\"fas fa-edit\" title=\"Editar institucion\" :href=\"route('instituciones.edit', instituciones.id)\"></inertia-link>                                   "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para eliminar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <jet-button class=\"fas fa-arrow-alt-circle-down\" style='color:#dc3545' title=\"Eliminar institucion\" method=\"delete\" \r\n                                  v-on:click=\"deleteInstitucion(instituciones)\"></jet-button> ")])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Card Body ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Card ")])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Main Content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal de la informacion de la institucion "), _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Fin del modal de informacion de la institucion ")])]);
+  ))])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Card Body ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Card ")])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Main Content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal de la informacion de la institucion "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_23, "Titulo: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.nombre_peticion), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.nombre_institucion), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_28, [_hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.descripcion_peticion), 1
+  /* TEXT */
+  )])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_32, [_hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.cantidad_estudiantes), 1
+  /* TEXT */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_35, [_hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.correo_peticion), 1
+  /* TEXT */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_38, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.ubicacion_actividades), 1
+  /* TEXT */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_41, [_hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.fecha_peticion), 1
+  /* TEXT */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_44, [_hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.otros_tipo_servicio), 1
+  /* TEXT */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_47, [_hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.nombre_carrera), 1
+  /* TEXT */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_50, [_hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.nombre_tipo_servicio), 1
+  /* TEXT */
+  )])]), _hoisted_52])]), _hoisted_53]), _hoisted_54])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Fin del modal de informacion de la institucion ")])]);
 }
 
 /***/ }),
