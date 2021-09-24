@@ -28,55 +28,83 @@
               <!-- TO DO List -->
               <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">
-                      <i class="ion ion-clipboard mr-1"></i>
-                        Seleccione las actividades que desea finalizar
-                    </h3>
-                    
+                  <h3 class="card-title">
+                    <i class="ion ion-clipboard mr-1"></i>
+                    Lista de actividades aceptadas
+                  </h3>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body">
-                  <ul class="todo-list" data-widget="todo-list">
-                    <li>
-                      <!--Tabla donde apareceran todos las actividades-->
-                      <table class="table table-hover text-center" width="500" style="font-size: 20px">
-                        <thead class="thead-dark">
-                          <tr>
-                            <th scope="col">Codigo</th>
-                            <th scope="col">Nombre de la Actividad</th>
-                            <th scope="col">Estado de la actividad</th>
-                            <th scope="col">Seleccionar</th>
-                          </tr>
-                        </thead>
+                <!--<div class="card-body">
+                  <div class="col">
+                    <strong>Seleccionar todo: &nbsp; </strong>-->
+                    <!-- CheckBox para poder seleccionar todas las actividades a la vez-->
+                    <!--<input type="checkbox" style="width:20px;height:20px;" id="chkCheckAll">
+                  </div>
+                </div>-->
+                <div  v-if="actividadesFiltradas.length != 0">
+                  <div class="card-body">
+                    <ul class="todo-list" data-widget="todo-list">
+                      <li>
+                      <!--Tabla donde apareceran todos las actividades aceptadas-->
+                        <table class="table table-hover text-center" width="500" style="font-size: 20px">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">Código de actividad</th>
+                              <th scope="col">Nombre de la Actividad</th>
+                              <th scope="col">Estado de la actividad</th>
+                              <!--<th scope="col">Código de bitácora</th>-->
+                              <th scope="col" width="15%">Acción</th>
+                              <!--<th scope="col" width="15%"></th>-->
+                            </tr>
+                          </thead>
 
-                        <tbody>
-                          <tr class="table-secondary" scope="row" v-for="(actividad, index) in actividadesFiltradas" :key="index">
-                            <!--Aqui devuelven los datos que se mostraran en pantalla -->
-                            <td>{{ actividad.id }}</td>
-                            <td>{{ actividad.nombre_actividad }}</td>
-                            <td>
-                              <button v-if="actividad.verificado == 'Aceptada'" class="btn btn-info" style="cursor: default;">
-                                <i>Aceptada</i>
-                              </button>
-                            </td>
-                            <td>
-                              <!-- checkbox -->
-                             <div  class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo1" id="todoCheck1" style="width:20px;height:20px;">
+                          <tbody>
+                            <tr class="table-secondary" scope="row" v-for="(actividad, index) in actividadesFiltradas" :key="index">
+                              <!--Aqui devuelven los datos que se mostraran en pantalla -->
+                              <td>{{ actividad.id }}</td>
+                              <td>{{ actividad.nombre_actividad }}</td>
+                              <td>
+                                <!-- se coloca un botón no funcional solo para mostrar si la actividad ha sido aceptada-->
+                                <button v-if="actividad.verificado == 'Aceptada'" class="btn btn-success" style="cursor: default;">
+                                  <i class="fa fa-thumbs-up"></i> &nbsp; <strong> Aceptada </strong>
+                                </button>
+                                <button v-if="actividad.verificado == 'Finalizada'" class="btn btn-primary" style="cursor: default;">
+                                  <i class="fa fa-award nav-icon"></i> &nbsp; <strong> Finalizada </strong>
+                                </button>
+                              </td>
+                            <!--<td>{{ actividad.idBitacora }}</td>-->
+                            <!--<td>-->
+                              <!-- checkbox en cada fila de las actividades aceptadas-->
+                              <!--<div  class="icheck-primary d-inline ml-2">
+                                <input type="checkbox" class="checkBoxClass" value="" name="todo1" id="todoCheck1" style="width:20px;height:20px;">
                                   <label for="todoCheck1-sm"></label>
+                              </div>-->
+                            <!--</td>-->
+                              <td>
+                                <div class = "d-flex justify-content-center">
+                                  <div class="tools">
+                                    <!--Botón para ver el detalle de la actividad-->
+                                    <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarDatos(actividad)" title="Ver más información de la actividad"></jet-button>
+                                    <!--Botón para finalizar la actividad-->
+                                    <jet-button class="fas fa-arrow-alt-circle-down text-blue" title="Finalizar actividad" method="delete" v-on:click="finalizar(actividad)"></jet-button>
+                                  </div>
                                 </div>
-                            </td>
-                          </tr>
-                          <a href="javascript:seleccionar_todo()">Marcar todos</a>
-                        </tbody>
-                      </table>
-                      <div class="card-body">
-                        <button class="btn btn-warning float-cneter" title="Verificar actividad">
-                          <i class="fas"></i>Finalizar actividades
-                        </button>
-                      </div>
-                    </li>
-                  </ul>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="card-body">
+                          <!--Botón para finalizar proyectos-->
+                          <inertia-link type="button" class="btn btn-warning float-left mt-2"  :href="route('finproyecto.index')">
+                            <i class="fa fa-flag-checkered"></i> <strong> &nbsp; Finalizar Proyecto Social</strong>
+                          </inertia-link>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div v-else class="alert alert-warning ml-4 mr-4 mt-3" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                  No se han encontrado datos
                 </div>
               </div>
             </section><!-- /.Left col -->
@@ -86,112 +114,62 @@
     </div><!-- /.content-wrapper -->
   </div>
 
-  <!-- Modal para la verificación de las actividades de los estudiantes-->
-  <div class="modal fade" id="verificar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <!--Contenido de la modal-->
+  <!-- Modal de la informacion de la actividad -->
+  <div class="modal fade" id="verInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <!--Encabezado de la modal-->
         <div class="modal-header">
-          <!--Título de la modal-->
-          <h5 class="modal-title" id="exampleModalLabel">Verificar actividad</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-        </div><!--Fin del encabezado-->
-        <!--Cuerpo de la modal-->
+          <h5 class="modal-title text-primary"><strong>Información de la actividad</strong></h5>
+            <!--<h3 class="modal-title text-primary">{{ form.nombre_actividad }} </h3>-->
+            <span class="d-flex flex-row-reverse bd-highlight col">
+            <button class="btn btn-dark text-light text-lg" style="cursor: default;">
+              {{ form.id }}                   
+            </button>    
+            <h5 class="mt-2 mr-2"><strong>Codigo:</strong></h5> 
+          </span>
+        </div>
         <div class="modal-body">
-          <div class="card-body">
-            <!--Primera fila de la modal-->
-            <div class="row">
-              <!--Primera columna de la fila-->
-              <div class="col">
-                <div class="form-group">
-                  <jet-label for="id_actividad" value="Código de la actividad" />
-                  <jet-input id="id_actividad" type="text" readonly="readonly" v-model="form.id" required autofocus autocomplete="id_actividad"/>
-                </div>
-              </div><!--Fin de la primera columna-->
-              <!--Segunda columna de la fila-->
-              <div class="col">
-                <div class="form-group">
-                  <jet-label for="bitacora_id" value="Código de bitácora" />
-                  <jet-input id="bitacora_id" type="text" readonly="readonly" v-model="form.bitacora_id" required autofocus autocomplete="bitacora_id"/>
-                </div>
-              </div><!--Fin de la segunda columna-->
-            </div><!--Fin de la primera fila-->
 
-            <!--Segunda fila-->
-            <div class="row">
-              <!--Primera columna de la fila-->
-              <div class="col">
-                <div class="form-group">
-                  <jet-label for="nombre_actividad" value="Nombre de la actividad" />
-                  <jet-input id="nombre_actividad" type="text" readonly="readonly" v-model="form.nombre_actividad" required autofocus autocomplete="nombre_actividad"/>
-                </div>
-              </div><!--Fin de la primera columna-->
-            </div><!--Fin de la segunda fila-->
-
-            <!--Tercera fila de la modal-->
-            <div class="row">
-              <!--Primera columna de la fila-->
-              <div class="col">
-                <div class="form-group">
-                  <jet-label for="fecha_actividad" value="Fecha de la actividad" />
-                  <jet-input id="fecha_actividad" type="text" readonly="readonly" v-model="form.fecha_actividad" required autofocus autocomplete="fecha_actividad"/>
-                </div>
-              </div><!--Fin de la primera columna-->
-              <!--Segunda columna de la fila-->
-              <div class="col">
-                <div class="form-group">
-                  <jet-label for="total_horas" value="Total de horas en la actividad" />
-                  <jet-input id="total_horas" type="text" readonly="readonly" v-model="form.total_horas" required autofocus autocomplete="total_horas"/>
-                </div>
-              </div><!--Fin de la segunda columna-->
-            </div><!--Fin de la tercera fila-->
-
-          </div><!-- Fin card body-->
-
-          <!--Sección de botones-->
-          <div class="card-footer clearfix">
-              <div class="d-flex justify-content-center align-items-baseline">
-                <!--Fila de los botones-->
-                <div class="row">
-                  <!--Primera columna-->
-                  <div class="col">
-                    <!--boton de verificación de actividad-->
-                    <button v-if="actividad.verificado == '0'" class="btn btn-warning float-center" title="Verificar actividad" v-on:click="verificacion(form)">
-                      <i class="fas"></i>Aceptar
-                    </button>
-                    <button v-else class="btn btn-warning float-cneter" title="Verificar actividad" v-on:click="verificacion(form)">
-                      <i class="fas"></i>Aceptar
-                    </button>
-                  </div><!--Fin primera columna-->
-                  <!--Segunda columna-->
-                  <div class="col">
-                    <!--boton de reportar actividad-->
-                    <button v-if="actividad.verificado == '0'" class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Reportar(form)">
-                      <i class="fas"></i>Reportar
-                    </button>
-                    <button v-else class="btn btn-danger float-cneter" title="Verificar actividad" v-on:click="Reportar(form)">
-                      <i class="fas"></i>Reportar
-                    </button>
-                  </div><!--Fin Segunda columna-->
-                  <!--Tercera columna-->
-                  <div class="col">
-                    <!--boton atras-->
-                    <button :href="route('verificaractividades.index')" class="btn btn-dark float-center" title="Atras" data-dismiss="modal">
-                      <i class="fas"></i>Atrás
-                    </button>
-                  </div><!--Fin Tercera columna-->
-                </div><!--Fin de la fila de los botones-->
-              </div>
+          <table>
+            <tr>
+              <td><h5 class=""><strong>Nombre de la actividad: </strong></h5></td>
+              <td><h5>{{ form.nombre_actividad }}</h5></td>
+            </tr>
+            <tr>
+              <td><h5 class=""><strong>Fecha de la actividad: </strong></h5></td>
+              <td><h5>{{ form.fecha_actividad }}</h5></td>
+            </tr>
+            <tr>
+              <td><h5 class=""><strong>Total de horas de la actividad: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strong></h5></td>
+              <td><h5>{{ form.total_horas }}</h5></td>
+            </tr>
+            <tr>
+              <td><h5><strong>Estado de la actividad:</strong></h5></td>
+              <td>
+                <h5><strong>
+                  <button v-if="form.verificado == 'Aceptada'" class="btn btn-success" style="cursor: default;" disabled>
+                    <i class="fa fa-thumbs-up"></i> &nbsp; <strong> Aceptada </strong>
+                  </button>
+                  <button v-if="form.verificado == 'Finalizada'" class="btn btn-primary" style="cursor: default;" disabled>
+                    <i class="fa fa-award nav-icon"></i> &nbsp; <strong> Finalizada </strong>
+                  </button>
+                </strong></h5>
+              </td>
+            </tr>
+          </table>  
+          <hr class="mb-1"/>
+        </div>
+        <div class="mb-4">
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-dark" data-dismiss="modal">
+              <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                Ocultar detalle
+            </button>
           </div>
-          <!--Fin de sección de botones-->
-
-        </div><!--Fin cuerpo de la modal-->
-      </div><!--Fin contenido de la modal-->
+        </div>
+      </div>
     </div>
-  </div>
+  </div> <!--MODAL DE INFORMACION DE LA ACTIVIDAD -->
 
 </template>
 
@@ -220,21 +198,7 @@
             logout() {
                 this.$inertia.post(route('logout'));
             },
-            /*filtrarByActividad(event){
-              this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
-              console.log(event.target.value);
-              var verificadoText= "0";
-              if (event.target.value == 0){
-                verificadoText= "1";
-              }
-              this.actividad.forEach(element =>{
-                if(element.verificado=verificadoText){
-                  console.log(element);
-                  this.actividadesFiltradas.push(element);
-                }
-              });
-              console.log(this.actividadesFiltradas);
-            },*/
+
             filtrarByActividad(id){
                 this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
                 console.log(id);
@@ -253,62 +217,24 @@
                 }
             },
           
-          //Metodo para la verificación de la actividad
-            verificacion(actividad){
-              if(actividad.verificado == '0'){
-                Swal.fire({
-                  title:'¿Está seguro que desea dar por verificada la actividad?',
-                  text: "Código " + actividad.id + " Nombre de actividad" + actividad.nombre_actividad,
-                  icon:'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Si, dar por verificada',
-                  cancelButtonText: 'No, cancelar'
-                }).then((result)=>{
-                  if(result.isConfirmed){
-                    this.$inertia.put(route('verificaractividades.update', actividad.id), this.formUp);
-                    Swal.fire(
-                      '!Verificada',
-                      'La actividad a sido verificada correctamente',
-                      'success'
-                    );
-                    window.location.reload(true);
-                  }
-                })
-              }
-            },
-
-            // Método para reportar la actividad
-            Reportar(actividad){
-              if(actividad.verificado == '0'){
-                Swal.fire({
-                  title:'¿Está seguro que desea reportar la actividad?',
-                  text: "Código " +actividad.id + " Nombre de actividad " +actividad.nombre_actividad,
-                  icon:'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Aceptar',
-                  cancelButtonText: 'No, cancelar'
-                }).then((result)=>{
-                  if(result.isConfirmed){
-                    //this.$inertia.put(route('verificaractividades.report', actividad.id), this.formUp);
-                    Swal.fire(
-                      '!Reportada',
-                      'La actividad ha sido reportada correctamente',
-                      'success'
-                    );
-                    window.location.reload(true);
-                  }
-                })
-              }
-            },
-
-            seleccionar_todo(){
-             for (i=0;i<todoCheck1.elements.length;i++)
-                  if(todoCheck1.elements[i].type == "checkbox")
-                 todoCheck1.elements[i].checked=1
+            //Metodo para finalizar la actividad
+            finalizar(actividad){
+            console.log(actividad);
+                console.log(actividad.verificado);
+                if(actividad.verificado == 'Aceptada'){
+                    this.formUp.verificado = 'Finalizada'; 
+                    Swal.fire({
+                        title: 'Se ha finalizado la actividad ' + actividad.nombre_actividad,
+                        text: 'Actualice la página para ver los cambios',
+                        icon: 'warning',
+                        iconColor: '#FF8000',
+                        confirmButtonText: 'Aceptar',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                    });
+                }
+                this.$inertia.put(route("finalizaractividades.update", actividad.id), this.form);
             },
 
             //carga informacion de la actividad seleccionada al formulario del modal
@@ -317,7 +243,8 @@
               this.form.nombre_actividad = actividad.nombre_actividad,
               this.form.fecha_actividad = actividad.fecha_actividad,
               this.form.total_horas = actividad.total_horas,
-              this.form.verificado = actividad.verificado
+              this.form.verificado = actividad.verificado,
+              this.form.idBitacora = actividad.idBitacora
             }
         },    
         data(){
@@ -331,14 +258,16 @@
                     nombre_actividad:'',
                     fecha_actividad:'',
                     total_horas:'',
-                    verificado:'0',
+                    verificado:'',
+                    idBitacora:'',
                     }),
                 formUp: this.$inertia.form({
                     id:'',
                     nombre_actividad:'',
                     fecha_actividad:'',
                     total_horas:'',
-                    verificado:'0',
+                    verificado:'',
+                    idBitacora:'',
                     }),
                 }
             },        
@@ -350,4 +279,12 @@
             this.successGuardado = false;        
         },
     }
+    
+    //función para seleccionar todos los checkbox a la vez
+    //$(function(e){
+      //$("#chkCheckAll").click(function(){
+        //$(".checkBoxClass").prop('checked',$(this).prop('checked'));
+      //})
+    //});
+
 </script>
