@@ -34,7 +34,7 @@ class ServicioSocialController extends Controller
 
                 // consulta de servicio activo
                 $servicioActivo = DB::table('solicitudes')
-                ->select('nombre_peticion as servicio', 'nombre_tipo_servicio as tipo', 'descripcion_peticion as descripcion', 'ubicacion_actividades', 'fecha_inicio as fechaInicio', 'fecha_fin as fechaFin', 'proyectos_sociales.numero_horas as numHoras', 'estado_proyecto_social as estado', 'nombre_institucion as institucion', 'rubro_institucion as rubro', 'contacto_institucion as contacto', 'correo_institucion as correo', 'telefono_institucion as telefono', 'ubicacion_institucion as ubicacion')
+                ->select('nombre_peticion as servicio', 'proyectos_sociales.id as idServicio', 'nombre_tipo_servicio as tipo', 'descripcion_peticion as descripcion', 'ubicacion_actividades', 'fecha_inicio as fechaInicio', 'fecha_fin as fechaFin', 'proyectos_sociales.numero_horas as numHoras', 'estado_proyecto_social as estado', 'nombre_institucion as institucion', 'rubro_institucion as rubro', 'contacto_institucion as contacto', 'correo_institucion as correo', 'telefono_institucion as telefono', 'ubicacion_institucion as ubicacion')
                 ->join('proyectos_sociales', 'proyectos_sociales.id', '=', 'solicitudes.proyecto_social_id')
                 ->join('peticiones', 'peticiones.id', '=', 'proyectos_sociales.peticion_id')
                 ->join('tipos_servicio_social', 'tipos_servicio_social.id', '=', 'peticiones.tipo_servicio_social_id')
