@@ -34,87 +34,95 @@
                                     Lista de Servicios Sociales Completados
                                 </h3>
                             </div>
-                            <div class="card-body">
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <h5 class="m-0"> Nombre Estudiante &nbsp; </h5> {{ $props.est }}
-                                    </div>
-                                    <div class="row">
-                                        <h5 class="m-0">  Carrera: &nbsp; </h5> {{ $props.car }}
-                                    </div>
-                                    <div class="row">
-                                        <h5 class="m-0">  Facultad: &nbsp; </h5> {{ $props.fac }}
+                            <div  v-if="serviciosFiltrados.length != 0">
+                                <div class="card-body">
+                                    <div class="col-sm-6">
+                                        <table>
+                                            <tr>
+                                                <td><h5 class="m-0"> Nombre Estudiante &nbsp; &nbsp; &nbsp; &nbsp; </h5></td>
+                                                <td><strong>{{ $props.est }}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5 class="m-0">  Carrera: &nbsp; </h5></td>
+                                                <td><strong>{{ $props.car }}</strong></td>
+                                            </tr>
+                                                <td><h5 class="m-0">  Facultad: &nbsp; </h5></td>
+                                                <td><strong>{{ $props.fac }}</strong></td>
+                                        </table>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <ul class="todo-list" data-widget="todo-list">
-                                    <li>
-                                        <!--Tabla donde apareceran todas los proyectos-->
-                                        <table class="table table-hover text-center" width="500" style="font-size: 20px" id ="act">
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th scope="col">Servicio Social</th>
-                                                    <th scope="col">Lugar de ejecución</th>
-                                                    <th scope="col">Fecha Inicio</th>
-                                                    <th scope="col">Fecha Fin</th>
-                                                    <th scope="col">Número de horas</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="table-secondary" scope="row" v-for="(servicio, index) in serviciosFiltrados" :key="index">
-                                                    <!--Aqui devuelven los datos que se mostraran en pantalla -->
-                                                    <td>{{ servicio.tipo }}</td>
-                                                    <td>{{ servicio.ubicacion }}</td>
-                                                    <td>{{ servicio.inicio }}</td>
-                                                    <td>{{ servicio.fin }}</td>
-                                                    <td>{{ servicio.horas }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </li>
-                                </ul>
-                            </div>  <!--AQUI TERMINAR CARD-BODY -->
-                            <div class ="card-body">
-                                <div class = "d-flex justify-content-center">
-                                    <h5>
-                                        <strong>Total: 
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <ul class="todo-list" data-widget="todo-list">
+                                        <li>
+                                            <!--Tabla donde apareceran todas los proyectos-->
+                                            <table class="table table-hover text-center" width="500" style="font-size: 20px" id ="act">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th scope="col">Servicio Social</th>
+                                                        <th scope="col">Lugar de ejecución</th>
+                                                        <th scope="col">Fecha Inicio</th>
+                                                        <th scope="col">Fecha Fin</th>
+                                                        <th scope="col">Número de horas</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="table-secondary" scope="row" v-for="(servicio, index) in serviciosFiltrados" :key="index">
+                                                        <!--Aqui devuelven los datos que se mostraran en pantalla -->
+                                                        <td>{{ servicio.tipo }}</td>
+                                                        <td>{{ servicio.ubicacion }}</td>
+                                                        <td>{{ servicio.inicio }}</td>
+                                                        <td>{{ servicio.fin }}</td>
+                                                        <td>{{ servicio.horas }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                </div>  <!--AQUI TERMINAR CARD-BODY -->
+                                <div class ="card-body">
+                                    <div class = "d-flex justify-content-center">
+                                        <h5>
+                                            <strong>Total: 
                                             <!--Llamamos la variblae total, que tiene el total de horas de los proyectos realizados-->
                                             {{ this.total }} 
-                                        </strong>
-                                    </h5>
+                                            </strong>
+                                        </h5>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                <div class = "d-flex justify-content-center">
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class = "d-flex justify-content-center">
-                                                    <h5 class="m-0"> Encargado de Escuela </h5>
+                                <div class="card-body">
+                                    <div class = "d-flex justify-content-center">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class = "d-flex justify-content-center">
+                                                        <h5 class="m-0"> Encargado de Escuela </h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class = "d-flex justify-content-center">
+                                                        <h5 class="m-0"> Encargado de Facultad </h5>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col">
-                                                <div class = "d-flex justify-content-center">
-                                                    <h5 class="m-0"> Encargado de Facultad </h5>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class = "d-flex justify-content-center">
+                                                        {{ $props.encargadoE }}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class = "d-flex justify-content-center">
-                                                    {{ $props.encargadoE }}
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class = "d-flex justify-content-center">
-                                                    {{ $props.encargadoF }}
+                                                <div class="col">
+                                                    <div class = "d-flex justify-content-center">
+                                                        {{ $props.encargadoF }}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div v-else class="alert alert-warning ml-4 mr-4 mt-3" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                                No se han encontrado datos
                             </div>
                         </div><!-- /.card -->
                     </section>

@@ -24,15 +24,17 @@ class BitacoraController extends Controller
         //$actividades= Actividad::all();
         $actividades = DB::table('actividades')
         ->select('actividades.id as id', 'actividades.nombre_actividad as nombre_actividad', 'actividades.total_horas as total_horas',
-        'actividades.verificado as verificado')
+        'actividades.verificado as verificado', 'actividades.fecha_actividad as fecha_actividad')
         ->join('bitacoras','bitacoras.id','=','actividades.bitacora_id')
         ->join('proyectos_sociales','proyectos_sociales.id','=','bitacoras.proyecto_social_id')
         ->join('estudiantes','estudiantes.id','=','bitacoras.estudiante_id')
         ->join('peticiones','peticiones.id','=','proyectos_sociales.peticion_id')
         ->join('carreras','carreras.id','=','peticiones.carrera_id')
         ->join('facultades','facultades.id','=','carreras.facultad_id')
-        ->where('verificado', '=', 'Aceptada')
-        ->orWhere('verificado', '=', 'Reportada')->get();
+        ->where('proyectos_sociales.estado_proyecto_social','=','En curso')
+        ->Where('actividades.verificado', '=', 'Aceptada')
+        ->orWhere('actividades.verificado', '=', 'Reportada')
+        ->get();
 
         //$idUsuario = 2;
         //Obtenemos el id del usuario logueado

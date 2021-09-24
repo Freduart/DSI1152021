@@ -20,6 +20,8 @@
       <!-- /.content-header -->
 
       <!-- Main content -->
+      
+      <div  v-if="actividadesFiltradas.length != 0">
       <section class="content">
         <div class="container-fluid">
           <!-- Main row -->
@@ -33,7 +35,7 @@
                     <div class="row">
                       <div class="col">
                         <div class = "d-flex justify-content-center">
-                          <h5 class="m-0"><strong> UNIVERSIDAD DE EL SALVADOR </strong></h5>
+                          <h4 class="m-0"><strong> UNIVERSIDAD DE EL SALVADOR </strong></h4>
                         </div>
                       </div>
                     </div>
@@ -57,12 +59,16 @@
               <div class="card">
                 <div class="card-body">
                   <div class="col-sm-6">
-                    <div class="row">
-                      <h5 class="m-0"> Carnet: &nbsp; </h5> {{ $props.carnet }}
-                    </div>
-                    <div class="row">
-                      <h5 class="m-0">  Nombre: &nbsp; </h5> {{ $props.est }}
-                    </div>
+                    <table>
+                      <tr>
+                        <td><h5 class="m-0"> Carnet: &nbsp;</h5></td> 
+                        <td><strong> {{ $props.carnet }} </strong></td>
+                      </tr>
+                      <tr>
+                        <td><h5 class="m-0"> Nombre Estudiante: &nbsp;</h5></td> 
+                        <td><strong> {{ $props.est }} </strong></td>
+                      </tr>
+                    </table>
                   </div>
                 </div>
                 <!-- /.card-header -->
@@ -73,7 +79,7 @@
                       <table class="table table-hover text-center" width="500" style="font-size: 20px" id ="act">
                         <thead class="thead-dark">
                           <tr>
-                            <th scope="col">Codigo</th>
+                            <th scope="col">Fecha</th>
                             <th scope="col">Nombre de la Actividad</th>
                             <th scope="col">Horas de la Actividad</th>
                             <th scope="col">Estado de la Actividad</th>
@@ -83,15 +89,15 @@
                         <tbody>
                           <tr class="table-secondary" scope="row" v-for="(actividad, index) in actividadesFiltradas" :key="index">
                             <!--Aqui devuelven los datos que se mostraran en pantalla -->
-                            <td>{{ actividad.id }}</td>
+                            <td>{{ actividad.fecha_actividad }}</td>
                             <td>{{ actividad.nombre_actividad }}</td>
                             <td>{{ actividad.total_horas }}</td>
                             <td>
                               <button v-if="actividad.verificado == 'Aceptada'" class="btn btn-info" style="cursor: default;">
-                                <i>Aceptada</i>
+                                <i class="fa fa-thumbs-up"></i> &nbsp; <strong> Aceptada </strong>
                               </button>
                               <button v-if="actividad.verificado == 'Reportada'" class="btn btn-warning" style="cursor: default;">
-                                <i>Reportada</i>
+                                <i class="fa fa-thumbs-down"></i> &nbsp; <strong> Reportada </strong>
                               </button>
                             </td>
                             <td>
@@ -117,6 +123,10 @@
           </div><!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
       </section><!-- /.content -->
+      </div>
+      <div v-else class="alert alert-warning ml-4 mr-4 mt-3" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+        No se han encontrado datos
+      </div>
     </div>
     <!-- /.content-wrapper -->
   </div>
@@ -136,44 +146,34 @@
           </span>
         </div>
         <div class="modal-body">
-          <div>
-            <div class="row">
-              <div class="col">
-                <h5 class=""><strong>Nombre de la actividad: </strong>{{ form.nombre_actividad }}</h5>
-              </div>
-              <!--<div class="col-4">
-                <h5 class=""><strong>Teléfono: </strong>{{ form.telefono_encargado_escuela }}</h5>
-              </div>-->
-            </div>
 
-            <div class="row">
-              <div class="col">
-                <h5 class=""><strong>Fecha de la actividad: </strong>{{ form.fecha_actividad }}</h5>
-              </div>
-              <div class="col">
-                <h5 class=""></h5>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col">
-                <h5 class=""><strong>Total de horas que realizo la actividad: </strong>{{ form.total_horas }}</h5>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col">
-                <h5><strong>La actividad fue: 
-                  <button v-if="form.verificado == 'Aceptada'" class="btn btn-info" style="cursor: default;">
-                    <i>Aceptada</i>
+          <table>
+            <tr>
+              <td><h5 class=""><strong>Nombre de la actividad: </strong></h5></td>
+              <td><h5>{{ form.nombre_actividad }}</h5></td>
+            </tr>
+            <tr>
+              <td><h5 class=""><strong>Fecha de la actividad: </strong></h5></td>
+              <td><h5>{{ form.fecha_actividad }}</h5></td>
+            </tr>
+            <tr>
+              <td><h5 class=""><strong>Total de horas de la actividad: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strong></h5></td>
+              <td><h5>{{ form.total_horas }}</h5></td>
+            </tr>
+            <tr>
+              <td><h5><strong>La actividad fue:</strong></h5></td>
+              <td>
+                <h5><strong>
+                  <button v-if="form.verificado == 'Aceptada'" class="btn btn-info" style="cursor: default;" disabled>
+                    <i class="fa fa-thumbs-up"></i> &nbsp; <strong> Aceptada </strong>
                   </button>
-                  <button v-if="form.verificado == 'Reportada'" class="btn btn-warning" style="cursor: default;">
-                    <i>Reportada</i>
+                  <button v-if="form.verificado == 'Reportada'" class="btn btn-warning" style="cursor: default;" disabled>
+                    <i class="fa fa-thumbs-down"></i> &nbsp; <strong> Reportada </strong>
                   </button>
                 </strong></h5>
-              </div>
-            </div>
-          </div>  
+              </td>
+            </tr>
+          </table>  
           <hr class="mb-1"/>
         </div>
         <div class="mb-4">

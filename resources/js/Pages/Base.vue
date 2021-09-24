@@ -197,7 +197,7 @@
 
                     <li class="nav-item">
                             <inertia-link :href="route('constancia.index')" class="nav-link">
-                            <i class="fa fa-award nav-icon"></i>
+                            <i class="fas fa-medal nav-icon"></i>
                             <p>Constancia de cumplimiento</p>
                             </inertia-link>
                     </li>
