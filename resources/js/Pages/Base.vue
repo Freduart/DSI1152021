@@ -164,14 +164,6 @@
                             </inertia-link>
                     </li>
 
-<!-- fa fa-check-square--->
-                    <li class="nav-item">
-                            <inertia-link :href="route('actividades.index')" class="nav-link">
-                            <i class="nav-icon fa fa-list-alt"></i>
-                            <p> Mis Actividades</p>
-                            </inertia-link>
-                    </li>
-
                     <li class="nav-item">
                             <inertia-link :href="route('establecerha.index')" class="nav-link">
                             <i class="nav-icon fa fa-clipboard "></i>

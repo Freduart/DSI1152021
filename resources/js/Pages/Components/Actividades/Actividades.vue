@@ -44,9 +44,6 @@
                                         <div class="form-group">
                                           <inertia-link type="button" class="btn btn-success float-left mt-2"  :href="route('bitacora.index')">
                                           <i class="fa fa-eye"></i> Visualizar Bitacora</inertia-link>
-
-
-
                                         </div>
                                 </div>
 
@@ -82,7 +79,7 @@
                                         <tr class="table-secondary" scope="row" v-for="(actividad, index) in actividadesFiltradas" :key="index">
                                             
                                             <!--Aqui devuelven los datos que se mostraran en pantalla -->
-                                            <td>{{ actividad.id }}</td>
+                                            <td>{{ actividad.id}}</td>
                                             <td>{{ actividad.nombre_actividad }}</td>
                                             <td>{{ actividad.fecha_actividad }}</td>
     
@@ -95,7 +92,7 @@
                                                     
 
                                                     <!--BOTON DE EDITAR -->
-                                                    <jet-button :href="route('actividades.update', actividad.id)" v-on:click="mostrarMensajeUpdate(actividad)" data-toggle="modal" 
+                                                    <jet-button  v-on:click="mostrarMensajeUpdate(actividad)" data-toggle="modal" 
                                                     data-target="#modificarActividad" title="Editar Actividad"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>
 
                                                     <!--BOTON DE ELIMINAR -->
@@ -156,24 +153,14 @@
         
         <!-- MUESTRA EN PANTALLA LOS CAMPOS A INGRESAR-->
         <form @submit.prevent="submit">
-                <div class="card-body">
-                    <div class="row">
-                      <div class="col">
-                        <div class="form-group">
-                            <jet-label for="id" value="Codigo" />
-                            <jet-input id="id" type="text" v-model="form.id" required autofocus autocomplete="off"/>
-                        </div>
-                      </div>
+                <div class="card-body"> 
                       <div class="col">
                         <div class="form-group">
                             <jet-label for="nombre_actividad" value="Nombre de la Actividad" />
                             <jet-input id="nombre_actividad" type="text" v-model="form.nombre_actividad" required autofocus autocomplete="off"/>
                         </div>
                       </div>
-                    </div>
-
-                                            
-
+ 
                     <div class="row">
                       <div class="col">
                         <div class="form-group">
@@ -213,7 +200,7 @@
                     
                     <div class="col">
                         <div class="form-group">
-                            <inertia-link :href="route('actividades.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
+                            <inertia-link :href="`/actividades/${$props.idServicio}`" type="button" class="btn btn-danger float-center" data-dismiss="modal">
                              Cancelar</inertia-link>
                         </div>
                     </div>
@@ -243,14 +230,12 @@
         
     <!-- MUESTRA EN PANTALLA LOS CAMPOS LLENOS CON LOS DATOS INGRESADOS LISTOS PARA SER MODIFICADOS--->
         <form @submit.prevent="submitUpdate(this.formUp)">
-
             <div class="card-body">
                     <div class="row">
                       <div class="col">
-
                        <div class="form-group">
                             <jet-label for="id" value="Codigo" />
-                            <jet-input id="id" type="text" v-model="formUp.id" required autofocus autocomplete="off" :value="this.formUp.id"/>
+                            <jet-input id="id" type="text" readonly="readonly" v-model="formUp.id" required autofocus autocomplete="off" :value="this.formUp.id"/>
                         </div>
 
                       </div>
@@ -262,9 +247,6 @@
 
                       </div>
                     </div>
-
-
-
                     <div class="row">
                       <div class="col">
 
@@ -279,7 +261,6 @@
                                  <jet-label for="total_horas" value="Total de horas" />
                                  <jet-input id="total_horas" type="text" v-model="formUp.total_horas" required autofocus autocomplete="off" :value="this.formUp.total_horas"/>
                             </div>
-
                       </div>
                     </div>
                     <br>
@@ -305,7 +286,7 @@
 
                         <div class="col">
                             <div class="form-grup">
-                                <jet-button :href="route('actividades.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
+                                <jet-button :href="`/actividades/${$props.idServicio}`" type="button" class="btn btn-danger float-center" data-dismiss="modal">
                                  Cancelar</jet-button>
                             </div>
                         </div>
@@ -337,33 +318,24 @@
               </span>
           </div>
           <div class="modal-body">
-              
-            <div>
-              <div class="row">
-                <div class="col">
-                  <h5 class=""><strong>Nombre de la actividad: </strong>{{ form.nombre_actividad }}</h5>
-                </div>
-              </div>
+            <table>
+                      <tr>
+                        <td><h5 class=""><strong>Nombre de la actividad: </strong></h5></td>
+                            <td> <h5> {{ form.nombre_actividad }}</h5></td>
+                      </tr>
 
-              <div class="row">
-                <div class="col">
-                  <h5 class=""><strong>Fecha de la actividad: </strong>{{ form.fecha_actividad }}</h5>
-                </div>
-                <div class="col">
-                  <h5 class=""></h5>
-                </div>
-              </div>
-              
-               
+                      <tr>
+                        <td><h5 class=""><strong>Fecha de la actividad: </strong></h5></td>
+                            <td> <h5> {{ form.fecha_actividad }}</h5></td>
+                      </tr>
 
-              <div class="row">
-                <div class="col">
-                  <h5 class=""><strong>Total de horas que realizo la actividad: </strong>{{ form.total_horas }}</h5>
-                </div>
-              </div>
-
-            </div>  
+                      <tr>
+                        <td><h5 class=""><strong>Total de horas que realizo la actividad:  </strong></h5></td>
+                            <td> <h5> {{ form.total_horas }}</h5></td>
+                      </tr>             
             <hr class="mb-1"/>
+
+            </table>
           </div>
           <div class="mb-4">
               <div class="d-flex justify-content-center">
@@ -382,9 +354,6 @@
 
 
 
-<!--<script src="/path/to/dist/jquery.inputmask.min.js"></script>-->
-
-
 <script>
     import JetNavLink from '@/Jetstream/NavLink'
     import JetDropdownLink from '@/Jetstream/DropdownLink'
@@ -393,7 +362,7 @@
     import JetButton from '@/Jetstream/Button'
     import Label from '../../../Jetstream/Label.vue'
     import Button from '../../../Jetstream/Button.vue'
-   // import Inputmask from"inputmask";
+   
 
     import Base from "@/Pages/Base.vue";
 
@@ -406,46 +375,31 @@
             //JetButton,
             Base
         },
-        props:['actividades'],
+        props:['actividades', 'idServicio', 'idBitacora'],
         methods:{
             logout() {
                 this.$inertia.post(route('logout'));
             },
-            filtrarByActividad(id){
-                this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
-                console.log(id);
-                this.actividades.forEach(element => {
-                    if(element.bitacora_id == id){
-                        console.log(element);
-                        this.actividadesFiltradas.push(element);
-                    }
-                });
-                console.log(this.actividadesFiltradas);
-                if(id == '0'){
-                    this.actividades.forEach(element => {
-                        this.acividadesFiltradas.push(element);
-                        // this.mostrarMensajeSuccess();
-                    })     
-                }
-            },
+
             mostrarMensajeSuccess(){
                     Swal.fire({
-                        title: 'Se ha guardado con éxito',
+                        title: 'Se ha guardado la actividad con éxito',
                         text: 'Actualice la página para ver los cambios',
                         icon: 'success',
                         confirmButtonText: 'Aceptar',
                         allowEscapeKey: false,
                         allowOutsideClick: false,
-                        showConfirmButton: false,
+                        showConfirmButton: false,  
                     });
+                    //window.location.reload(true);   
             },
             submit(){
                 console.log(this.form);
-                    this.mostrarMensajeSuccess();
+                this.mostrarMensajeSuccess();
                 this.form.post(this.route('actividades.store'));
                 this.form.id='';
                 this.form.nombre_actividad='';
-                this.form.fecha_actividad=''
+                this.form.fecha_actividad='';
                 this.form.total_horas='';
             },
             //Muestra mensaje cuando se actualiza los campos
@@ -461,15 +415,17 @@
                     allowEscapeKey: false,
                     allowOutsideClick: false,
                     showConfirmButton: false,
+                    
                 });
                 this.$inertia.put(route("actividades.update",form.id), this.formUp);
+                //window.location.reload(true);
             },
             //Muestra mmensaje cuando se borra los campos
             mostrarMensajeDelete(actividad){
                 this.borrado = true;
                 Swal.fire({
                     title: 'Se ha borrado la actividad ' + actividad.nombre_actividad,
-                    text: 'Actualice la página para ver los cambios',
+                    //text: 'Actualice la página para ver los cambios',
                     iconColor: '#CB3234',
                     icon: 'warning',
                     confirmButtonText: 'Aceptar',
@@ -477,6 +433,7 @@
                     allowOutsideClick: false,
                     showConfirmButton: false,
                 });
+                //window.location.reload(true);
             },
             
             mostrarMensajeUpdate(actividad){
@@ -494,7 +451,8 @@
               this.form.nombre_actividad = actividad.nombre_actividad,
               this.form.fecha_actividad = actividad.fecha_actividad,
               this.form.total_horas = actividad.total_horas,
-              this.form.verificado = actividad.verificado
+              this.form.verificado = actividad.verificado,
+              this.form.proyecto_social_id=actividad.proyecto_social_id
                 
             }
            
@@ -505,12 +463,15 @@
                 actividadesFiltradas:[],
                 successGuardado:false,
                 
+                
                 form: this.$inertia.form({
-                    id:'',
+                    
                     nombre_actividad:'',
                     fecha_actividad:'',
                     total_horas:'',
                     verificado:'En espera',
+                    proyecto_social_id: this.$props.idServicio,
+                    bitacora_id: this.$props.idBitacora,
                     }),
                 formUp: this.$inertia.form({
                     id:'',
@@ -518,6 +479,8 @@
                     fecha_actividad:'',
                     total_horas:'',
                     verificado:'En espera',
+                    proyecto_social_id: this.$props.idServicio,
+                    bitacora_id: this.$props.idBitacora,
                     }),
                 }
             },        
@@ -526,7 +489,7 @@
                 this.actividadesFiltradas.push(element);
             }),
             // this.mostrarMensajeSuccess();
-            this.successGuardado = false;        
+            this.successGuardado = false;   
         },
     }
 
