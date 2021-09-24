@@ -100,6 +100,7 @@ Route::resource('serviciossociales', ServicioSocialController::class)->middlewar
 Route::resource('constancia', ConstanciaController::class)->middleware(['auth:sanctum', 'verified']);
 
 Route::resource('finproyecto',FinalizarProyectoController::class)->middleware(['auth:sanctum', 'verified']);
+Route::get('actividades/{proyecto_social_id}', ['as' => 'actividades', 'uses' => 'ActividadesController@show']);
 
 //Route::delete('verificarcuenta/{id}', [VerificarCuentaController::class, 'id'])->name('verificarcuenta.eliminar');
 Route::get('credenciales', function (){
