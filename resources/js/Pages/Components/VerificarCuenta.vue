@@ -426,20 +426,7 @@ import Button from '../../Jetstream/Button.vue'
                 estudiantesFiltradas:[],
                 successGuardado:false,
                 formularioNuevaCarrera:false,
-                /*form: this.$inertia.form({
-                    nombre_estudiante:'',
-                    apellido_estudiante:'',
-                    carnet_estudiante:'',
-                    sexo_estudiante:'',
-                    correo_estudiante:'',
-                    telefono_estudiante:'',
-                    carrera_id:'',
-                    dui_estudiante:'',
-                    nit_estudiante:'',
-                    materias_cursadas:'',
-                    cantidad_horas_ss:'',
-                    estado_estudiante:'En espera',
-                    }),*/
+                                
                 formUp: this.$inertia.form({
                     id:'',
                     nombre_estudiante:'',

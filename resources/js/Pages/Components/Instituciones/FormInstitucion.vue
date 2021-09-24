@@ -89,8 +89,8 @@
                       <div class="my-2">
                         <div class="d-flex justify-content-center align-items-baseline">
                           <!-- botones de accion  -->
-                          <jet-button type="submit" class="btn btn-primary float-center" :class="{ 'text-white-50': form.processing }" :disabled="form.processing" >
-                            <inertia-link class="fas fa-edit" title="Editar institucion" :href="route('instituciones.edit', instituciones.id)"></inertia-link>
+                          <jet-button type="submit" class="btn btn-success float-center" :class="{ 'text-white-50': form.processing }" :disabled="form.processing" >
+                            <inertia-link class="btn btn-success float-center" title="Editar institucion" :href="route('instituciones.edit', instituciones.id)"></inertia-link>
                             <i class="fas"></i> 
                             Guardar
                           </jet-button>

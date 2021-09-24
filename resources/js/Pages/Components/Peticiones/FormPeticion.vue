@@ -10,9 +10,9 @@
             <div class="row justify-content-center mb-2">
               <div class="col-sm-5">
                 <!-- titulo que cambiará conforme a la accion seleccionada -->
-                <!-- <h1 v-if="this.$props.peticiones.id != null" class="m-2">Modificar encargado de escuela</h1> -->
-                <!-- <h1 v-else class="m-2">Agregar encargado de escuela</h1> -->
-                <h1>Peticion de servicio social</h1>
+                <h1 v-if="this.$props.peticiones.id != null" class="m-2">Modificar peticion de servicio social</h1>
+                <h1 v-else class="m-2">Agregar peticion de servicio social</h1>
+                
               </div><!-- /.col -->          
             </div><!-- /.row -->
           </div><!-- /.container-fluid -->
@@ -239,13 +239,12 @@ export default {
 
     submit(){
       if(this.$props.peticiones.id != null){
-        this.$inertia.put(route('peticiones.update', this.$props.peticiones.id), this.form);
+        this.$inertia.put(route('peticiones.updateStatus', this.$props.peticiones.id), this.form);
       }
       else{
         this.form.post(route('peticiones.store'));
       }
     },
-
 
     // funcion para cargar las carreras de la facultad seleccionada
     buscarCarreras(id){
@@ -253,6 +252,7 @@ export default {
       this.carreras.forEach(carrera => {
         if(carrera.facultad_id == id){ 
           this.carrerasFiltradas.push(carrera); // llenar las carreras de la facultad
+          
         }
       });
 
@@ -268,16 +268,19 @@ export default {
   mounted(){
     // funcion para cargar las carreras de las facultades al cargar la pagina
     if(this.$props.peticiones.id != null){ // validar si es insercion o actualizacion por medio del id
-      var idFac = this.form.facultad_id;  // obteniendo la facultad del encargado
+      var idFac = this.form.facultad_id;  // obteniendo la facultad del encargado     
       this.carreras.forEach(carrera => { 
         if(carrera.facultad_id == idFac){
-          this.carrerasFiltradas.push(carrera); // llenar las carreras de la facultad
-        }
+          this.facultades.push(carrera); // llenar las carreras de la facultad
+
+        }        
+
       });
 
-      this.escuela.forEach(element => {
-        this.carrerasFiltradas.push(element); //agregar la facultad del encargado al arreglo
-      });      
+      this.carreras.forEach(element =>{
+        this.carrerasFiltradas.push(element);
+      });
+
     } 
   }
 }

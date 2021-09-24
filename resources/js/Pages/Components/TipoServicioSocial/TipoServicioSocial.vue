@@ -34,6 +34,10 @@
                   <h3 class="card-title">
                     <i class="ion-clipboard ion mr-1"></i>
                     Tipo de servicio social
+                    <br>                    
+                    <jet-button class="btn btn-danger" :href="route('peticiones.create')" title="Eliminar tipo de servicio social">
+                      Volver a crear peticiones
+                    </jet-button>
                   </h3>
                   <!--Boton para añadir facultades-->
                   <button type="button" class="btn btn-success float-right mb-8" data-toggle="modal" data-target="#addTipoServicio">
@@ -227,15 +231,14 @@
             'Guardado con exito!',
             'El tipo de servicio social se agrego correctamente',
             'success'
-          );
+          );          
       },
 
       // Agrega un nuevo tipo de servicio a partir del modal de servicio socia
       submit(){
         this.form.post(this.route('tipoServicio.store'));
         this.form.nombre_tipo_servicio='';
-        this.success();
-        window.location.reload(true);      
+        this.success();                
       },
 
       submitUpdate(form){

@@ -61,7 +61,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                          <tr class="table-secondary" scope="row" v-for="peticiones in peticionesArray" :key="peticiones.id">
+                          <tr class="table-secondary" scope="row" v-for="(peticiones, index) in peticionesArray" :key="index">
                             <!--Aqui devuelven los datos que se mostraran en pantalla -->
                             <td>{{ peticiones.nombre_institucion }}</td>
                             <td>{{ peticiones.nombre_peticion }}</td>
@@ -74,7 +74,7 @@
                                   <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarInfo(peticiones)" title="Ver informacion de la institucion"></jet-button>
                                   
                                   <!-- Boton para editar -->
-                                  <!-- <inertia-link class="fas fa-edit" title="Editar institucion" :href="route('instituciones.edit', instituciones.id)"></inertia-link>                                   -->
+                                  <!-- <inertia-link class="fas fa-edit" title="Editar peticion" :href="route('peticiones.edit', peticiones.idPeticion)"></inertia-link>                                   -->
 
                                   <!-- Boton para eliminar -->
                                   <!-- <jet-button class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Eliminar institucion" method="delete" 
@@ -101,8 +101,8 @@
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Titulo: {{ form.nombre_peticion }}</h5>
-                  <h5 class="modal-title text-primary">{{ form.nombre_institucion }}</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Titulo: {{ formUp.nombre_peticion }}</h5>
+                  <h5 class="modal-title text-primary">{{ formUp.nombre_institucion }}</h5>
                          
               </div>
               <div class="modal-body">
@@ -110,37 +110,37 @@
                 <div>
                   <div class="row">
                     <div class="col-md-12">
-                      <h5 class=""><strong>Descripcion: </strong>{{ form.descripcion_peticion }}</h5>
+                      <h5 class=""><strong>Descripcion: </strong>{{ formUp.descripcion_peticion }}</h5>
                     </div>                    
                   </div>
 
                   <div class="row">
                     <div class="col-md-12">
-                      <h5 class=""><strong>Cantidad de estudiantes solicitada: </strong>{{ form.cantidad_estudiantes }}</h5>
+                      <h5 class=""><strong>Cantidad de estudiantes solicitada: </strong>{{ formUp.cantidad_estudiantes }}</h5>
                     </div>
 
                     <div class="col-md-12">
-                      <h5 class=""><strong>Correo: </strong>{{ form.correo_peticion }}</h5>
+                      <h5 class=""><strong>Correo: </strong>{{ formUp.correo_peticion }}</h5>
                     </div>
 
                     <div class="col-md-12">
-                      <h5 class=""><strong>Ubicacion: </strong>{{ form.ubicacion_actividades }}</h5>
+                      <h5 class=""><strong>Ubicacion: </strong>{{ formUp.ubicacion_actividades }}</h5>
                     </div>
 
                     <div class="col-md-12">
-                      <h5 class=""><strong>Fecha inicio: </strong>{{ form.fecha_peticion }}</h5>
+                      <h5 class=""><strong>Fecha inicio: </strong>{{ formUp.fecha_peticion }}</h5>
                     </div>
 
                     <div class="col-md-12">
-                      <h5 class=""><strong>Mas detalle: </strong>{{ form.otros_tipo_servicio }}</h5>
+                      <h5 class=""><strong>Mas detalle: </strong>{{ formUp.otros_tipo_servicio }}</h5>
                     </div>                      
                   
                     <div class="col-md-12">
-                      <h5 class=""><strong>Carrera solicitada: </strong>{{ form.nombre_carrera }}</h5>
+                      <h5 class=""><strong>Carrera solicitada: </strong>{{ formUp.nombre_carrera }}</h5>
                     </div>
                   
                     <div class="col-md-12">
-                      <h5 class=""><strong>Tipo de servicio: </strong>{{ form.nombre_tipo_servicio }}</h5>
+                      <h5 class=""><strong>Tipo de servicio: </strong>{{ formUp.nombre_tipo_servicio }}</h5>
                     </div>                                    
                     <div class="row">
                       <div>
@@ -156,13 +156,43 @@
                 </div>  
                 <hr class="mb-1"/>
               </div>
-              <div class="mb-4">                  
-                  <div class="d-flex justify-content-center">
-                      <button class="btn btn-warning" data-dismiss="modal">
-                        <i class="fa fa-eye-slash" aria-hidden="true"></i>
-                        Ocultar detalle
-                      </button>
+              <div class="d-flex justify-content-center align-items-baseline">
+                <div class="row">
+
+                  <!-- Boton para visualizar -->
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <inertia-link :href="route('peticiones.index')" type="button" class="btn btn-warning float-center" data-dismiss="modal">
+                      <i class="fas fa-eye-slash" aria-hidden="true"></i> Ocultar </inertia-link>                  
+                    </div>
                   </div>
+
+                  <div class="col-md-1"></div>
+
+                  <!-- Boton para aprobar -->
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <button v-if="peticiones.estado_peticion == 'En espera'" class="btn btn-success float-center" title="Aceptar peticion" v-on:click="cambiarEstado(form)"> 
+                        <i class="fas fa-check" aria-hidden="true"></i> Aceptar </button>  
+
+                        <button v-else class="btn btn-success float-center" title="Activar estudiante" v-on:click="cambiarEstado(formUp)"> 
+                        <i class="fas fa-check" aria-hidden="true"></i> Aceptar </button>
+                    </div>
+                  </div>
+
+                  <div class="col-md-1"></div>
+
+                  <!-- Boton para rechazar -->
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <inertia-link v-if="peticiones.estado_peticion == 'En espera'" class="btn btn-danger" title="Desactivar institucion" method="delete" :href="route('peticiones.destroy', this.formUp.id)" v-on:click="rechazarEstado(formUp)"> 
+                        <i class="fas fa-times" aria-hidden="true"></i> Rechazar </inertia-link>  
+
+                        <inertia-link v-else class="btn btn-danger" title="Desactivar estudiante" method="delete" :href="route('peticiones.destroy', this.formUp.id)" v-on:click="rechazarEstado(formUp)"> 
+                        <i class="fas fa-times" aria-hidden="true"></i> Rechazar </inertia-link>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -200,45 +230,70 @@
 
       // Carga la informacionn de la institucion seleccionada de la lista
       mostrarInfo(peticiones){
-        this.form.cantidad_estudiantes = peticiones.cantidad_estudiantes,
-        this.form.nombre_peticion = peticiones.nombre_peticion,
-        this.form.descripcion_peticion =peticiones.descripcion_peticion,
-        this.form.ubicacion_actividades = peticiones.ubicacion_actividades,
-        this.form.fecha_peticiones =peticiones.fecha_peticiones,        
-        this.form.otros_tipo_servicio =peticiones.otros_tipo_servicio,
-        this.form.estado_peticion = peticiones.estado_peticion,
-        this.form.correo_peticion= peticiones.correo_peticion,
-        this.form.nombre_carrera =peticiones.nombre_carrera,
-        this.form.nombre_tipo_servicio =peticiones.nombre_tipo_servicio,
-        this.form.nombre_institucion = peticiones.nombre_institucion
-
-        // this.form.contacto_institucion= peticiones.contacto_institucion,
-        // this.form.correo_institucion= peticiones.correo_institucion,
-        // this.form.telefono_institucion= peticiones.telefono_institucion,        
-        // this.form.rubro_institucion= peticiones.rubro_institucion,
-        // this.form.correo_peticion =peticiones.correo_peticion     
-      },
+        this.formUp.cantidad_estudiantes = peticiones.cantidad_estudiantes,
+        this.formUp.nombre_peticion = peticiones.nombre_peticion,
+        this.formUp.descripcion_peticion =peticiones.descripcion_peticion,
+        this.formUp.ubicacion_actividades = peticiones.ubicacion_actividades,
+        this.formUp.fecha_peticion =peticiones.fecha_peticion,        
+        this.formUp.otros_tipo_servicio =peticiones.otros_tipo_servicio,
+        this.formUp.estado_peticion = peticiones.estado_peticion,
+        this.formUp.correo_peticion= peticiones.correo_peticion,
+        this.formUp.nombre_carrera =peticiones.nombre_carrera,
+        this.formUp.nombre_tipo_servicio =peticiones.nombre_tipo_servicio,
+        this.formUp.nombre_institucion = peticiones.nombre_institucion        
+      },    
       
-      // Cambiar el estado de la peticion
-      // cambiarEstado(peticion){
-      //   Swal.fire({
-      //     title: '¿Que desea hacer con la peticion?',
-      //     text: "La institucion"+ this.peticiones.nombre_institucion + " con la peticion " + this.peticiones.nombre_peticion + " sera eliminada",
-      //     icon: 'warning',
-      //     showCancelButton: true,
-      //     confirmButtonColor: '#3085d6',
-      //     cancelButtonColor: '#d33',
-      //     confirmButtonText: 'Si, desactivar',
-      //     cancelButtonText: 'No, cancelar'
-      //   }).then((result) =>{
-      //     if(result.isConfirmed){
-      //       this.$inertia.delete(route('peticiones.destroy', peticion.id));
-      //       Swal.fire(
+      // Aca se acepta la peticon de servicio social
+    cambiarEstado(peticion){
+      if(peticion.estado_peticion == 'En espera'){
+        Swal.fire({
+          title: '¿Esta seguro que desea aceptar la peticion de servicio social?',
+          text: "Titulo: "+ peticion.nombre_peticion + ", institucion: "+ peticion.nombre_institucion,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, aceptar',
+          cancelButtonText: 'No, cancelar'
+        }).then((result)=> {
+          if(result.isConfirmed){
+            this.$inertia.put(route('peticiones.update', peticion.id), this.formUp);
+              Swal.fire(
+                '!Aceptado!',
+                'La peticion se acepto correctamente',
+                'success'
+              );
+              window.location.reload(true);
+          }
+        })
+      }
+    },
 
-      //       )
-      //     }
-      //   })
-      // }
+
+    rechazarEstado(peticion){
+      if(peticion.estado_peticion == 'En espera'){
+        Swal.fire({
+          title: '¿Esta seguro que desea rechazar la peticion de servicio social?',
+          text: "Titulo: "+ peticion.nombre_peticion + ", institucion: "+ peticion.nombre_institucion,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, aceptar',
+          cancelButtonText: 'No, cancelar'
+        }).then((result)=> {
+          if(result.isConfirmed){
+            // this.$inertia.put(route('peticiones.update', peticion.id), this.form);
+              Swal.fire(
+                '!Rechazado!',
+                'La peticion se rechazo correctamente',
+                'success'
+              );
+            // window.location.reload(true);
+          }
+        })
+      }
+    },
       
     },
 
@@ -247,19 +302,21 @@
         // Array para recueprar la lista de peticiones
         peticionesArray:[],      
         // objeto para recuperar una peticion y mostrar su info
-        form:{
+        formUp: this.$inertia.form({          
+          id: '',
           nombre_peticion:'',
           descripcion_peticion: '',
           cantidad_estudiantes: '',
           ubicacion_actividades: '',
           fecha_peticiones: '',
           otros_tipo_servicio: '',
-          estado_peticion: '',
+          estado_peticion: 'En espera',
           correo_peticion: '',
           nombre_carrera:'',
           nombre_tipo_servicio:'',
           nombre_institucion:'',          
-        }
+        }),
+        
       }
     },
 
