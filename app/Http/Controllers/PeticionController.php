@@ -54,7 +54,7 @@ class PeticionController extends Controller
         $peticion->fecha_peticion = '';
         $peticion->fecha_peticion_fin = '';
         $peticion->cantidad_horas='';
-        
+
         $peticion->otros_tipo_servicio = '';
         $peticion->estado_peticion = 'En espera';
         $peticion->correo_peticion = '';
@@ -166,6 +166,16 @@ class PeticionController extends Controller
         $peticionF= Peticion::find($peticion);
         $peticionF->estado_peticion = "Aceptado";
         $peticionF->save();
+
+        // $proyectoS = new ProyectoSocial();
+        // $proyectoS->estado_proyecto_social = 'No iniciado';
+        // $proyectoS->peticion_id = $peticionF->id;
+        // $proyectoS->save();
+
+        ProyectoSocial::create([
+            'estado_proyecto_social' => 'No iniciado',
+            'peticion_id' => $peticionF->id,
+        ]);
 
         return Redirect::route('peticiones.index');
 

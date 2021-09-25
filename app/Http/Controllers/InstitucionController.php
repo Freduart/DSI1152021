@@ -70,29 +70,24 @@ class InstitucionController extends Controller
         $institucion->save();
 
         // if($institucion->save()){
-					// Creando la institucion y asignandole el rol
-                    User::create([
-                            'name' => $data['nombre_institucion'],
-                            'email' => $data['correo_institucion'],
-                            'password' => bcrypt($contra)
-					])->assignRole('Institucion');                   
+        // Creando la institucion y asignandole el rol
+        User::create([
+                'name' => $data['nombre_institucion'],
+                'email' => $data['correo_institucion'],
+                'password' => bcrypt($contra)
+        ])->assignRole('Institucion');                   
 
-					$usuario= User::where('name', '=', $data['nombre_institucion'])->firstOrFail();
-                    // $usuario->assingRole('Institucion');
-					// error_log($usuario);
-					
-					$institucion->user_id=$usuario->id;
-                    $institucion->save();
-					// Asignamos el usuario a la institucion
-					$institucion = Institucion::where('nombre_institucion', '=', $data['nombre_institucion'])->firstOrFail();
-					// error_log($institucion);
-        // }
-
-        // Institucion::create($request->all());
-        // return "mensaje";
-        // return Institucion::all();
+        $usuario= User::where('name', '=', $data['nombre_institucion'])->firstOrFail();
+        // $usuario->assingRole('Institucion');
+        // error_log($usuario);
+        
+        $institucion->user_id=$usuario->id;
+        $institucion->save();
+        // Asignamos el usuario a la institucion
+        $institucion = Institucion::where('nombre_institucion', '=', $data['nombre_institucion'])->firstOrFail();
+        
         return Redirect::route('instituciones.index'); 
-        // return Inertia::render('Components/Instituciones/institucion');
+        
     }
 
     /**
