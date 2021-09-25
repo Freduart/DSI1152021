@@ -18,8 +18,14 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
 
         // \App\Models\User::factory(10)->create();
+
+        // Se debe llamar en orden o se chingan todo
         $this->call(FacultadSeeder::class);
         $this->call(CarreraSeeder::class);
-        $this->call(EstudianteSeeder::class);
+        $this->call(TipoServicioSocialSeeder::class);
+        $this->call(InstitucionesSeeder::class);
+        $this->call(EncargadoEscuelaSeeder::class);
+        $this->call(PeticionesSeeder::class);
+        
     }
 }

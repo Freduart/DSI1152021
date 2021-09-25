@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
@@ -14,12 +15,53 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+
+      DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
         //
-        User::create([
-          'name' => 'admin',
-          'email'=> 'admin@gmail.com',
-          'password' => bcrypt('adminadmin')
-        ])->assignRole('Administrador');
+      User::create([
+        'name' => 'admin',
+        'email'=> 'admin@gmail.com',
+        'password' => bcrypt('adminadmin')
+      ])->assignRole('Administrador');
+
+
+      // Apartados de estudiantes
+      $estudiantes = [
+        ["Fredy","fredy@gmail.com","estudiante"],
+        ["Leo","leo@gmail.com","estudiante"],
+        ["Chico","chico@gmail.com","estudiante"],
+        ["Fransisco","ganuza@gmail.com","estudiante"],
+        ["Stefany","stefany@gmail.com","estudiante"],
+      ];
+
+      foreach($estudiantes as $estudiante){
+        User::create(['name' => $estudiante[0],'email' => $estudiante[1],'password' => bcrypt($estudiante[2])]);
+      }      
+
+      // Apartado de instituciones
+      $instituciones = [
+        ["Applaudo","applaudo@gmail.com","institucion"],
+        ["Novatech","novatech@gmail.com","institucion"],
+      ];
+
+      foreach($instituciones as $institucion){
+        User::create(['name' => $institucion[0],'email' => $institucion[1],'password' => bcrypt($institucion[2])]);
+      }
+
+      // Apartado de encargados de escuela
+
+      $encargadosE = [
+        ["Balmore", "balmore@gmail.com", "encargadoE"],
+        ["Garcia", "garcia@gmail.com", "encargadoE"]
+      ];
+
+      foreach($encargadosE as $encargadoE){
+        User::create(['name' => $encargadoE[0],'email' => $encargadoE[1],'password' => bcrypt($encargadoE[2])]);
+      }
+
+      // Apartados de encargados de facultad
+
+      DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
 
         /*User::create([
           'name' => 'facultad',
@@ -39,17 +81,18 @@ class UserSeeder extends Seeder
           'password' => bcrypt('adminadmin')
         ])->assignRole('Encargado Escuela');*/
 
-        User::create([
-          'name' => 'estudiante',
-          'email'=> 'estudiante@gmail.com',
-          'password' => bcrypt('studiante')
-        ])->assignRole('Estudiante');
+        // User::create([
+        //   'name' => 'estudiante',
+        //   'email'=> 'estudiante@gmail.com',
+        //   'password' => bcrypt('studiante')
+        // ])->assignRole('Estudiante');
+        
 
-        User::create([
-          'name' => 'institucion',
-          'email'=> 'institucion@gmail.com',
-          'password' => bcrypt('institucion')
-        ])->assignRole('Institucion');
+        // User::create([
+        //   'name' => 'institucion',
+        //   'email'=> 'institucion@gmail.com',
+        //   'password' => bcrypt('institucion')
+        // ])->assignRole('Institucion');
 
     }
 }
