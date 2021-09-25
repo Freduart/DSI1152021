@@ -31,11 +31,12 @@ class BitacoraController extends Controller
         ->join('peticiones','peticiones.id','=','proyectos_sociales.peticion_id')
         ->join('carreras','carreras.id','=','peticiones.carrera_id')
         ->join('facultades','facultades.id','=','carreras.facultad_id')
-        ->where('proyectos_sociales.estado_proyecto_social','=','En curso')
+        // ->where('proyectos_sociales.estado_proyecto_social','=','En curso')
         ->Where('actividades.verificado', '=', 'Aceptada')
         ->orWhere('actividades.verificado', '=', 'Reportada')
         ->get();
 
+        // return $actividades;
         //$idUsuario = 2;
         //Obtenemos el id del usuario logueado
         $idUsuario = Auth::id();

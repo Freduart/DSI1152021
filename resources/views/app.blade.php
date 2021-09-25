@@ -15,6 +15,8 @@
         <link rel="stylesheet" href="{{ mix('css/dashboard.css') }}">
         {{-- Styles para AdminLTE 3.1 --}}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
+        <link rel="stylesheet" href="../themes/default/default.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="../nivo-slider.css" type="text/css" media="screen" />
 
         @routes
         

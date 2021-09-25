@@ -18,6 +18,8 @@ use App\Http\Controllers\VerificarActividadesController;
 use App\Http\Controllers\FinalizarActividadesController;
 use App\Http\Controllers\EstablecerHAController;
 use App\Http\Controllers\ServicioSocialController;
+use App\Http\Controllers\PeticionController;
+use App\Http\Controllers\TipoServicioController;
 use App\Http\Controllers\ConstanciaController;
 use App\Http\Controllers\FinalizarProyectoController;
 
@@ -79,7 +81,7 @@ Route::resource('facultades', FacultadController::class)->middleware(['auth:sanc
 Route::resource('encargadosescuela', EncargadoEscuelaController::class)->middleware(['auth:sanctum','verified']);
 
 Route::resource('verificarcuenta', VerificarCuentaController::class)->middleware(['auth:sanctum','verified']);
-Route::resource('instituciones', InstitucionController::class)->middleware(['auth:sanctum','verified']);
+Route::resource('instituciones', InstitucionController::class);
 Route::resource('actividades', ActividadesController::class)->middleware(['auth:sanctum','verified']);
 
 
@@ -112,3 +114,12 @@ Route::get('credenciales', function (){
   Mail::to('jganuzaramírez@gmail.com')->send(new CredencialesMailable($details));
   return "mensaje enviado";
 });
+
+
+//Ruta para el tipo de servicio social
+Route::resource('tipoServicio', TipoServicioController::class)->only([
+  'index','store','update','destroy'
+]);
+
+//Ruta de las peticiones
+Route::resource('peticiones', PeticionController::class);

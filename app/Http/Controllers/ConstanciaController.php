@@ -26,8 +26,8 @@ class ConstanciaController extends Controller
     {
         $servicios = DB::table('proyectos_sociales')
         ->select('proyectos_sociales.id as idServicio', 'proyectos_sociales.peticion_id as idPeticion', 'tipos_servicio_social.nombre_tipo_servicio as tipo',
-        'peticiones.ubicacion_actividades as ubicacion', 'proyectos_sociales.fecha_inicio as inicio', 'proyectos_sociales.fecha_fin as fin', 
-        'proyectos_sociales.numero_horas as horas', 'encargado_escuelas.nombre_encargado_escuela as encargadoE', 'encargado_facultades.nombre_encargado_facultad as encargadoF',
+        'peticiones.fecha_peticion as inicio', 'peticiones.fecha_peticion_fin','peticiones.cantidad_horas',
+        'peticiones.ubicacion_actividades as ubicacion','encargado_escuelas.nombre_encargado_escuela as encargadoE', 'encargado_facultades.nombre_encargado_facultad as encargadoF',
         'estudiantes.nombre_estudiante as estudiante', 'facultades.nombre_facultad as facultad', 'carreras.nombre_carrera as carrera')
         ->join('peticiones','peticiones.id','=','proyectos_sociales.peticion_id')
         ->join('tipos_servicio_social','tipos_servicio_social.id','=','peticiones.tipo_servicio_social_id')
