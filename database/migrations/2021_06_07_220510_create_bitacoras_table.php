@@ -15,9 +15,9 @@ class CreateBitacorasTable extends Migration
     {
         Schema::create('bitacoras', function (Blueprint $table) {
             $table->id('id');
-            $table->unsignedInteger('total_horas');
-            $table->text('observaciones_bitacora');
-            $table->binary('documento_pdf');
+            $table->unsignedInteger('total_horas')->nullable();
+            $table->text('observaciones_bitacora')->nullable();
+            $table->binary('documento_pdf')->nullable();
 
             $table->unsignedBigInteger('estudiante_id')->nullable();
             $table->unsignedBigInteger('proyecto_social_id')->nullable();
