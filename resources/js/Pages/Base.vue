@@ -184,7 +184,7 @@
                             <inertia-link :href="route('solicitudesestudiante.index')" class="nav-link">
                             <i class="fas fa-paper-plane nav-icon"></i>
                             <p>Mis solicitudes</p>
-                            </inertia-link>
+                            </inertia-link> 
                     </li>
                     
                     <li v-if="is('Encargado Escuela') || is('Encargado Facultad') || is('Estudiante') || is('Unidad de Proyeccion Social')" class="nav-item">

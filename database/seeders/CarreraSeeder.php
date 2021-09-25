@@ -17,7 +17,7 @@ class CarreraSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Carrera::factory()->count(12)->create();
+        // \App\Models\Carrera::factory()->count(12)->create();
 
     }
 }
