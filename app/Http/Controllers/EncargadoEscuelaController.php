@@ -12,6 +12,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use App\Models\EncargadoFacultad;
 
 class EncargadoEscuelaController extends Controller
 {
@@ -59,7 +61,19 @@ class EncargadoEscuelaController extends Controller
         $encargadoE->dui_encargado_escuela = '';
         $encargadoE->telefono_encargado_escuela = '';
 
-        $facultades = Facultad::all();
+        $facultades = null;
+        // validando que el usuario ha iniciado sesion
+        if(Auth::check()){            
+            // validando el rol del usuario logeado
+            if (Auth::user()->hasRole('Encargado Facultad')) {
+                $idUsuario = Auth::id();
+                $encargadoF = EncargadoFacultad::where('user_id', '=', $idUsuario)->firstOrFail();
+                $facultades = DB::table('facultades')->where('id','=',$encargadoF->facultad_id)->get();
+                //$facultades = Facultad::find($encargadoF->facultad_id)->get();
+            } else {
+                $facultades = Facultad::all();
+            }
+        }
 
         // obteniendo las carreras que aun no tienen asignado encargado de escuela activo
         $carreras = DB::table('carreras')->distinct('nombre_carrera')
@@ -141,31 +155,73 @@ class EncargadoEscuelaController extends Controller
     public function edit($encargadoEscuela)
     {
         // obteniendo las facultades
-        $facultades = Facultad::all();
+        $facultades = null;
+        // validando que el usuario ha iniciado sesion
+        if(Auth::check()){            
+            // validando el rol del usuario logeado
 
-        // obtenindo el encargado
-        $encargadoE = EncargadoEscuela::find($encargadoEscuela);
-        // obteniendo el id de la facultad del encargado de escuela
-        $idCarrera = $encargadoE->carrera_id;
-        $carreraEncargado = Carrera::find($idCarrera);
-        $idFacultad = $carreraEncargado->facultad_id;
-        // obteniendo las carreras que aun no tienen asignado encargado de escuela activo
-        $carreras = DB::table('carreras')->distinct('nombre_carrera')
-        ->select('carreras.id AS idC', 'nombre_carrera', 'facultad_id')
-        ->whereNotIn('nombre_carrera', DB::table('encargado_escuelas')
-        ->select('nombre_carrera')
-        ->distinct('nombre_carrera')
-        ->join('carreras', 'encargado_escuelas.carrera_id', '=', 'carreras.id')
-        ->where('estado_encargado_escuela', '=', 'Activo'))
-        ->get();
-        // obteniendo la carrera del encargado de escuela
-        $escuela = DB::table('carreras')->distinct('nombre_carrera')
-        ->join('encargado_escuelas', 'carreras.id', '=', 'encargado_escuelas.carrera_id')
-        ->select('carreras.id AS idC', 'nombre_carrera', 'facultad_id')
-        ->where('encargado_escuelas.id', '=', $encargadoEscuela)
-        ->get();
-        return Inertia::render('Components/EncargadoEscuela/FormEncargadoEscuela', ['encargadoE' => $encargadoE, 'facultades' => $facultades, 'carreras' => $carreras, 'idFacultad' => $idFacultad, 'escuela'=> $escuela]);
-    }
+            // obteniendo las carreras que aun no tienen asignado encargado de escuela activo
+            $carreras = DB::table('carreras')->distinct('nombre_carrera')
+            ->select('carreras.id AS idC', 'nombre_carrera', 'facultad_id')
+            ->whereNotIn('nombre_carrera', DB::table('encargado_escuelas')
+            ->select('nombre_carrera')
+            ->distinct('nombre_carrera')
+            ->join('carreras', 'encargado_escuelas.carrera_id', '=', 'carreras.id')
+            ->where('estado_encargado_escuela', '=', 'Activo'))
+            ->get();
+
+            if (Auth::user()->hasRole('Encargado Facultad')) {
+                $idUsuario = Auth::id();
+                $encargadoF = EncargadoFacultad::where('user_id', '=', $idUsuario)->firstOrFail();
+                
+                $encargadoE = EncargadoEscuela::find($encargadoEscuela);
+                $escuela = Carrera::find($encargadoE->carrera_id);
+                $facultad = Facultad::find($escuela->facultad_id);
+
+                if ($encargadoF->facultad_id == $facultad->id){
+                    
+                    $facultades = DB::table('facultades')->where('id','=',$encargadoF->facultad_id)->get();
+
+                    // obtenindo el encargado
+                    $encargadoE = EncargadoEscuela::find($encargadoEscuela);
+                    // obteniendo el id de la facultad del encargado de escuela
+                    $idCarrera = $encargadoE->carrera_id;
+                    $carreraEncargado = Carrera::find($idCarrera);
+                    $idFacultad = $carreraEncargado->facultad_id;
+                    
+                    // obteniendo la carrera del encargado de escuela
+                    $escuela = DB::table('carreras')->distinct('nombre_carrera')
+                    ->join('encargado_escuelas', 'carreras.id', '=', 'encargado_escuelas.carrera_id')
+                    ->select('carreras.id AS idC', 'nombre_carrera', 'facultad_id')
+                    ->where('encargado_escuelas.id', '=', $encargadoEscuela)
+                    ->get();
+                    return Inertia::render('Components/EncargadoEscuela/FormEncargadoEscuela', ['encargadoE' => $encargadoE, 'facultades' => $facultades, 'carreras' => $carreras, 'idFacultad' => $idFacultad, 'escuela'=> $escuela]);
+    
+                } else {
+                    return Redirect::route('encargadosescuela.index'); 
+                }
+                
+            } else {
+                $facultades = Facultad::all();
+                // obtenindo el encargado
+                $encargadoE = EncargadoEscuela::find($encargadoEscuela);
+                // obteniendo el id de la facultad del encargado de escuela
+                $idCarrera = $encargadoE->carrera_id;
+                $carreraEncargado = Carrera::find($idCarrera);
+                $idFacultad = $carreraEncargado->facultad_id;
+                
+                // obteniendo la carrera del encargado de escuela
+                $escuela = DB::table('carreras')->distinct('nombre_carrera')
+                ->join('encargado_escuelas', 'carreras.id', '=', 'encargado_escuelas.carrera_id')
+                ->select('carreras.id AS idC', 'nombre_carrera', 'facultad_id')
+                ->where('encargado_escuelas.id', '=', $encargadoEscuela)
+                ->get();
+                return Inertia::render('Components/EncargadoEscuela/FormEncargadoEscuela', ['encargadoE' => $encargadoE, 'facultades' => $facultades, 'carreras' => $carreras, 'idFacultad' => $idFacultad, 'escuela'=> $escuela]);
+    
+            }
+        }
+
+        }
 
     /**
      * Update the specified resource in storage.
@@ -190,15 +246,35 @@ class EncargadoEscuelaController extends Controller
      */
     public function destroy($encargadoEscuela)
     {
-        // cambio de estado del encargado de escuela
-        $encargadoE = EncargadoEscuela::find($encargadoEscuela);
-        if ($encargadoE->estado_encargado_escuela == "Activo"){
-            $encargadoE->estado_encargado_escuela = "Inactivo";
-            $encargadoE->save();
-        } else {
-            $encargadoE->estado_encargado_escuela = "Activo";
-            $encargadoE->save();
+        // obteniendo las facultades
+        $facultades = null;
+        // validando que el usuario ha iniciado sesion
+        if(Auth::check()){            
+            // validando el rol del usuario logeado
+            if (Auth::user()->hasRole('Encargado Facultad')) {
+                $idUsuario = Auth::id();
+                $encargadoF = EncargadoFacultad::where('user_id', '=', $idUsuario)->firstOrFail();
+
+                $encargadoE = EncargadoEscuela::find($encargadoEscuela);
+                $escuela = Carrera::find($encargadoE->carrera_id);
+                $facultad = Facultad::find($escuela->facultad_id);
+                
+                if ($encargadoF->facultad_id == $facultad->id){
+                    // cambio de estado del encargado de escuela
+                    $encargadoE = EncargadoEscuela::find($encargadoEscuela);
+                    if ($encargadoE->estado_encargado_escuela == "Activo"){
+                        $encargadoE->estado_encargado_escuela = "Inactivo";
+                        $encargadoE->save();
+                    } else {
+                        $encargadoE->estado_encargado_escuela = "Activo";
+                        $encargadoE->save();
+                    }
+                } else {
+                    return Redirect::route('encargadosescuela.index'); 
+                }
+            } 
         }
+        
         return Redirect::route('encargadosescuela.index');
     }
 }

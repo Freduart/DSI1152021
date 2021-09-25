@@ -272,13 +272,7 @@
                     <div class="d-flex justify-content-center">
                         <div class="row">
                                 <!--BOTON PARA IR A ACTIVIDADES -->
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <!--v-if="form.estado_proyecto_social == 'En curso'"-->
-                                          <inertia-link type="button"  data-dismiss="modal" class="btn btn-success float-left mt-2"  :href="route('actividades.index')">
-                                          <i class="fa fa-eye"></i> Visualizar Actividades</inertia-link>
-                                        </div>
-                                    </div>
+                                    
                                     <button class="btn btn-warning" data-dismiss="modal">
                                     <i class="fa fa-eye-slash" aria-hidden="true"></i>
                                         Ocultar detalle

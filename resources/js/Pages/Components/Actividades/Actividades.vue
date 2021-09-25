@@ -60,6 +60,7 @@
                             
                 </div>
                 <!-- /.card-header -->
+                <div v-if="actividadesFiltradas.length != 0">
                 <div class="card-body">
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
@@ -69,9 +70,9 @@
                                     <thead class="thead-dark">
                                         <tr> 
                                         <!-- <th scope='col'>Código</th> -->
-                                        <th scope="col">Codigo</th>
                                         <th scope="col">Nombre de la Actividadd</th>
                                         <th scope="col">Fecha de la actividad</th>
+                                        <th scope="col">Horas</th>
                                         <th scope="col"></th>
                                         </tr>
                                     </thead>
@@ -79,9 +80,9 @@
                                         <tr class="table-secondary" scope="row" v-for="(actividad, index) in actividadesFiltradas" :key="index">
                                             
                                             <!--Aqui devuelven los datos que se mostraran en pantalla -->
-                                            <td>{{ actividad.id}}</td>
                                             <td>{{ actividad.nombre_actividad }}</td>
                                             <td>{{ actividad.fecha_actividad }}</td>
+                                            <td>{{ actividad.total_horas }}</td>
     
                                             <td>
                                             <!-- Botones para edit or delete-->
@@ -108,6 +109,10 @@
 
                         </li>
                     </ul>
+                </div>
+                </div>
+                <div v-else class="alert alert-warning ml-4 mr-4 mt-3" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                    No se han encontrado datos
                 </div>
 
                 <div class="card-footer clearfix">
@@ -380,23 +385,23 @@
             logout() {
                 this.$inertia.post(route('logout'));
             },
-
-            mostrarMensajeSuccess(){
-                    Swal.fire({
-                        title: 'Se ha guardado la actividad con éxito',
-                        text: 'Actualice la página para ver los cambios',
-                        icon: 'success',
-                        confirmButtonText: 'Aceptar',
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                        showConfirmButton: false,  
-                    });
-                    //window.location.reload(true);   
-            },
+            
             submit(){
                 console.log(this.form);
-                this.mostrarMensajeSuccess();
                 this.form.post(this.route('actividades.store'));
+                Swal.fire({
+                    title: 'Operación exitosa',
+                    text: 'Se ha guardado la actividad con éxito',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showConfirmButton: true,  
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    location.reload();
+                  }
+                });
                 this.form.id='';
                 this.form.nombre_actividad='';
                 this.form.fecha_actividad='';
@@ -406,32 +411,41 @@
             submitUpdate(form){
                 console.log(this.formUp);
                 console.log(form);
+                this.$inertia.put(route("actividades.update",form.id), this.formUp);
                 Swal.fire({
-                    title: 'Se ha actualizado la actividad ' + form.nombre_actividad,
-                    text: 'Actualice la página para ver los cambios',
+                    title: 'Operación exitosa',
+                    text: 'Se ha actualizado la actividad ' + form.nombre_actividad,
                     icon: 'success',
                     iconColor: '#FF8000',
                     confirmButtonText: 'Aceptar',
                     allowEscapeKey: false,
                     allowOutsideClick: false,
-                    showConfirmButton: false,
+                    showConfirmButton: true,
                     
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    location.reload();
+                  }
                 });
-                this.$inertia.put(route("actividades.update",form.id), this.formUp);
+                
                 //window.location.reload(true);
             },
             //Muestra mmensaje cuando se borra los campos
             mostrarMensajeDelete(actividad){
                 this.borrado = true;
                 Swal.fire({
-                    title: 'Se ha borrado la actividad ' + actividad.nombre_actividad,
-                    //text: 'Actualice la página para ver los cambios',
+                    title: 'Operación exitosa',
+                    text: 'Se ha borrado la actividad ' + actividad.nombre_actividad,
                     iconColor: '#CB3234',
-                    icon: 'warning',
+                    icon: 'success',
                     confirmButtonText: 'Aceptar',
                     allowEscapeKey: false,
                     allowOutsideClick: false,
-                    showConfirmButton: false,
+                    showConfirmButton: true,
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    location.reload();
+                  }
                 });
                 //window.location.reload(true);
             },

@@ -84,13 +84,13 @@
                         <p>Inicio</p>
                         </inertia-link>
                     </li>
-                    <li class="nav-item">
+                    <li v-if="is('Administrador')" class="nav-item">
                         <inertia-link :href="route('carreras.index')" class="nav-link" >
                         <i class="fa fa-graduation-cap nav-icon"></i>
                         <p>Carreras</p>
                         </inertia-link>
                     </li>
-                    <li class="nav-item">
+                    <li v-if="is('Unidad de Proyeccion Social') || is('Administrador')" class="nav-item">
                         <!--<a v-if="is('Estudiante')" href="#" class="nav-link">-->
                         <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-id-card"></i>
@@ -114,65 +114,64 @@
                         </li>
                         </ul>
                     </li>
+
+                    <li v-if="is('Encargado Facultad')" class="nav-item">
+                        <inertia-link :href="route('encargadosescuela.index')" :active="route().current('encargadosescuela.index')" class="nav-link">
+                            <i class="fa fa-chalkboard-teacher nav-icon" aria-hidden="true"></i>
+                            <p>Encargados por escuela</p>
+                        </inertia-link>
+                    </li>
                   
-                    <li class="nav-item">
+                    <li v-if="is('Administrador')" class="nav-item">
                             <inertia-link :href="route('facultades.index')" class="nav-link">
-                            <i class="far fa-building nav-icon"></i>
+                            <i class="fa fa-building nav-icon"></i>
                             <p>Facultades</p>
                             </inertia-link>
                     </li>
 
-                    <li class="nav-item">
+                    <li v-if="is('Encargado Facultad') || is('Encargado Escuela') || is('Unidad de Proyeccion Social')" class="nav-item">
                             <inertia-link :href="route('estudiantes.index')" class="nav-link">
                             <i class="fa fa-user-friends nav-icon" aria-hidden="true"></i>
                             <p>Estudiantes</p>
                             </inertia-link>
                     </li>
 
-                    <li class="nav-item">
+                    <li v-if="is('Encargado Escuela')" class="nav-item">
                             <inertia-link :href="route('verificarcuenta.index')" class="nav-link">
                             <i class="fas fa-file nav-icon"></i>
                             <p>Verificar Cuenta</p>
                             </inertia-link>
                     </li>
 
-                    <li class="nav-item">
+                    <li v-if="is('Administrador')" class="nav-item">
                             <inertia-link :href="route('usuarios.index')" class="nav-link">
                             <i class="fas fa-user-circle nav-icon"></i>
                             <p>Usuarios</p>
                             </inertia-link>
                     </li>
 
-                     <li class="nav-item">
+                     <li v-if="is('Administrador')" class="nav-item">
                             <inertia-link :href="route('roles.index')" class="nav-link">
                             <i class="fas fa-key nav-icon"></i>
                             <p>Roles</p>
                             </inertia-link>
                     </li>
 
-                    <li class="nav-item">
+                    <li v-if="is('Encargado Escuela')" class="nav-item">
                             <inertia-link :href="route('solicitudes.index')" class="nav-link">
                             <i class="nav-icon fas fa-edit"></i>
                             <p>Evaluacion de Solicitudes</p>
                             </inertia-link>
                     </li>
 
-<!-- fa fa-check-square--->
-                    <li class="nav-item">
-                            <inertia-link :href="route('actividades.index')" class="nav-link">
-                            <i class="nav-icon fa fa-list-alt"></i>
-                            <p> Mis Actividades</p>
-                            </inertia-link>
-                    </li>
-
-                    <li class="nav-item">
+                    <li v-if="is('Encargado Escuela')" class="nav-item">
                             <inertia-link :href="route('verificaractividades.index')" class="nav-link">
                             <i class="nav-icon fa fa-clipboard "></i>
                             <p>Verificar Actividades</p>
                             </inertia-link>
                     </li>
 
-                    <li class="nav-item">
+                    <li v-if="is('Encargado Escuela')" class="nav-item">
                             <inertia-link :href="route('establecerha.index')" class="nav-link">
                             <i class="nav-icon fa fa-clipboard "></i>
                             <p>Establecer cantidad de Horas y Alumnos</p>
@@ -188,7 +187,7 @@
                             </inertia-link>
                     </li>
                     
-                    <li class="nav-item">
+                    <li v-if="is('Encargado Escuela') || is('Encargado Facultad') || is('Estudiante') || is('Unidad de Proyeccion Social')" class="nav-item">
                             <inertia-link :href="route('serviciossociales.index')" class="nav-link">
                             <i class="fa fa-th-large nav-icon"></i>
                             <p>Servicios Sociales</p>

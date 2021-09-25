@@ -38,6 +38,7 @@
                             
                 </div>
                 <!-- /.card-header -->
+                <div v-if="serviciosFiltrados.length != 0">
                 <div class="card-body">
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
@@ -81,6 +82,10 @@
 
                         </li>
                     </ul>
+                </div>
+                </div>
+                <div v-else class="alert alert-warning ml-4 mr-4 mt-3" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                    No se han encontrado datos
                 </div>
 
                 <div class="card-footer clearfix">
