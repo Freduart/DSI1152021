@@ -270,10 +270,14 @@
                     <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button> -->
                     <div class="d-flex justify-content-center">
-                        <button class="btn btn-warning" data-dismiss="modal">
-                                <i class="fa fa-eye-slash" aria-hidden="true"></i>
-                                Ocultar detalle
-                        </button>
+                        <div class="row">
+                                <!--BOTON PARA IR A ACTIVIDADES -->
+                                    
+                                    <button class="btn btn-warning" data-dismiss="modal">
+                                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                        Ocultar detalle
+                                    </button>
+                        </div>
                     </div>
                 </div>
                 </div>

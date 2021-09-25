@@ -13,7 +13,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Establecer Cantidad de Horas y Alumnos</h1>
+            <h1 class="m-0">Establecer cantidad de horas y estudiantes</h1>
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -32,22 +32,22 @@
                 <div class="card-header">
                     <h3 class="card-title">
                     <i class="ion ion-clipboard mr-1"></i>
-                    Lista de Servicios Sociales
+                    Lista de servicios sociales
                     </h3>
                           <br>
-                     
                             
                 </div>
                 <!-- /.card-header -->
+                <div v-if="serviciosFiltrados.length != 0">
                 <div class="card-body">
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
                            
-                                <!--Tabla donde apareceran todos los servicios sociales-->
+                                <!--Tabla donde apareceran todos las actividadess-->
                                 <table class="table table-hover text-center" width="500" style="font-size: 20px">
                                     <thead class="thead-dark">
                                         <tr> 
-                                        <th scope='col'>Institucion</th>
+                                        <th scope="col">Institución</th>
                                         <th scope="col">Tipo de servicio</th>
                                         <th scope="col">Carrera</th>
                                         <th scope="col">Estado</th>
@@ -58,29 +58,22 @@
                                         <tr class="table-secondary" scope="row" v-for="(servicio, index) in serviciosFiltrados" :key="index">
                                             
                                             <!--Aqui devuelven los datos que se mostraran en pantalla -->
-                                            <td>{{ servicio.nombre_institucion }}</td>
-                                            <td>{{ servicio.nombre_tipo_servicio}}</td>
-                                            <td>{{ servicio.nombre_carrera }}</td>
+                                            <td>{{ servicio.institucion }}</td>
+                                            <td>{{ servicio.tipo}}</td>
+                                            <td>{{ servicio.carrera }}</td>
+                                            <td>{{ servicio.estado }}</td>
     
                                             <td>
                                             <!-- Botones para edit or delete-->
                                                 <div class="tools">
 
-                                                     <!--BOTON DE AGREGAR -->
-                                                     <jet-button :href="route('actividades.update', servicio.id)" data-toggle="modal" 
-                                                    data-target="#añadirCantidad" title="Agregar cantidad de hora y alumnos"> <i class="fa fa-plus-circle" style='color:#30bd21'></i> </jet-button>
-                                                   
-                                                    
-                                                    <!-- BOTON DE VER INFORMACION -->
-                                                        <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarinfo(actividad)" title="Ver mas informacion de la actividad"></jet-button>
-                                                    
+                                                  <!-- BOTON DE VER INFORMACION -->
+                                                        <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarinfo(servicio)" title="Ver mas informacion del Servicio Social"></jet-button>
 
-                                                    <!--BOTON DE EDITAR -->
-                                                    <jet-button :href="route('actividades.update', actividad.id)" v-on:click="mostrarMensajeUpdate(actividad)" data-toggle="modal" 
-                                                    data-target="#modificarActividad" title="Editar Actividad"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>
+                                                  <!-- BOTON DE EDITAR -->
+                                                  <jet-button  v-on:click="mostrarMensajeUpdate(servicio)" data-toggle="modal" 
+                                                    data-target="#modificarCantidad" title="Editar Cantidad de Horas y Estudiantes"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>
 
-                                                   
-                                                          
                                                 </div>
                                             </td>
                                         </tr>
@@ -89,6 +82,10 @@
 
                         </li>
                     </ul>
+                </div>
+                </div>
+                <div v-else class="alert alert-warning ml-4 mr-4 mt-3" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                    No se han encontrado datos
                 </div>
 
                 <div class="card-footer clearfix">
@@ -120,133 +117,38 @@
 
 
 
-  <!-- Modal Insertar las cantidades desde el boton añadir-->
-  <div class="modal fade" id="añadirCantidad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-           <h5 class="modal-title" id="exampleModalLabel">Establecer Cantidad de Horas y Alumnos</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        
-        <!-- MUESTRA EN PANTALLA LOS CAMPOS A INGRESAR-->
-        <form @submit.prevent="submit">
-                <div class="card-body">
-                    <div class="d-flex justify-content-center align-items-baseline">
-                            <div class="form-group">
-                                 <h5 class=""><strong>Tipo de servicio </strong>{{ form.nombre_tipo_servicio }}</h5>
-                            </div>
-                    </div>
-                    <div class="row">
-                      <div class="col">
-                        <div class="form-group">
-                            <jet-label for="total_horas" value="Numero de horas para el servicio social" />
-                            <jet-input id="total_horas" type="text" v-model="form.total_horas" required autofocus autocomplete="off"/>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col">
-                        <div class="form-group">
-                            <jet-label for="total_horas" value="Cantidad de alumnos en el servicio social" />
-                            <jet-input id="total_horas" type="text" v-model="form.total_horas" required autofocus autocomplete="off"/>
-                        </div>
-                      </div>
-                    </div>
-
-                    <br>
-                    <br>
-
-                    
-                </div>
-                
-            <!--    BOTONES DE GUARDAR Y CANCELAR PARA LA MODAL DE INSERTAR-->
-            <div class="d-flex justify-content-center align-items-baseline">
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <div class="mt-12">
-                                <button class="btn btn-dark float-center" :class="{ 'text-white-50 bg-green-400': form.processing }" >
-                                <i class="fas"></i>Guardar
-                                <!--<i class="fas fa-save"></i>  Guardar Actividad --> 
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="col">
-                        <div class="form-group">
-                            <inertia-link :href="route('actividades.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
-                             Cancelar</inertia-link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    
- 
-        </form>
-        </div>
-      </div>
-    </div>
-  </div><!--Final Modal Insertar cantidades-->
 
 
-
-<!-- Modal para actualizar los campos de las actividades con el boton de edit-->
-<div class="modal fade" id="modificarActividad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- Modal para ACTUALIZAR los campos de las cantidades de hora y estudiantes con el boton de edit-->
+ <div class="modal fade" id="modificarCantidad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modificar Actividad</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modificar Cantidad de Horas y estudiantes al Servicio Social</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
       <div class="modal-body">
         
-    <!-- MUESTRA EN PANTALLA LOS CAMPOS LLENOS CON LOS DATOS INGRESADOS LISTOS PARA SER MODIFICADOS--->
-        <form @submit.prevent="submitUpdate(this.formUp)">
-
+        <!-- MUESTRA EN PANTALLA LOS CAMPOS LLENOS CON LOS DATOS INGRESADOS LISTOS PARA SER MODIFICADOS--->
+          <form @submit.prevent="submitUpdate(this.formUp)">
             <div class="card-body">
                     <div class="row">
                       <div class="col">
-
                        <div class="form-group">
-                            <jet-label for="id" value="Codigo" />
-                            <jet-input id="id" type="text" v-model="formUp.id" required autofocus autocomplete="off" :value="this.formUp.id"/>
+                            <jet-label for="horas" value="Cantidad de Horas para el Servicio Social" />
+                            <jet-input id="horas" type="text" v-model="formUp.horas" required autofocus autocomplete="off" :value="this.formUp.horas"/>
                         </div>
-
                       </div>
-                      <div class="col">
-                        <div class="form-group">
-                            <jet-label for="nombre_actividad" value="Nombre de la actividad" />
-                            <jet-input id="nombre_actividad" type="text" v-model="formUp.nombre_actividad" required autofocus autocomplete="off" :value="this.formUp.nombre_actividad"/>
-                        </div>
-
-                      </div>
+                      
                     </div>
-
-
-
                     <div class="row">
                       <div class="col">
-
-                        <div class="form-group">
-                                <jet-label for="fecha_actividad" value="Fecha de la Actividad" />
-                                <jet-input id="fecha_actividad" type="date" placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" v-model="formUp.fecha_actividad" required autofocus autocomplete="off" :value="this.formUp.fecha_actividad"/>
-                         </div>
-                      </div>
-                      <div class="col">
-
                             <div class="form-group">
-                                 <jet-label for="total_horas" value="Total de horas" />
-                                 <jet-input id="total_horas" type="text" v-model="formUp.total_horas" required autofocus autocomplete="off" :value="this.formUp.total_horas"/>
+                                 <jet-label for="cantidad" value="Cantidad de Estudiantes para el Servicio Social" />
+                                 <jet-input id="cantidad" type="text" v-model="formUp.cantidad" required autofocus autocomplete="off" :value="this.formUp.cantidad"/>
                             </div>
-
                       </div>
                     </div>
                     <br>
@@ -264,7 +166,7 @@
                                 <div class="mt-12">
                                     <jet-button class="btn btn-dark float-center" :class="{ 'text-white-50 bg-green-400': formUp.processing }" v-on:click="submitUpdate(this.formUp)">
                                     <i class="fas"></i>Guardar
-                                         <!--<i class="fas fa-edit"></i>  Modificar-->   
+                                          
                                      </jet-button>  
                                 </div>                  
                             </div>
@@ -272,7 +174,7 @@
 
                         <div class="col">
                             <div class="form-grup">
-                                <jet-button :href="route('actividades.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
+                                <jet-button :href="route('establecerha.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
                                  Cancelar</jet-button>
                             </div>
                         </div>
@@ -280,27 +182,29 @@
                     </div>
                </div>
  
-        </form>
+          </form>
         </div>
+      </div>
     </div>
-  </div>
-</div>
-<!--Final Modal Update de actividades-->
+ </div>
+ <!--Final Modal Update de Cantidades-->
 
-<!-- Modal de la informacion de la actividad -->
+
+
+
+  <!-- Modal de la informacion del Servicio Social -->
     <div class="modal fade" id="verInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
              
-             <h5 class="modal-title text-primary"><strong>Informacion de la actividad</strong></h5>
-              <!--<h3 class="modal-title text-primary">{{ form.nombre_actividad }} </h3>-->
+             <h5 class="modal-title text-primary"><strong>Información del Servicio Social</strong></h5>
               <span class="d-flex flex-row-reverse bd-highlight col">
                   
                   <button class="btn btn-dark text-light text-lg" style="cursor: default;">
-                      {{ form.id }}                   
+                      {{ form.tipo }}                   
                   </button>    
-                  <h5 class="mt-2 mr-2"><strong>Codigo:</strong></h5> 
+                  <h5 class="mt-2 mr-2"><strong>Tipo de Servicio Social:</strong></h5> 
               </span>
           </div>
           <div class="modal-body">
@@ -308,16 +212,13 @@
             <div>
               <div class="row">
                 <div class="col">
-                  <h5 class=""><strong>Nombre de la actividad: </strong>{{ form.nombre_actividad }}</h5>
+                  <h5 class=""><strong>Nombre de la institución: </strong>{{ form.institucion }}</h5>
                 </div>
-                <!--<div class="col-4">
-                  <h5 class=""><strong>Teléfono: </strong>{{ form.telefono_encargado_escuela }}</h5>
-                </div>-->
               </div>
 
               <div class="row">
                 <div class="col">
-                  <h5 class=""><strong>Fecha de la actividad: </strong>{{ form.fecha_actividad }}</h5>
+                  <h5 class=""><strong>Carrera: </strong>{{ form.carrera }}</h5>
                 </div>
                 <div class="col">
                   <h5 class=""></h5>
@@ -328,11 +229,14 @@
 
               <div class="row">
                 <div class="col">
-                  <h5 class=""><strong>Total de horas que realizo la actividad: </strong>{{ form.total_horas }}</h5>
+                  <h5 class=""><strong>Cantidad de horas para el Servicio Social: </strong>{{ form.horas }}</h5>
                 </div>
               </div>
-
-              
+              <div class="row">
+                <div class="col">
+                  <h5 class=""><strong>Cantidad de estudiantes para el Servicio Social: </strong>{{ form.cantidad }}</h5>
+                </div>
+              </div>
 
             </div>  
             <hr class="mb-1"/>
@@ -347,7 +251,7 @@
           </div>
         </div>
       </div>
-    </div> <!--MODAL DE INFORMACION PARA ESTABLECER CANTIDADES -->
+    </div> <!--MODAL DE INFORMACION DE establecer HA -->
 
 
 </template>
@@ -363,6 +267,7 @@
     import JetButton from '@/Jetstream/Button'
     import Label from '../../../Jetstream/Label.vue'
     import Button from '../../../Jetstream/Button.vue'
+   // import Inputmask from"inputmask";
 
     import Base from "@/Pages/Base.vue";
 
@@ -380,47 +285,14 @@
             logout() {
                 this.$inertia.post(route('logout'));
             },
-            /*filtrarByActividad(id){
-                this.serviciosFiltrados.splice(0, this.serviciosFiltrados.length);
-                console.log(id);
-                this.actividades.forEach(element => {
-                    if(element.bitacora_id == id){
-                        console.log(element);
-                        this.serviciosFiltrados.push(element);
-                    }
-                });
-                console.log(this.serviciosFiltrados);
-                if(id == '0'){
-                    this.actividades.forEach(element => {
-                        this.serviciosFiltrados.push(element);
-                        // this.mostrarMensajeSuccess();
-                    })     
-                }
-            },*/
-            mostrarMensajeSuccess(){
-                    Swal.fire({
-                        title: 'Se ha guardado con éxito',
-                        text: 'Actualice la página para ver los cambios',
-                        icon: 'success',
-                        confirmButtonText: 'Aceptar',
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                    });
-            },
-            submit(){
-                console.log(this.form);
-                this.mostrarMensajeSuccess();
-                this.form.post(this.route('actividades.store'));
-                this.form.numero_horas='';
-                this.form.cantidad_estudiantes='';
-            },
+           
             //Muestra mensaje cuando se actualiza los campos
             submitUpdate(form){
+                //alert(this.formUp.idPeticion);
                 console.log(this.formUp);
                 console.log(form);
                 Swal.fire({
-                    title: 'Se ha actualizado los datos ',
+                    title: 'Se han actualizado las cantidades ',
                     text: 'Actualice la página para ver los cambios',
                     icon: 'success',
                     iconColor: '#FF8000',
@@ -429,68 +301,57 @@
                     allowOutsideClick: false,
                     showConfirmButton: false,
                 });
-                this.$inertia.put(route("actividades.update",form.id), this.formUp);
+                this.$inertia.put(route("establecerha.update", this.formUp.idServicio), this.formUp);
             },
-            //Muestra mmensaje cuando se borra los campos
-            /*mostrarMensajeDelete(actividad){
-                this.borrado = true;
-                Swal.fire({
-                    title: 'Se ha borrado la actividad ' + actividad.nombre_actividad,
-                    text: 'Actualice la página para ver los cambios',
-                    iconColor: '#CB3234',
-                    icon: 'warning',
-                    confirmButtonText: 'Aceptar',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    showConfirmButton: false,
-                });
-            },*/
-            
             mostrarMensajeUpdate(servicio){
                 console.log(servicio);
-              this.formUp.nombre_tipo_servicio = servicio.nombre_tipo_servicio,
-              this.formUp.nombre_institucion = servicio.nombre_institucion,
-              this.formUp.numero_horas = servicio.numero_horas,
-              this.formUp.nombre_carrera = servicio.nombre_carrera,
-              this.formUp.nombre_facultad = servicio.nombre_facultad,
-              this.formUp.cantidad_estudiantes=servicio.cantidad_estudiantes
+                //this.formUp.institucion = servicio.institucion;
+                //this.formUp.tipo= servicio.tipo;
+                //this.formUp.carrera = servicio.carrera;
+                //this.formUp.estado= servicio.estado;
+                this.formUp.cantidad= servicio.cantidad;
+                this.formUp.horas = servicio.horas;                
+                this.formUp.idServicio = servicio.idServicio;
+                this.formUp.idPeticion = servicio.idPeticion;
+                
                 console.log(this.formUp);
             },
 
-            //carga informacion del servicio social seleccionado al formulario del modal
+            //carga informacion de la actividad seleccionada al formulario del modal
             mostrarinfo(servicio){
-              this.form.nombre_tipo_servicio = servicio.nombre_tipo_servicio,
-              this.form.nombre_institucion = servicio.nombre_institucion,
-              this.form.numero_horas = servicio.numero_horas,
-              this.form.nombre_carrera = servicio.nombre_carrera,
-              this.form.nombre_facultad = servicio.nombre_facultad,
-              this.form.cantidad_estudiantes=servicio.cantidad_estudiantes
+                this.form.institucion = servicio.institucion;
+                this.form.tipo = servicio.tipo;
+                this.form.carrera = servicio.carrera;
+                this.form.estado = servicio.estado;
+                this.form.cantidad = servicio.cantidad;
+                this.form.horas = servicio.horas;
+                
             }
            
         },    
         data(){
             return{
-                actividad:0,
+                servicio:0,
                 serviciosFiltrados:[],
                 successGuardado:false,
                 
                 form: this.$inertia.form({
-                    numero_horas:'',
-                    estado_proyecto_social:'',
-                    cantidad_estudiantes:'',
-                    nombre_carrera:'',
-                    nombre_tipo_servicio:'',
-                    nombre_facultad:'',
-                    nombre_institucion:'',
+                    institucion:'',
+                    tipo:'',
+                    carrera:'',
+                    estado:'',
+                    cantidad:'0',
+                    horas:'0',
                     }),
                 formUp: this.$inertia.form({
-                    numero_horas:'',
-                    estado_proyecto_social:'',
-                    cantidad_estudiantes:'',
-                    nombre_carrera:'',
-                    nombre_tipo_servicio:'',
-                    nombre_facultad:'',
-                    nombre_institucion:'',
+                    //institucion:'',
+                    //tipo:'',
+                    //carrera:'',
+                    //estado:'',
+                    cantidad:0,
+                    horas:0,
+                    idServicio:0,
+                    idPeticion:0
                     }),
                 }
             },        
@@ -502,6 +363,5 @@
             this.successGuardado = false;        
         },
     }
-
 
 </script>

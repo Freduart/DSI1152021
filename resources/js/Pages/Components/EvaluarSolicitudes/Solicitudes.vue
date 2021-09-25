@@ -37,6 +37,7 @@
                     </h3>
                 </div>
                 <!-- /.card-header -->
+                <div v-if="solicitudesFiltradas.length != 0">
                 <div class="card-body">
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
@@ -46,7 +47,7 @@
                                     <thead class="thead-dark">
                                         <tr>
                                         
-                                        <th scope='col'>Codigo</th>
+                                        <th scope='col'>Carnet</th>
                                         <th scope="col">Nombre del estudiante</th>
                                         
                                         <th scope="col">Estado</th>
@@ -57,7 +58,7 @@
                                         <!--Aqui devuelven los datos para que se muestren en pantalla-->
                                         <tr class="table-secondary" scope="row" v-for="(solicitud, index) in solicitudesFiltradas" :key="index">
                                             
-                                            <td>{{ solicitud.id }}</td>
+                                            <td>{{ solicitud.carnet_estudiante }}</td>
                                             <td>{{ solicitud.nombre_estudiante }} {{ solicitud.apellido_estudiante }}</td>
                                             
                                             <td>{{ solicitud.estado_solicitud }}</td>
@@ -82,6 +83,10 @@
 
                         </li>
                     </ul>
+                </div>
+                </div>
+                <div v-else class="alert alert-warning ml-4 mr-4 mt-3" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                    No se han encontrado datos
                 </div>
                 
 
@@ -128,8 +133,8 @@
                             <div class="row">
                               <div class="col">
                                 <div class="form-group">
-                                    <jet-label for="id" value="Codigo" />
-                                    <jet-input id="id" type="text" readonly="readonly" v-model="formUp.id" required autofocus autocomplete="id"/>
+                                    <jet-label for="id" value="Carnet" />
+                                    <jet-input id="id" type="text" readonly="readonly" v-model="formUp.carnet_estudiante" required autofocus autocomplete="id"/>
                                   
                                 </div>
                               </div>
@@ -296,13 +301,19 @@
                   }).then((result) => {
                       if (result.isConfirmed) {
                           //var tipo = 1;
-                          this.$inertia.put(route('solicitudes.update', solicitud.id), this.formUp);
-                          Swal.fire(
-                          '!Aprobado!',
-                          'El estudiante se aprobo correctamente',
-                          'success'
-                          );
-                          window.location.reload(true);
+                        this.$inertia.put(route('solicitudes.update', solicitud.id), this.formUp);
+                        Swal.fire({
+                            title: '!Aprobado!',
+                            text: 'El estudiante se aprobo correctamente',
+                            icon: 'success',
+                            confirmButtonColor: '#3085d6',
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        })  
                       }
                   })
                 }
@@ -369,6 +380,7 @@
             },
             mostrarDatos(solicitud){
                 console.log(solicitud);
+                this.formUp.carnet_estudiante = solicitud.carnet_estudiante;
                 this.formUp.id=solicitud.id;
                 this.formUp.nombre_estudiante=solicitud.nombre_estudiante;
                 this.formUp.fecha_solicitud=solicitud.fecha_solicitud;
@@ -385,6 +397,7 @@
                     successGuardado:false,
 
                     formUp: this.$inertia.form({
+                    carnet_estudiante:'',
                     id:'',
                     estudiante_id:'',
                     fecha_solicitud:'',

@@ -9,14 +9,30 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+use App\Models\EncargadoEscuela;
 
 class VerificarCuentaController extends Controller
 {
     //
     public function index(){
-        // $estudiantes=Estudiante::all();
-        $estudiantes = Estudiante::where('estado_estudiante', '=', 'En espera')->get();
-        return Inertia::render('Components/VerificarCuenta',['estudiantes'=>$estudiantes]);
+
+        // validando que el usuario ha iniciado sesion
+        if(Auth::check()){            
+            // validando el rol del usuario logeado
+            if (Auth::user()->hasRole('Encargado Escuela')) {
+                // obteniendo el id del usuario logeado
+                $idUsuario = Auth::id();
+
+                // obteniendo el encargado logeado
+                $encargado = EncargadoEscuela::where('user_id', '=', $idUsuario)->firstOrFail();
+
+                $estudiantes = Estudiante::where('estado_estudiante', '=', 'En espera')->where('carrera_id', '=', $encargado->carrera_id)->get();
+                return Inertia::render('Components/VerificarCuenta',['estudiantes'=>$estudiantes]);
+            }
+        }
+
+        
     }
 
   

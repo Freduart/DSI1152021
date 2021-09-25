@@ -20,6 +20,8 @@ use App\Http\Controllers\EstablecerHAController;
 use App\Http\Controllers\ServicioSocialController;
 use App\Http\Controllers\PeticionController;
 use App\Http\Controllers\TipoServicioController;
+use App\Http\Controllers\ConstanciaController;
+use App\Http\Controllers\FinalizarProyectoController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -96,6 +98,11 @@ Route::resource('finalizaractividades', FinalizarActividadesController::class)->
 Route::resource('bitacora', BitacoraController::class)->middleware(['auth:sanctum','verified']);
 
 Route::resource('serviciossociales', ServicioSocialController::class)->middleware(['auth:sanctum', 'verified']);
+
+Route::resource('constancia', ConstanciaController::class)->middleware(['auth:sanctum', 'verified']);
+
+Route::resource('finproyecto',FinalizarProyectoController::class)->middleware(['auth:sanctum', 'verified']);
+Route::get('actividades/{proyecto_social_id}', ['as' => 'actividades', 'uses' => 'ActividadesController@show']);
 
 //Route::delete('verificarcuenta/{id}', [VerificarCuentaController::class, 'id'])->name('verificarcuenta.eliminar');
 Route::get('credenciales', function (){

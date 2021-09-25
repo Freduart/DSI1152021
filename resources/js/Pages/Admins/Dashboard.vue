@@ -81,6 +81,22 @@
                 this.$inertia.post(route('logout'));
              },
         },
+        mounted() {
+            //this.$forceUpdate();
+            
+        },
+        /*watch: {
+                     // Si la ruta cambia, el método se ejecutará nuevamente
+          "$route" (to, from){
+              //location.reload();
+            if(to !== from ) {
+                this.siteData = this.getSiteData();
+            }
+          },
+        },*/
+        /*beforeRouteEnter (to, from, next) { 
+            location.reload()
+        } */
     }    
     
 </script>

@@ -19,6 +19,7 @@
       </div><!-- /.content-header -->
 
       <!-- Main content -->
+      <div  v-if="actividadesFiltradas.length != 0">
       <section class="content">
         <div class="container-fluid">
           <!-- Main row -->
@@ -37,13 +38,14 @@
                   <!--Boton para finalizar actividades-->
                   <div class="col">
                     <div class="form-group">
-                      <inertia-link type="button" class="btn btn-success float-left mt-2"  :href="route('finalizaractividades.index')">
+                      <inertia-link type="button" class="btn btn-success float-left mt-2" :href="route('finalizaractividades.index')">
                         <i class="fa fa-check-square"></i> Finalizar Actividades
                       </inertia-link>
                     </div>
                   </div>
                 </div>
                 <!-- /.card-header -->
+                <div v-if="actividadesFiltradas.length != 0">
                 <div class="card-body">
                   <ul class="todo-list" data-widget="todo-list">
                     <li>
@@ -51,8 +53,8 @@
                       <table class="table table-hover text-center" width="500" style="font-size: 20px">
                         <thead class="thead-dark">
                           <tr>
-                            <th scope="col">Codigo</th>
-                            <th scope="col">Nombre de la Actividad</th>
+                            <th scope="col" width="20%">Código de la actividad</th>
+                            <th scope="col">Nombre de la actividad</th>
                             <th scope="col">Acción</th>
                           </tr>
                         </thead>
@@ -65,8 +67,8 @@
                             <td>
                               <div class="flex justify-center">      
                                 <!--boton verificar-->
-                                <button class="btn btn-success" v-on:click="mostrarDatos(actividad)" data-toggle="modal" data-target="#verificar">
-                                  <i>Verificar</i>
+                                <button class="btn btn-primary" v-on:click="mostrarDatos(actividad)" data-toggle="modal" data-target="#verificar">
+                                  <i class="fa fa-glasses"></i> &nbsp; <strong> Verificar </strong>
                                 </button>
                               </div>
                             </td>
@@ -75,115 +77,106 @@
                       </table>
                     </li>
                   </ul>
+                </div>  
                 </div>
+                <div v-else class="alert alert-warning ml-4 mr-4 mt-3" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                    No se han encontrado datos
+                </div>
+
+
               </div>
             </section><!-- /.Left col -->
           </div><!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
       </section><!-- /.content -->
+      </div>
+      <div v-else class="alert alert-warning ml-4 mr-4 mt-3" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+        No se han encontrado datos
+      </div>
     </div><!-- /.content-wrapper -->
   </div>
 
   <!-- Modal para la verificación de las actividades de los estudiantes-->
   <div class="modal fade" id="verificar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg">
       <!--Contenido de la modal-->
       <div class="modal-content">
         <!--Encabezado de la modal-->
         <div class="modal-header">
           <!--Título de la modal-->
-          <h5 class="modal-title" id="exampleModalLabel">Verificar actividad</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Información General de la Actividad</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
           </button>
         </div><!--Fin del encabezado-->
         <!--Cuerpo de la modal-->
         <div class="modal-body">
           <div class="card-body">
-            <!--Primera fila de la modal-->
-            <div class="row">
-              <!--Primera columna de la fila-->
-              <div class="col">
-                <div class="form-group">
-                  <jet-label for="id_actividad" value="Código de la actividad" />
-                  <jet-input id="id_actividad" type="text" readonly="readonly" v-model="form.id" required autofocus autocomplete="id_actividad"/>
-                </div>
-              </div><!--Fin de la primera columna-->
-              <!--Segunda columna de la fila-->
-              <!--<div class="col">
-                <div class="form-group">
-                  <jet-label for="bitacora_id" value="Código de bitácora" />
-                  <jet-input id="bitacora_id" type="text" readonly="readonly" v-model="form.bitacora_id" required autofocus autocomplete="bitacora_id"/>
-                </div>
-              </div>-->
-              <!--Fin de la segunda columna-->
-            </div><!--Fin de la primera fila-->
-
-            <!--Segunda fila-->
-            <div class="row">
-              <!--Primera columna de la fila-->
-              <div class="col">
-                <div class="form-group">
-                  <jet-label for="nombre_actividad" value="Nombre de la actividad" />
-                  <jet-input id="nombre_actividad" type="text" readonly="readonly" v-model="form.nombre_actividad" required autofocus autocomplete="nombre_actividad"/>
-                </div>
-              </div><!--Fin de la primera columna-->
-            </div><!--Fin de la segunda fila-->
-
-            <!--Tercera fila de la modal-->
-            <div class="row">
-              <!--Primera columna de la fila-->
-              <div class="col">
-                <div class="form-group">
-                  <jet-label for="fecha_actividad" value="Fecha de la actividad" />
-                  <jet-input id="fecha_actividad" type="text" readonly="readonly" v-model="form.fecha_actividad" required autofocus autocomplete="fecha_actividad"/>
-                </div>
-              </div><!--Fin de la primera columna-->
-              <!--Segunda columna de la fila-->
-              <div class="col">
-                <div class="form-group">
-                  <jet-label for="total_horas" value="Total de horas en la actividad" />
-                  <jet-input id="total_horas" type="text" readonly="readonly" v-model="form.total_horas" required autofocus autocomplete="total_horas"/>
-                </div>
-              </div><!--Fin de la segunda columna-->
-            </div><!--Fin de la tercera fila-->
-
+            <table class="">
+              <tr>
+                <td><h5 class=""><strong>Códido de la actividad: </strong></h5></td>
+                <td><h5>{{ form.id }}</h5></td>
+              </tr>
+              <tr>
+                <td><h5 class=""><strong>Nombre de la actividad: </strong></h5></td>
+                <td><h5>{{ form.nombre_actividad }}</h5></td>
+              </tr>
+              <tr>
+                <td><h5 class=""><strong>Fecha de la actividad: </strong></h5></td>
+                <td><h5>{{ form.fecha_actividad }}</h5></td>
+              </tr>
+              <tr>
+                <td><h5 class=""><strong>Total de horas en la actividad: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strong></h5></td>
+                <td><h5>{{ form.total_horas }}</h5></td>
+              </tr>
+              <tr>
+                <td><h5><strong>Estado de actividad:</strong></h5></td>
+                <td>
+                <h5><strong>
+                  <button v-if="form.verificado == 'En espera'" class="btn btn-info" style="cursor: default;" disabled>
+                    <i class="far fa-clock"></i> &nbsp; <strong> En espera </strong>
+                  </button>
+                </strong></h5>
+                </td>
+              </tr>
+            </table>
           </div><!-- Fin card body-->
 
           <!--Sección de botones-->
           <div class="card-footer clearfix">
-              <div class="d-flex justify-content-center align-items-baseline">
-                <!--Fila de los botones-->
-                <div class="row">
-                  <!--Primera columna-->
-                  <div class="col">
-                    <!--boton de verificación de actividad-->
-                    <inertia-link class="btn btn-warning" title="Verificar actividad" method="put" :href="route('verificaractividades.update', this.form)" v-on:click="verificacion(form)"> 
-                      <i class="fas"></i>Aceptar
-                    </inertia-link>
-                  </div><!--Fin primera columna-->
-                  <!--Segunda columna-->
-                  <div class="col">
-                    <!--boton de reportar actividad-->
-                    <inertia-link class="btn btn-danger" title="Verificar actividad" method="delete" :href="route('verificaractividades.destroy', this.form)" v-on:click="Reportar(form)"> 
-                      <i class="fas"></i>Reportar 
-                    </inertia-link>
-                    <!--<button v-else class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Reportar(form)">
-                      <i class="fas"></i>Reportar
-                    </button>-->
-                  </div><!--Fin Segunda columna-->
-                  <!--Tercera columna-->
-                  <div class="col">
-                    <!--boton atras-->
-                    <button :href="route('verificaractividades.index')" class="btn btn-dark float-center" title="Atras" data-dismiss="modal">
-                      <i class="fas"></i>Atrás
-                    </button>
-                  </div><!--Fin Tercera columna-->
-                </div><!--Fin de la fila de los botones-->
-              </div>
+            <div class="d-flex justify-content-center align-items-baseline">
+              <!--Fila de los botones-->
+              <div class="row">
+                <!--Primera columna-->
+                <div class="col">
+                  <!--boton de verificación de actividad-->
+                  <inertia-link class="btn btn-warning" title="Verificar actividad" method="put" :href="route('verificaractividades.update', this.form)" v-on:click="verificacion(form)"> 
+                    <i class="fas"></i>Aceptar
+                  </inertia-link>
+                </div><!--Fin primera columna-->
+
+                <!--Segunda columna-->
+                <div class="col">
+                  <!--boton de reportar actividad-->
+                  <inertia-link class="btn btn-danger" title="Verificar actividad" method="delete" :href="route('verificaractividades.destroy', this.form)" v-on:click="Reportar(form)"> 
+                    <i class="fas"></i>Reportar 
+                  </inertia-link>
+                  <!--<button v-else class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Reportar(form)">
+                    <i class="fas"></i>Reportar
+                  </button>-->
+                </div><!--Fin Segunda columna-->
+
+                <!--Tercera columna-->
+                <div class="col">
+                  <!--boton atras-->
+                  <button :href="route('verificaractividades.index')" class="btn btn-dark float-center" title="Atras" data-dismiss="modal">
+                    <i class="fas"></i>Atrás
+                  </button>
+                </div><!--Fin Tercera columna-->
+              </div><!--Fin de la fila de los botones-->
+            </div>
           </div>
           <!--Fin de sección de botones-->
-
         </div><!--Fin cuerpo de la modal-->
       </div><!--Fin contenido de la modal-->
     </div>
@@ -216,21 +209,7 @@
             logout() {
                 this.$inertia.post(route('logout'));
             },
-            /*filtrarByActividad(event){
-              this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
-              console.log(event.target.value);
-              var verificadoText= "0";
-              if (event.target.value == 0){
-                verificadoText= "1";
-              }
-              this.actividad.forEach(element =>{
-                if(element.verificado=verificadoText){
-                  console.log(element);
-                  this.actividadesFiltradas.push(element);
-                }
-              });
-              console.log(this.actividadesFiltradas);
-            },*/
+
             filtrarByActividad(id){
                 this.actividadesFiltradas.splice(0, this.actividadesFiltradas.length);
                 console.log(id);
@@ -309,35 +288,37 @@
               this.form.total_horas = actividad.total_horas,
               this.form.verificado = actividad.verificado
             }
-        },    
-        data(){
-            return{
-                actividad:0,
-                actividadesFiltradas:[],
-                successGuardado:false,
-                //formularioNuevaCarrera:false,
-                form: this.$inertia.form({
-                    id:'',
-                    nombre_actividad:'',
-                    fecha_actividad:'',
-                    total_horas:'',
-                    verificado:'En espera',
-                    }),
-                formUp: this.$inertia.form({
-                    id:'',
-                    nombre_actividad:'',
-                    fecha_actividad:'',
-                    total_horas:'',
-                    verificado:'En espera',
-                    }),
-                }
-            },        
-        mounted(){
-            this.actividades.forEach(element => {
-                this.actividadesFiltradas.push(element);
-            }),
-            // this.mostrarMensajeSuccess();
-            this.successGuardado = false;        
-        },
-    }
+    },    
+      
+    data(){
+        return{
+          actividad:0,
+          actividadesFiltradas:[],
+          successGuardado:false,
+          //formularioNuevaCarrera:false,
+          form: this.$inertia.form({
+            id:'',
+            nombre_actividad:'',
+            fecha_actividad:'',
+            total_horas:'',
+            verificado:'En espera',
+          }),
+          formUp: this.$inertia.form({
+            id:'',
+            nombre_actividad:'',
+            fecha_actividad:'',
+            total_horas:'',
+            verificado:'En espera',
+          }),
+        }
+    },        
+    
+    mounted(){
+      this.actividades.forEach(element => {
+        this.actividadesFiltradas.push(element);
+      }),
+      // this.mostrarMensajeSuccess();
+      this.successGuardado = false;        
+    },
+  }
 </script>
