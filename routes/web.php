@@ -79,7 +79,7 @@ Route::resource('facultades', FacultadController::class)->middleware(['auth:sanc
 Route::resource('encargadosescuela', EncargadoEscuelaController::class)->middleware(['auth:sanctum','verified']);
 
 Route::resource('verificarcuenta', VerificarCuentaController::class)->middleware(['auth:sanctum','verified']);
-Route::resource('instituciones', InstitucionController::class)->middleware(['auth:sanctum','verified']);
+Route::resource('instituciones', InstitucionController::class);
 Route::resource('actividades', ActividadesController::class)->middleware(['auth:sanctum','verified']);
 
 

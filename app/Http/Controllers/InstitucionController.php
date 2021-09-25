@@ -35,13 +35,13 @@ class InstitucionController extends Controller
         $institucion = new Institucion();
         $institucion -> id = null;
         $institucion -> user_id = null;
-        $institucion -> nombre_institucion = 'h';
-        $institucion -> contacto_institucion = 'h';
-        $institucion -> correo_institucion = 'h';
-        $institucion -> telefono_institucion = 'h';
-        $institucion -> ubicacion_institucion = 'h';
-        $institucion -> rubro_institucion = 'h';         
-        return Inertia::render('Components/Instituciones/FormInstitucion', ['instituciones', $institucion]);
+        $institucion -> nombre_institucion = '';
+        $institucion -> contacto_institucion = '';
+        $institucion -> correo_institucion = '';
+        $institucion -> telefono_institucion = '';
+        $institucion -> ubicacion_institucion = '';
+        $institucion -> rubro_institucion = '';         
+        return Inertia::render('Components/Instituciones/FormInstitucion', ['instituciones' => $institucion]);
     }
 
     /**
@@ -51,8 +51,8 @@ class InstitucionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-			/* 
+    {  	
+
         // Se le asigna la contraseña
         $contra = "institucion";
         // Se obtienen los datos del request
@@ -67,26 +67,32 @@ class InstitucionController extends Controller
         $institucion->ubicacion_institucion = $data['ubicacion_institucion'];
         $institucion->rubro_institucion = $data['rubro_institucion'];
 
-        if($institucion->save()){
+        $institucion->save();
+
+        // if($institucion->save()){
 					// Creando la institucion y asignandole el rol
-					User::create([
-							'name' => $data['nombre_institucion'],
-							'email' => $data['correo_institucion'],
-							'password' => bcrypt($contra)
-					])->assingRole('Institucion');
+                    User::create([
+                            'name' => $data['nombre_institucion'],
+                            'email' => $data['correo_institucion'],
+                            'password' => bcrypt($contra)
+					])->assignRole('Institucion');                   
 
 					$usuario= User::where('name', '=', $data['nombre_institucion'])->firstOrFail();
-					error_log($usuario);
+                    // $usuario->assingRole('Institucion');
+					// error_log($usuario);
 					
-					$id=$usuario->id;
-
+					$institucion->user_id=$usuario->id;
+                    $institucion->save();
 					// Asignamos el usuario a la institucion
-					$institucion = Institucion::where('nombre_institucion', '=', $data['correo_institucion'])->firstOrFail();
-					error_log($institucion);
-        }
+					$institucion = Institucion::where('nombre_institucion', '=', $data['nombre_institucion'])->firstOrFail();
+					// error_log($institucion);
+        // }
 
-        Institucion::create($request->all());
-        return Redirect::route('instituciones.index'); */
+        // Institucion::create($request->all());
+        // return "mensaje";
+        // return Institucion::all();
+        return Redirect::route('instituciones.index'); 
+        // return Inertia::render('Components/Instituciones/institucion');
     }
 
     /**

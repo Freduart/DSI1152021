@@ -30,15 +30,10 @@
               <div class="card">
 
                 <!-- Card Header -->
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="ion-clipboard ion mr-1"></i>
-                    Tipo de servicio social
-                    <br>                    
-                    <jet-button class="btn btn-danger" :href="route('peticiones.create')" title="Eliminar tipo de servicio social">
+                <div class="card-header">                                      
+                    <inertia-link class="btn btn-danger" :href="route('peticiones.create')" title="Eliminar tipo de servicio social">
                       Volver a crear peticiones
-                    </jet-button>
-                  </h3>
+                    </inertia-link>                
                   <!--Boton para añadir facultades-->
                   <button type="button" class="btn btn-success float-right mb-8" data-toggle="modal" data-target="#addTipoServicio">
                     <i class="fas fa-plus"></i> Añadir Tipo servicio social</button> 
@@ -231,7 +226,8 @@
             'Guardado con exito!',
             'El tipo de servicio social se agrego correctamente',
             'success'
-          );          
+          ); 
+          window.location.reload(true);         
       },
 
       // Agrega un nuevo tipo de servicio a partir del modal de servicio socia
@@ -247,7 +243,7 @@
           'El tipo de servicio social se actualizo correctamente',
           'success'
         );
-        this.$inertia.patch(route("tipoServicio.update",form.id), this.formUp);      
+        this.$inertia.put(route("tipoServicio.update",form.id), this.formUp);      
         window.location.reload(true);
       },
 

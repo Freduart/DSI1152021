@@ -90,7 +90,7 @@
                         <div class="d-flex justify-content-center align-items-baseline">
                           <!-- botones de accion  -->
                           <jet-button type="submit" class="btn btn-success float-center" :class="{ 'text-white-50': form.processing }" :disabled="form.processing" >
-                            <inertia-link class="btn btn-success float-center" title="Editar institucion" :href="route('instituciones.edit', instituciones.id)"></inertia-link>
+                            <!-- <inertia-link class="float-center" title="Editar institucion" :href="route('instituciones.edit', this.instituciones.id)"></inertia-link> -->
                             <i class="fas"></i> 
                             Guardar
                           </jet-button>
@@ -158,12 +158,12 @@
       return{
         // Esta data esta generando problemas a la hora de querer crear una nueva institucion
         form: this.$inertia.form({          
-          contacto_institucion: this.$props.instituciones.contacto_institucion,
-          correo_institucion: this.$props.instituciones.correo_institucion,
-          nombre_institucion: this.$props.instituciones.nombre_institucion,
-          telefono_institucion: this.$props.instituciones.telefono_institucion,
-          ubicacion_institucion: this.$props.instituciones.ubicacion_institucion,
-          rubro_institucion: this.$props.instituciones.rubro_institucion
+          nombre_institucion: this.instituciones.nombre_institucion,
+          contacto_institucion: this.instituciones.contacto_institucion,
+          correo_institucion: this.instituciones.correo_institucion,
+          telefono_institucion: this.instituciones.telefono_institucion,
+          ubicacion_institucion: this.instituciones.ubicacion_institucion,
+          rubro_institucion: this.instituciones.rubro_institucion
         }),
         institucionesFiltradas:[],
       }

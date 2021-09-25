@@ -28,7 +28,7 @@ class PeticionController extends Controller
         ->join('tipos_servicio_social', 'peticiones.tipo_servicio_social_id', '=', 'tipos_servicio_social.id')
         ->join('instituciones', 'peticiones.institucion_id', '=', 'instituciones.id')
         ->where('estado_peticion', '=', 'En espera')
-        ->select('peticiones.id AS idPeticion', 'cantidad_estudiantes', 'nombre_peticion', 'descripcion_peticion', 'ubicacion_actividades', 'fecha_peticion', 'otros_tipo_servicio', 'estado_peticion', 'correo_peticion', 'carrera_id', 'nombre_carrera', 'tipo_servicio_social_id', 'nombre_tipo_servicio', 'institucion_id', 'nombre_institucion')
+        ->select('peticiones.id AS idPeticion', 'cantidad_estudiantes', 'nombre_peticion', 'descripcion_peticion', 'ubicacion_actividades', 'fecha_peticion', 'fecha_peticion_fin', 'cantidad_horas', 'otros_tipo_servicio', 'estado_peticion', 'correo_peticion', 'carrera_id', 'nombre_carrera', 'tipo_servicio_social_id', 'nombre_tipo_servicio', 'institucion_id', 'nombre_institucion')
         ->get();
         $carreras= Carrera::all();
         return Inertia::render('Components/Peticiones/ListarPeticion',['peticiones' => $peticion, 'carreras' => $carreras]);
@@ -49,7 +49,12 @@ class PeticionController extends Controller
         $peticion->descripcion_peticion = '';
         $peticion->cantidad_estudiantes = '';
         $peticion->ubicacion_actividades = '';
+
+        //Campos nuevos agregados
         $peticion->fecha_peticion = '';
+        $peticion->fecha_peticion_fin = '';
+        $peticion->cantidad_horas='';
+        
         $peticion->otros_tipo_servicio = '';
         $peticion->estado_peticion = 'En espera';
         $peticion->correo_peticion = '';
@@ -156,11 +161,15 @@ class PeticionController extends Controller
      */
     public function update(Request $request, $peticion)
     {
+        // return $peticion;
+        // return $request;
         $peticionF= Peticion::find($peticion);
         $peticionF->estado_peticion = "Aceptado";
         $peticionF->save();
 
         return Redirect::route('peticiones.index');
+
+
 
     }
 

@@ -71,11 +71,31 @@
                             <div class="col">
                               <!-- codigo de empleado del encargado -->
                               <div class="form-group">
-                                <jet-label for="fecha" value="Fecha de inicio" />
-                                <jet-input id="fecha_peticion" type="date" v-model="form.fecha_peticion" placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" required autofocus autocomplete="off"/>
+                                <jet-label for="cantidad_horas" value="Cantidad de horas" />
+                                <jet-input id="cantidad_horas" type="text" v-model="form.cantidad_horas"/>
                               </div>
                             </div>
                           </div> 
+
+                          <div class="row">
+                            <div class="col">
+                              <!-- Ubicacion -->
+                              <div class="form-group">
+                                <jet-label for="fecha_peticion_inicio" value="Fecha de inicio" />
+                                <jet-input id="fecha_peticion_inicio" type="date" v-model="form.fecha_peticion"  placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" required autofocus autocomplete="off"/>
+                              </div>
+                            </div>
+
+                            <!-- Fecha de la peticion -->
+                            <div class="col">
+                              <!-- codigo de empleado del encargado -->
+                              <div class="form-group">
+                                <jet-label for="fecha_peticion_fin" value="Fecha de finalización" />
+                                <jet-input id="fecha_peticicion_fin" type="date" v-model="form.fecha_peticion_fin" placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" required autofocus autocomplete="off"/>
+                              </div>
+                            </div>
+                          </div> 
+
 
                           <div class="row">                            
                             <!-- Otros tipos de servicio -->
@@ -219,6 +239,8 @@ export default {
         cantidad_estudiantes: this.$props.peticiones.cantidad_estudiantes,
         ubicacion_actividades: this.$props.peticiones.ubicacion_actividades,
         fecha_peticion: this.$props.peticiones.fecha_peticion,
+        fecha_peticion_fin: this.$props.peticiones.fecha_peticion_fin,
+        cantidad_horas: this.$props.peticiones.cantidad_horas,
         otros_tipo_servicio: this.$props.peticiones.otros_tipo_servicio,
         estado_peticion: this.$props.peticiones.estado_peticion,
         correo_peticion: this.$props.peticiones.correo_peticion,
@@ -242,7 +264,7 @@ export default {
         this.$inertia.put(route('peticiones.updateStatus', this.$props.peticiones.id), this.form);
       }
       else{
-        this.form.post(route('peticiones.store'));
+        this.form.post(route('peticiones.store'));        
       }
     },
 

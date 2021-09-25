@@ -30,13 +30,13 @@
               <div class="card">
 
                 <!-- Card Header -->
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="ion-clipboard ion mr-1"></i>
-                    Listado de Instituciones
-                  </h3>
+                <div class="card-header">                                      
+                    <inertia-link class="btn btn-danger" :href="route('peticiones.create')" title="Eliminar tipo de servicio social">
+                      Volver a crear peticiones
+                    </inertia-link>
+                  
                   <!--Boton para añadir instituciones-->
-                  <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('instituciones.create')">
+                  <inertia-link type="button" class="btn btn-success float-right"  :href="route('instituciones.create')">
                     <i class="fas fa-plus"></i> 
                      Añadir institucion
                   </inertia-link>

@@ -16,6 +16,9 @@ class Peticion extends Model
         'descripcion_peticion',
         'ubicacion_actividades',
         'fecha_peticion',
+        // Campos nuevos
+        'fecha_peticion_fin',
+        'cantidad_horas',
         'otros_tipo_servicio',
         'estado_peticion',
         'correo_peticion',

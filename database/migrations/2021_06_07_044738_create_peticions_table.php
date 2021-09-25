@@ -20,6 +20,8 @@ class CreatePeticionsTable extends Migration
             $table->text('descripcion_peticion');
             $table->string('ubicacion_actividades', 50);
             $table->date('fecha_peticion')->nullable();
+            $table->date('fecha_peticion_fin')->nullable();
+            $table->unsignedBigInteger('cantidad_horas');
             $table->string('otros_tipo_servicio')->nullable();
             $table->enum('estado_peticion', ['En espera', 'Aceptado', 'Rechazado']);
             $table->string('correo_peticion', 50)->unique();

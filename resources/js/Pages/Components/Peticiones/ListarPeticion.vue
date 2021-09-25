@@ -172,10 +172,10 @@
                   <!-- Boton para aprobar -->
                   <div class="col-md-3">
                     <div class="form-group">
-                      <button v-if="peticiones.estado_peticion == 'En espera'" class="btn btn-success float-center" title="Aceptar peticion" v-on:click="cambiarEstado(form)"> 
-                        <i class="fas fa-check" aria-hidden="true"></i> Aceptar </button>  
+                      <!-- <button v-if="peticiones.estado_peticion == 'En espera'" class="btn btn-success float-center" title="Aceptar peticion" v-on:click="cambiarEstado(form)"> 
+                        <i class="fas fa-check" aria-hidden="true"></i> Aceptar </button>   -->
 
-                        <button v-else class="btn btn-success float-center" title="Activar estudiante" v-on:click="cambiarEstado(formUp)"> 
+                        <button class="btn btn-success float-center" title="Activar estudiante" v-on:click="cambiarEstado(this.formUp)"> 
                         <i class="fas fa-check" aria-hidden="true"></i> Aceptar </button>
                     </div>
                   </div>
@@ -185,11 +185,12 @@
                   <!-- Boton para rechazar -->
                   <div class="col-md-3">
                     <div class="form-group">
-                      <inertia-link v-if="peticiones.estado_peticion == 'En espera'" class="btn btn-danger" title="Desactivar institucion" method="delete" :href="route('peticiones.destroy', this.formUp.id)" v-on:click="rechazarEstado(formUp)"> 
-                        <i class="fas fa-times" aria-hidden="true"></i> Rechazar </inertia-link>  
 
-                        <inertia-link v-else class="btn btn-danger" title="Desactivar estudiante" method="delete" :href="route('peticiones.destroy', this.formUp.id)" v-on:click="rechazarEstado(formUp)"> 
-                        <i class="fas fa-times" aria-hidden="true"></i> Rechazar </inertia-link>
+                      <!-- <inertia-link v-if="this.peticiones.estado_peticion == 'En espera'" class="btn btn-danger" title="Desactivar institucion"  v-on:click="rechazarEstado(formUp)"> 
+                        <i class="fas fa-times" aria-hidden="true"></i> Rechazar </inertia-link>   -->
+
+                        <button class="btn btn-danger" title="Desactivar estudiante" method="delete" v-on:click="rechazarEstado(this.formUp)"> 
+                        <i class="fas fa-times" aria-hidden="true"></i> Rechazar </button>
                     </div>
                   </div>
                 </div>
@@ -230,6 +231,7 @@
 
       // Carga la informacionn de la institucion seleccionada de la lista
       mostrarInfo(peticiones){
+        this.formUp.id = peticiones.idPeticion,
         this.formUp.cantidad_estudiantes = peticiones.cantidad_estudiantes,
         this.formUp.nombre_peticion = peticiones.nombre_peticion,
         this.formUp.descripcion_peticion =peticiones.descripcion_peticion,
@@ -245,7 +247,7 @@
       
       // Aca se acepta la peticon de servicio social
     cambiarEstado(peticion){
-      if(peticion.estado_peticion == 'En espera'){
+      console.log(peticion);
         Swal.fire({
           title: '¿Esta seguro que desea aceptar la peticion de servicio social?',
           text: "Titulo: "+ peticion.nombre_peticion + ", institucion: "+ peticion.nombre_institucion,
@@ -257,21 +259,22 @@
           cancelButtonText: 'No, cancelar'
         }).then((result)=> {
           if(result.isConfirmed){
-            this.$inertia.put(route('peticiones.update', peticion.id), this.formUp);
+            
               Swal.fire(
                 '!Aceptado!',
                 'La peticion se acepto correctamente',
                 'success'
               );
+              this.$inertia.put(route('peticiones.update', peticion.id), this.formUp);
               window.location.reload(true);
           }
         })
-      }
+      
     },
 
 
     rechazarEstado(peticion){
-      if(peticion.estado_peticion == 'En espera'){
+      console.log(peticion);
         Swal.fire({
           title: '¿Esta seguro que desea rechazar la peticion de servicio social?',
           text: "Titulo: "+ peticion.nombre_peticion + ", institucion: "+ peticion.nombre_institucion,
@@ -283,16 +286,18 @@
           cancelButtonText: 'No, cancelar'
         }).then((result)=> {
           if(result.isConfirmed){
-            // this.$inertia.put(route('peticiones.update', peticion.id), this.form);
+            
               Swal.fire(
                 '!Rechazado!',
                 'La peticion se rechazo correctamente',
                 'success'
               );
-            // window.location.reload(true);
+              
+            this.$inertia.delete(route('peticiones.destroy', peticion));
+            window.location.reload(true);
           }
         })
-      }
+      
     },
       
     },
@@ -321,6 +326,7 @@
     },
 
     mounted(){
+      // window.location.reload(true);
       this.peticiones.forEach(element =>{
         this.peticionesArray.push(element);      
       })    
