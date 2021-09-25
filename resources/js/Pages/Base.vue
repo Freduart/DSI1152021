@@ -171,20 +171,13 @@
                             </inertia-link>
                     </li>
 
-<!-- fa fa-check-square--->
-                    <li class="nav-item">
-                            <inertia-link :href="route('actividades.index')" class="nav-link">
-                            <i class="nav-icon fa fa-list-alt"></i>
-                            <p> Mis Actividades</p>
-                            </inertia-link>
-                    </li>
-                    <li class="nav-item">
                     <li v-if="is('Encargado Escuela')" class="nav-item">
                             <inertia-link :href="route('establecerha.index')" class="nav-link">
                             <i class="nav-icon fa fa-clipboard "></i>
                             <p>Establecer cantidad de Horas y Alumnos</p>
                             </inertia-link>
                     </li>
+
                     <!-- https://es.vuejs.org/v2/guide/conditional.html -->
                     <!-- https://www.npmjs.com/package/laravel-permission-to-vuejs -->
                     <li v-if="is('Estudiante')" class="nav-item">
@@ -201,14 +194,6 @@
                             </inertia-link>
                     </li>
 
-                    <!-- Boton de instituciones en el slidebar -->
-                    <li class="nav-item">
-                            <inertia-link :href="route('instituciones.index')" class="nav-link">
-                            <i class="fas fa-university nav-icon"></i>
-                            <p>Instituciones</p>
-                            </inertia-link>
-                    </li>
-                    <!-- Fin de boton de instituciones -->
                     <li class="nav-item">
                             <inertia-link :href="route('constancia.index')" class="nav-link">
                             <i class="fas fa-medal nav-icon"></i>
@@ -241,8 +226,10 @@
 </template>
 
 <script>
+
     import JetNavLink from '@/Jetstream/NavLink'
     import JetDropdownLink from '@/Jetstream/DropdownLink'
+
     export default {
         components:{
             name: 'menu',
@@ -264,6 +251,35 @@
             }
         },
         mounted(){
+            /*$(".nav li").on("click", function(){
+              $(".nav").find(".active").removeClass("active");
+              $(this).addClass("active");
+            });*/
+            
+          /*$(function() {
+  
+            // elementos de la lista
+            var menues = $(".nav li a"); 
+            var menues2 = $(".nav li"); 
+
+            // manejador de click sobre todos los elementos
+            menues.click(function() {
+              // eliminamos active de todos los elementos
+              menues.removeClass("active");
+              // activamos el elemento clicado.
+              $(this).addClass("active");
+            });
+
+            menues2.click(function() {
+              // eliminamos active de todos los elementos
+              menues.removeClass("menu-is-opening");
+              menues.removeClass("menu-open");
+              // activamos el elemento clicado.
+              $(this).addClass("menu-is-opening");
+              $(this).addClass("menu-open");
+            });
+
+          });*/
           
         }
     }   
