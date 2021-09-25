@@ -45,16 +45,22 @@
                   </div>
                 </div>
                 <!-- /.card-header -->
-                <div v-if="actividadesFiltradas.length != 0">
-                <div class="card-body">
+                <div v-if="proyectosFiltradas.length != 0">
+                <div class="card-body" v-for="(proyecto, index) in proyectosFiltradas" :key="index">
                   <ul class="todo-list" data-widget="todo-list">
                     <li>
+                      <h5 class="mt-2 ml-3" style="margin-bottom: 0.2rem;">{{ proyecto.nombre_peticion }}</h5>
+                      <p class="ml-4 mb-1 text-gray" >Tipo Servicio: {{ proyecto.nombre_tipo_servicio }}</p>
+                      <p class="ml-4 mb-4 text-gray" >Institución: {{ proyecto.nombre_institucion }}</p>
                       <!--Tabla donde apareceran todos las actividades-->
+                      <div v-if="actividadesFiltradas.length != 0">
+                      
                       <table class="table table-hover text-center" width="500" style="font-size: 20px">
                         <thead class="thead-dark">
                           <tr>
-                            <th scope="col" width="20%">Código de la actividad</th>
-                            <th scope="col">Nombre de la actividad</th>
+                            <th scope="col">Estudiante</th>
+                            <th scope="col">Actividad</th>
+                            <th scope="col">Fecha actividad</th>
                             <th scope="col">Acción</th>
                           </tr>
                         </thead>
@@ -62,9 +68,10 @@
                         <tbody>
                           <tr class="table-secondary" scope="row" v-for="(actividad, index) in actividadesFiltradas" :key="index">
                             <!--Aqui devuelven los datos que se mostraran en pantalla -->
-                            <td>{{ actividad.id }}</td>
-                            <td>{{ actividad.nombre_actividad }}</td>
-                            <td>
+                            <td v-if="proyecto.idServicio == actividad.idServicio">{{ actividad.nombre_estudiante }} {{ actividad.nombre_estudiante }}</td>
+                            <td v-if="proyecto.idServicio == actividad.idServicio">{{ actividad.nombre_actividad }}</td>
+                            <td v-if="proyecto.idServicio == actividad.idServicio">{{ actividad.fecha_actividad }}</td>
+                            <td v-if="proyecto.idServicio == actividad.idServicio">
                               <div class="flex justify-center">      
                                 <!--boton verificar-->
                                 <button class="btn btn-primary" v-on:click="mostrarDatos(actividad)" data-toggle="modal" data-target="#verificar">
@@ -75,6 +82,10 @@
                           </tr>
                         </tbody>
                       </table>
+                      </div>
+                      <div v-else class="alert alert-warning ml-4 mr-4 mt-3" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                          No se han encontrado datos
+                      </div>
                     </li>
                   </ul>
                 </div>  
@@ -114,8 +125,8 @@
           <div class="card-body">
             <table class="">
               <tr>
-                <td><h5 class=""><strong>Códido de la actividad: </strong></h5></td>
-                <td><h5>{{ form.id }}</h5></td>
+                <td><h5 class=""><strong>Estudiante: </strong></h5></td>
+                <td><h5>{{ form.nombre_estudiante }} {{ form.apellido_estudiante }}</h5></td>
               </tr>
               <tr>
                 <td><h5 class=""><strong>Nombre de la actividad: </strong></h5></td>
@@ -204,7 +215,7 @@
             //JetButton,
             Base
         },
-        props:['actividades'],
+        props:['actividades', 'proyectos'],
         methods:{
             logout() {
                 this.$inertia.post(route('logout'));
@@ -283,6 +294,8 @@
             //carga informacion de la actividad seleccionada al formulario del modal
             mostrarDatos(actividad){
               this.form.id = actividad.id,
+              this.form.nombre_estudiante = actividad.nombre_estudiante,
+              this.form.apellido_estudiante = actividad.apellido_estudiante,
               this.form.nombre_actividad = actividad.nombre_actividad,
               this.form.fecha_actividad = actividad.fecha_actividad,
               this.form.total_horas = actividad.total_horas,
@@ -294,6 +307,7 @@
         return{
           actividad:0,
           actividadesFiltradas:[],
+          proyectosFiltradas:[],
           successGuardado:false,
           //formularioNuevaCarrera:false,
           form: this.$inertia.form({
@@ -302,6 +316,8 @@
             fecha_actividad:'',
             total_horas:'',
             verificado:'En espera',
+            nombre_estudiante: '',
+            apellido_estudiante: ''
           }),
           formUp: this.$inertia.form({
             id:'',
@@ -314,6 +330,9 @@
     },        
     
     mounted(){
+      this.proyectos.forEach(element => {
+        this.proyectosFiltradas.push(element);
+      }),
       this.actividades.forEach(element => {
         this.actividadesFiltradas.push(element);
       }),

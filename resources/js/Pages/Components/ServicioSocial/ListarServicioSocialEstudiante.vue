@@ -112,12 +112,8 @@
                         <div class="row">
                               <div class="col">
                                 <jet-button type="button" class="mt-3 ml-2 mb-1 btn btn-primary" data-toggle="modal" data-target="#verInstitucion" v-on:click="mostrarInstitucion(servicioA)" title="Ver informacion de la institución">Información de la institución</jet-button>
-                                <a type="button" class="mt-3 ml-2 mb-1 btn btn-warning left" :href="`/actividades/${servicioA.idServicio}`" title="Ver informacion de la actividad">Información de la actividad</a>                             
+                                <a v-if="servicioA.estado == 'En curso'" type="button" class="mt-3 ml-2 mb-1 btn btn-warning left" :href="`/actividades/${servicioA.idServicio}`" title="Ver informacion de la actividad">Información de la actividad</a>                             
                               </div>
-                          <div class="col">
-                            <!--BOTON DE ACTIVIDADES -->
-                                  
-                           </div>
                         </div>
                       
                     </div>
