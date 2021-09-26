@@ -171,12 +171,12 @@
                             </inertia-link>
                     </li>
 
-                    <li v-if="is('Encargado Escuela')" class="nav-item">
+                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item">
                             <inertia-link :href="route('establecerha.index')" class="nav-link">
                             <i class="nav-icon fa fa-clipboard "></i>
                             <p>Establecer cantidad de Horas y Alumnos</p>
                             </inertia-link>
-                    </li>
+                    </li> -->
 
                     <!-- https://es.vuejs.org/v2/guide/conditional.html -->
                     <!-- https://www.npmjs.com/package/laravel-permission-to-vuejs -->
