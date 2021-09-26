@@ -9,7 +9,7 @@ class ConstanciaCumplimiento extends Model
 {
     use HasFactory;
 
-    protected $table = 'contancias_cumplimiento';
+    protected $table = 'constancias_cumplimiento';
 
     //Relacion uno a uno con Estudiante
     public function estudiante(){
