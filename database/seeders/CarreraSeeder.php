@@ -16,9 +16,7 @@ class CarreraSeeder extends Seeder
     public function run()
     {
         // Crea cosas aleatorias pero no lo queremos asi
-        // \App\Models\Carrera::factory()->count(12)->create();
-
-        DB::table('carreras')->delete();
+        // \App\Models\Carrera::factory()->count(12)->create();        
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
         
         $carreras = [

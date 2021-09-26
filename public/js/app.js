@@ -27644,20 +27644,6 @@ var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_63 = {
-  "class": "nav-item"
-};
-
-var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "fas fa-medal nav-icon"
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_65 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Constancia de cumplimiento", -1
-/* HOISTED */
-);
-
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
 
@@ -27870,19 +27856,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["href"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
-    href: _ctx.route('constancia.index'),
-    "class": "nav-link"
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_64, _hoisted_65];
-    }),
-    _: 1
-    /* STABLE */
-
-  }, 8
-  /* PROPS */
-  , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Cuando es un solo elemento "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li class=\"nav-item\">\r\n                        <a href=\"pages/gallery.html\" class=\"nav-link\">\r\n                        <i class=\"nav-icon far fa-image\"></i>\r\n                        <p>\r\n                            Gallery\r\n                        </p>\r\n                        </a>\r\n                    </li> ")])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.sidebar-menu ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.sidebar ")])], 64
+  , ["href"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li class=\"nav-item\">\r\n                            <inertia-link :href=\"route('constancia.index')\" class=\"nav-link\">\r\n                            <i class=\"fas fa-medal nav-icon\"></i>\r\n                            <p>Constancia de cumplimiento</p>\r\n                            </inertia-link>\r\n                    </li> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Cuando es un solo elemento "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li class=\"nav-item\">\r\n                        <a href=\"pages/gallery.html\" class=\"nav-link\">\r\n                        <i class=\"nav-icon far fa-image\"></i>\r\n                        <p>\r\n                            Gallery\r\n                        </p>\r\n                        </a>\r\n                    </li> ")])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.sidebar-menu ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.sidebar ")])], 64
   /* STABLE_FRAGMENT */
   );
 }

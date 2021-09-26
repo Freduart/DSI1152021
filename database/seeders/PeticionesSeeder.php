@@ -18,7 +18,8 @@ class PeticionesSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
 
         $peticiones = [
-            [2,"Pasantia para desarrollo","Se necesita dos estudiantes con ganas de aprender","San Salvador","2021-09-24","2021-10-10",300,null,"En espera","applaudo@gmail.com",4,1,1],
+            [2,"Pasantia para desarrollo","Se necesita dos estudiantes con ganas de aprender","San Salvador","2021-09-24","2021-10-10",300,null,"En espera","applaudoempleado@gmail.com",4,1,1],
+            [3,"Desarrollador Web","Se necesita dos estudiantes con ganas de aprender","Santa Tecla","2021-09-27","2021-11-10",400,null,"Aceptado","novatech@gmail.com",4,3,1],
         ];
 
         foreach($peticiones as $peticion){

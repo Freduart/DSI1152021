@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
       ];
 
       foreach($estudiantes as $estudiante){
-        User::create(['name' => $estudiante[0],'email' => $estudiante[1],'password' => bcrypt($estudiante[2])]);
+        User::create(['name' => $estudiante[0],'email' => $estudiante[1],'password' => bcrypt($estudiante[2])])->assignRole('Estudiante');;
       }      
 
       // Apartado de instituciones
@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
       ];
 
       foreach($instituciones as $institucion){
-        User::create(['name' => $institucion[0],'email' => $institucion[1],'password' => bcrypt($institucion[2])]);
+        User::create(['name' => $institucion[0],'email' => $institucion[1],'password' => bcrypt($institucion[2])])->assignRole('Institucion');;
       }
 
       // Apartado de encargados de escuela
@@ -56,7 +56,16 @@ class UserSeeder extends Seeder
       ];
 
       foreach($encargadosE as $encargadoE){
-        User::create(['name' => $encargadoE[0],'email' => $encargadoE[1],'password' => bcrypt($encargadoE[2])]);
+        User::create(['name' => $encargadoE[0],'email' => $encargadoE[1],'password' => bcrypt($encargadoE[2])])->assignRole('Encargado Escuela');
+      }
+
+      // Encargados de facultad
+      $encargadosF = [
+        ["Alexis", "alexis@gmail.com", "encargadoF"],        
+      ];
+
+      foreach($encargadosF as $encargadoF){
+        User::create(['name' => $encargadoF[0],'email' => $encargadoF[1],'password' => bcrypt($encargadoF[2])])->assignRole('Encargado Facultad');;
       }
 
       // Apartados de encargados de facultad

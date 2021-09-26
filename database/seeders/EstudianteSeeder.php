@@ -21,8 +21,8 @@ class EstudianteSeeder extends Seeder
 		$estudiantes = [
 				["Fredy","Martinez",2,"MM16045","Masculino","fredy@gmail.com","7911-9346",1,"05570933-6","0702-110897-101-3",30,63.00,0,"Activo"],
 				["Leo","Urquilla",3,"UR17008","Masculino","leo@gmail.com","6539-9871",2,"05570933-7","0702-110897-101-4",32,59.00,0,"Activo"],
-				["Chico","Santana",4,"SM16006","Masculino","chico@gmail.com","6539-9872",3,"05570933-8","0702-110897-101-5",32,63.00,0,"Inactivo"],
-				["Fransisco","Ganuza",5,"GR18015","Masculino","fransisco@gmail.com","6539-9873",4,"05570933-9","0702-110897-101-6",32,76.00,0,"Inactivo"],
+				["Chico","Santana",4,"SM16006","Masculino","chico@gmail.com","6539-9872",3,"05570933-8","0702-110897-101-5",32,63.00,0,"Activo"],
+				["Fransisco","Ganuza",5,"GR18015","Masculino","fransisco@gmail.com","6539-9873",4,"05570933-9","0702-110897-101-6",32,76.00,0,"Activo"],
 				["Stefany","Ruiz",6,"RR16003","Femenino","stefany@gmail.com","6539-9874",5,"05570933-1","0702-110897-101-7",32,91.00,0,"Activo"],
 		];
 
