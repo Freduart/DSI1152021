@@ -10,12 +10,8 @@ class Institucion extends Model
     protected $table = 'instituciones';
     use HasFactory;
 
-    //Relacion uno a muchos con peticiones
-    public function peticiones(){
-        return $this->hasMany('App\Models\Peticion');
-    }
- 
     protected $fillable = [
+        'id',
         'nombre_institucion',
         'contacto_institucion',
         'correo_institucion',
@@ -23,4 +19,14 @@ class Institucion extends Model
         'ubicacion_institucion',
         'rubro_institucion',
     ];
+
+    //Relacion uno a muchos con peticiones
+    public function peticiones(){
+        return $this->hasMany('App\Models\Peticion');
+    }    
+
+    //Relacion uno a uno con Usuario
+    public function usuario(){
+        return $this->hasOne('App\Models\User');
+    }
 }

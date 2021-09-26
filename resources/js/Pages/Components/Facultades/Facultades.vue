@@ -32,17 +32,19 @@
                 <div class="card-header">
                     <h3 class="card-title">
                     <i class="ion ion-clipboard mr-1"></i>
-                    Facultades
+                    Lista de Facultades
                     </h3>
+
+                     <!--Boton para añadir facultades-->
+                            <button type="button" class="btn btn-success float-right mt-2" data-toggle="modal" data-target="#añadirFacultad">
+                            <i class="fas fa-plus"></i> Añadir Facultades</button> 
+                            <br> <br>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
-                            <!--Boton para añadir facultades-->
-                            <button type="button" class="btn btn-success mb-8" data-toggle="modal" data-target="#añadirFacultad">
-                            <i class="fas fa-plus"></i> Añadir</button> 
-                            <hr>
+                           
                                 <!--Tabla donde apareceran todos las facultades-->
                                 <table class="table table-hover text-center" width="500" style="font-size: 20px">
                                     <thead class="thead-dark">
@@ -60,13 +62,14 @@
                                             <td>
                                             <!-- Botones para edit or delete-->
                                                 <div class="tools">
-                                                    <inertia-link class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a Facultad" method="delete"
-                                                    :href="route('facultades.destroy', facultad.id)"
-                                                    v-on:click="mostrarMensajeDelete(facultad)"></inertia-link>
+                                                    
                                                     
                                                     <jet-button :href="route('facultades.update', facultad.id)" v-on:click="mostrarMensajeUpdate(facultad)" data-toggle="modal" 
                                                     data-target="#modificarFacultad" title="Editar Facultad"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>
-                                                          
+
+                                                    <inertia-link class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a Facultad" method="delete"
+                                                    :href="route('facultades.destroy', facultad.id)"
+                                                    v-on:click="mostrarMensajeDelete(facultad)"></inertia-link>
                                                 </div>
                                             </td>
                                         </tr>

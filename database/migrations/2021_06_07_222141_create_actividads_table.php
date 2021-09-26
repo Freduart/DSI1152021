@@ -19,7 +19,7 @@ class CreateActividadsTable extends Migration
             $table->string('nombre_actividad', 50);
             $table->date('fecha_actividad');
             $table->unsignedInteger('total_horas');
-            $table->boolean('verificado');
+            $table->enum('verificado',['En espera', 'Aceptada', 'Reportada', 'Finalizada', 'No finalizada']);
 
             $table->timestamps();
 

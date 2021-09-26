@@ -69,43 +69,12 @@
                   </ul>
               </div> -->
               <!-- /.card-body -->
+
               <div class="card-footer clearfix" >
                   <!-- <p>{{ estudiante.nombre_estudiante }}</p> -->
                 <div class="row">
-                      <!-- <div class="col-sm-4" v-for="(estudiante, index) in this.filtrarEstudiantes" :key="index"> -->
-                        <!-- <div class="card">
-                        <div class="card-body">
-                            <div class="">
-                                <div class="">
-                                    <h4 class=""><strong>Nombre: </strong>{{ estudiante.nombre_estudiante }} {{ estudiante.apellido_estudiante }}</h4>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <h4><strong>Carnet: </strong>{{ estudiante.carnet_estudiante }}</h4>
-                                    </div>
-                                    <div class="">
-                                        <span class="d-flex flex-row-reverse bd-highlight col">
-                                                <button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-primary" disabled>{{ estudiante.estado_estudiante }}</button>
-                                                <button v-else-if="estudiante.estado_estudiante == 'Inactivo'" class="btn btn-danger" disabled>{{ estudiante.estado_estudiante }}</button>
-                                                <button v-else-if="estudiante.estado_estudiante == 'Servicio finalizado'" class="btn btn-success" disabled>{{ estudiante.estado_estudiante }}</button>
-                                                <button v-else-if="estudiante.estado_estudiante == 'Realizando servicio'" class="btn btn-info" disabled>En servicio</button>
-                                        </span>
-                                    </div> 
-                                </div>                            
-                            </div>
-                            <hr class=""/>
-
-                                <div class="d-flex justify-content-center">
-                                    <button class="btn btn-warning" v-on:click="this.verDetalle(estudiante)" data-toggle="modal" data-target="#detalleEstudianteModal">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                            Ver detalle
-                                    </button>
-                                </div>
-                                                                                                             
-                        </div>
-                        </div> -->
-                        <table class="table table-striped table-dark text-center" style="font-size: 20px">
-                                    <thead>
+                        <table v-if="filtrarEstudiantes.length != 0" class="table table-hover text-center" style="font-size: 20px">
+                                    <thead class="thead-dark">
                                         <tr>
                                         
                                         <th scope='col'>Nombres</th>
@@ -116,7 +85,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr scope="row" v-for="(estudiante, index) in filtrarEstudiantes" :key="index">
+                                        <tr class="table-secondary" scope="row" v-for="(estudiante, index) in filtrarEstudiantes" :key="index">
                                             
                                             <td>{{ estudiante.nombre_estudiante }}</td>
                                             <td>{{ estudiante.apellido_estudiante }}</td>
@@ -142,17 +111,21 @@
                                                         </button>
                                                     </inertia-link> -->
                                                     
-                                                    <button class="btn btn-warning" v-on:click="this.verDetalle(estudiante)" data-toggle="modal" data-target="#detalleEstudianteModal">
+                                                    <!-- <button class="btn btn-warning" v-on:click="this.verDetalle(estudiante)" data-toggle="modal" data-target="#detalleEstudianteModal">
                                                         <i class="fas fa-eye mx-12"></i>
                                                         Ver detalle
-                                                    </button>    
-                                                
+                                                    </button>     -->
+                                                    <jet-button type="button" class="fas fa-info-circle text-yellow" data-toggle="modal" data-target="#detalleEstudianteModal" v-on:click="verDetalle(estudiante)" title="Ver informacion del estudiante"></jet-button>
                                                 
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
-                                </table>
+                                </table> 
+                                <div v-else class="alert alert-warning ml-4 mr-4 mt-3 justify-center" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                                    No se han encontrado registros
+                                </div> 
+                              
 
         <!-- Modal -->
     <div class="modal fade" id="detalleEstudianteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

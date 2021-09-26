@@ -16,9 +16,9 @@ class CreateProyectoSocialsTable extends Migration
         Schema::create('proyectos_sociales', function (Blueprint $table) {
             $table->id('id');
             $table->unsignedBigInteger('peticion_id')->unique()->nullable();
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
-            $table->integer('numero_horas');
+            // $table->date('fecha_inicio');
+            // $table->date('fecha_fin');
+            // $table->integer('numero_horas');
             $table->enum('estado_proyecto_social', ['No iniciado', 'En curso', 'Finalizado', 'Cancelado']);
             $table->timestamps();
 

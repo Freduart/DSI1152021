@@ -280,12 +280,18 @@
                     if (result.isConfirmed) {
                         // modificando el estado
                         this.$inertia.delete(route('encargadosescuela.destroy', encargado.idEncargado));
-                        Swal.fire(
-                        '!Desactivado!',
-                        'El encargado se desactivó correctamente',
-                        'success'
-                        );
-                        window.location.reload(true);
+                        Swal.fire({
+                          title: '!Desactivado!',
+                          text: 'El encargado se desactivó correctamente',
+                          icon: 'success',
+                          confirmButtonColor: '#3085d6',
+                          allowEscapeKey: false,
+                          allowOutsideClick: false,
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            location.reload();
+                          }
+                        })  
                     }
                 })
               } else {
@@ -303,12 +309,18 @@
                     if (result.isConfirmed) {
                         // modificando el estado
                         this.$inertia.delete(route('encargadosescuela.destroy', encargado.idEncargado));
-                        Swal.fire(
-                        '!Activado!',
-                        'El encargado se activó correctamente',
-                        'success'
-                        );
-                        window.location.reload(true);
+                        Swal.fire({
+                          title: '!Activado!',
+                          text: 'El encargado se activó correctamente',
+                          icon: 'success',
+                          confirmButtonColor: '#3085d6',
+                          allowEscapeKey: false,
+                          allowOutsideClick: false,
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            location.reload();
+                          }
+                        })  
                     }
                 })
               }

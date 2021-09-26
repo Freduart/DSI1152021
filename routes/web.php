@@ -10,6 +10,19 @@ use App\Http\Controllers\EncargadoEscuelaController;
 use App\Http\Controllers\VerificarCuentaController;
 use App\Http\Controllers\InstitucionController;
 use App\Http\Controllers\RolController;
+use App\Http\Controllers\SolicitudController;
+use App\Http\Controllers\SolicitudesController;
+use App\Http\Controllers\ActividadesController;
+use App\Http\Controllers\BitacoraController;
+use App\Http\Controllers\VerificarActividadesController;
+use App\Http\Controllers\FinalizarActividadesController;
+use App\Http\Controllers\EstablecerHAController;
+use App\Http\Controllers\ServicioSocialController;
+use App\Http\Controllers\PeticionController;
+use App\Http\Controllers\TipoServicioController;
+use App\Http\Controllers\ConstanciaController;
+use App\Http\Controllers\FinalizarProyectoController;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -68,7 +81,29 @@ Route::resource('facultades', FacultadController::class)->middleware(['auth:sanc
 Route::resource('encargadosescuela', EncargadoEscuelaController::class)->middleware(['auth:sanctum','verified']);
 
 Route::resource('verificarcuenta', VerificarCuentaController::class)->middleware(['auth:sanctum','verified']);
-Route::resource('instituciones', InstitucionController::class)->middleware(['auth:sanctum','verified']);
+Route::resource('instituciones', InstitucionController::class);
+Route::resource('actividades', ActividadesController::class)->middleware(['auth:sanctum','verified']);
+
+
+Route::resource('solicitudesestudiante', SolicitudController::class)->middleware(['auth:sanctum','verified']);
+
+Route::resource('solicitudes', SolicitudesController::class)->middleware(['auth:sanctum','verified']);
+
+Route::resource('verificaractividades', VerificarActividadesController::class)->middleware(['auth:sanctum','verified']);
+
+Route::resource('establecerha', EstablecerHAController::class)->middleware(['auth:sanctum','verified']);
+
+Route::resource('finalizaractividades', FinalizarActividadesController::class)->middleware(['auth:sanctum','verified']);
+
+Route::resource('bitacora', BitacoraController::class)->middleware(['auth:sanctum','verified']);
+
+Route::resource('serviciossociales', ServicioSocialController::class)->middleware(['auth:sanctum', 'verified']);
+
+Route::resource('constancia', ConstanciaController::class)->middleware(['auth:sanctum', 'verified']);
+
+Route::resource('finproyecto',FinalizarProyectoController::class)->middleware(['auth:sanctum', 'verified']);
+Route::get('actividades/{proyecto_social_id}', ['as' => 'actividades', 'uses' => 'ActividadesController@show']);
+
 //Route::delete('verificarcuenta/{id}', [VerificarCuentaController::class, 'id'])->name('verificarcuenta.eliminar');
 Route::get('credenciales', function (){
   $details = [
@@ -79,3 +114,12 @@ Route::get('credenciales', function (){
   Mail::to('jganuzaramírez@gmail.com')->send(new CredencialesMailable($details));
   return "mensaje enviado";
 });
+
+
+//Ruta para el tipo de servicio social
+Route::resource('tipoServicio', TipoServicioController::class)->only([
+  'index','store','update','destroy'
+]);
+
+//Ruta de las peticiones
+Route::resource('peticiones', PeticionController::class);

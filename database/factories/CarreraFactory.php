@@ -22,11 +22,11 @@ class CarreraFactory extends Factory
      */
     public function definition()
     {
-        return [
-            'nombre_carrera' => Str::random(10),
-            'codigo_carrera' => Str::random(7),
-            'materias_para_aprobar'=>$this->faker->numberBetween(32, 40),
-            'facultad_id' => $this->faker->numberBetween(1, 9)    
-        ];
+        // return [
+        //     'nombre_carrera' => Str::random(10),
+        //     'codigo_carrera' => Str::random(7),
+        //     'materias_para_aprobar'=>$this->faker->numberBetween(32, 40),
+        //     'facultad_id' => $this->faker->numberBetween(1, 9)    
+        // ];
     }
 }

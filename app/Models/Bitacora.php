@@ -11,6 +11,16 @@ class Bitacora extends Model
 
     protected $table = 'bitacoras';
 
+    protected $fillable =[
+        'id',
+        'total_horas',
+        'observaciones_bitacora',
+        'documento_pdf',
+        'estudiante_id',
+        'proyecto_social_id',
+
+    ];
+
     //Relacion muchos a uno con Estudiantes
     public function estudiante(){
         return $this->hasOne('App\Models\Estudiante');
