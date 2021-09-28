@@ -65,6 +65,7 @@
                                         <!-- <option value="Cancelado">Cancelado</option> -->
                                     </select>    
                                 </div>
+
                                 <div class="col" v-if="boolFiltrar">
                                     <select id="idFiltroServicios" class="" style="width: 350px;" v-model="this.valor" v-on:change="filtrarServicios(this.valor)">
                                         <option value="0" selected>Todos</option>
@@ -76,13 +77,19 @@
                                     </select>    
                                 </div>
 
-                            </div>   
 
+                            </div>   
+                                
+
+                                
                         </div>
 
 
                     
-                  </h3>                  
+                  </h3>
+                    <inertia-link type="button" class="btn btn-success float-right mt-2" :href="route('finalizaractividades.index')">
+                        <i class="fa fa-check-square"></i> Finalizar Actividades
+                    </inertia-link>                                    
               </div>
               <!-- /.card-header -->
               <!-- <div class="card-body">
@@ -201,12 +208,12 @@
                     <div class="row">
                         <div class="col">
                             <h5 class=""><strong>Fecha de inicio: </strong>
-                                <button class="btn btn-info btn-lg p-2 text-lg" style="cursor:default;">{{ verDetalleForm.fecha_inicio }}</button>
+                                <button class="btn btn-info btn-lg p-2 text-lg" style="cursor:default;">{{ verDetalleForm.fecha_peticion }}</button>
                             </h5>                           
                         </div>
                         <div class="col">
                             <h5 class=""><strong>Fecha de finalización: </strong>
-                                <button class="btn btn-info btn-lg p-2 text-lg" style="cursor:default;">{{ verDetalleForm.fecha_fin }}</button>
+                                <button class="btn btn-info btn-lg p-2 text-lg" style="cursor:default;">{{ verDetalleForm.fecha_peticion_fin}}</button>
                             </h5>
                         </div>
                     </div>
@@ -329,14 +336,15 @@ import Button from '../../../Jetstream/Button.vue';
             verDetalle(servicio){
                 console.log(servicio);
                 console.log(this.verDetalleForm);
-                this.verDetalleForm.fecha_inicio = servicio.fecha_inicio;
-                this.verDetalleForm.fecha_fin = servicio.fecha_fin;
+                // this.verDetalleForm.fecha_inicio = servicio.fecha_inicio;
+                // this.verDetalleForm.fecha_fin = servicio.fecha_fin;
                 this.verDetalleForm.numero_horas = servicio.numero_horas;
                 this.verDetalleForm.estado_proyecto_social = servicio.estado_proyecto_social;
                 this.verDetalleForm.cantidad_estudiantes = servicio.cantidad_estudiantes;
                 this.verDetalleForm.descripcion_peticion = servicio.descripcion_peticion;
                 this.verDetalleForm.ubicacion_actividades = servicio.ubicacion_actividades;
                 this.verDetalleForm.fecha_peticion = servicio.fecha_peticion;
+                this.verDetalleForm.fecha_peticion_fin = servicio.fecha_peticion_fin;
                 this.verDetalleForm.correo_peticion = servicio.correo_peticion;
                 this.verDetalleForm.nombre_carrera = servicio.nombre_carrera;
                 this.verDetalleForm.nombre_tipo_servicio = servicio.nombre_tipo_servicio;

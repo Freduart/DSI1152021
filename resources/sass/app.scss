@@ -20,3 +20,29 @@
 
 // Custom
 @import "custom";
+
+
+// .button-log{
+//   line-height: 12px;
+//   width: 18px;
+//   font-size: 8pt;
+//   font-family: tahoma;
+//   margin-top: 1px;
+//   margin-right: 2px;
+//   position:absolute;
+//   top:0;
+//   right:0;
+// }
+
+
+
+.delete_right {
+  display: block;
+  cursor: pointer;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 22px;
+  right: 30px;
+  background-color: #000;
+}

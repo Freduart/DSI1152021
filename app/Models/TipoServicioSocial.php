@@ -11,9 +11,8 @@ class TipoServicioSocial extends Model
     use HasFactory;
 
     protected $fillable =[
-        'id',
         'nombre_tipo_servicio',
-
+        'id',
     ];
 
     //Relación muchos a muchos con carreras

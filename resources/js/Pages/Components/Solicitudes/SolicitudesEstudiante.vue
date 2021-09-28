@@ -39,7 +39,11 @@
                   <i class="ion ion-clipboard mr-1"></i>
                   Solicitudes para participación en proyecto social
                   </h3>
-                  <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('encargadosescuela.create')">
+
+                  <!-- Aca se redireccionara a los servicios sociales pero con la diferencia que habra un nuevo apartado donde solo liste los proyectos serviciossociales
+                  se tienen que filtrar por: en primer lugar la carrera y en segundo lugar que el estudiante no este en un proyecto ya que asi nos simplificaremos 
+                  que no se inscriba en un servicio social mientras ya esta inscrito en otro -->
+                  <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('serviciossociales.index')">
                       <i class="fas fa-plus"></i> Ver proyectos </inertia-link>
                   <br><br>
                   

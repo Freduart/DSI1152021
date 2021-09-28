@@ -171,12 +171,12 @@
                             </inertia-link>
                     </li>
 
-                    <li v-if="is('Encargado Escuela')" class="nav-item">
+                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item">
                             <inertia-link :href="route('establecerha.index')" class="nav-link">
                             <i class="nav-icon fa fa-clipboard "></i>
                             <p>Establecer cantidad de Horas y Alumnos</p>
                             </inertia-link>
-                    </li>
+                    </li> -->
 
                     <!-- https://es.vuejs.org/v2/guide/conditional.html -->
                     <!-- https://www.npmjs.com/package/laravel-permission-to-vuejs -->
@@ -184,7 +184,7 @@
                             <inertia-link :href="route('solicitudesestudiante.index')" class="nav-link">
                             <i class="fas fa-paper-plane nav-icon"></i>
                             <p>Mis solicitudes</p>
-                            </inertia-link>
+                            </inertia-link> 
                     </li>
                     
                     <li v-if="is('Encargado Escuela') || is('Encargado Facultad') || is('Estudiante') || is('Unidad de Proyeccion Social')" class="nav-item">
@@ -194,12 +194,12 @@
                             </inertia-link>
                     </li>
 
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                             <inertia-link :href="route('constancia.index')" class="nav-link">
                             <i class="fas fa-medal nav-icon"></i>
                             <p>Constancia de cumplimiento</p>
                             </inertia-link>
-                    </li>
+                    </li> -->
 
                     <!-- Cuando es un solo elemento -->
                     <!-- <li class="nav-item">

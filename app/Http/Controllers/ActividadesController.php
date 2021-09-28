@@ -63,12 +63,20 @@ class ActividadesController extends Controller
     public function store(Request $request)
     {
         //Actividad::create($request->all());
+        // return $request;
 
         $actividad = new Actividad;
         $actividad->nombre_actividad = $request->nombre_actividad;
         $actividad->fecha_actividad = $request->fecha_actividad;
         $actividad->total_horas = $request->total_horas;
         $actividad->bitacora_id = $request->bitacora_id;
+        
+
+        // $idUsuario = Auth::id();
+        // $estudiante = Estudiante::where('user_id', '=', $idUsuario)->firstOrFail();
+        // $bitacora = Bitacora::where('estudiante_id', $estudiante)->firstOrFail();
+        // $actividad->bitacora_id = $bitacora->id;
+
         $actividad->save();
         
         
