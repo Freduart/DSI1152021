@@ -16,7 +16,7 @@
               </div>
               <div class="col-sm-8 alinging">
                 <h1 class="ml-3">Universidad de El Salvador</h1>
-                <h4 class="ml-3">Hacia la libertal por la cultura</h4>
+                <h4 class="ml-3">Hacia la libertad por la cultura</h4>
               </div>
             </div>
             <div class="col-md-4">
