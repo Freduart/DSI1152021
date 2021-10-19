@@ -40,7 +40,7 @@
                 </form>
             </div>
             <template v-else>
-              <inertia-link :href="route('login')" class="btn btn-success">
+              <inertia-link :href="route('login')" class="btn btn-success">                
                 Iniciar Sesión
               </inertia-link>
               
@@ -49,7 +49,7 @@
               </inertia-link>  -->
 
               <button type="button" class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
-                Registrase
+                Registrarse
               </button>
 
             </template>
@@ -68,7 +68,7 @@
         </a>
 
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" :key="componentKey">
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
@@ -229,6 +229,7 @@
 
     import JetNavLink from '@/Jetstream/NavLink'
     import JetDropdownLink from '@/Jetstream/DropdownLink'
+import { getCurrentInstance } from '@vue/runtime-core';
 
     export default {
         components:{
@@ -242,46 +243,30 @@
             laravelVersion: String,
             phpVersion: String,
         },
+        // data(){
+        //   return{
+        //     componentKey:2,
+        //   };
+        // },
         methods:{
-            logout() {
-                this.$inertia.post(route('logout'));
-             },
-            mostrarFormularioEstudiante(){
-                this.$inertia.get(route('estudiantes.create'));
-            }
+        //     forceRerender(){
+        //       this.componentKey+=1;
+        //     }
+          logout() {
+              this.$inertia.post(route('logout'));
+              window.location.reload();
+            },
+          mostrarFormularioEstudiante(){
+              this.$inertia.get(route('estudiantes.create'));
+          },
         },
         mounted(){
-            /*$(".nav li").on("click", function(){
-              $(".nav").find(".active").removeClass("active");
-              $(this).addClass("active");
-            });*/
-            
-          /*$(function() {
-  
-            // elementos de la lista
-            var menues = $(".nav li a"); 
-            var menues2 = $(".nav li"); 
 
-            // manejador de click sobre todos los elementos
-            menues.click(function() {
-              // eliminamos active de todos los elementos
-              menues.removeClass("active");
-              // activamos el elemento clicado.
-              $(this).addClass("active");
-            });
-
-            menues2.click(function() {
-              // eliminamos active de todos los elementos
-              menues.removeClass("menu-is-opening");
-              menues.removeClass("menu-open");
-              // activamos el elemento clicado.
-              $(this).addClass("menu-is-opening");
-              $(this).addClass("menu-open");
-            });
-
-          });*/
-          
+        },
+        setup(){
+          // const instance = getCurrentInstance();
+          // instance.proxy.$forceUpdate();
+          // window.location.reload();
         }
     }   
-    
 </script>

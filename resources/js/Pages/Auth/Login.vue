@@ -33,6 +33,9 @@
             <jet-button class="d-flex justify-content-center btn btn-success" :class="{ 'text-white-50': form.processing }" :disabled="form.processing">
               Iniciar sesión
             </jet-button>
+            <!-- <inertia-link class="d-flex justify-content-center btn btn-success" :href="route('serviciossociales.index')">
+              Iniciar sesión
+            </inertia-link> -->
           </div>
         </div>
       </form>
@@ -84,7 +87,7 @@ export default {
           }))
           .post(this.route('login'), {
             onFinish: () => this.form.reset('password'),
-          })
+          })  
     }
   }
 }
