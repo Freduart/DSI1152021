@@ -112,7 +112,7 @@
                         <div class="row">
                               <div class="col">
                                 <jet-button type="button" class="mt-3 ml-2 mb-1 btn btn-primary" data-toggle="modal" data-target="#verInstitucion" v-on:click="mostrarInstitucion(servicioA)" title="Ver informacion de la institución">Información de la institución</jet-button>
-                                <a v-if="servicioA.estado == 'En curso'" type="button" class="mt-3 ml-2 mb-1 btn btn-warning left" :href="`/actividades/${servicioA.idServicio}`" title="Ver informacion de la actividad">Información de la actividad</a>                             
+                                <a v-if="servicioA.estado == 'En curso'" type="button" class="mt-3 ml-2 mb-1 btn btn-warning left" :href="`/actividades/${servicioA.idServicio}`" title="Ver informacion de la actividad">Información de las actividades</a>                             
                               </div>
                         </div>
                       
@@ -162,8 +162,8 @@
                               
                               <td> <strong></strong>{{ serv.nombre_peticion }} - Tipo: {{ serv.nombre_tipo_servicio }}</td>
                               <td> {{ serv.nombre_institucion }}</td>
-                              <td> {{ serv.numero_horas }} h</td>
-                              <td> {{ serv.fecha_fin }} </td>
+                              <td> {{ serv.cantidad_horas }} h</td>
+                              <td> {{ serv.fecha_peticion_fin }} </td>
                               <td> 
                                 <button v-if="serv.estado_proyecto_social == 'No iniciado'" class="btn btn-primary" style="cursor: default;">{{ serv.estado_proyecto_social }}</button>
                                 <button v-else-if="serv.estado_proyecto_social == 'En curso'" class="btn btn-success" style="cursor: default;">{{ serv.estado_proyecto_social }}</button>
@@ -378,6 +378,8 @@
                     <i class="fa fa-eye-slash" aria-hidden="true"></i>
                     Ocultar detalle
             </button>
+            <a type="button" class="ml-2 btn btn-success" :href="`/actividades/${form.idServicio}`" title="Ver informacion de la actividad">Información de las actividades</a>               
+              
           </div>
           </div>
         </div>
@@ -434,6 +436,7 @@
           
           //carga informacion de la solicitud seleccionada al formulario del modal
           mostrarinfo(servicio){
+            this.form.idServicio = servicio.proyecto_social_id;
             this.form.fecha_inicio = servicio.fecha_inicio;
             this.form.fecha_fin = servicio.fecha_fin;
             this.form.numero_horas = servicio.numero_horas;

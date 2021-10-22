@@ -12,7 +12,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="ml-3">Listado de servicios sociales</h1>
+            <h1 class="ml-3">Servicios sociales disponibles</h1>
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -78,10 +78,7 @@
                                 </div>
                             </div>   
                         </div>
-                  </h3>
-                    <inertia-link type="button" class="btn btn-success float-right mt-2" :href="route('finalizaractividades.index')">
-                        <i class="fa fa-check-square"></i> Finalizar Actividades
-                    </inertia-link>                                    
+                  </h3>                                 
               </div>
               <!-- /.card-header -->
               <!-- <div class="card-body">
@@ -100,19 +97,18 @@
                         <table v-if="serviciosFiltrados.length != 0" class="table table-hover text-center" style="font-size: 20px">
                                     <thead class="thead-dark">
                                         <tr>                                        
-                                        <th scope='col'>Institución</th>
+                                        <th scope="col">Servicio</th>
                                         <th scope="col">Tipo de servicio</th>
-                                        <th scope="col">Carrera</th>
+                                        <th scope='col'>Institución</th>
                                         <th scope="col">Estado</th>
                                         <th scope="col" width="15%"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr class="table-secondary" scope="row" v-for="(servicio, index) in serviciosFiltrados" :key="index">
-                                            
-                                            <td class="d-xl-block">{{ servicio.nombre_institucion }}</td>
+                                            <td>{{ servicio.nombre_peticion }}</td>
                                             <td>{{ servicio.nombre_tipo_servicio}}</td>
-                                            <td>{{ servicio.nombre_carrera }}</td>
+                                            <td class="d-xl-block">{{ servicio.nombre_institucion }}</td>
                                             <td>
                                                 <button v-if="servicio.estado_proyecto_social == 'No iniciado'" class="btn btn-primary" style="cursor: default;">{{ servicio.estado_proyecto_social }}</button>
                                                 <button v-else-if="servicio.estado_proyecto_social == 'En curso'" class="btn btn-success" style="cursor: default;">{{ servicio.estado_proyecto_social }}</button>
@@ -122,29 +118,15 @@
                                             <td>
                                             <!-- General tools such as edit or delete-->
                                                 <div class="flex justify-center tools">
-
+                                                    <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#detalleServicioModal" v-on:click="verDetalle(servicio)" title="Ver informacion del servicio social"></jet-button>
+                                                    <jet-button type="button" class="fas fa-paper-plane text-red ml-2" data-toggle="modal" data-target="#enviarSolicitud"  v-on:click="verServicio(servicio)" title="Enviar solicitud a servicio social"></jet-button>
                                                     
-                                                    <!-- <inertia-link
-                                                    method="delete"
-                                                    :href="route('carreras.destroy', carrera.id)"
-                                                    v-on:click="mostrarMensajeDelete(carrera)">
-                                                        <button class="btn btn-danger">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </inertia-link> -->
-                                                    
-                                                    <!-- <button class="btn btn-warning" v-on:click="this.verDetalle(servicio)" data-toggle="modal" data-target="#detalleServicioModal">
-                                                        <i class="fas fa-eye mx-12"></i>
-                                                    </button>     -->
-                                                    <!-- <jet-button type="button" class="fas fa-info-circle text-yellow" data-toggle="modal" data-target="#detalleServicioModal" v-on:click="verDetalle(servicio)" title="Ver informacion del servicio social"></jet-button> -->
-                                                    <a type="button" class="fas fa-info-circle text-yellow" :href="`/serviciossociales/${servicio.id}`" title="Ver informacion del servicio social"></a>
-                                                    <!-- <a type="button" class="mt-3 ml-2 mb-1 btn btn-warning left"  title="Ver servicio social">Información del servicio</a>  -->
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
                             </table>
-                    <div v-else class="alert alert-warning ml-4 mr-4 mt-3 justify-center" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                    <div v-else class="alert alert-warning ml-4 mr-4 mt-3 justify-center" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba; width: 100%;">
                         No se han encontrado registros
                     </div>
 
@@ -284,6 +266,53 @@
             </div>
             </div>
 
+            <!-- Modal Insertar los datos de las facultades desde el boton añadir-->
+            <div class="modal fade" id="enviarSolicitud" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Enviar solicitud a servicio social</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                    <form @submit.prevent="submit">
+                        <div class="form-group">
+                            <jet-label for="nombre_peticion" value="Servicio social" />
+                            <jet-input id="nombre_peticion" type="text" v-model="form.nombre_peticion" required autofocus autocomplete="off" disabled/>
+                            <br>
+                            <jet-label for="justificacion_solicitud" value="Justificación" />
+                            <textarea class="form-control" id="justificacion_solicitud" type="text" v-model="form.justificacion_solicitud" required autofocus autocomplete="off"/>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-baseline">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <div class="mt-12">
+                                            <button class="btn btn-dark float-center" :class="{ 'text-white-50 bg-green-400': form.processing }" >
+                                            <i class="fas"></i>Guardar
+                                            <!--<i class="fas fa-save"></i>  Guardar Facultad --> 
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <inertia-link type="button" class="btn btn-danger float-center" data-dismiss="modal">Cancelar</inertia-link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+            
+                    </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+
 
                     <!-- </div>     -->
 
@@ -311,7 +340,13 @@
 
 </template>
 <script>
-
+import JetAuthenticationCard from '@/Jetstream/AuthenticationCard'
+import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo'
+import JetButton from '@/Jetstream/Button'
+import JetInput from '@/Jetstream/Input'
+import JetCheckbox from "@/Jetstream/Checkbox";
+import JetLabel from '@/Jetstream/Label'
+import JetValidationErrors from '@/Jetstream/ValidationErrors'
 import Base from "@/Pages/Base.vue";
 import Button from '../../../Jetstream/Button.vue';
 
@@ -319,9 +354,9 @@ import Button from '../../../Jetstream/Button.vue';
         components:{
         //   JetAuthenticationCard,
         //   JetAuthenticationCardLogo,
-        //   JetInput,
+           JetInput,
         //   JetCheckbox,
-        //   JetLabel,
+           JetLabel,
         //   JetValidationErrors,
           Base
         },
@@ -349,34 +384,13 @@ import Button from '../../../Jetstream/Button.vue';
                 this.verDetalleForm.ubicacion_institucion = servicio.ubicacion_institucion;
                 this.verDetalleForm.rubro_institucion = servicio.rubro_institucion;
             },
-            // buscar(descripcionServicio){
-            //     this.estado = 0;
-            //     this.filtrarServicios.splice(0, this.filtrarServicios.length);
-            //     console.log(descripcionServicio);
-            //     if(descripcionServicio == null || descripcionServicio == ''){
-            //         this.filtrarServicios.splice(0, this.filtrarServicios.length);
-            //         this.servicios.forEach(element => {
-            //             this.filtrarServicios.push(element);
-            //         });
-            //     }else{
-            //         this.servicios.forEach(element => {
-            //             // console.log(element);
-            //             var nombreCompleto = element.nombre_estudiante + element.apellido_estudiante;
-            //             //Filtrar por nombre
-            //             if(nombreCompleto.toUpperCase().includes(nombreEstudiante.toUpperCase())){
-            //                 console.log(element);
-            //                 this.filtrarEstudiantes.push(element);
-            //             }
-            //             //Filtrar por carnet
-            //             if(element.carnet_estudiante.toUpperCase().includes(nombreEstudiante.toUpperCase())){
-            //                 console.log(element);
-            //                 this.filtrarEstudiantes.push(element);
-            //             }
-            //         });
-            //     }
-            //     console.log(this.filtrarEstudiantes);
-            //     console.log(descripcionServicio);
-            // },
+
+            verServicio(servicio){
+                this.form.nombre_peticion = servicio.nombre_peticion;
+                this.form.proyecto_social_id = servicio.id;
+                this.form.justificacion_solicitud = '';
+            },
+
             filtrarValores(campo){
                 // this.llenarFiltroValor(valor);
                 if(this.campo == 0){
@@ -406,21 +420,6 @@ import Button from '../../../Jetstream/Button.vue';
                 }
                 console.log(this.valoresFiltrados);
 
-                // this.filtrarServicios.splice(0, this.filtrarServicios.length);
-                // console.log(valor);
-                // if(valor == 0){
-                //     this.filtrarServicios.splice(0, this.filtrarServicios.length);
-                //     this.servicios.forEach(element => {
-                //         this.filtrarServicios.push(element);
-                //     });
-                // }
-                // else{
-                //     this.servicios.forEach(element => {
-                //         if(valor == element.campo){
-                //             this.filtrarServicios.push(element);
-                //         }
-                //     });
-                // }
             },
             filtrarServicios(valor){
                 this.serviciosFiltrados.splice(0, this.serviciosFiltrados.length);
@@ -463,9 +462,77 @@ import Button from '../../../Jetstream/Button.vue';
                     this.valor = 0;
                 }
                 this.filtrarServicios(0);
+            },
+
+            calculofecha(){
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
+
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                this.hoy = yyyy + '-' + mm + '-' + dd;
+            },
+
+            submit(){
+                if(this.estudiante.estado_estudiante == "Realizando servicio"){
+                    Swal.fire({
+                        title: 'Error',
+                        text: "Usted ya tiene un servicio social activo.",
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                        allowEscapeKey: true,
+                        allowOutsideClick: true,
+                        showConfirmButton: true,  
+                    })
+                } else {
+                    var cont = 0;
+                    var solicitudes = this.solicitudes;
+                    this.form.fecha_solicitud = this.hoy;
+                    for(var solicitud of solicitudes){
+                        if (this.form.proyecto_social_id == solicitud.proyecto_social_id){
+                            cont++;
+                        }
+                    }
+                    
+                    if(cont == 0){
+                        this.form.post(this.route('solicitudesestudiante.store'));
+                        Swal.fire({
+                            title: 'Solicitud enviada',
+                            text: "Espere a que el encargado de escuela acepte o rechace la solicitud",
+                            icon: 'success',
+                            confirmButtonText: 'Aceptar',
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
+                            showConfirmButton: true,  
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        })
+
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: "No es posible enviar más de una solicitud al mismo servicio.",
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                            allowEscapeKey: true,
+                            allowOutsideClick: true,
+                            showConfirmButton: true,  
+                        })
+                    }
+                }
+
+                
             }
         },
-        props:['servicios', 'tipos', 'carreras'],
+        props:['servicios', 'tipos', 'carreras', 'solicitudes', 'estudiante'],
         data(){
             return{
                 verDetalleForm:{
@@ -489,6 +556,14 @@ import Button from '../../../Jetstream/Button.vue';
                     ubicacion_institucion:'',
                     rubro_institucion:'',
                 },
+                form: this.$inertia.form({
+                    nombre_peticion:'',
+                    fecha_solicitud: this.hoy,
+                    justificacion_solicitud:'',
+                    estado_solicitud:'En espera',
+                    proyecto_social_id:0,
+                    estudiante_id: this.estudiante.id,
+                }),
                 buscarNombre:'',
                 serviciosFiltrados:[],
                 valor: 0,
@@ -498,6 +573,8 @@ import Button from '../../../Jetstream/Button.vue';
                 campoEstado:['No iniciado', 'En curso', 'Finalizado', 'Cancelado'],
                 campoCarrera: this.carreras,
                 valoresFiltrados: [],
+                hoy:'',
+                idServicio:0,
             }
         },
         mounted(){
@@ -507,6 +584,7 @@ import Button from '../../../Jetstream/Button.vue';
             console.log(this.campoTipo);
             console.log(this.campoEstado);
             console.log(this.campoCarrera);
+            this.calculofecha();
         },
     }    
 </script>

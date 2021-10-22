@@ -164,12 +164,12 @@
                             </inertia-link>
                     </li>
 
-                    <li v-if="is('Encargado Escuela')" class="nav-item">
+                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item">
                             <inertia-link :href="route('verificaractividades.index')" class="nav-link">
                             <i class="nav-icon fa fa-clipboard "></i>
                             <p>Verificar Actividades</p>
                             </inertia-link>
-                    </li>
+                    </li> -->
 
                     <!-- <li v-if="is('Encargado Escuela')" class="nav-item">
                             <inertia-link :href="route('establecerha.index')" class="nav-link">
@@ -191,6 +191,13 @@
                             <inertia-link :href="route('serviciossociales.index')" class="nav-link">
                             <i class="fa fa-th-large nav-icon"></i>
                             <p>Servicios Sociales</p>
+                            </inertia-link>
+                    </li>
+
+                     <li v-if="is('Estudiante')" class="nav-item">
+                            <inertia-link :href="route('serviciosDisponibles')" class="nav-link">
+                            <i class="fa fa-calendar-check nav-icon"></i>
+                            <p>Servicios Disponibles</p>
                             </inertia-link>
                     </li>
 

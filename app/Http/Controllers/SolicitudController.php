@@ -69,6 +69,15 @@ class SolicitudController extends Controller
     public function store(Request $request)
     {
         //
+        $solicitud = new Solicitud();
+        $solicitud->estudiante_id = $request->estudiante_id;
+        $solicitud->proyecto_social_id = $request->proyecto_social_id;
+        $solicitud->fecha_solicitud = $request->fecha_solicitud;
+        $solicitud->justificacion_solicitud = $request->justificacion_solicitud;
+        $solicitud->estado_solicitud = $request->estado_solicitud;
+        $solicitud->save();
+
+        return Redirect::route('serviciosDisponibles');
     }
 
     /**

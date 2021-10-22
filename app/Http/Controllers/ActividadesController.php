@@ -29,10 +29,14 @@ class ActividadesController extends Controller
             if(Auth::user()->hasRole('Estudiante')){
                     // obteniendo el id del usuario logeado
                     $idUsuario = Auth::id();
-
+                    
                     // obteniendo el id del estudiante logeado
-                    $estudiante = Estudiante::where('user_id', '=', $idUsuario)->firstOrFail();
-                    $idEstudiante = $estudiante->id;
+                    $estudiante = DB::table('estudiantes')->select('estudiantes.id as idE', 'nombre_facultad', 'nombre_carrera', 'carnet_estudiante', 'nombre_estudiante', 'apellido_estudiante')
+                    ->join('carreras','carreras.id', '=', 'estudiantes.carrera_id')
+                    ->join('facultades', 'facultades.id', '=', 'carreras.facultad_id')
+                    ->where('user_id', '=', $idUsuario)
+                    ->first();
+                    $idEstudiante = $estudiante->idE;
                     
                     $actividades=DB::table('actividades')
                     ->select('actividades.id','proyectos_sociales.id as proyecto_social_id','actividades.nombre_actividad','actividades.fecha_actividad',
@@ -44,11 +48,18 @@ class ActividadesController extends Controller
                     ->where('proyectos_sociales.id','=', $proyecto_social_id)
                     ->get();
 
-                    $bitacora = Bitacora::where('estudiante_id', '=' , $idEstudiante)->where('proyecto_social_id','=', $proyecto_social_id)->firstOrFail();
-                    
+                    $bitacora = Bitacora::select('bitacoras.id as id', 'estado_bitacora')->where('estudiante_id', '=' , $idEstudiante)->where('proyecto_social_id','=', $proyecto_social_id)->firstOrFail();
+
+                    $servicio = DB::table('proyectos_sociales')->select('nombre_peticion', 'estado_proyecto_social')
+                    ->join('peticiones', 'peticiones.id', '=', 'proyectos_sociales.peticion_id')
+                    ->where('proyectos_sociales.id', '=', $proyecto_social_id)
+                    ->first();
+
+                    /*$bitacora = Bitacora::where('estudiante_id', '=' , $idEstudiante)->where('proyecto_social_id','=', $proyecto_social_id)->first();
+                    $idBitacora = $bitacora->id;*/
                     //Consulta de la tabla
                     //$actividades = Actividad::where('verificado','=','En espera')->get();
-                    return Inertia::render("Components/Actividades/Actividades",['actividades' => $actividades, 'idServicio' => $proyecto_social_id, 'idBitacora' => $bitacora->id]);
+                    return Inertia::render("Components/Actividades/Actividades",['actividades' => $actividades, 'idServicio' => $proyecto_social_id, 'bitacora' => $bitacora, 'servicio' => $servicio, 'estudiante' => $estudiante]);
 
                 }else{
                     return Redirect::route('dashboard');

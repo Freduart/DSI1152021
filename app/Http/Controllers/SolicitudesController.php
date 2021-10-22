@@ -71,7 +71,12 @@ class SolicitudesController extends Controller
         $bitacora = new Bitacora();
         $bitacora->estudiante_id = $solicitudE->estudiante_id;
         $bitacora->proyecto_social_id = $solicitudE->proyecto_social_id;
+        $bitacora->total_horas = 0;
         $bitacora->save();
+
+        $estudiante = Estudiante::find($solicitudE->estudiante_id);
+        $estudiante->estado_estudiante= "Realizando servicio";
+        $estudiante->save();
 
         return Redirect::route('solicitudes.index');
 

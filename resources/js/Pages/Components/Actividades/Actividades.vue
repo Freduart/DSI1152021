@@ -13,7 +13,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Gestion de actividades</h1>
+            <h1 class="m-0">Bitacora del estudiante</h1>
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -27,37 +27,98 @@
             <div class="row">
             <!-- Left col -->
             <section class="col-lg-12 connectedSortable">
+
+
+
                 <!-- TO DO List -->
                 <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                    <i class="ion ion-clipboard mr-1"></i>
-                    Lista de Actividades
-                    </h3>
-                          <br>
-                     
+                  <div class="card-body">
+                      <div class = "d-flex justify-content-center">
+                        <div class="col-sm-6">
                           <div class="row">
-
-                            <!--Boton para VISTA DE BITACORA-->
-                           
-                                <div class="col">
-                                        <div class="form-group">
-                                          <inertia-link type="button" class="btn btn-success float-left mt-2"  :href="route('bitacora.index')">
-                                          <i class="fa fa-eye"></i> Visualizar Bitacora</inertia-link>
-                                        </div>
-                                </div>
-
-                                <!--Boton para añadir actividades-->
                             <div class="col">
-                                <div class="form-group">
-                                  <button type="button" class="btn btn-success float-right mt-2" data-toggle="modal" data-target="#añadirActividad">
-                                  <i class="fas fa-plus"></i> Añadir Actividad</button> 
-                               </div>
-
+                              <div class = "d-flex justify-content-center">
+                                <h4 class="m-0"><strong> UNIVERSIDAD DE EL SALVADOR </strong></h4>
+                              </div>
                             </div>
-
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class = "d-flex justify-content-center">
+                                <h5 class="m-0"> <strong> {{ $props.estudiante.nombre_facultad }} </strong></h5>
+                              </div>
                             </div>
-                            
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class = "d-flex justify-content-center">
+                                <h5 class="m-0"> <strong> {{ $props.estudiante.nombre_carrera }} </strong></h5>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <br/>
+                    <div class="row">
+                        
+                      <div class="col-sm-6 ml-4">
+
+                        <div class="row">
+                          <div class="col-md-5">
+                            <strong>Carnet</strong>
+                          </div>
+                          <div class="col-md-6">
+                            {{ $props.estudiante.carnet_estudiante }} 
+                          </div>
+                        </div> 
+                        
+                        <div class="row">
+                          <div class="col-md-5">
+                            <strong>Nombre Estudiante:</strong>
+                          </div>
+                          <div class="col-md-6">
+                            {{ $props.estudiante.nombre_estudiante }} {{ $props.estudiante.apellido_estudiante }}
+                          </div>
+                        </div> 
+
+                        <div class="row">
+                          <div class="col-md-5">
+                            <strong>Servicio social:</strong>
+                          </div>
+                          <div class="col-md-6">
+                            {{ $props.servicio.nombre_peticion }}
+                          </div>
+                        </div> 
+
+                        <div class="row">
+                          <div class="col-md-5">
+                            <strong>Estado del servicio:</strong>
+                          </div>
+                          <div class="col-md-6">
+                            <h5 class="">
+                                  <button v-if="$props.servicio.estado_proyecto_social == 'No iniciado'" class="btn btn-primary" style="cursor: default;">{{ $props.servicio.estado_proyecto_social }}</button>
+                                  <button v-else-if="$props.servicio.estado_proyecto_social == 'En curso'" class="btn btn-success" style="cursor: default;">{{ $props.servicio.estado_proyecto_social }}</button>
+                                  <button v-else-if="$props.servicio.estado_proyecto_social == 'Finalizado'" class="btn btn-warning" style="cursor: default;">{{ $props.servicio.estado_proyecto_social }}</button>
+                                  <button v-else-if="$props.servicio.estado_proyecto_social == 'Cancelado'" class="btn btn-danger" style="cursor: default;">{{ $props.servicio.estado_proyecto_social }}</button>
+                              </h5>
+                          </div>
+                        </div> 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title mt-2 ml-3">Lista de Actividades</h3>
+                    <div class="row">
+                      <!--Boton para añadir actividades-->
+                      <div class="col">
+                          <div class="form-group">
+                            <button v-if="this.bitacora.estado_bitacora == 'En curso'" type="button" class="btn btn-success float-right" v-on:click="limpiar();" data-toggle="modal" data-target="#añadirActividad">
+                            <i class="fas fa-plus"></i> Añadir Actividad</button> 
+                          </div>
+                      </div>
+                    </div>
                 </div>
                 <!-- /.card-header -->
                 <div v-if="actividadesFiltradas.length != 0">
@@ -65,48 +126,59 @@
                     <ul class="todo-list" data-widget="todo-list">
                         <li>
                            
-                                <!--Tabla donde apareceran todos las actividadess-->
-                                <table class="table table-hover text-center" width="500" style="font-size: 20px">
-                                    <thead class="thead-dark">
-                                        <tr> 
-                                        <!-- <th scope='col'>Código</th> -->
-                                        <th scope="col">Nombre de la Actividadd</th>
-                                        <th scope="col">Fecha de la actividad</th>
-                                        <th scope="col">Horas</th>
-                                        <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="table-secondary" scope="row" v-for="(actividad, index) in actividadesFiltradas" :key="index">
-                                            
-                                            <!--Aqui devuelven los datos que se mostraran en pantalla -->
-                                            <td>{{ actividad.nombre_actividad }}</td>
-                                            <td>{{ actividad.fecha_actividad }}</td>
-                                            <td>{{ actividad.total_horas }}</td>
-    
-                                            <td>
-                                            <!-- Botones para edit or delete-->
-                                                <div class="tools">
+                          <!--Tabla donde apareceran todos las actividadess-->
+                          <table class="table table-hover text-center" width="500" style="font-size: 20px">
+                              <thead class="thead-dark">
+                                  <tr> 
+                                  <!-- <th scope='col'>Código</th> -->
+                                  <th scope="col">Nombre de la Actividadd</th>
+                                  <th scope="col">Fecha</th>
+                                  <th scope="col">Horas</th>
+                                  <th scope="col">Estado</th>
+                                  <th scope="col" width="15%" ></th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr class="table-secondary" scope="row" v-for="(actividad, index) in actividadesFiltradas" :key="index">
+                                      
+                                      <!--Aqui devuelven los datos que se mostraran en pantalla -->
+                                      <td>{{ actividad.nombre_actividad }}</td>
+                                      <td>{{ actividad.fecha_actividad }}</td>
+                                      <td>{{ actividad.total_horas }}</td>
+                                      <td>
+                                          <button v-if="actividad.verificado == 'En espera'" class="btn btn-primary" style="cursor: default;">{{ actividad.verificado }}</button>
+                                          <button v-else-if="actividad.verificado == 'Aceptada'" class="btn btn-success" style="cursor: default;">{{ actividad.verificado }}</button>
+                                          <button v-else-if="actividad.verificado == 'Reportada'" class="btn btn-warning" style="cursor: default;">{{ actividad.verificado }}</button>  
+                                      </td>
+
+                                      <td>
+                                      <!-- Botones para edit or delete-->
+                                          <div class="tools">
+                                              
+                                              <!-- BOTON DE VER INFORMACION -->
+                                              <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarinfo(actividad)" title="Ver mas informacion de la actividad"></jet-button>
+                                              
+
+                                              <!--BOTON DE EDITAR -->
+                                              <jet-button v-if="actividad.verificado != 'Aceptada'" v-on:click="mostrarMensajeUpdate(actividad)" data-toggle="modal" 
+                                              data-target="#modificarActividad" title="Editar Actividad"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>
+
+                                              <!--BOTON DE ELIMINAR -->
+                                              <inertia-link v-if="actividad.verificado != 'Aceptada'" class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a actividad" method="delete"
+                                              :href="route('actividades.destroy', actividad.id)"
+                                              v-on:click="mostrarMensajeDelete(actividad)"></inertia-link>
                                                     
-                                                    <!-- BOTON DE VER INFORMACION -->
-                                                        <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarinfo(actividad)" title="Ver mas informacion de la actividad"></jet-button>
-                                                    
-
-                                                    <!--BOTON DE EDITAR -->
-                                                    <jet-button  v-on:click="mostrarMensajeUpdate(actividad)" data-toggle="modal" 
-                                                    data-target="#modificarActividad" title="Editar Actividad"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>
-
-                                                    <!--BOTON DE ELIMINAR -->
-                                                    <inertia-link class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a actividad" method="delete"
-                                                    :href="route('actividades.destroy', actividad.id)"
-                                                    v-on:click="mostrarMensajeDelete(actividad)"></inertia-link>
-                                                          
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
+                                          </div>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <h5>
+                            <strong>Total de horas aceptadas: 
+                              <!--Llamamos la variblae total, que tiene el total de horas de las actividades realizadas-->
+                              {{ this.horasTotales }} horas 
+                            </strong>
+                          </h5>
                         </li>
                     </ul>
                 </div>
@@ -238,13 +310,6 @@
             <div class="card-body">
                     <div class="row">
                       <div class="col">
-                       <div class="form-group">
-                            <jet-label for="id" value="Codigo" />
-                            <jet-input id="id" type="text" readonly="readonly" v-model="formUp.id" required autofocus autocomplete="off" :value="this.formUp.id"/>
-                        </div>
-
-                      </div>
-                      <div class="col">
                         <div class="form-group">
                             <jet-label for="nombre_actividad" value="Nombre de la actividad" />
                             <jet-input id="nombre_actividad" type="text" v-model="formUp.nombre_actividad" required autofocus autocomplete="off" :value="this.formUp.nombre_actividad"/>
@@ -317,27 +382,27 @@
               <span class="d-flex flex-row-reverse bd-highlight col">
                   
                   <button class="btn btn-dark text-light text-lg" style="cursor: default;">
-                      {{ form.id }}                   
+                      {{ form.verificado }}                   
                   </button>    
-                  <h5 class="mt-2 mr-2"><strong>Codigo:</strong></h5> 
+                  <h5 class="mt-2 mr-2"><strong>Estado:</strong></h5> 
               </span>
           </div>
           <div class="modal-body">
             <table>
-                      <tr>
-                        <td><h5 class=""><strong>Nombre de la actividad: </strong></h5></td>
-                            <td> <h5> {{ form.nombre_actividad }}</h5></td>
-                      </tr>
+              <tr>
+                <td><h5 class=""><strong>Nombre de la actividad: </strong></h5></td>
+                    <td> <h5> {{ form.nombre_actividad }}</h5></td>
+              </tr>
 
-                      <tr>
-                        <td><h5 class=""><strong>Fecha de la actividad: </strong></h5></td>
-                            <td> <h5> {{ form.fecha_actividad }}</h5></td>
-                      </tr>
+              <tr>
+                <td><h5 class=""><strong>Fecha de la actividad: </strong></h5></td>
+                    <td> <h5> {{ form.fecha_actividad }}</h5></td>
+              </tr>
 
-                      <tr>
-                        <td><h5 class=""><strong>Total de horas que realizo la actividad:  </strong></h5></td>
-                            <td> <h5> {{ form.total_horas }}</h5></td>
-                      </tr>             
+              <tr>
+                <td><h5 class=""><strong>Total de horas empleadas:  </strong></h5></td>
+                    <td> <h5> {{ form.total_horas }}</h5></td>
+              </tr>             
             <hr class="mb-1"/>
 
             </table>
@@ -380,10 +445,16 @@
             //JetButton,
             Base
         },
-        props:['actividades', 'idServicio', 'idBitacora'],
+        props:['actividades', 'idServicio', 'servicio', 'bitacora', 'estudiante'],
         methods:{
             logout() {
                 this.$inertia.post(route('logout'));
+            },
+
+            limpiar() {
+              this.form.nombre_actividad = '';
+              this.form.fecha_actividad = '';
+              this.form.total_horas = '';
             },
             
             submit(){
@@ -468,6 +539,17 @@
               this.form.verificado = actividad.verificado,
               this.form.proyecto_social_id=actividad.proyecto_social_id
                 
+            },
+
+            calcularTotal(){
+              var total = 0;
+              this.actividades.forEach(element => {
+                if(element.verificado == 'Aceptada'){
+                  total += element.total_horas;
+                }
+              });
+              this.horasTotales = total;
+              
             }
            
         },    
@@ -476,7 +558,7 @@
                 actividad:0,
                 actividadesFiltradas:[],
                 successGuardado:false,
-                
+                horasTotales:0,
                 
                 form: this.$inertia.form({
                     
@@ -485,7 +567,7 @@
                     total_horas:'',
                     verificado:'En espera',
                     proyecto_social_id: this.$props.idServicio,
-                    bitacora_id: this.$props.idBitacora,
+                    bitacora_id: this.$props.bitacora.id,
                     }),
                 formUp: this.$inertia.form({
                     id:'',
@@ -494,16 +576,17 @@
                     total_horas:'',
                     verificado:'En espera',
                     proyecto_social_id: this.$props.idServicio,
-                    bitacora_id: this.$props.idBitacora,
+                    bitacora_id: this.$props.bitacora.id,
                     }),
                 }
             },        
         mounted(){
             this.actividades.forEach(element => {
                 this.actividadesFiltradas.push(element);
-            }),
+            });
             // this.mostrarMensajeSuccess();
-            this.successGuardado = false;   
+            this.successGuardado = false;  
+            this.calcularTotal(); 
         },
     }
 

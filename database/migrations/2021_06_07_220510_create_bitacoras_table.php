@@ -18,6 +18,7 @@ class CreateBitacorasTable extends Migration
             $table->unsignedInteger('total_horas')->nullable();
             $table->text('observaciones_bitacora')->nullable();
             $table->binary('documento_pdf')->nullable();
+            $table->enum('estado_bitacora', ['En curso', 'Finalizado'])->default('En curso');
 
             $table->unsignedBigInteger('estudiante_id')->nullable();
             $table->unsignedBigInteger('proyecto_social_id')->nullable();
