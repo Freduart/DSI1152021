@@ -102,7 +102,19 @@ Route::resource('serviciossociales', ServicioSocialController::class)->middlewar
 Route::resource('constancia', ConstanciaController::class)->middleware(['auth:sanctum', 'verified']);
 
 Route::resource('finproyecto',FinalizarProyectoController::class)->middleware(['auth:sanctum', 'verified']);
-Route::get('actividades/{proyecto_social_id}', ['as' => 'actividades', 'uses' => 'ActividadesController@show']);
+//Route::get('actividades/{proyecto_social_id}', ['as' => 'actividades', 'uses' => 'ActividadesController@show']);
+Route::get('actividades/{proyecto_social_id}', [ActividadesController::class, 'show'])->name('actividades');
+
+//Route::get('serviciossociales/{proyecto_social_id}', ['as' => 'serviciossociales', 'uses' => 'ServicioSocialController@show']);
+Route::get('serviciossociales/{proyecto_social_id}', [ServicioSocialController::class, 'show'])->name('serviciossociales');
+
+//Route::get('serviciossociales/{proyecto_social_id}/estudiante/{estudiante_id}', 'App\Http\Controllers\VerificarActividadesController@actividades')->name('serviciossociales');
+Route::get('serviciossociales/{proyecto_social_id}/estudiante/{estudiante_id}', [VerificarActividadesController::class, 'actividades'])->name('actividadesestudiante');
+
+//Route::get('serviciossocialesx', 'VerificarActividadesController@aceptarTodas')->name('verftodas');
+//Route::get('serviciossocialesx', [VerificarActividadesController::class, 'aceptarTodas'])->name('verftodas');
+
+Route::get('serviciosdisponibles', [ServicioSocialController::class, 'serviciosDisponibles'])->name('serviciosDisponibles')->middleware(['auth:sanctum', 'verified']);
 
 //Route::delete('verificarcuenta/{id}', [VerificarCuentaController::class, 'id'])->name('verificarcuenta.eliminar');
 Route::get('credenciales', function (){

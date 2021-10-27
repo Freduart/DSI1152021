@@ -19,12 +19,12 @@ class BitacorasSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
 
         $bitacoras = [
-            [375, "Ninguna", NULL, 4, 1],
+            [0, "Ninguna", NULL, 4, 1, "En curso"],
         ];
 
         foreach($bitacoras as $bitacora){
             Bitacora::create(['total_horas' => $bitacora[0], 'observaciones_bitacora' => $bitacora[1], 'documento_pdf' => $bitacora[2], 
-            'estudiante_id' => $bitacora[3], 'proyecto_social_id' => $bitacora[4]]);
+            'estudiante_id' => $bitacora[3], 'proyecto_social_id' => $bitacora[4], 'estado_bitacora' => $bitacora[5]]);
         }
 
         DB::statement('SET FOREIGN_KEY_CHECKS = 1;');

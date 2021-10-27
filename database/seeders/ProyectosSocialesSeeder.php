@@ -19,7 +19,7 @@ class ProyectosSocialesSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
 
         $proyectos = [
-            [2,"Finalizado"],
+            [2,"En curso"],
         ];
 
         foreach($proyectos as $proyecto){
