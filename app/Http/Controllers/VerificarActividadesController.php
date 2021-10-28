@@ -57,7 +57,7 @@ class VerificarActividadesController extends Controller
 
                 // se obtienen todos los campos de tabla actividad
                 $actividades = DB::table('actividades')->orderBy('idE')
-                ->select('estudiantes.id as idE','nombre_estudiante','apellido_estudiante','actividades.id as id', 'nombre_actividad', 'fecha_actividad', 'verificado', 'actividades.total_horas as total_horas', 'proyectos_sociales.id as idServicio' )
+                ->select('estudiantes.id as idE','nombre_estudiante','apellido_estudiante','actividades.id as id', 'nombre_actividad', 'fecha_actividad', 'verificado', 'actividades.total_horas as total_horas', 'proyectos_sociales.id as idServicio', 'observaciones_actividad' )
                 ->join('bitacoras','bitacoras.id','=','actividades.bitacora_id')
                 ->join('estudiantes','estudiantes.id','=','bitacoras.estudiante_id')
                 ->join('proyectos_sociales','proyectos_sociales.id','=','bitacoras.proyecto_social_id')
@@ -116,6 +116,7 @@ class VerificarActividadesController extends Controller
             $actividad=Actividad::find($actividad_id);
             //cambiamos el verificado a Aceptada
             $actividad->verificado = $request->verificado;
+            $actividad->observaciones_actividad = $request->observaciones_actividad;
             //Guardamos los cambios
             $actividad->save();
         }

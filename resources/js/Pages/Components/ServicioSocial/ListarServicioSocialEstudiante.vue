@@ -145,7 +145,7 @@
                   
                   <!-- todo text -->
                   <!-- tabla de las solicitudes del estudiante -->
-                  <table class="table table-hover text-center ">
+                  <table class="table table-hover text-center "  width="500" style="font-size: 17px">
                       <thead class="thead-dark">
                           <tr>
                           <th scope='col' width="40%">Proyecto</th>
@@ -153,7 +153,7 @@
                           <th scope="col">Horas</th>
                           <th scope="col">Finalizado el</th>
                           <th scope="col">Estado</th>
-                          <th scope="col" width="10%"></th>
+                          <th scope="col" width="7%"></th>
                           </tr>
                       </thead>
                       <tbody>

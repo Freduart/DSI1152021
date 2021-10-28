@@ -40,7 +40,7 @@ class ActividadesController extends Controller
                     
                     $actividades=DB::table('actividades')
                     ->select('actividades.id','proyectos_sociales.id as proyecto_social_id','actividades.nombre_actividad','actividades.fecha_actividad',
-                    'actividades.total_horas','actividades.verificado')
+                    'actividades.total_horas','actividades.verificado', 'observaciones_actividad')
                     ->join('bitacoras','bitacoras.id','=','actividades.bitacora_id')
                     ->join('proyectos_sociales','proyectos_sociales.id','=','bitacoras.proyecto_social_id')
                     ->join('peticiones','peticiones.id','=','proyectos_sociales.peticion_id')

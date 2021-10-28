@@ -95,7 +95,7 @@
                             <a type="button" class="btn btn-secondary float-left mt-2 mr-2" :href="`/serviciossociales/${proyecto.idServicio}`">
                               <i class="fa fa-arrow-left"></i> Regresar al servicio social
                             </a>
-                            <a v-if="proyecto.estado_bitacora == 'En curso' && actividadesFiltradas.length != 0" type="button" class="btn btn-warning float-left mt-2" v-on:click="concederHoras();">
+                            <a v-if="proyecto.estado_bitacora == 'En curso' && actividadesFiltradas.length != 0" type="button" class="btn btn-success float-left mt-2" v-on:click="concederHoras();">
                               <i class="fa fa-clipboard-check"></i> Conceder horas al estudiante
                             </a>
                           </div>
@@ -138,6 +138,7 @@
                             <th scope="col">Actividad</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Horas</th>
+                            <th scope="col">Estado</th>
                             <th scope="col">Acción</th>
                           </tr>
                         </thead>
@@ -148,14 +149,21 @@
                             <td>{{ actividad.nombre_actividad }}</td>
                             <td>{{ actividad.fecha_actividad }}</td>
                             <td>{{ actividad.total_horas }}</td>
+                            <!-- <td>{{ actividad.verificado }}</td> -->
+                            <td><button v-if="actividad.verificado == 'Reportada'" class="btn btn-danger" style="cursor: default;"><i>{{ actividad.verificado }}</i></button>
+                                <button v-else-if="actividad.verificado == 'Aceptada'" class="btn btn-success" style="cursor: default;"><i>{{ actividad.verificado }}</i></button>
+                                <button v-else-if="actividad.verificado == 'En espera'" class="btn btn-warning" style="cursor: default;"><i>{{ actividad.verificado }}</i></button>
+                            </td>
                             <td>
                               <div class="flex justify-center">      
                                 <!--boton verificar-->
+                                <button v-if="actividad.verificado == 'Reportada' || actividad.verificado == 'Aceptada'" class="btn btn-info" v-on:click="mostrarDatos(actividad)" data-toggle="modal" data-target="#verificar">
+                                  <i class="fa fa-info-circle"></i> &nbsp; <strong> Ver actividad </strong>
+                                </button>
                                 <button v-if="actividad.verificado == 'En espera'" class="btn btn-warning" v-on:click="mostrarDatos(actividad)" data-toggle="modal" data-target="#verificar">
                                   <i class="fa fa-glasses"></i> &nbsp; <strong> Verificar </strong>
                                 </button>
-                                <button v-else-if="actividad.verificado == 'Reportada'" class="btn btn-danger" style="cursor: default;"><i>{{ actividad.verificado }}</i></button>
-                                <button v-else-if="actividad.verificado == 'Aceptada'" class="btn btn-success" style="cursor: default;"><i>{{ actividad.verificado }}</i></button>
+                                
                                 
                               </div>
                             </td>
@@ -224,11 +232,22 @@
                 <td><h5><strong>Estado de actividad:</strong></h5></td>
                 <td>
                 <h5><strong>
-                  <button v-if="form.verificado == 'En espera'" class="btn btn-info" style="cursor: default;" disabled>
-                    <i class="far fa-clock"></i> &nbsp; <strong> En espera </strong>
+                  <button v-if="form.verificado == 'En espera'" class="btn btn-warning" style="cursor: default;" >
+                    <i> En espera </i>
+                  </button>
+                  <button v-else-if="form.verificado == 'Aceptada'" class="btn btn-success" style="cursor: default;" >
+                    <i> Aceptada </i>
+                  </button>
+                  <button v-else-if="form.verificado == 'Reportada'" class="btn btn-danger" style="cursor: default;" >
+                    <i> Reportada </i>
                   </button>
                 </strong></h5>
                 </td>
+              </tr>
+              <tr>
+                <td><h5 class=""><strong>Observaciones: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strong></h5></td>
+                <td v-if="form.observaciones_actividad == null || form.observaciones_actividad == ''"><h5>-</h5></td>
+                <td v-else><h5>{{ form.observaciones_actividad }}</h5></td>
               </tr>
             </table>
           </div><!-- Fin card body-->
@@ -237,37 +256,80 @@
           <div class="card-footer clearfix">
             <div class="d-flex justify-content-center align-items-baseline">
               <!--Fila de los botones-->
+              
+                <!--boton atras-->
+                <button class="btn btn-dark float-center mr-2" title="Atras" data-dismiss="modal">
+                  <i class="fas"></i>Cerrar
+                </button>
+              
+                <!--boton de reportar actividad-->
+                <button v-if="form.verificado == 'En espera'" class="btn btn-danger mr-2" title="Verificar actividad" data-dismiss="modal" data-toggle="modal" data-target="#observaciones"> 
+                  <i class="fas"></i>Reportar actividad
+                </button>
+
+              
+                <!--boton de verificación de actividad-->
+                <button v-if="form.verificado == 'En espera' || form.verificado == 'Reportada'" class="btn btn-success" title="Verificar actividad" v-on:click="verificacion(form)"> 
+                  Aceptar actividad
+                </button>
+              
+
+            </div>
+          </div>
+          <!--Fin de sección de botones-->
+        </div><!--Fin cuerpo de la modal-->
+      </div><!--Fin contenido de la modal-->
+    </div>
+  </div>
+
+
+
+  <!-- Modal para la verificación de las actividades de los estudiantes-->
+  <div class="modal fade" id="observaciones" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <!--Contenido de la modal-->
+      <div class="modal-content">
+        <!--Encabezado de la modal-->
+        <div class="modal-header">
+          <!--Título de la modal-->
+          <h5 class="modal-title" id="exampleModalLabel">Reportar actividad</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div><!--Fin del encabezado-->
+        <!--Cuerpo de la modal-->
+        <div class="modal-body">
+          <div class="card-body">
+              <h5>La actividad: "{{ form.nombre_actividad }}" se le asignará el estado de Reportada. Indique las correcciones a realizar por el estudiante.</h5>
+              <br>
+              <form>
+                <jet-label for="observaciones_actividad" value="Observaciones" />
+                <textarea class="form-control" id="observaciones_actividad" type="text" v-model="form.observaciones_actividad" required autofocus autocomplete="off"/>
+              </form>
+          </div>
+          <div class="card-footer clearfix">
+            <div class="d-flex justify-content-center align-items-baseline">
+              <!--Fila de los botones-->
               <div class="row">
                 <!--Primera columna-->
                 <div class="col">
-                  <!--boton de verificación de actividad-->
-                  <button class="btn btn-warning" title="Verificar actividad" v-on:click="verificacion(form)"> 
-                    <i class="fas"></i>Aceptar
+                  <!--boton atras-->
+                  <button class="btn btn-secondary float-center" title="Atras" data-dismiss="modal" data-toggle="modal" data-target="#verificar">
+                    <i class="fas"></i>Cancelar
                   </button>
                 </div><!--Fin primera columna-->
 
                 <!--Segunda columna-->
                 <div class="col">
-                  <!--boton de reportar actividad-->
-                  <button class="btn btn-danger" title="Verificar actividad" v-on:click="reportar(form)"> 
-                    <i class="fas"></i>Reportar 
+                  <!--boton de verificación de actividad-->
+                  <button class="btn btn-primary" title="Verificar actividad" v-on:click="reportar(form)"> 
+                    <i class="fas"></i>Continuar
                   </button>
-                  <!--<button v-else class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Reportar(form)">
-                    <i class="fas"></i>Reportar
-                  </button>-->
-                </div><!--Fin Segunda columna-->
-
-                <!--Tercera columna-->
-                <div class="col">
-                  <!--boton atras-->
-                  <button :href="route('verificaractividades.index')" class="btn btn-dark float-center" title="Atras" data-dismiss="modal">
-                    <i class="fas"></i>Atrás
-                  </button>
-                </div><!--Fin Tercera columna-->
+                </div>
+                <!--Fin Segunda columna-->
               </div><!--Fin de la fila de los botones-->
             </div>
           </div>
-          <!--Fin de sección de botones-->
         </div><!--Fin cuerpo de la modal-->
       </div><!--Fin contenido de la modal-->
     </div>
@@ -321,78 +383,67 @@
           
           //Metodo para la verificación de la actividad
             verificacion(actividad){
-              if(actividad.verificado == 'En espera'){
-                this.form.verificado = 'Aceptada';
-                Swal.fire({
-                  title:'¿Está seguro que desea dar por verificada la actividad?',
-                  text: "Actividad: " + actividad.nombre_actividad,
-                  icon:'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Si, dar por verificada',
-                  cancelButtonText: 'No, cancelar'
-                }).then((result)=>{
-                  if(result.isConfirmed){
-                    this.$inertia.put(route('verificaractividades.update', actividad.id), this.form);
-                    Swal.fire({
-                    title: 'Actividad Verificada',
-                    text: 'La actividad ' + actividad.nombre_actividad + ' ha sido verificada correctamente',
-                    iconColor: '#CB3234',
-                    icon: 'success',
-                    confirmButtonText: 'Aceptar',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    showConfirmButton: true,
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        location.reload();
-                      }
-                    });
+              Swal.fire({
+                title:'¿Está seguro que desea dar por aceptada la actividad?',
+                text: 'Se aceptará la actividad: "' + actividad.nombre_actividad + "'",
+                icon:'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, dar por verificada',
+                cancelButtonText: 'No, cancelar'
+              }).then((result)=>{
+                if(result.isConfirmed){
+                  this.form.verificado = 'Aceptada';
+                  this.$inertia.put(route('verificaractividades.update', actividad.id), this.form);
+                  Swal.fire({
+                  title: 'Actividad Verificada',
+                  text: 'La actividad ' + actividad.nombre_actividad + ' ha sido verificada correctamente',
+                  icon: 'success',
+                  confirmButtonText: 'Aceptar',
+                  allowEscapeKey: false,
+                  allowOutsideClick: false,
+                  showConfirmButton: true,
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      location.reload();
+                    }
+                  });
 
-                  }
-                })
-              }
+                }
+              })
             },
 
             // Método para reportar la actividad
             reportar(actividad){
-              if(actividad.verificado == 'En espera'){
-                this.form.verificado = 'Reportada';
-                Swal.fire({
-                  title:'¿Está seguro que desea reportar la actividad?',
-                  text: "Actividad: " +actividad.nombre_actividad,
-                  icon:'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Aceptar',
-                  cancelButtonText: 'No, cancelar'
-                }).then((result)=>{
-                  if(result.isConfirmed){
-                    this.$inertia.put(route('verificaractividades.update', actividad.id), this.form);
-                    Swal.fire({
-                    title: 'Actividad Reportada',
-                    text: 'La actividad ' + actividad.nombre_actividad + ' ha sido reportada correctamente',
-                    iconColor: '#CB3234',
-                    icon: 'success',
-                    confirmButtonText: 'Aceptar',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    showConfirmButton: true,
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        location.reload();
-                      }
-                    });
+              
+              var valor = document.getElementById('observaciones_actividad').value;
+              //alert(valor);
+              this.form.verificado = 'Reportada';
+              this.form.observaciones_actividad = valor;
+              this.$inertia.put(route('verificaractividades.update', actividad.id), this.form);
+              Swal.fire({
+              title: 'Actividad Reportada',
+              text: 'La actividad ' + actividad.nombre_actividad + ' ha sido reportada correctamente',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+              showConfirmButton: true,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  location.reload();
+                }
+              });
                     
-                  }
-                })
-              }
+                  
             },
 
+
+            // Método para reportar la actividad
+            
+
             aceptarTodas(){
-              this.form.verificado = 'Aceptadas';
               Swal.fire({
                   title:'¿Está seguro que desea aceptar todas las actividades?',
                   text: "Todas las actividades serán aceptadas, incluso las que estan reportadas",
@@ -404,12 +455,12 @@
                   cancelButtonText: 'No, cancelar'
                 }).then((result)=>{
                   if(result.isConfirmed){
+                    this.form.verificado = 'Aceptadas';
                     //this.$inertia.put(route('verftodas'), this.form);
                     this.$inertia.put(route('verificaractividades.update', this.estudiante.idE), this.form);
                     Swal.fire({
                     title: 'Actividades aceptadas',
                     text: 'La actividades del estudiante ' + this.estudiante.nombre_estudiante + ' ' + this.estudiante.apellido_estudiante +' han sido aceptadas correctamente',
-                    iconColor: '#CB3234',
                     icon: 'success',
                     confirmButtonText: 'Aceptar',
                     allowEscapeKey: false,
@@ -452,7 +503,6 @@
                     Swal.fire({
                     title: 'Actividades Finalizadas del estudiante',
                     text: 'El estudiante ' + this.estudiante.nombre_estudiante + ' ' + this.estudiante.apellido_estudiante +' ha finalizado las actividades del servicio social',
-                    iconColor: '#CB3234',
                     icon: 'success',
                     confirmButtonText: 'Aceptar',
                     allowEscapeKey: false,
@@ -487,6 +537,7 @@
               this.form.apellido_estudiante = actividad.apellido_estudiante,
               this.form.nombre_actividad = actividad.nombre_actividad,
               this.form.fecha_actividad = actividad.fecha_actividad,
+              this.form.observaciones_actividad = actividad.observaciones_actividad,
               this.form.total_horas = actividad.total_horas,
               this.form.verificado = actividad.verificado,
               this.form.estudiante_id = actividad.idE,
@@ -521,6 +572,7 @@
             verificado:'En espera',
             nombre_estudiante: '',
             apellido_estudiante: '',
+            observaciones_actividad:null,
             proyecto_social_id: this.proyecto.idServicio,
             estudiante_id: this.estudiante.idE,
           }),
@@ -542,7 +594,7 @@
       }),
       // this.mostrarMensajeSuccess();
       this.successGuardado = false; 
-      this.calcularTotal();        
+      this.calcularTotal(); 
     },
   }
 </script>

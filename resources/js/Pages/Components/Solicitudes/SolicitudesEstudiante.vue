@@ -43,8 +43,8 @@
                   <!-- Aca se redireccionara a los servicios sociales pero con la diferencia que habra un nuevo apartado donde solo liste los proyectos serviciossociales
                   se tienen que filtrar por: en primer lugar la carrera y en segundo lugar que el estudiante no este en un proyecto ya que asi nos simplificaremos 
                   que no se inscriba en un servicio social mientras ya esta inscrito en otro -->
-                  <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('serviciossociales.index')">
-                      <i class="fas fa-plus"></i> Ver proyectos </inertia-link>
+                  <inertia-link type="button" class="btn btn-success float-right mt-2"  :href="route('serviciosDisponibles')">
+                      <i class="fas fa-plus"></i> Enviar solicitud </inertia-link>
                   <br><br>
                   
               </div>
@@ -54,7 +54,7 @@
                       <li>
                       <!-- todo text -->
                           <!-- tabla de las solicitudes del estudiante -->
-                          <table class="table table-hover text-center ">
+                          <table class="table table-hover text-center "  width="500" style="font-size: 20px">
                               <thead class="thead-dark">
                                   <tr>
                                   <th scope='col' width="40%">Proyecto</th>
