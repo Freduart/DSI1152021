@@ -46,7 +46,7 @@ Route::resource('usuarios', UsersController::class)->middleware(['auth:sanctum',
 Route::resource('roles', RolController::class)->middleware(['auth:sanctum','verified']);
 
 Route::get('/', function () {
-    return Inertia::render('Admins/Dashboard', [
+    return Inertia::render('Admins/home', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,

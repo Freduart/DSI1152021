@@ -1,9 +1,7 @@
 <template>
 
   <!-- Preloader -->
-  <!-- <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div> -->
+
     <slot name="header"></slot>
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-dark">
@@ -12,50 +10,22 @@
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
-
-            
-            <!-- <li class="nav-item d-none d-sm-inline-block mx-4">
-                <a href="index3.html" class="nav-link">Home</a>
-                <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
-                    <i class="fa fa-home" aria-hidden="true"></i>
-                    Inicio
-                </jet-nav-link>
-            </li> -->
-
-            <!-- <form @submit.prevent="logout">
-                <li class="d-flex flex-row-reverse bd-highlight col"> 
-                    <button class="btn btn-primary d-flex flex-row-reverse bd-highlight col" as="button"> 
-                        Cerrar Sesión
-                    </button>
-                </li> 
-            </form>   -->
-
-            <div v-if="$page.props.user">
-                <form @submit.prevent="logout">
-                    
-                        <button class="btn btn-info"> 
-                            Cerrar Sesión
-                        </button>
-                    
-                </form>
+        <div v-if="$page.props.user">
+            <form @submit.prevent="logout">            
+                <button class="btn btn-info"> 
+                    Cerrar Sesión
+                </button>        
+            </form>
             </div>
             <template v-else>
               <inertia-link :href="route('login')" class="btn btn-success">                
                 Iniciar Sesión
               </inertia-link>
-              
-              <!-- <inertia-link v-if="canRegister" :href="route('estudiantes.create')" class="ml-4 text-muted">
-                Registrarse
-              </inertia-link>  -->
-
+ 
               <button type="button" class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
                 Registrarse
               </button>
-
             </template>
-
-
-            
         </ul>
     </nav>
     <!-- /.navbar -->
@@ -164,20 +134,6 @@
                             </inertia-link>
                     </li>
 
-                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item">
-                            <inertia-link :href="route('verificaractividades.index')" class="nav-link">
-                            <i class="nav-icon fa fa-clipboard "></i>
-                            <p>Verificar Actividades</p>
-                            </inertia-link>
-                    </li> -->
-
-                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item">
-                            <inertia-link :href="route('establecerha.index')" class="nav-link">
-                            <i class="nav-icon fa fa-clipboard "></i>
-                            <p>Establecer cantidad de Horas y Alumnos</p>
-                            </inertia-link>
-                    </li> -->
-
                     <!-- https://es.vuejs.org/v2/guide/conditional.html -->
                     <!-- https://www.npmjs.com/package/laravel-permission-to-vuejs -->
                     <li v-if="is('Estudiante')" class="nav-item">
@@ -200,24 +156,6 @@
                             <p>Servicios Disponibles</p>
                             </inertia-link>
                     </li>
-
-                    <!-- <li class="nav-item">
-                            <inertia-link :href="route('constancia.index')" class="nav-link">
-                            <i class="fas fa-medal nav-icon"></i>
-                            <p>Constancia de cumplimiento</p>
-                            </inertia-link>
-                    </li> -->
-
-                    <!-- Cuando es un solo elemento -->
-                    <!-- <li class="nav-item">
-                        <a href="pages/gallery.html" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
-                        <p>
-                            Gallery
-                        </p>
-                        </a>
-                    </li> -->
-
                     </ul>
                 </li>            
             </ul>
@@ -226,10 +164,6 @@
     </div>
     <!-- /.sidebar -->
     </aside>
-
-
-    
-    
 </template>
 
 <script>
@@ -250,15 +184,8 @@ import { getCurrentInstance } from '@vue/runtime-core';
             laravelVersion: String,
             phpVersion: String,
         },
-        // data(){
-        //   return{
-        //     componentKey:2,
-        //   };
-        // },
+
         methods:{
-        //     forceRerender(){
-        //       this.componentKey+=1;
-        //     }
           logout() {
               this.$inertia.post(route('logout'));
               window.location.reload();
@@ -271,9 +198,6 @@ import { getCurrentInstance } from '@vue/runtime-core';
 
         },
         setup(){
-          // const instance = getCurrentInstance();
-          // instance.proxy.$forceUpdate();
-          // window.location.reload();
         }
     }   
 </script>

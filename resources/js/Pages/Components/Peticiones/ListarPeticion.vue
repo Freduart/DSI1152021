@@ -163,7 +163,7 @@
                   <div class="col-md-3">
                     <div class="form-group">
                       <inertia-link :href="route('peticiones.index')" type="button" class="btn btn-warning float-center" data-dismiss="modal">
-                      <i class="fas fa-eye-slash" aria-hidden="true"></i> Ocultar </inertia-link>                  
+                      <i class="fas fa-eye-slash" aria-hidden="true"></i> Cerrar </inertia-link>                  
                     </div>
                   </div>
 
@@ -175,7 +175,7 @@
                       <!-- <button v-if="peticiones.estado_peticion == 'En espera'" class="btn btn-success float-center" title="Aceptar peticion" v-on:click="cambiarEstado(form)"> 
                         <i class="fas fa-check" aria-hidden="true"></i> Aceptar </button>   -->
 
-                        <button class="btn btn-success float-center" title="Activar estudiante" v-on:click="cambiarEstado(this.formUp)"> 
+                        <button v-if="is('Encargado Escuela') || is('Encargado Facultad')" class="btn btn-success float-center" title="Activar estudiante" v-on:click="cambiarEstado(this.formUp)"> 
                         <i class="fas fa-check" aria-hidden="true"></i> Aceptar </button>
                     </div>
                   </div>
@@ -189,7 +189,7 @@
                       <!-- <inertia-link v-if="this.peticiones.estado_peticion == 'En espera'" class="btn btn-danger" title="Desactivar institucion"  v-on:click="rechazarEstado(formUp)"> 
                         <i class="fas fa-times" aria-hidden="true"></i> Rechazar </inertia-link>   -->
 
-                        <button class="btn btn-danger" title="Desactivar estudiante" method="delete" v-on:click="rechazarEstado(this.formUp)"> 
+                        <button v-if="is('Encargado Escuela') || is('Encargado Facultad')" class="btn btn-danger" title="Desactivar estudiante" method="delete" v-on:click="rechazarEstado(this.formUp)"> 
                         <i class="fas fa-times" aria-hidden="true"></i> Rechazar </button>
                     </div>
                   </div>
