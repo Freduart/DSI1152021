@@ -47,7 +47,13 @@ class EstudianteController extends Controller
      */
     public function store(Request $request)
     {
+
+        // return $request->hasFile('archivo_comprobante');
+        // return dd($request->file('archivo_comprobante'));
         // return $request->all();
+
+
+
         $request->validate([
             'carnet_estudiante' => 'required|unique:estudiantes|regex:/[a-zA-Z]{2}[0-9]{5}/i|size:7',
             'correo_estudiante' => 'required|unique:estudiantes|regex:/^.+@.+$/i',
@@ -65,10 +71,17 @@ class EstudianteController extends Controller
         // return $request;
         // return $estudiante;
         // return $porcentaje;
+
+        if($request->hasFile('archivo_comprobante_path')){
+            $estudiante->subirArchivo($request->file('archivo_comprobante_path'));
+        }
+
         $estudiante->porcentaje_aprobacion = $porcentaje;
         $estudiante->carnet_estudiante = strtoupper($estudiante->carnet_estudiante);
         $estudiante->save();
-        
+        // $url_archivo = $estudiante->archivo_comprobacion_url;
+        // $estudiante->archivo_comprobante_url = str_replace('localhost', '127.0.0.1:8000', $url_archivo);
+        // $estudiante->save();    
         // return Inertia::render('Dashboard');  
         return Redirect::route("dashboard");  
         // return Inertia::render('Welcome');

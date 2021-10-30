@@ -29,6 +29,8 @@ class CreateEstudiantesTable extends Migration
             $table->float('porcentaje_aprobacion')->default(0);
             $table->unsignedInteger('cantidad_horas_ss');
             $table->enum('estado_estudiante', ['Inactivo','Activo','En espera', 'Realizando servicio', 'Servicio finalizado']);
+            // $table->binary('archivo_comprobante')->nullable()->unique();
+            $table->string('archivo_comprobante_path', 2048)->nullable();
 
             // $table->unsignedBigInteger('persona_id')->nullable();
 

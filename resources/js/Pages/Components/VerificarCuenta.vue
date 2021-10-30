@@ -20,6 +20,8 @@
     </div>
     <!-- /.content-header -->
 
+
+
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -230,6 +232,19 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group text-center">
+                                        <jet-label for="archivo_comprobacion" value="Captura de comprobacion de avance de carrera" />
+                                        <a :href="formUp.archivo_comprobante_url" target="_blank">
+                                            <br/>
+                                            <img id="archivoComprobante" :src="formUp.archivo_comprobante_url" style="height: 200px; width: 300px; rounded: 15px;" @mouseover="efectoBlur()" @mouseleave="salidaEfectoBlur()" alt="archivo de comprobacion de avance"/>
+                                        </a>
+                                        <!-- <small>{{ formUp.archivo_comprobante_url }}</small> -->
+                                    </div>
+                                </div>
+                            </div>
+
                             <hr>
                           </div>
 
@@ -420,7 +435,17 @@ import Button from '../../Jetstream/Button.vue'
                 this.formUp.cantidad_horas_ss=estudiante.cantidad_horas_ss;
                 this.formUp.estado_estudiante = estudiante.estado_estudiante;
                 this.formUp.porcentaje_aprobacion = estudiante.porcentaje_aprobacion;
+                this.formUp.archivo_comprobante_url = estudiante.archivo_comprobante_url.replace('localhost', '127.0.0.1:8000');
+                this.formUp.archivo_comprobante_path = estudiante.archivo_comprobante_path;
                 console.log(this.formUp);
+            },
+            efectoBlur(){
+                var img = document.getElementById("archivoComprobante");
+                img.style.filter = 'blur(6px)';
+            },
+            salidaEfectoBlur(){
+                var img = document.getElementById("archivoComprobante");
+                img.style.filter = 'blur(0px)';                
             }
 
         },    
@@ -445,17 +470,23 @@ import Button from '../../Jetstream/Button.vue'
                     materias_cursadas:'',
                     cantidad_horas_ss:'',
                     estado_estudiante:'Activo',
-                    porcentaje_aprobacion:''
+                    porcentaje_aprobacion:'',
+                    archivo_comprobante_url:'',
+                    archivo_comprobante_path:''
                     }),
                 activo: true,    
                 }
             },        
         mounted(){
+            
             this.estudiantes.forEach(element => {
                 this.estudiantesFiltradas.push(element);
             }),
             // this.mostrarMensajeSuccess();
             this.successGuardado = false;        
         },
+        setup(){
+            
+        }
     }
 </script>
