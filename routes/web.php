@@ -42,8 +42,7 @@ use Illuminate\Support\Facades\Mail;
 |
 */
 
-Route::resource('usuarios', UsersController::class)->middleware(['auth:sanctum','verified']);
-Route::resource('roles', RolController::class)->middleware(['auth:sanctum','verified']);
+
 
 Route::get('/', function () {
     return Inertia::render('Admins/Dashboard', [
@@ -53,6 +52,9 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::resource('usuarios', UsersController::class)->middleware(['auth:sanctum','verified']);
+Route::resource('roles', RolController::class)->middleware(['auth:sanctum','verified']);
 
 Route::get('/dashboard', function () {
    // return Inertia::render('Dashboard');
@@ -117,15 +119,15 @@ Route::get('serviciossociales/{proyecto_social_id}/estudiante/{estudiante_id}', 
 Route::get('serviciosdisponibles', [ServicioSocialController::class, 'serviciosDisponibles'])->name('serviciosDisponibles')->middleware(['auth:sanctum', 'verified']);
 
 //Route::delete('verificarcuenta/{id}', [VerificarCuentaController::class, 'id'])->name('verificarcuenta.eliminar');
-Route::get('credenciales', function (){
-  $details = [
-    'usuario' => 'usuariooo',
-    'contrasena' => 'contra'
-  ];
-  //$correo = new CredencialesMailable;
-  Mail::to('jganuzaramírez@gmail.com')->send(new CredencialesMailable($details));
-  return "mensaje enviado";
-});
+// Route::get('credenciales', function (){
+//   $details = [
+//     'usuario' => 'usuariooo',
+//     'contrasena' => 'contra'
+//   ];
+//   //$correo = new CredencialesMailable;
+//   Mail::to('leourquilla27@gmail.com')->send(new CredencialesMailable($details));
+//   return "mensaje enviado";
+// });
 
 
 //Ruta para el tipo de servicio social

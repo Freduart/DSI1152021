@@ -39,6 +39,8 @@
                     
                 </form>
             </div>
+
+
             <template v-else>
               <inertia-link :href="route('login')" class="btn btn-success">                
                 Iniciar Sesión
@@ -52,8 +54,13 @@
                 Registrarse
               </button>
 
+
             </template>
 
+
+            <div class="col-4" v-if="$page.props.user">
+                <h6 class="text-white float-right">¡Bienvenido, {{$page.props.user.name}}!</h6>
+            </div>
 
             
         </ul>
@@ -268,7 +275,7 @@ import { getCurrentInstance } from '@vue/runtime-core';
           },
         },
         mounted(){
-
+            
         },
         setup(){
           // const instance = getCurrentInstance();

@@ -31,6 +31,7 @@ class CreateEstudiantesTable extends Migration
             $table->enum('estado_estudiante', ['Inactivo','Activo','En espera', 'Realizando servicio', 'Servicio finalizado']);
             // $table->binary('archivo_comprobante')->nullable()->unique();
             $table->string('archivo_comprobante_path', 2048)->nullable();
+            // $table->text('observacion_registro')->nullable();
 
             // $table->unsignedBigInteger('persona_id')->nullable();
 

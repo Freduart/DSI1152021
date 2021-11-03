@@ -245,6 +245,24 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col">
+                                    <div v-if="this.existeObservacion" class="form-group" style="cursor:pointer;">
+                                        <div v-on:click="agregarObservaciones()">
+                                        <i class="fa fa-eye text-primary" aria-hidden="true"></i> Agregar observaciones
+                                        </div>
+                                        <div>
+                                            <textarea class="form-control" rows="3" v-model="this.formUp.observacion_registro"/>
+                                        </div>
+                                    </div>
+                                    <div v-else class="form-group" style="cursor:pointer;">
+                                        <div v-on:click="agregarObservaciones()">
+                                        <i class="fa fa-eye" aria-hidden="true"></i> Agregar observaciones
+                                        </div>
+                                    </div>                                    
+                                </div>
+                            </div>
+
                             <hr>
                           </div>
 
@@ -263,11 +281,11 @@
 
                                         <div class="col">
                                             <div class="form-group">
-                                                <inertia-link v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-warning" title="Desactivar estudiante" method="delete" :href="route('verificarcuenta.destroy', this.formUp.id)" v-on:click="changestatus(formUp)"> 
-                                                 <i class="fas"></i>DENEGAR </inertia-link>  
+                                                <button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-warning" title="Desactivar estudiante" method="delete" v-on:click="changestatus(formUp)"> 
+                                                 <i class="fas"></i>DENEGAR </button>  
 
-                                                 <inertia-link v-else class="btn btn-warning" title="Desactivar estudiante" method="delete" :href="route('verificarcuenta.destroy', this.formUp.id)"  v-on:click="changestatus(formUp)"> 
-                                                 <i class="fas"></i>DENEGAR </inertia-link>
+                                                 <button v-else class="btn btn-warning" title="Desactivar estudiante" method="delete" v-on:click="changestatus(formUp)"> 
+                                                 <i class="fas"></i>DENEGAR </button>
                                            </div>
                                         </div>
 
@@ -377,6 +395,7 @@ import Button from '../../Jetstream/Button.vue'
             },
             changestatus(estudiante){
                 //this.borrado = true;
+
                 if(estudiante.estado_estudiante == 'En espera'){
                     Swal.fire({
                       title: '¿Esta seguro que desea desactivar al estudiante?',
@@ -389,8 +408,11 @@ import Button from '../../Jetstream/Button.vue'
                       cancelButtonText: 'No, cancelar'
                   }).then((result) => {
                       if (result.isConfirmed) {
+                          console.log(estudiante)
                           //var tipo = 1;
                           //this.$inertia.delete(route('verificarcuenta.eliminar', estudiante.id/*, tipo*/));
+
+                          this.$inertia.delete(route('verificarcuenta.destroy', this.formUp))
                           Swal.fire(
                           '!Desactivado!',
                           'El estudiante se desactivo correctamente',
@@ -401,7 +423,6 @@ import Button from '../../Jetstream/Button.vue'
                   })
                 }
             },
-
             submitUpdate(form){
                 console.log(this.formUp);
                 console.log(form);
@@ -437,6 +458,7 @@ import Button from '../../Jetstream/Button.vue'
                 this.formUp.porcentaje_aprobacion = estudiante.porcentaje_aprobacion;
                 this.formUp.archivo_comprobante_url = estudiante.archivo_comprobante_url.replace('localhost', '127.0.0.1:8000');
                 this.formUp.archivo_comprobante_path = estudiante.archivo_comprobante_path;
+                this.formUp.observacion_registro = estudiante.observacion_registro;
                 console.log(this.formUp);
             },
             efectoBlur(){
@@ -446,6 +468,10 @@ import Button from '../../Jetstream/Button.vue'
             salidaEfectoBlur(){
                 var img = document.getElementById("archivoComprobante");
                 img.style.filter = 'blur(0px)';                
+            },
+            agregarObservaciones(){
+                this.existeObservacion = !this.existeObservacion;
+                console.log(this.existeObservacion);
             }
 
         },    
@@ -455,7 +481,7 @@ import Button from '../../Jetstream/Button.vue'
                 estudiantesFiltradas:[],
                 successGuardado:false,
                 formularioNuevaCarrera:false,
-                                
+                existeObservacion:false,                
                 formUp: this.$inertia.form({
                     id:'',
                     nombre_estudiante:'',
@@ -472,7 +498,8 @@ import Button from '../../Jetstream/Button.vue'
                     estado_estudiante:'Activo',
                     porcentaje_aprobacion:'',
                     archivo_comprobante_url:'',
-                    archivo_comprobante_path:''
+                    archivo_comprobante_path:'',
+                    observacion_registro:''
                     }),
                 activo: true,    
                 }
