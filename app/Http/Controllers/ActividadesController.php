@@ -104,6 +104,7 @@ class ActividadesController extends Controller
         $actividades->nombre_actividad = $request->nombre_actividad;
         $actividades->fecha_actividad = $request->fecha_actividad;
         $actividades->total_horas = $request->total_horas;
+        $actividades->verificado = 'En espera';
         $actividades->save();
 
         return redirect()->route('actividades', ['proyecto_social_id' => $request->proyecto_social_id]);

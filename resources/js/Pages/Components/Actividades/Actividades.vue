@@ -131,7 +131,7 @@
                               <thead class="thead-dark">
                                   <tr> 
                                   <!-- <th scope='col'>Código</th> -->
-                                  <th scope="col">Nombre de la Actividadd</th>
+                                  <th scope="col">Actividadd</th>
                                   <th scope="col">Fecha</th>
                                   <th scope="col">Horas</th>
                                   <th scope="col">Estado</th>
@@ -233,7 +233,7 @@
                 <div class="card-body"> 
                       <div class="col">
                         <div class="form-group">
-                            <jet-label for="nombre_actividad" value="Nombre de la Actividad" />
+                            <jet-label for="nombre_actividad" value="Actividad" />
                             <jet-input id="nombre_actividad" type="text" v-model="form.nombre_actividad" required autofocus autocomplete="off"/>
                         </div>
                       </div>
@@ -307,7 +307,7 @@
                     <div class="row">
                       <div class="col">
                         <div class="form-group">
-                            <jet-label for="nombre_actividad" value="Nombre de la actividad" />
+                            <jet-label for="nombre_actividad" value="Actividad" />
                             <jet-input id="nombre_actividad" type="text" v-model="formUp.nombre_actividad" required autofocus autocomplete="off" :value="this.formUp.nombre_actividad"/>
                         </div>
 
@@ -386,7 +386,7 @@
           <div class="modal-body">
             <table>
               <tr>
-                <td><h5 class=""><strong>Nombre de la actividad: </strong></h5></td>
+                <td><h5 class=""><strong>Actividad: </strong></h5></td>
                     <td> <h5> {{ form.nombre_actividad }}</h5></td>
               </tr>
 
@@ -486,7 +486,7 @@
                 this.$inertia.put(route("actividades.update",form.id), this.formUp);
                 Swal.fire({
                     title: 'Operación exitosa',
-                    text: 'Se ha actualizado la actividad ' + form.nombre_actividad,
+                    text: 'Se ha actualizado la actividad: ' + form.nombre_actividad,
                     icon: 'success',
                     confirmButtonText: 'Aceptar',
                     allowEscapeKey: false,
@@ -506,7 +506,7 @@
                 this.borrado = true;
                 Swal.fire({
                     title: 'Operación exitosa',
-                    text: 'Se ha borrado la actividad ' + actividad.nombre_actividad,
+                    text: 'Se ha borrado la actividad: ' + actividad.nombre_actividad,
                     icon: 'success',
                     confirmButtonText: 'Aceptar',
                     allowEscapeKey: false,

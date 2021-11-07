@@ -284,7 +284,7 @@
 
 
 
-  <!-- Modal para la verificación de las actividades de los estudiantes-->
+  <!-- Modal para el reporte de la actividad del estudiante-->
   <div class="modal fade" id="observaciones" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
       <!--Contenido de la modal-->
@@ -398,7 +398,7 @@
                   this.$inertia.put(route('verificaractividades.update', actividad.id), this.form);
                   Swal.fire({
                   title: 'Actividad Verificada',
-                  text: 'La actividad ' + actividad.nombre_actividad + ' ha sido verificada correctamente',
+                  text: 'La actividad: ' + actividad.nombre_actividad + ', ha sido verificada correctamente',
                   icon: 'success',
                   confirmButtonText: 'Aceptar',
                   allowEscapeKey: false,
@@ -424,7 +424,7 @@
               this.$inertia.put(route('verificaractividades.update', actividad.id), this.form);
               Swal.fire({
               title: 'Actividad Reportada',
-              text: 'La actividad ' + actividad.nombre_actividad + ' ha sido reportada correctamente',
+              text: 'La actividad: ' + actividad.nombre_actividad + ', ha sido reportada correctamente',
               icon: 'success',
               confirmButtonText: 'Aceptar',
               allowEscapeKey: false,
@@ -439,10 +439,7 @@
                   
             },
 
-
-            // Método para reportar la actividad
-            
-
+            // Método para aceptar todas las actividades
             aceptarTodas(){
               Swal.fire({
                   title:'¿Está seguro que desea aceptar todas las actividades?',
@@ -460,7 +457,7 @@
                     this.$inertia.put(route('verificaractividades.update', this.estudiante.idE), this.form);
                     Swal.fire({
                     title: 'Actividades aceptadas',
-                    text: 'La actividades del estudiante ' + this.estudiante.nombre_estudiante + ' ' + this.estudiante.apellido_estudiante +' han sido aceptadas correctamente',
+                    text: 'Todas las actividades del estudiante ' + this.estudiante.nombre_estudiante + ' ' + this.estudiante.apellido_estudiante +' han sido aceptadas correctamente',
                     icon: 'success',
                     confirmButtonText: 'Aceptar',
                     allowEscapeKey: false,
@@ -476,6 +473,7 @@
                 })
             },
 
+            // Método para conceder horas
             concederHoras(){
               var cont = 0;
               var actividades = this.actividades;

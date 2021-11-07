@@ -114,9 +114,13 @@ class VerificarActividadesController extends Controller
         } else {
             //utilizamos el método update para cambiar la verificación
             $actividad=Actividad::find($actividad_id);
-            //cambiamos el verificado a Aceptada
+            //cambiamos el estado de la actividad
             $actividad->verificado = $request->verificado;
-            $actividad->observaciones_actividad = $request->observaciones_actividad;
+            if($request->verificado  == 'Aceptada') {
+                $actividad->observaciones_actividad = null;
+            } else {
+                $actividad->observaciones_actividad = $request->observaciones_actividad;
+            }
             //Guardamos los cambios
             $actividad->save();
         }
