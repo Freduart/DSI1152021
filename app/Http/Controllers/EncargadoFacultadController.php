@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use App\Mail\CredencialesMailable;
+use Illuminate\Support\Facades\Mail;
 
 class EncargadoFacultadController extends Controller
 {
@@ -106,6 +108,19 @@ class EncargadoFacultadController extends Controller
         $encargado = EncargadoFacultad::where('correo_encargado_facultad', '=', $data['correo_encargado_facultad'])->firstOrFail();
         $encargado->user_id = $id;
         $encargado->save();
+
+        //envio de correo
+        //details es un array que contiene las variables que se van a renderizar en la vista del correo
+        $details = [
+          'usuario' => $data['correo_encargado_facultad'],
+          'contraseña' => $contra,
+          'mensaje' => 'Estimado '.$data['nombre_encargado_facultad'].' '.$data['apellido_encargado_facultad'].', su cuenta como encargado de facultad en SASS-UES ha sido creada.',
+        ];
+        //Se crea un objeto correo de tipo CredencialesMailable para el envio de correo de credenciales
+        //Se debe crear otra clase de tipo Mailable si se quiere crear un correo que sirva para otra cosa
+        $correo = new CredencialesMailable($details);
+        //Se envía el correo, con la dirección del estudiante
+        Mail::to($data['correo_encargado_facultad'])->send($correo);  
       }
 
       return Redirect::route('encargadosfacultad.index');  
