@@ -171,7 +171,7 @@ class EncargadoEscuelaController extends Controller
             $details = [
                 'usuario' => $data['correo_encargado_escuela'],
                 'contraseña' => $contra,
-                'mensaje' => 'Estimado '.$data['nombre_encargado_escuela'].' '.$data['apellido_encargado_escuela'].', su cuenta como encargado de escuela en SASS-UES ha sido creada.',
+                'mensaje' => 'Estimado/a '.$data['nombre_encargado_escuela'].' '.$data['apellido_encargado_escuela'].', su cuenta como encargado de escuela en SASS-UES ha sido creada.',
             ];
             //Se crea un objeto correo de tipo CredencialesMailable para el envio de correo de credenciales
             //Se debe crear otra clase de tipo Mailable si se quiere crear un correo que sirva para otra cosa
