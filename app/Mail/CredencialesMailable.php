@@ -31,6 +31,6 @@ class CredencialesMailable extends Mailable
      */
     public function build()
     {
-        return $this->subject('Envio de credenciales')->view('emails.credenciales');
+        return $this->subject('Envio de credenciales SASS-UES')->view('emails.credenciales');
     }
 }
