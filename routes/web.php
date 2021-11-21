@@ -29,6 +29,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\UsersController;
 
 use App\Mail\CredencialesMailable;
+use App\Mail\CorreossInstitucionMailable;
 use Illuminate\Support\Facades\Mail;
 
 /*
@@ -126,6 +127,18 @@ Route::get('credenciales', function (){
   Mail::to('jganuzaramírez@gmail.com')->send(new CredencialesMailable($details));
   return "mensaje enviado";
 });
+
+//Confirmacion de peticion se servicio social
+//Supongo que confirmacion es el nombre de la ruta
+Route::get('confirmacion', function(){
+    
+    
+    $correossinsti = new CorreossInstitucionMailable;
+
+    Mail::to('stefany19rodriguez@gmail.com')->send(new CorreossInstitucionMailable());
+    return "Mensaje enviado";
+});
+
 
 
 //Ruta para el tipo de servicio social

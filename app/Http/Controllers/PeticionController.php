@@ -165,7 +165,25 @@ class PeticionController extends Controller
         // return $request;
         $peticionF= Peticion::find($peticion);
         $peticionF->estado_peticion = "Aceptado";
-        $peticionF->save();
+        
+        //AQUIIIIII SE ENVIARA EL CORREO A LA INSTITUCIONNNN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+        $contra = "institucion";
+
+        $data = $request->input();
+        
+ 
+        User::create([
+          'name' => $data['nombre_institucion'],
+          'email'=> $data['correo_institucion'],
+          'password' => bcrypt($contra)
+        ])->assignRole('Institucion');
+
+        //envio de correo
+        $usuario = User::where('email', '=', $data['correo_institucion'])->firstOrFail();
+        $id = $usuario->id;
+
+        $petici->user_id = $id;
+        $petici->save();
 
         // $proyectoS = new ProyectoSocial();
         // $proyectoS->estado_proyecto_social = 'No iniciado';
@@ -174,7 +192,7 @@ class PeticionController extends Controller
 
         ProyectoSocial::create([
             'estado_proyecto_social' => 'No iniciado',
-            'peticion_id' => $peticionF->id,
+            'peticion_id' => $peticionF->id,  //AQUI NO SE SI VA A CAMBIAR $peticionF !!!!!
         ]);
 
         return Redirect::route('peticiones.index');
