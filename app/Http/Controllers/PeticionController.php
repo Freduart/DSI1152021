@@ -6,11 +6,14 @@ use App\Models\Carrera;
 use App\Models\Facultad;
 use App\Models\Institucion;
 use App\Models\Peticion;
+use App\Models\User;
 use App\Models\ProyectoSocial;
 use App\Models\TipoServicioSocial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use App\Mail\CorreossInstitucionMailable;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class PeticionController extends Controller
@@ -165,39 +168,49 @@ class PeticionController extends Controller
         // return $request;
         $peticionF= Peticion::find($peticion);
         $peticionF->estado_peticion = "Aceptado";
+        $peticionF->save();
         
         //AQUIIIIII SE ENVIARA EL CORREO A LA INSTITUCIONNNN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
         $contra = "institucion";
 
         $data = $request->input();
         
- 
         User::create([
           'name' => $data['nombre_institucion'],
-          'email'=> $data['correo_institucion'],
+          'email'=> $data['correo_peticion'],
           'password' => bcrypt($contra)
         ])->assignRole('Institucion');
 
         //envio de correo
-        $usuario = User::where('email', '=', $data['correo_institucion'])->firstOrFail();
+        //details es un array que contiene las variables que se van a renderizar en la vista del correo
+        $details = [
+            'usuario' => $peticionF->correo_peticion,
+            'contrasena' => $contra,
+            'proyecto' => $peticionF->nombre_peticion,
+            'estado' => $peticionF->estado_peticion,
+            'mensaje' => 'Su solicitud de registro en el sistema SASS-UES ha sido aceptada',
+        ];
+        //Se crea un objeto correo de tipo CredencialesMailable para el envio de correo de credenciales
+        //Se debe crear otra clase de tipo Mailable si se quiere crear un correo que sirva para otra cosa
+        $correo = new CorreossInstitucionMailable($details);
+        //Se envía el correo, con la dirección de la institucion
+        Mail::to($peticionF->correo_peticion)
+              ->send($correo);      
+
+        $usuario = User::where('email', '=', $data['correo_peticion'])->firstOrFail();
         $id = $usuario->id;
 
-        $petici->user_id = $id;
-        $petici->save();
+        $institucion = Institucion::where('correo_institucion', '=', $data['correo_peticion'])->firstOrFail();
 
-        // $proyectoS = new ProyectoSocial();
-        // $proyectoS->estado_proyecto_social = 'No iniciado';
-        // $proyectoS->peticion_id = $peticionF->id;
-        // $proyectoS->save();
-
+        $institucion->user_id = $id;
+        $institucion->save();
+        
         ProyectoSocial::create([
             'estado_proyecto_social' => 'No iniciado',
-            'peticion_id' => $peticionF->id,  //AQUI NO SE SI VA A CAMBIAR $peticionF !!!!!
+            'peticion_id' => $peticionF->id,  
         ]);
 
         return Redirect::route('peticiones.index');
-
-
 
     }
 

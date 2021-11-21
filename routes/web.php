@@ -132,14 +132,14 @@ Route::get('serviciosdisponibles', [ServicioSocialController::class, 'serviciosD
 
 //Confirmacion de peticion se servicio social
 //Supongo que confirmacion es el nombre de la ruta
-Route::get('confirmacion', function(){
-    
+/*Route::get('confirmacion', function(){
+
     
     $correossinsti = new CorreossInstitucionMailable;
 
     Mail::to('stefany19rodriguez@gmail.com')->send(new CorreossInstitucionMailable());
     return "Mensaje enviado";
-});
+});*/
 
 
 

@@ -13,7 +13,7 @@ class CorreossInstitucionMailable extends Mailable
 
     public $details;
     
-    public $subject = "Confirmacion de peticion de Servicio Social";
+    //public $subject = "Confirmacion de peticion de Servicio Social";
 
     /**
      * Create a new message instance.
