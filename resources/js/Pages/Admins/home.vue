@@ -5,6 +5,8 @@
       <template v-slot:header></template>
     </Base>  -->
 
+    <component-to-re-render :key="componentKey" />
+    
     <!-- content-wrapper -->
     <!-- <div class="content-wrapper"> -->
       <div class="content-header">
@@ -112,7 +114,7 @@
               </div>               
               <!-- End of carousel --> 
                <div class="text-center">            
-            <h4>Antes de empezar debes saber esto:</h4>            
+            <h4>¿Qué deseas realizar?</h4>            
           </div>
 
           <!-- Card content -->           
@@ -120,22 +122,27 @@
             <div class="col-sm-6">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-info">Go somewhere</a>
+                  <h5 class="card-title">Agregar peticion de servicio social</h5>
+                  <p class="card-text">Agrega una peticion para realizar un servicio social segun las necesidades de tu institucion.</p>
+                  <inertia-link :href="route('login')">                
+                    <button class="btn btn-info">Añadir peticion</button>
+                  </inertia-link>
                 </div>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-info">Go somewhere</a>
+                  <h5 class="card-title">Añadir una institucion</h5>
+                  <p class="card-text">Añade tu institucion para poder ver la informacion sobre tus peticiones desde nuestro sitio.</p>
+                  <inertia-link :href="route('instituciones.create')">                
+                    <button class="btn btn-info">Añadir institucion</button>
+                  </inertia-link>
                 </div>
               </div>
             </div>
           </div>      
+          <!-- Estas dos opciones no se para que podemos usarlas pero por si las dudas la dejare -->
           <div class="row">
             <div class="col-sm-6">
               <div class="card">
@@ -183,3 +190,18 @@
     <!-- /.control-sidebar -->  
   <!-- </div> -->
 </template>
+
+<script>
+ export default {
+  data() {
+    return {
+      componentKey: 0,
+    };
+  },
+  methods: {
+    forceRerender() {
+      this.componentKey += 1;  
+    }
+  }
+ }
+</script>

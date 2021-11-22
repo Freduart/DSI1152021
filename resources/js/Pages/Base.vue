@@ -16,13 +16,13 @@
                     Cerrar Sesión
                 </button>        
             </form>
-            </div>
-            <template v-else>
-              <inertia-link :href="route('login')" class="btn btn-success">                
+            </div >
+            <template class="col-sm-12">
+              <inertia-link :href="route('login')" class="btn btn-success" >                
                 Iniciar Sesión
               </inertia-link>
  
-              <button type="button" class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
+              <button  class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
                 Registrarse
               </button>
             </template>
