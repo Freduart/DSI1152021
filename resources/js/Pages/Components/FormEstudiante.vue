@@ -12,7 +12,7 @@
       <jet-validation-errors class="mb-3" />
 
         <!-- Este es el formulario para los estudiantes -->
-      <form @submit.prevent="submit">
+      <form @submit.prevent="submit" enctype="multipart/form-data">
         <div class="form-group">
           <jet-label for="nombre_estudiante" value="Nombres" />
           <jet-input id="nombre_estudiante" type="text" v-model="form.nombre_estudiante" required autofocus autocomplete="nombre_estudiante" />
@@ -83,6 +83,26 @@
         </div>
 
         <hr/>
+        <div class="form-group">
+          <jet-label for="archivo_comprobante_path" value="Captura de comprobante de avance"/>
+          <jet-input type="file" @input="form.archivo_comprobante_path = $event.target.files[0]" accept="image/*"/>
+
+          <!-- <div v-if="!form.archivo_comprobante">
+            <input id="archivoComponente" type="file" v-on:change="onFileChange">
+          </div>
+          <div v-else>
+            <img :src="form.archivo_comprobante" contain height="100px" width="100px" alt="imagen"/>
+            <button class="btn btn-danger" v-on:click="removeImage">Eliminar archivo</button>
+          </div> -->
+
+
+
+          <!-- <input type="file" class="" id="customFileLang" lang="es">
+          <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label> -->
+          <!-- <input type="file" id="archivoComprobante" name="archivoComprobante" v-on:change="archivo_comprobante" required> -->
+        </div>
+
+        <hr/>
         <div class="mb-0">
           <div class="d-flex justify-content-end align-items-baseline">
             <inertia-link :href="route('login')" class="text-muted mr-3 text-decoration-none">
@@ -92,9 +112,7 @@
             <!-- <button class="ml-4 btn btn-primary" :class="{ 'text-white-50': form.processing }" :disabled="form.processing">
               Enviar solicitud de registro
             </button> -->
-            <button style="padding: 6px" class="ml-4 btn btn-outline-success btn-md" :class="{ 'text-white-50': form.processing }" 
-            
-            >
+            <button style="padding: 6px" class="ml-4 btn btn-outline-success btn-md" :class="{ 'text-white-50': form.processing }">
               <i class="fa fa-paper-plane" aria-hidden="true"></i>
               Enviar solicitud de registro
             </button>
@@ -133,6 +151,7 @@ export default {
   props:['facultades','carreras'],
   data() {
     return {
+      image:'',
       form: this.$inertia.form({
         nombre_estudiante: '',
         apellido_estudiante:'',
@@ -149,12 +168,14 @@ export default {
         dui_estudiante: '',
         nit_estudiante: '',
         porcentaje_aprobacion:0,
+        archivo_comprobante_path:'',
       }), carrerasFiltradas:[],
     }
   },
 
   methods: {
     submit() {
+      // alert(this.form.archivo_comprobante_path)
       // this.form.post(this.route('register'), {
       //   onFinish: () => this.form.reset('password', 'password_confirmation'),
       // })
@@ -189,7 +210,23 @@ export default {
 
         }
       });
-    }
-  },
+    },
+    onFileChange(e){
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length)
+        return;
+      this.createImage(files[0]);
+    },
+    createImage(file) {
+      var image = new Image();
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = (e) => {
+        this.form.archivo_comprobante_path = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+  }
 }
 </script>
