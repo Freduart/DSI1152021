@@ -31,6 +31,7 @@ class CredencialesMailable extends Mailable
      */
     public function build()
     {
+        // Asunto que aparece en el correo
         return $this->subject('Envio de credenciales')->view('emails.credenciales');
     }
 }

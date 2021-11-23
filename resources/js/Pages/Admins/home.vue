@@ -124,7 +124,7 @@
                 <div class="card-body">
                   <h5 class="card-title">Agregar peticion de servicio social</h5>
                   <p class="card-text">Agrega una peticion para realizar un servicio social segun las necesidades de tu institucion.</p>
-                  <inertia-link :href="route('login')">                
+                  <inertia-link :href="route('peticiones.create')">                
                     <button class="btn btn-info">Añadir peticion</button>
                   </inertia-link>
                 </div>
