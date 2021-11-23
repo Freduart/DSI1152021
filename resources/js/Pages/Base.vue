@@ -60,6 +60,7 @@
 
             <div class="col-4" v-if="$page.props.user">
                 <h6 class="text-white float-right">¡Bienvenido, {{$page.props.user.name}}!</h6>
+                <!-- <h6>{{$page.props.user}}</h6> -->
             </div>
 
             
@@ -91,13 +92,16 @@
                         <p>Inicio</p>
                         </inertia-link>
                     </li>
-                    <li v-if="is('Administrador')" class="nav-item">
+                    <!-- <li v-if="is('Administrador')" class="nav-item"> -->
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Administrador'" class="nav-item">    
                         <inertia-link :href="route('carreras.index')" class="nav-link" >
                         <i class="fa fa-graduation-cap nav-icon"></i>
                         <p>Carreras</p>
                         </inertia-link>
                     </li>
-                    <li v-if="is('Unidad de Proyeccion Social') || is('Administrador')" class="nav-item">
+                    <li v-if="$page.props.user && ($page.props.user.rol == 'Administrador' 
+                                                 | $page.props.user.rol == 'Unidad de Proyeccion Social')" class="nav-item">
+                    <!-- <li v-if="is('Unidad de Proyeccion Social') || is('Administrador')" class="nav-item"> -->
                         <!--<a v-if="is('Estudiante')" href="#" class="nav-link">-->
                         <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-id-card"></i>
@@ -122,49 +126,58 @@
                         </ul>
                     </li>
 
-                    <li v-if="is('Encargado Facultad')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Encargado Facultad'" class="nav-item">
+                    <!-- <li v-if="is('Encargado Facultad')" class="nav-item"> -->
                         <inertia-link :href="route('encargadosescuela.index')" :active="route().current('encargadosescuela.index')" class="nav-link">
                             <i class="fa fa-chalkboard-teacher nav-icon" aria-hidden="true"></i>
                             <p>Encargados por escuela</p>
                         </inertia-link>
                     </li>
                   
-                    <li v-if="is('Administrador')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Administrador'" class="nav-item">
+                    <!-- <li v-if="is('Administrador')" class="nav-item"> -->
                             <inertia-link :href="route('facultades.index')" class="nav-link">
                             <i class="fa fa-building nav-icon"></i>
                             <p>Facultades</p>
                             </inertia-link>
                     </li>
 
-                    <li v-if="is('Encargado Facultad') || is('Encargado Escuela') || is('Unidad de Proyeccion Social')" class="nav-item">
+                    <li v-if="$page.props.user && ($page.props.user.rol == 'Encargado Facultad' 
+                                                 | $page.props.user.rol == 'Encargado Escuela'  
+                                                 | $page.props.user.rol == 'Unidad de Proyeccion Social')" class="nav-item">
+                    <!-- <li v-if="is('Encargado Facultad') || is('Encargado Escuela') || is('Unidad de Proyeccion Social')" class="nav-item"> -->
                             <inertia-link :href="route('estudiantes.index')" class="nav-link">
                             <i class="fa fa-user-friends nav-icon" aria-hidden="true"></i>
                             <p>Estudiantes</p>
                             </inertia-link>
                     </li>
 
-                    <li v-if="is('Encargado Escuela')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Encargado Escuela'" class="nav-item">
+                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item"> -->
                             <inertia-link :href="route('verificarcuenta.index')" class="nav-link">
                             <i class="fas fa-file nav-icon"></i>
                             <p>Verificar Cuenta</p>
                             </inertia-link>
                     </li>
 
-                    <li v-if="is('Administrador')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Administrador'" class="nav-item">
+                    <!-- <li v-if="is('Administrador')" class="nav-item"> -->
                             <inertia-link :href="route('usuarios.index')" class="nav-link">
                             <i class="fas fa-user-circle nav-icon"></i>
                             <p>Usuarios</p>
                             </inertia-link>
                     </li>
 
-                     <li v-if="is('Administrador')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Administrador'" class="nav-item">
+                    <!-- <li v-if="is('Administrador')" class="nav-item"> -->
                             <inertia-link :href="route('roles.index')" class="nav-link">
                             <i class="fas fa-key nav-icon"></i>
                             <p>Roles</p>
                             </inertia-link>
                     </li>
 
-                    <li v-if="is('Encargado Escuela')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Encargado Escuela'" class="nav-item">
+                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item"> -->
                             <inertia-link :href="route('solicitudes.index')" class="nav-link">
                             <i class="nav-icon fas fa-edit"></i>
                             <p>Evaluacion de Solicitudes</p>
@@ -187,21 +200,27 @@
 
                     <!-- https://es.vuejs.org/v2/guide/conditional.html -->
                     <!-- https://www.npmjs.com/package/laravel-permission-to-vuejs -->
-                    <li v-if="is('Estudiante')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Estudiante'" class="nav-item">
+                    <!-- <li v-if="is('Estudiante')" class="nav-item"> -->
                             <inertia-link :href="route('solicitudesestudiante.index')" class="nav-link">
                             <i class="fas fa-paper-plane nav-icon"></i>
                             <p>Mis solicitudes</p>
                             </inertia-link> 
                     </li>
-                    
-                    <li v-if="is('Encargado Escuela') || is('Encargado Facultad') || is('Estudiante') || is('Unidad de Proyeccion Social')" class="nav-item">
+
+                    <li v-if="$page.props.user && ($page.props.user.rol == 'Encargado Escuela'
+                                                 | $page.props.user.rol == 'Encargado Facultad'
+                                                 | $page.props.user.rol == 'Estudiante'
+                                                 | $page.props.user.rol == 'Unidad de Proyeccion Social')" class="nav-item">
+                    <!-- <li v-if="is('Encargado Escuela') || is('Encargado Facultad') || is('Estudiante') || is('Unidad de Proyeccion Social')" class="nav-item"> -->
                             <inertia-link :href="route('serviciossociales.index')" class="nav-link">
                             <i class="fa fa-th-large nav-icon"></i>
                             <p>Servicios Sociales</p>
                             </inertia-link>
                     </li>
 
-                     <li v-if="is('Estudiante')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Estudiante'" class="nav-item">
+                    <!-- <li v-if="is('Estudiante')" class="nav-item"> -->
                             <inertia-link :href="route('serviciosDisponibles')" class="nav-link">
                             <i class="fa fa-calendar-check nav-icon"></i>
                             <p>Servicios Disponibles</p>
@@ -243,7 +262,7 @@
 
     import JetNavLink from '@/Jetstream/NavLink'
     import JetDropdownLink from '@/Jetstream/DropdownLink'
-import { getCurrentInstance } from '@vue/runtime-core';
+    import { getCurrentInstance } from '@vue/runtime-core'
 
     export default {
         components:{
@@ -268,7 +287,9 @@ import { getCurrentInstance } from '@vue/runtime-core';
         //     }
           logout() {
               this.$inertia.post(route('logout'));
-              window.location.reload();
+            //   window.location.reload();
+              this.$inertia.get(route('/'));
+              
             },
           mostrarFormularioEstudiante(){
               this.$inertia.get(route('estudiantes.create'));

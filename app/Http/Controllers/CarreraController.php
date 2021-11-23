@@ -9,6 +9,7 @@ use Inertia\Inertia;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class CarreraController extends Controller
 {
@@ -19,16 +20,18 @@ class CarreraController extends Controller
      */
     public function index()
     {
-        // $carreras = Carrera::all();
-        // $carreras = Carrera::join('facultades', 'facultades.id', '=', 'carreras.facultad_id')
-        // ->select('*')->get();
-        $carreras = Facultad::join('carreras', 'carreras.facultad_id', '=', 'facultades.id')
-        ->select('*')->get();
-        // $carreras = DB::table('carreras')->paginate(15);
-        // $carreras = DB::select('select * from facultades f JOIN carreras c ON c.facultad_id = f.id');
-        // return $carreras;
-        $facultades = Facultad::all();
-        return Inertia::render('Components/Carreras', ['carreras' => $carreras, 'facultades' => $facultades]);
+        if(Auth::check()){
+            if(Auth::user()->hasRole('Administrador')){
+                $carreras = Facultad::join('carreras', 'carreras.facultad_id', '=', 'facultades.id')
+                ->select('*')->get();
+                $facultades = Facultad::all();
+                return Inertia::render('Components/Carreras', ['carreras' => $carreras, 'facultades' => $facultades]);        
+            }else{
+                return Redirect::route('dashboard');
+            }
+        }else{
+            return Redirect::route('login');
+        }
     }
 
     /**
