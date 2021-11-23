@@ -23,12 +23,14 @@ use App\Http\Controllers\TipoServicioController;
 use App\Http\Controllers\ConstanciaController;
 use App\Http\Controllers\FinalizarProyectoController;
 
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UsersController;
 
 use App\Mail\CredencialesMailable;
+use App\Models\Bitacora;
 use Illuminate\Support\Facades\Mail;
 
 /*
@@ -126,3 +128,5 @@ Route::resource('tipoServicio', TipoServicioController::class)->only([
 
 //Ruta de las peticiones
 Route::resource('peticiones', PeticionController::class);
+
+Route::get('/bitacoras/pdf/{proyecto_social_id}', [BitacoraController::class, 'generarPDF'])->name('bitacora.pdf');
