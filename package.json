@@ -36,6 +36,7 @@
         "vue-loader": "^16.1.2"
     },
     "dependencies": {
-        "laravel-permission-to-vuejs": "^3.0.0"
+        "laravel-permission-to-vuejs": "^3.0.0",
+        "vue-bootstrap-typeahead": "^0.2.6"
     }
 }

@@ -163,11 +163,16 @@
                               <div class="form-group">
                                 <jet-label for="institucion" value="Institucion" />
                                 <br/>
-                                <!-- select para cargar las facultades -->
-                                <select class="custom-select col-md-10" id="institucion" v-model="form.institucion_id" required>
-                                  <option disabled value="">Seleccione una institucion</option>
-                                  <option v-for="(institucion, index) in instituciones" :key="index" :value="institucion.id">{{ institucion.nombre_institucion }}</option>
+                                <select class="custom-select col-md-10" id="institucion_id" v-model="form.institucion_id" required>
+                                  <option disabled value="">Seleccione un tipo de servicio social</option>
+                                  <option v-for="(institucion, index) in instituciones" :key="index" :value="instituciones.id">{{ institucion.nombre_institucion }}</option>
                                 </select>
+                                <!-- select para cargar las facultades -->
+                                <!-- <vue-bootstrap-typeahead class="col-md-10"
+                                  v-model="query"
+                                  size="md"                                  
+                                  :data="institucionesFiltradas"
+                                /> -->
                                 <inertia-link :href="route('instituciones.create')" type="button" class="btn btn-success col-md-2">
                                   <i class="fas fa-plus"></i> 
                                 </inertia-link>
@@ -214,7 +219,7 @@ import JetInput from '@/Jetstream/Input'
 import JetCheckbox from "@/Jetstream/Checkbox";
 import JetLabel from '@/Jetstream/Label'
 import JetValidationErrors from '@/Jetstream/ValidationErrors'
-
+import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 import Base from "@/Pages/Base.vue"
 
 export default {
@@ -226,7 +231,8 @@ export default {
     JetCheckbox,
     JetLabel,
     JetValidationErrors,
-    Base
+    Base,
+    VueBootstrapTypeahead,
   },
 
   props:['peticiones', 'facultades', 'idFacultad', 'carreras', 'tipoServicios', 'instituciones'],
@@ -249,11 +255,9 @@ export default {
         tipo_servicio_social_id: this.$props.peticiones.tipo_servicio_social_id,
         institucion_id: this.$props.peticiones.institucion_id,
       }),
-
       carrerasFiltradas:[],
       tiposFiltrados:[],
       institucionesFiltradas:[],
-
     }
   },
 

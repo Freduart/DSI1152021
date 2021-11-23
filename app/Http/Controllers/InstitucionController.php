@@ -6,7 +6,8 @@ use App\Models\Institucion;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
+use App\Mail\CredencialesMailable;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use SebastianBergmann\Environment\Console;
 
@@ -83,7 +84,23 @@ class InstitucionController extends Controller
         // error_log($usuario);
         
         $institucion->user_id=$usuario->id;
-        $institucion->save();
+        $institucion->save();        
+
+        // Envio de correos
+        $details = [
+            'usuario' => $institucion->correo_institucion,
+            'contraseña' => $contra,
+            'mensaje' => 'Su solicitud de registro en el sistema SASS-UES ha sido aceptada',
+        ];
+
+        // Nuevo objeto mailable
+        $correo = new CredencialesMailable($details);
+
+        // Envio de correo
+        Mail::to($institucion->correo_institucion)
+            ->send($correo);
+
+
         // Asignamos el usuario a la institucion
         $institucion = Institucion::where('nombre_institucion', '=', $data['nombre_institucion'])->firstOrFail();
         

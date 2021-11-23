@@ -1,9 +1,7 @@
 <template>
 
   <!-- Preloader -->
-  <!-- <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div> -->
+
     <slot name="header"></slot>
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-dark">
@@ -45,12 +43,8 @@
               <inertia-link :href="route('login')" class="btn btn-success">                
                 Iniciar Sesión
               </inertia-link>
-              
-              <!-- <inertia-link v-if="canRegister" :href="route('estudiantes.create')" class="ml-4 text-muted">
-                Registrarse
-              </inertia-link>  -->
-
-              <button type="button" class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
+ 
+              <button  class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
                 Registrarse
               </button>
 
@@ -184,20 +178,6 @@
                             </inertia-link>
                     </li>
 
-                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item">
-                            <inertia-link :href="route('verificaractividades.index')" class="nav-link">
-                            <i class="nav-icon fa fa-clipboard "></i>
-                            <p>Verificar Actividades</p>
-                            </inertia-link>
-                    </li> -->
-
-                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item">
-                            <inertia-link :href="route('establecerha.index')" class="nav-link">
-                            <i class="nav-icon fa fa-clipboard "></i>
-                            <p>Establecer cantidad de Horas y Alumnos</p>
-                            </inertia-link>
-                    </li> -->
-
                     <!-- https://es.vuejs.org/v2/guide/conditional.html -->
                     <!-- https://www.npmjs.com/package/laravel-permission-to-vuejs -->
                     <li v-if="$page.props.user && $page.props.user.rol == 'Estudiante'" class="nav-item">
@@ -226,24 +206,6 @@
                             <p>Servicios Disponibles</p>
                             </inertia-link>
                     </li>
-
-                    <!-- <li class="nav-item">
-                            <inertia-link :href="route('constancia.index')" class="nav-link">
-                            <i class="fas fa-medal nav-icon"></i>
-                            <p>Constancia de cumplimiento</p>
-                            </inertia-link>
-                    </li> -->
-
-                    <!-- Cuando es un solo elemento -->
-                    <!-- <li class="nav-item">
-                        <a href="pages/gallery.html" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
-                        <p>
-                            Gallery
-                        </p>
-                        </a>
-                    </li> -->
-
                     </ul>
                 </li>            
             </ul>
@@ -252,10 +214,6 @@
     </div>
     <!-- /.sidebar -->
     </aside>
-
-
-    
-    
 </template>
 
 <script>
@@ -276,15 +234,8 @@
             laravelVersion: String,
             phpVersion: String,
         },
-        // data(){
-        //   return{
-        //     componentKey:2,
-        //   };
-        // },
+
         methods:{
-        //     forceRerender(){
-        //       this.componentKey+=1;
-        //     }
           logout() {
               this.$inertia.post(route('logout'));
             //   window.location.reload();
@@ -299,9 +250,6 @@
             
         },
         setup(){
-          // const instance = getCurrentInstance();
-          // instance.proxy.$forceUpdate();
-          // window.location.reload();
         }
     }   
 </script>
