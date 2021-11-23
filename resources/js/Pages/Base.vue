@@ -10,22 +10,53 @@
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
-        <div v-if="$page.props.user">
-            <form @submit.prevent="logout">            
-                <button class="btn btn-info"> 
-                    Cerrar Sesión
-                </button>        
-            </form>
-            </div >
-            <template class="col-sm-12">
-              <inertia-link :href="route('login')" class="btn btn-success" >                
+
+            
+            <!-- <li class="nav-item d-none d-sm-inline-block mx-4">
+                <a href="index3.html" class="nav-link">Home</a>
+                <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    Inicio
+                </jet-nav-link>
+            </li> -->
+
+            <!-- <form @submit.prevent="logout">
+                <li class="d-flex flex-row-reverse bd-highlight col"> 
+                    <button class="btn btn-primary d-flex flex-row-reverse bd-highlight col" as="button"> 
+                        Cerrar Sesión
+                    </button>
+                </li> 
+            </form>   -->
+
+            <div v-if="$page.props.user">
+                <form @submit.prevent="logout">
+                    
+                        <button class="btn btn-info"> 
+                            Cerrar Sesión
+                        </button>
+                    
+                </form>
+            </div>
+
+
+            <template v-else>
+              <inertia-link :href="route('login')" class="btn btn-success">                
                 Iniciar Sesión
               </inertia-link>
  
               <button  class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
                 Registrarse
               </button>
+
+
             </template>
+
+
+            <div class="col-4" v-if="$page.props.user">
+                <h6 class="text-white float-right">¡Bienvenido, {{$page.props.user.name}}!</h6>
+            </div>
+
+            
         </ul>
     </nav>
     <!-- /.navbar -->
@@ -195,7 +226,7 @@ import { getCurrentInstance } from '@vue/runtime-core';
           },
         },
         mounted(){
-
+            
         },
         setup(){
         }

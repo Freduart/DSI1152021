@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Jetstream\HasProfilePhoto;
 
 class Estudiante extends Model
 {
     use HasFactory;
+    use HasProfilePhoto;
 
     protected $table = 'estudiantes';
 
@@ -35,7 +39,8 @@ class Estudiante extends Model
         'telefono_estudiante',
         'dui_estudiante',
         'nit_estudiante',
-        'porcentaje_aprobacion'
+        'porcentaje_aprobacion',
+        'archivo_comprobante_path'
     ];
 
     //Relacion uno a uno con persona
@@ -66,5 +71,37 @@ class Estudiante extends Model
     //Relacion uno a uno con Usuario
     public function usuario(){
         return $this->hasOne('App\Models\User');
+    }
+
+    protected $appends = [
+        'archivo_comprobante_url',
+    ];
+
+    //Funcion para guardar las imagenes de los comprobantes de la carrera
+    public function subirArchivo(UploadedFile $foto){
+        tap($this->archivo_comprobante_path, function ($previous) use ($foto){
+            $this->forceFill([
+                'archivo_comprobante_path' => $foto->storePublicly(
+                    'archivos_comprobacion', ['disk' => $this->profilePhotoDisk()] 
+                ),
+            ])->save();
+
+            if($previous){
+                Storage::disk($this->profilePhotoDisk())->delete($previous);
+            }
+        });
+    }
+
+    public function getArchivoComprobanteUrlAttribute()
+    {
+        return $this->archivo_comprobante_path
+                    ? Storage::disk($this->profilePhotoDisk())->url($this->archivo_comprobante_path)
+                    : $this->defaultProfilePhotoUrl();
+                    // : null;
+    }
+
+    protected function profilePhotoDisk()
+    {
+        return isset($_ENV['VAPOR_ARTIFACT_NAME']) ? 's3' : config('jetstream.profile_photo_disk', 'public');
     }
 }
