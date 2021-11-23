@@ -97,6 +97,8 @@ class BitacoraController extends Controller
         // dd($actividades);
 
         view()->share('actividades', $actividades);
+        view()->share('estudiante', $estudiante);
+        view()->share('servicio', $servicio);
         $pdf = PDF::loadview('PDFs/bitacorapdf');
         return $pdf->download('bitacorapdf.pdf');
     }

@@ -7,9 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <pre>
-        {{ $actividades }}
-    </pre>
-    
+    <h1>UNIVERSIDAD DE EL SALVADOR</h1>
+    @foreach($actividades as $actividad)
+        <h3>{{ $actividad->nombre_actividad}}</h3>
+    @endforeach
+    <hr/>
+    <h3>{{ $estudiante->nombre_facultad}}</h3>
 </body>
 </html>
