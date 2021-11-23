@@ -32,7 +32,11 @@ class VerificarCuentaController extends Controller
 
                 $estudiantes = Estudiante::where('estado_estudiante', '=', 'En espera')->where('carrera_id', '=', $encargado->carrera_id)->get();
                 return Inertia::render('Components/VerificarCuenta',['estudiantes'=>$estudiantes]);
+            }else{
+                return Redirect::route('dashboard');
             }
+        }else{
+            return Redirect::route('login');
         }
 
         
@@ -59,7 +63,8 @@ class VerificarCuentaController extends Controller
         User::create([
           'name' => $data['carnet_estudiante'],
           'email'=> $data['correo_estudiante'],
-          'password' => bcrypt($contra)
+          'password' => bcrypt($contra),
+          'rol' => 'Estudiante'
         ])->assignRole('Estudiante');
 
 
