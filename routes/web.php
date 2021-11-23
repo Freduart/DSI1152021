@@ -53,6 +53,12 @@ Route::get('/', function () {
     ]);
 })->name('homepage');
 
+// Route::middleware(['auth'])->group(function(){
+//     Route::get('/usuarios/detalle/{id}', [UsersController::class, 'show'])->name('user.show')->middleware('permission:user.create');
+// });
+
+
+
 Route::resource('usuarios', UsersController::class)->middleware(['auth:sanctum','verified']);
 Route::resource('roles', RolController::class)->middleware(['auth:sanctum','verified']);
 
