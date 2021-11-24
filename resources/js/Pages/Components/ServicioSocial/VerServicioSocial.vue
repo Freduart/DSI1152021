@@ -174,8 +174,13 @@
                                 </button>
                                 <jet-button v-else-if="servicio.estado_proyecto_social == 'No iniciado'" type="button" class="mt-3 ml-2 mb-1 btn btn-success" title="Iniciar servicio social" v-on:click="iniciarservicio();">
                                     <i class="fa fa-check-square"></i> Iniciar servicio social
-                                </jet-button>    
-                              </div>
+                                </jet-button> 
+
+                                <!-- BOTON DE EDITAR cantidad de horas -->
+                                <jet-button  v-if="servicio.estado_proyecto_social == 'No iniciado'" v-on:click="mostrarMensajeUpdate(servicio)" data-toggle="modal" type="button" class="mt-3 ml-2 mb-1 btn btn-warning"
+                                data-target="#modificarCantidad" title="Editar Cantidad de Horas"> <i class="fas fa-edit"></i> Modificar hora de servicio social </jet-button>
+
+                            </div>
                         </div>
                       
                     </div>
@@ -395,9 +400,82 @@
 
     </div>
 
+              <!-- Modal para ACTUALIZAR los campos de las cantidades de hora y estudiantes con el boton de edit-->
+ <div class="modal fade" id="modificarCantidad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modificar Cantidad de Horas al Servicio Social</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+      <div class="modal-body">
+        
+        <!-- MUESTRA EN PANTALLA LOS CAMPOS LLENOS CON LOS DATOS INGRESADOS LISTOS PARA SER MODIFICADOS--->
+          <form @submit.prevent="submitUpdate(this.formUp)">
+            <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                       <div class="form-group">
+                            <jet-label for="horas" value="Cantidad de Horas para el Servicio Social" />
+                            <jet-input id="horas" type="text" v-model="formUp.cantidad_horas" required autofocus autocomplete="off" :value="this.formUp.cantidad_horas"/>
+                        </div>
+                      </div>
+                      
+                    </div>
+                   <!-- <div class="row">
+                      <div class="col">
+                            <div class="form-group">
+                                 <jet-label for="cantidad" value="Cantidad de Estudiantes para el Servicio Social" />
+                                 <jet-input id="cantidad" type="text" v-model="formUp.cantidad" required autofocus autocomplete="off" :value="this.formUp.cantidad"/>
+                            </div>
+                      </div>
+                    </div>-->
+                    <br>
+
+                </div>
+
+
+
+            <!--BOTONES DE GUARDAR Y CANCELAR EN ACTUALIZAR -->
+               <div class="d-flex justify-content-center align-items-baseline">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="mt-12">
+                                    <jet-button class="btn btn-dark float-center" :class="{ 'text-white-50 bg-green-400': formUp.processing }" v-on:click="submitUpdate(this.formUp)">
+                                    <i class="fas"></i>Guardar
+                                          
+                                     </jet-button>  
+                                </div>                  
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-grup">
+                                <jet-button :href="route('establecerha.index')" type="button" class="btn btn-danger float-center" data-dismiss="modal">
+                                 Cancelar</jet-button>
+                            </div>
+                        </div>
+
+                    </div>
+               </div>
+ 
+          </form>
+        </div>
+      </div>
+    </div>
+ </div>
+ <!--Final Modal Update de Cantidades-->
+
+
+
 
 </template>
 <script>
+import JetInput from '@/Jetstream/Input'
+    import JetLabel from '@/Jetstream/Label'
 
 import Base from "@/Pages/Base.vue";
 
@@ -405,9 +483,9 @@ import Base from "@/Pages/Base.vue";
         components:{
         //   JetAuthenticationCard,
         //   JetAuthenticationCardLogo,
-        //   JetInput,
+           JetInput,
         //   JetCheckbox,
-        //   JetLabel,
+           JetLabel,
         //   JetValidationErrors,
           Base
         },
@@ -575,7 +653,33 @@ import Base from "@/Pages/Base.vue";
                         showConfirmButton: true,  
                     })
                 }
-            }
+            },
+            //Muestra mensaje cuando se actualiza los campos
+            submitUpdate(form){
+                alert(this.formUp.cantidad_horas);
+                console.log(this.formUp);
+                console.log(form);
+                Swal.fire({
+                    title: 'Se han actualizado las cantidades ',
+                    text: 'Actualice la página para ver los cambios',
+                    icon: 'success',
+                    iconColor: '#FF8000',
+                    confirmButtonText: 'Aceptar',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+                this.$inertia.put(route("serviciosocial.edit", this.formUp.idServicio), this.formUp);
+            },
+            mostrarMensajeUpdate(servicio){
+                console.log(servicio);
+                this.formUp.cantidad_horas= servicio.cantidad_horas;
+                //this.formUp.horas = servicio.horas;                
+                this.formUp.idServicio = servicio.idServicio;
+                this.formUp.idPeticion = servicio.idPeticion;
+                
+                console.log(this.formUp);
+            },
 
         },
         props:['estudiantes', 'servicio', 'idServicio'],
@@ -603,7 +707,20 @@ import Base from "@/Pages/Base.vue";
                 form: this.$inertia.form({
                     servicio_social_id: this.servicio.id,
                     tipo: '',
-                })
+                }),
+
+                form: this.$inertia.form({
+                    cantidad_horas:0,
+                    idServicio:0,
+                    idPeticion:0
+                    }),
+
+                formUp: this.$inertia.form({
+                    //Aqui van los campos que se van a modificar
+                    cantidad_horas:0,
+                    idServicio:0,
+                    idPeticion:0
+                    }),
             }
         },
         mounted(){

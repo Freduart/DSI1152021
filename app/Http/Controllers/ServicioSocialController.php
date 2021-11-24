@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Estudiante;
 use App\Models\EncargadoEscuela;
+use App\Models\Peticion;
 use App\Models\Solicitud;
 
 class ServicioSocialController extends Controller
@@ -204,9 +205,21 @@ class ServicioSocialController extends Controller
      * @param  \App\Models\ProyectoSocial  $proyectoSocial
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProyectoSocial $proyectoSocial)
+    //public function edit(ProyectoSocial $proyectoSocial)
+    public function edit(Request $request, $servicio)
     {
-        //
+        //AQUI SE EDITA LA cantidad de horas
+        //Actualiza el campo de numero_horas en la DB
+        $servicios=Peticion::find($servicio);
+        $servicios->cantidad_horas=$request->cantidad_horas;
+        $servicios->save();
+        
+        //Actualiza el campo de cantidad_estudiantes en la DB
+        //$peticiones=Peticion::find($request->idPeticion);
+        //$peticiones->cantidad_horas=$request->cantidad_horas;
+        //$peticiones->save();
+        return redirect()->route('serviciossociales', ['servicio' => $servicio]);
+
     }
 
     /**
@@ -229,6 +242,11 @@ class ServicioSocialController extends Controller
                 $servicio = ProyectoSocial::join('peticiones','proyectos_sociales.peticion_id', '=', 'peticiones.id')
                 ->where('proyectos_sociales.id', '=', $proyecto_social_id)
                 ->first();
+                
+                $servicios=Peticion::find($servicio);
+                 $servicios->cantidad_horas=$request->cantidad_horas;
+              $servicios->save();
+                
 
                 // obteniendo el id del estudiante logeado
                 $estudiantes = DB::table('estudiantes')->select('estudiantes.id as id')
