@@ -22845,10 +22845,9 @@ __webpack_require__.r(__webpack_exports__);
         cancelButtonText: 'No, cancelar'
       }).then(function (result) {
         if (result.isConfirmed) {
-          Swal.fire('!Aceptado!', 'La peticion se acepto correctamente', 'success');
-
           _this.$inertia.put(route('peticiones.update', peticion.id), _this.formUp);
 
+          Swal.fire('!Aceptado!', 'La peticion se acepto correctamente', 'success');
           window.location.reload(true);
         }
       });

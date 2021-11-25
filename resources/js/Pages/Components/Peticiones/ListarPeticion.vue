@@ -270,13 +270,13 @@
           cancelButtonText: 'No, cancelar'
         }).then((result)=> {
           if(result.isConfirmed){
-            
+              this.$inertia.put(route('peticiones.update', peticion.id), this.formUp);
               Swal.fire(
                 '!Aceptado!',
                 'La peticion se acepto correctamente',
                 'success'
               );
-              this.$inertia.put(route('peticiones.update', peticion.id), this.formUp);
+              
               window.location.reload(true);
           }
         })
