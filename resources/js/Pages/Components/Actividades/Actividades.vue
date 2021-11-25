@@ -14,6 +14,11 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0">Bitacora del estudiante</h1>
+          </div>
+          <div class="col-sm-6">
+            <a :href="route('bitacora.pdf', $props.idServicio)">
+              <button class="ml-16 btn btn-info float-right" >Generar PDF</button>
+            </a>       
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
