@@ -71,8 +71,8 @@
                             <div class="col">
                               <!-- codigo de empleado del encargado -->
                               <div class="form-group">
-                                <jet-label for="cantidad_horas" value="Cantidad de horas" />
-                                <jet-input id="cantidad_horas" type="text" v-model="form.cantidad_horas"/>
+                                <!-- <jet-label for="cantidad_horas" value="Cantidad de horas" /> -->
+                                <jet-input id="cantidad_horas" type="hidden" v-model="form.cantidad_horas"/>
                               </div>
                             </div>
                           </div> 
@@ -163,16 +163,11 @@
                               <div class="form-group">
                                 <jet-label for="institucion" value="Institucion" />
                                 <br/>
-                                <select class="custom-select col-md-10" id="institucion_id" v-model="form.institucion_id" required>
-                                  <option disabled value="">Seleccione un tipo de servicio social</option>
-                                  <option v-for="(institucion, index) in instituciones" :key="index" :value="instituciones.id">{{ institucion.nombre_institucion }}</option>
-                                </select>
                                 <!-- select para cargar las facultades -->
-                                <!-- <vue-bootstrap-typeahead class="col-md-10"
-                                  v-model="query"
-                                  size="md"                                  
-                                  :data="institucionesFiltradas"
-                                /> -->
+                                <select class="custom-select col-md-10" id="institucion" v-model="form.institucion_id" required>
+                                  <option disabled value="">Seleccione una institucion</option>
+                                  <option v-for="(institucion, index) in instituciones" :key="index" :value="institucion.id">{{ institucion.nombre_institucion }}</option>
+                                </select>
                                 <inertia-link :href="route('instituciones.create')" type="button" class="btn btn-success col-md-2">
                                   <i class="fas fa-plus"></i> 
                                 </inertia-link>
@@ -219,9 +214,7 @@ import JetInput from '@/Jetstream/Input'
 import JetCheckbox from "@/Jetstream/Checkbox";
 import JetLabel from '@/Jetstream/Label'
 import JetValidationErrors from '@/Jetstream/ValidationErrors'
-import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 import Base from "@/Pages/Base.vue"
-
 export default {
   components: {
     JetAuthenticationCard,
@@ -231,12 +224,9 @@ export default {
     JetCheckbox,
     JetLabel,
     JetValidationErrors,
-    Base,
-    VueBootstrapTypeahead,
+    Base
   },
-
   props:['peticiones', 'facultades', 'idFacultad', 'carreras', 'tipoServicios', 'instituciones'],
-
   data(){
     return{
       form: this.$inertia.form({
@@ -246,7 +236,7 @@ export default {
         ubicacion_actividades: this.$props.peticiones.ubicacion_actividades,
         fecha_peticion: this.$props.peticiones.fecha_peticion,
         fecha_peticion_fin: this.$props.peticiones.fecha_peticion_fin,
-        cantidad_horas: this.$props.peticiones.cantidad_horas,
+        cantidad_horas: 0,
         otros_tipo_servicio: this.$props.peticiones.otros_tipo_servicio,
         estado_peticion: this.$props.peticiones.estado_peticion,
         correo_peticion: this.$props.peticiones.correo_peticion,
@@ -260,9 +250,7 @@ export default {
       institucionesFiltradas:[],
     }
   },
-
   methods: {
-
     submit(){
       if(this.$props.peticiones.id != null){
         this.$inertia.put(route('peticiones.updateStatus', this.$props.peticiones.id), this.form);
@@ -271,7 +259,6 @@ export default {
         this.form.post(route('peticiones.store'));        
       }
     },
-
     // funcion para cargar las carreras de la facultad seleccionada
     buscarCarreras(id){
       this.carrerasFiltradas.length = 0; // vaciar arreglo
@@ -281,7 +268,6 @@ export default {
           
         }
       });
-
       // compara la facultad seleccionada con la facultad del encargado 
       if (id == this.$props.idFacultad){
         this.escuela.forEach(element => {
@@ -298,15 +284,11 @@ export default {
       this.carreras.forEach(carrera => { 
         if(carrera.facultad_id == idFac){
           this.facultades.push(carrera); // llenar las carreras de la facultad
-
         }        
-
       });
-
       this.carreras.forEach(element =>{
         this.carrerasFiltradas.push(element);
       });
-
     } 
   }
 }
