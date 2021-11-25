@@ -71,8 +71,8 @@
                             <div class="col">
                               <!-- codigo de empleado del encargado -->
                               <div class="form-group">
-                                <jet-label for="cantidad_horas" value="Cantidad de horas" />
-                                <jet-input id="cantidad_horas" type="text" v-model="form.cantidad_horas"/>
+                                <!-- <jet-label for="cantidad_horas" value="Cantidad de horas" /> -->
+                                <jet-input id="cantidad_horas" type="hidden" v-model="form.cantidad_horas"/>
                               </div>
                             </div>
                           </div> 
@@ -236,7 +236,7 @@ export default {
         ubicacion_actividades: this.$props.peticiones.ubicacion_actividades,
         fecha_peticion: this.$props.peticiones.fecha_peticion,
         fecha_peticion_fin: this.$props.peticiones.fecha_peticion_fin,
-        cantidad_horas: this.$props.peticiones.cantidad_horas,
+        cantidad_horas: 0,
         otros_tipo_servicio: this.$props.peticiones.otros_tipo_servicio,
         estado_peticion: this.$props.peticiones.estado_peticion,
         correo_peticion: this.$props.peticiones.correo_peticion,
