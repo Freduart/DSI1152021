@@ -66,21 +66,46 @@ class ServicioSocialController extends Controller
                 ->get();
 
                 return Inertia::render('Components/ServicioSocial/ListarServicioSocialEstudiante', ['servicio' => $servicioActivo, 'servicios' => $servicios]);
-            } else {
+            } else if (Auth::user()->hasRole('Encargado Escuela')) {
+                // obteniendo el id del usuario logeado
+                $idUsuario = Auth::id();
+
+                // obteniendo el id del encargado logeado
+                $encargado = EncargadoEscuela::where('user_id', '=', $idUsuario)->firstOrFail();
+                $idEncargado = $encargado->id;
+
                 $servicios = ProyectoSocial::select('proyectos_sociales.id as id', 'cantidad_horas', 'estado_proyecto_social', 'cantidad_estudiantes', 
                 'descripcion_peticion', 'ubicacion_actividades', 'fecha_peticion', 'fecha_peticion_fin', 'estado_proyecto_social', 
                 'correo_peticion', 'nombre_carrera', 'nombre_tipo_servicio', 'nombre_facultad', 'nombre_institucion', 
                 'contacto_institucion', 'correo_institucion', 'telefono_institucion', 'ubicacion_institucion', 
                 'rubro_institucion')
-                            ->join('peticiones','proyectos_sociales.peticion_id', '=', 'peticiones.id')
-                            ->join('carreras', 'peticiones.carrera_id', '=', 'carreras.id')
-                            ->join('facultades', 'carreras.facultad_id', '=', 'facultades.id')
-                            ->join('tipos_servicio_social', 'peticiones.tipo_servicio_social_id', '=', 'tipos_servicio_social.id')
-                            ->join('instituciones', 'peticiones.institucion_id', '=','instituciones.id')
-                            ->get();
+                ->join('peticiones','proyectos_sociales.peticion_id', '=', 'peticiones.id')
+                ->join('carreras', 'peticiones.carrera_id', '=', 'carreras.id')
+                ->join('facultades', 'carreras.facultad_id', '=', 'facultades.id')
+                ->join('tipos_servicio_social', 'peticiones.tipo_servicio_social_id', '=', 'tipos_servicio_social.id')
+                ->join('instituciones', 'peticiones.institucion_id', '=','instituciones.id')
+                ->where('peticiones.carrera_id', '=', $encargado->carrera_id)
+                ->get();
                 $tipos = TipoServicioSocial::select('nombre_tipo_servicio')->get();
                 $carreras = Carrera::select('nombre_carrera')->get();            
                 return Inertia::render('Components/ServicioSocial/ListarServicioSocial', ['servicios' => $servicios, 'tipos' => $tipos, 'carreras' => $carreras]);
+            } else {
+
+                $servicios = ProyectoSocial::select('proyectos_sociales.id as id', 'cantidad_horas', 'estado_proyecto_social', 'cantidad_estudiantes', 
+                'descripcion_peticion', 'ubicacion_actividades', 'fecha_peticion', 'fecha_peticion_fin', 'estado_proyecto_social', 
+                'correo_peticion', 'nombre_carrera', 'nombre_tipo_servicio', 'nombre_facultad', 'nombre_institucion', 
+                'contacto_institucion', 'correo_institucion', 'telefono_institucion', 'ubicacion_institucion', 
+                'rubro_institucion')
+                ->join('peticiones','proyectos_sociales.peticion_id', '=', 'peticiones.id')
+                ->join('carreras', 'peticiones.carrera_id', '=', 'carreras.id')
+                ->join('facultades', 'carreras.facultad_id', '=', 'facultades.id')
+                ->join('tipos_servicio_social', 'peticiones.tipo_servicio_social_id', '=', 'tipos_servicio_social.id')
+                ->join('instituciones', 'peticiones.institucion_id', '=','instituciones.id')
+                ->get();
+                $tipos = TipoServicioSocial::select('nombre_tipo_servicio')->get();
+                $carreras = Carrera::select('nombre_carrera')->get();            
+                return Inertia::render('Components/ServicioSocial/ListarServicioSocial', ['servicios' => $servicios, 'tipos' => $tipos, 'carreras' => $carreras]);
+            
             }
         } else {
             return Redirect::route('login');

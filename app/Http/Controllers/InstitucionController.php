@@ -75,7 +75,8 @@ class InstitucionController extends Controller
         User::create([
                 'name' => $data['nombre_institucion'],
                 'email' => $data['correo_institucion'],
-                'password' => bcrypt($contra)
+                'password' => bcrypt($contra),
+                'rol' => 'Institucion',
         ])->assignRole('Institucion');                   
 
         $usuario= User::where('name', '=', $data['nombre_institucion'])->firstOrFail();

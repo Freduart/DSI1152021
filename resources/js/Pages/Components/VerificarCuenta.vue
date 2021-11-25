@@ -217,8 +217,10 @@
                                 <div class="form-group">
 
                                      <jet-label for="materias_cursadas" value="Porcentaje de avance del alumno en la carrera (%)" />
-                                     <jet-input id="materias_cursadas" type="text" readonly="readonly" v-model="formUp.porcentaje_aprobacion" required autofocus autocomplete="materias_cursadas"/>
-                                  
+                                     
+                                     <jet-input v-if="formUp.porcentaje_aprobacion >= 60" id="materias_cursadas" type="text" readonly="readonly" v-model="formUp.porcentaje_aprobacion" required autofocus autocomplete="materias_cursadas"/>
+                                     <jet-input v-else id="materias_cursadas" type="text" style="border: 1px solid red; font-color: red;" readonly="readonly" v-model="formUp.porcentaje_aprobacion" required autofocus autocomplete="materias_cursadas"/>
+            
                                 </div>
                               </div>
                             </div> 

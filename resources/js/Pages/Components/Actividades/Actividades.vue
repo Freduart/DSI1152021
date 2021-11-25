@@ -14,6 +14,11 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0">Bitacora del estudiante</h1>
+          </div>
+          <div class="col-sm-6">
+            <a :href="route('bitacora.pdf', $props.idServicio)">
+              <button class="ml-16 btn btn-info float-right" >Generar PDF</button>
+            </a>       
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -131,7 +136,7 @@
                               <thead class="thead-dark">
                                   <tr> 
                                   <!-- <th scope='col'>Código</th> -->
-                                  <th scope="col">Nombre de la Actividadd</th>
+                                  <th scope="col">Actividadd</th>
                                   <th scope="col">Fecha</th>
                                   <th scope="col">Horas</th>
                                   <th scope="col">Estado</th>
@@ -164,7 +169,7 @@
                                               data-target="#modificarActividad" title="Editar Actividad"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>
 
                                               <!--BOTON DE ELIMINAR -->
-                                              <inertia-link v-if="actividad.verificado != 'Aceptada'" class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a actividad" method="delete"
+                                              <inertia-link v-if="is('Encargado Escuela') && actividad.verificado != 'Aceptada'" class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a actividad" method="delete"
                                               :href="route('actividades.destroy', actividad.id)"
                                               v-on:click="mostrarMensajeDelete(actividad)"></inertia-link>
                                                     
@@ -233,7 +238,7 @@
                 <div class="card-body"> 
                       <div class="col">
                         <div class="form-group">
-                            <jet-label for="nombre_actividad" value="Nombre de la Actividad" />
+                            <jet-label for="nombre_actividad" value="Actividad" />
                             <jet-input id="nombre_actividad" type="text" v-model="form.nombre_actividad" required autofocus autocomplete="off"/>
                         </div>
                       </div>
@@ -252,12 +257,8 @@
                         </div>
                       </div>
                     </div>
-
-
                     <br>
                     <br>
-
-                    
                 </div>
                 
             <!--    BOTONES DE GUARDAR Y CANCELAR PARA LA MODAL DE INSERTAR-->
@@ -311,7 +312,7 @@
                     <div class="row">
                       <div class="col">
                         <div class="form-group">
-                            <jet-label for="nombre_actividad" value="Nombre de la actividad" />
+                            <jet-label for="nombre_actividad" value="Actividad" />
                             <jet-input id="nombre_actividad" type="text" v-model="formUp.nombre_actividad" required autofocus autocomplete="off" :value="this.formUp.nombre_actividad"/>
                         </div>
 
@@ -390,7 +391,7 @@
           <div class="modal-body">
             <table>
               <tr>
-                <td><h5 class=""><strong>Nombre de la actividad: </strong></h5></td>
+                <td><h5 class=""><strong>Actividad: </strong></h5></td>
                     <td> <h5> {{ form.nombre_actividad }}</h5></td>
               </tr>
 
@@ -400,9 +401,14 @@
               </tr>
 
               <tr>
-                <td><h5 class=""><strong>Total de horas empleadas:  </strong></h5></td>
+                <td><h5 class=""><strong>Total de horas empleadas:  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strong></h5></td>
                     <td> <h5> {{ form.total_horas }}</h5></td>
-              </tr>             
+              </tr>  
+
+              <tr>
+                <td><h5 class=""><strong>Observaciones:  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strong></h5></td>
+                    <td> <h5> {{ form.observaciones_actividad }}</h5></td>
+              </tr>           
             <hr class="mb-1"/>
 
             </table>
@@ -485,9 +491,8 @@
                 this.$inertia.put(route("actividades.update",form.id), this.formUp);
                 Swal.fire({
                     title: 'Operación exitosa',
-                    text: 'Se ha actualizado la actividad ' + form.nombre_actividad,
+                    text: 'Se ha actualizado la actividad: ' + form.nombre_actividad,
                     icon: 'success',
-                    iconColor: '#FF8000',
                     confirmButtonText: 'Aceptar',
                     allowEscapeKey: false,
                     allowOutsideClick: false,
@@ -506,8 +511,7 @@
                 this.borrado = true;
                 Swal.fire({
                     title: 'Operación exitosa',
-                    text: 'Se ha borrado la actividad ' + actividad.nombre_actividad,
-                    iconColor: '#CB3234',
+                    text: 'Se ha borrado la actividad: ' + actividad.nombre_actividad,
                     icon: 'success',
                     confirmButtonText: 'Aceptar',
                     allowEscapeKey: false,
@@ -537,8 +541,8 @@
               this.form.fecha_actividad = actividad.fecha_actividad,
               this.form.total_horas = actividad.total_horas,
               this.form.verificado = actividad.verificado,
-              this.form.proyecto_social_id=actividad.proyecto_social_id
-                
+              this.form.proyecto_social_id=actividad.proyecto_social_id,
+              this.form.observaciones_actividad = actividad.observaciones_actividad
             },
 
             calcularTotal(){
@@ -568,6 +572,7 @@
                     verificado:'En espera',
                     proyecto_social_id: this.$props.idServicio,
                     bitacora_id: this.$props.bitacora.id,
+                    observaciones_actividad:null,
                     }),
                 formUp: this.$inertia.form({
                     id:'',
