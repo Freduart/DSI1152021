@@ -1,9 +1,7 @@
 <template>
 
   <!-- Preloader -->
-  <!-- <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div> -->
+
     <slot name="header"></slot>
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-dark">
@@ -45,12 +43,8 @@
               <inertia-link :href="route('login')" class="btn btn-success">                
                 Iniciar Sesión
               </inertia-link>
-              
-              <!-- <inertia-link v-if="canRegister" :href="route('estudiantes.create')" class="ml-4 text-muted">
-                Registrarse
-              </inertia-link>  -->
-
-              <button type="button" class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
+ 
+              <button  class="btn btn-primary ml-4" v-on:click="mostrarFormularioEstudiante()">
                 Registrarse
               </button>
 
@@ -60,6 +54,7 @@
 
             <div class="col-4" v-if="$page.props.user">
                 <h6 class="text-white float-right">¡Bienvenido, {{$page.props.user.name}}!</h6>
+                <!-- <h6>{{$page.props.user}}</h6> -->
             </div>
 
             
@@ -91,13 +86,16 @@
                         <p>Inicio</p>
                         </inertia-link>
                     </li>
-                    <li v-if="is('Administrador')" class="nav-item">
+                    <!-- <li v-if="is('Administrador')" class="nav-item"> -->
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Administrador'" class="nav-item">    
                         <inertia-link :href="route('carreras.index')" class="nav-link" >
                         <i class="fa fa-graduation-cap nav-icon"></i>
                         <p>Carreras</p>
                         </inertia-link>
                     </li>
-                    <li v-if="is('Unidad de Proyeccion Social') || is('Administrador')" class="nav-item">
+                    <li v-if="$page.props.user && ($page.props.user.rol == 'Administrador' 
+                                                 | $page.props.user.rol == 'Unidad de Proyeccion Social')" class="nav-item">
+                    <!-- <li v-if="is('Unidad de Proyeccion Social') || is('Administrador')" class="nav-item"> -->
                         <!--<a v-if="is('Estudiante')" href="#" class="nav-link">-->
                         <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-id-card"></i>
@@ -122,109 +120,92 @@
                         </ul>
                     </li>
 
-                    <li v-if="is('Encargado Facultad')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Encargado Facultad'" class="nav-item">
+                    <!-- <li v-if="is('Encargado Facultad')" class="nav-item"> -->
                         <inertia-link :href="route('encargadosescuela.index')" :active="route().current('encargadosescuela.index')" class="nav-link">
                             <i class="fa fa-chalkboard-teacher nav-icon" aria-hidden="true"></i>
                             <p>Encargados por escuela</p>
                         </inertia-link>
                     </li>
                   
-                    <li v-if="is('Administrador')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Administrador'" class="nav-item">
+                    <!-- <li v-if="is('Administrador')" class="nav-item"> -->
                             <inertia-link :href="route('facultades.index')" class="nav-link">
                             <i class="fa fa-building nav-icon"></i>
                             <p>Facultades</p>
                             </inertia-link>
                     </li>
 
-                    <li v-if="is('Encargado Facultad') || is('Encargado Escuela') || is('Unidad de Proyeccion Social')" class="nav-item">
+                    <li v-if="$page.props.user && ($page.props.user.rol == 'Encargado Facultad' 
+                                                 | $page.props.user.rol == 'Encargado Escuela'  
+                                                 | $page.props.user.rol == 'Unidad de Proyeccion Social')" class="nav-item">
+                    <!-- <li v-if="is('Encargado Facultad') || is('Encargado Escuela') || is('Unidad de Proyeccion Social')" class="nav-item"> -->
                             <inertia-link :href="route('estudiantes.index')" class="nav-link">
                             <i class="fa fa-user-friends nav-icon" aria-hidden="true"></i>
                             <p>Estudiantes</p>
                             </inertia-link>
                     </li>
 
-                    <li v-if="is('Encargado Escuela')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Encargado Escuela'" class="nav-item">
+                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item"> -->
                             <inertia-link :href="route('verificarcuenta.index')" class="nav-link">
                             <i class="fas fa-file nav-icon"></i>
                             <p>Verificar Cuenta</p>
                             </inertia-link>
                     </li>
 
-                    <li v-if="is('Administrador')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Administrador'" class="nav-item">
+                    <!-- <li v-if="is('Administrador')" class="nav-item"> -->
                             <inertia-link :href="route('usuarios.index')" class="nav-link">
                             <i class="fas fa-user-circle nav-icon"></i>
                             <p>Usuarios</p>
                             </inertia-link>
                     </li>
 
-                     <li v-if="is('Administrador')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Administrador'" class="nav-item">
+                    <!-- <li v-if="is('Administrador')" class="nav-item"> -->
                             <inertia-link :href="route('roles.index')" class="nav-link">
                             <i class="fas fa-key nav-icon"></i>
                             <p>Roles</p>
                             </inertia-link>
                     </li>
 
-                    <li v-if="is('Encargado Escuela')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Encargado Escuela'" class="nav-item">
+                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item"> -->
                             <inertia-link :href="route('solicitudes.index')" class="nav-link">
                             <i class="nav-icon fas fa-edit"></i>
                             <p>Evaluacion de Solicitudes</p>
                             </inertia-link>
                     </li>
 
-                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item">
-                            <inertia-link :href="route('verificaractividades.index')" class="nav-link">
-                            <i class="nav-icon fa fa-clipboard "></i>
-                            <p>Verificar Actividades</p>
-                            </inertia-link>
-                    </li> -->
-
-                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item">
-                            <inertia-link :href="route('establecerha.index')" class="nav-link">
-                            <i class="nav-icon fa fa-clipboard "></i>
-                            <p>Establecer cantidad de Horas y Alumnos</p>
-                            </inertia-link>
-                    </li> -->
-
                     <!-- https://es.vuejs.org/v2/guide/conditional.html -->
                     <!-- https://www.npmjs.com/package/laravel-permission-to-vuejs -->
-                    <li v-if="is('Estudiante')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Estudiante'" class="nav-item">
+                    <!-- <li v-if="is('Estudiante')" class="nav-item"> -->
                             <inertia-link :href="route('solicitudesestudiante.index')" class="nav-link">
                             <i class="fas fa-paper-plane nav-icon"></i>
                             <p>Mis solicitudes</p>
                             </inertia-link> 
                     </li>
-                    
-                    <li v-if="is('Encargado Escuela') || is('Encargado Facultad') || is('Estudiante') || is('Unidad de Proyeccion Social')" class="nav-item">
+
+                    <li v-if="$page.props.user && ($page.props.user.rol == 'Encargado Escuela'
+                                                 | $page.props.user.rol == 'Encargado Facultad'
+                                                 | $page.props.user.rol == 'Estudiante'
+                                                 | $page.props.user.rol == 'Unidad de Proyeccion Social')" class="nav-item">
+                    <!-- <li v-if="is('Encargado Escuela') || is('Encargado Facultad') || is('Estudiante') || is('Unidad de Proyeccion Social')" class="nav-item"> -->
                             <inertia-link :href="route('serviciossociales.index')" class="nav-link">
                             <i class="fa fa-th-large nav-icon"></i>
                             <p>Servicios Sociales</p>
                             </inertia-link>
                     </li>
 
-                     <li v-if="is('Estudiante')" class="nav-item">
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Estudiante'" class="nav-item">
+                    <!-- <li v-if="is('Estudiante')" class="nav-item"> -->
                             <inertia-link :href="route('serviciosDisponibles')" class="nav-link">
                             <i class="fa fa-calendar-check nav-icon"></i>
                             <p>Servicios Disponibles</p>
                             </inertia-link>
                     </li>
-
-                    <!-- <li class="nav-item">
-                            <inertia-link :href="route('constancia.index')" class="nav-link">
-                            <i class="fas fa-medal nav-icon"></i>
-                            <p>Constancia de cumplimiento</p>
-                            </inertia-link>
-                    </li> -->
-
-                    <!-- Cuando es un solo elemento -->
-                    <!-- <li class="nav-item">
-                        <a href="pages/gallery.html" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
-                        <p>
-                            Gallery
-                        </p>
-                        </a>
-                    </li> -->
-
                     </ul>
                 </li>            
             </ul>
@@ -233,17 +214,13 @@
     </div>
     <!-- /.sidebar -->
     </aside>
-
-
-    
-    
 </template>
 
 <script>
 
     import JetNavLink from '@/Jetstream/NavLink'
     import JetDropdownLink from '@/Jetstream/DropdownLink'
-import { getCurrentInstance } from '@vue/runtime-core';
+    import { getCurrentInstance } from '@vue/runtime-core'
 
     export default {
         components:{
@@ -257,18 +234,13 @@ import { getCurrentInstance } from '@vue/runtime-core';
             laravelVersion: String,
             phpVersion: String,
         },
-        // data(){
-        //   return{
-        //     componentKey:2,
-        //   };
-        // },
+
         methods:{
-        //     forceRerender(){
-        //       this.componentKey+=1;
-        //     }
           logout() {
               this.$inertia.post(route('logout'));
-              window.location.reload();
+            //   window.location.reload();
+              this.$inertia.get(route('/'));
+              
             },
           mostrarFormularioEstudiante(){
               this.$inertia.get(route('estudiantes.create'));
@@ -278,9 +250,6 @@ import { getCurrentInstance } from '@vue/runtime-core';
             
         },
         setup(){
-          // const instance = getCurrentInstance();
-          // instance.proxy.$forceUpdate();
-          // window.location.reload();
         }
     }   
 </script>

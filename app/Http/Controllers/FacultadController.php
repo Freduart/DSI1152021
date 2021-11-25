@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 class FacultadController extends Controller
 {
     /**
@@ -17,8 +18,17 @@ class FacultadController extends Controller
     public function index()
     {
         //Aqui se obtienen todos los campos de facultades
-        $facultades=Facultad::all(); 
-        return Inertia::render("Components/Facultades/Facultades",['facultades' => $facultades]);
+        if(Auth::check()){
+            if(Auth::user()->hasRole('Administrador')){
+                $facultades=Facultad::all(); 
+                return Inertia::render("Components/Facultades/Facultades",['facultades' => $facultades]);
+            }else{
+                return Redirect::route('dashboard');
+            }
+        }else{
+            return Redirect::route('login');
+        }
+
     }
 
     /**
