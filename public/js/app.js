@@ -33516,7 +33516,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     autocomplete: "id"
   }, null, 8
   /* PROPS */
-  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div class=\"col\">\r\n                                <div class=\"form-group\">\r\n                                  <jet-label for=\"proyecto_social_id\" value=\"Proyecto Social al que pertenece\" />\r\n                                  <jet-input id=\"proyecto_social_id\" type=\"text\" readonly=\"readonly\" v-model=\"formUp.proyecto_social_id\" required autofocus autocomplete=\"proyecto_social_id\"/> \r\n                                </div>\r\n                              </div>")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("FILA nombre estudiante"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+  , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("FILA nombre estudiante"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "nombre_estudiante",
     value: "Nombre del estudiante"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
