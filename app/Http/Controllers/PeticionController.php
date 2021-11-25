@@ -169,9 +169,11 @@ class PeticionController extends Controller
         $peticionF= Peticion::find($peticion);
         $peticionF->estado_peticion = "Aceptado";
         $peticionF->save();
+
+        $instituci = Institucion::all();
         
         //AQUIIIIII SE ENVIARA EL CORREO A LA INSTITUCIONNNN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-        $contra = "institucion";
+        //$contra = "institucion";
 
         $data = $request->input();
         
@@ -186,7 +188,7 @@ class PeticionController extends Controller
         $details = [
             //'usuario' => $peticionF->correo_peticion,
             //'contrasena' => $contra,
-            'institucion' => $institucion->nombre_institucion,
+            //'institucion' => $instituci->nombre_institucion,
             'proyecto' => $peticionF->nombre_peticion,
             'estado' => $peticionF->estado_peticion,
             'mensaje' => 'Su solicitud de registro en el sistema SASS-UES ha sido aceptada',
