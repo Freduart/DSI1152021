@@ -7,12 +7,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class CredencialesMailable extends Mailable
+class RechazarMailable extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $details;
-
     /**
      * Create a new message instance.
      *
@@ -31,6 +30,6 @@ class CredencialesMailable extends Mailable
      */
     public function build()
     {
-        return $this->subject('Envio de credenciales SASS-UES')->view('emails.credenciales');
+        return $this->subject('Situación de cuenta en sistema SASS-UES')->view('emails.rechazo');
     }
 }

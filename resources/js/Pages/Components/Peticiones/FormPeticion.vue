@@ -214,9 +214,7 @@ import JetInput from '@/Jetstream/Input'
 import JetCheckbox from "@/Jetstream/Checkbox";
 import JetLabel from '@/Jetstream/Label'
 import JetValidationErrors from '@/Jetstream/ValidationErrors'
-
 import Base from "@/Pages/Base.vue"
-
 export default {
   components: {
     JetAuthenticationCard,
@@ -228,9 +226,7 @@ export default {
     JetValidationErrors,
     Base
   },
-
   props:['peticiones', 'facultades', 'idFacultad', 'carreras', 'tipoServicios', 'instituciones'],
-
   data(){
     return{
       form: this.$inertia.form({
@@ -249,16 +245,12 @@ export default {
         tipo_servicio_social_id: this.$props.peticiones.tipo_servicio_social_id,
         institucion_id: this.$props.peticiones.institucion_id,
       }),
-
       carrerasFiltradas:[],
       tiposFiltrados:[],
       institucionesFiltradas:[],
-
     }
   },
-
   methods: {
-
     submit(){
       if(this.$props.peticiones.id != null){
         this.$inertia.put(route('peticiones.updateStatus', this.$props.peticiones.id), this.form);
@@ -267,7 +259,6 @@ export default {
         this.form.post(route('peticiones.store'));        
       }
     },
-
     // funcion para cargar las carreras de la facultad seleccionada
     buscarCarreras(id){
       this.carrerasFiltradas.length = 0; // vaciar arreglo
@@ -277,7 +268,6 @@ export default {
           
         }
       });
-
       // compara la facultad seleccionada con la facultad del encargado 
       if (id == this.$props.idFacultad){
         this.escuela.forEach(element => {
@@ -294,15 +284,11 @@ export default {
       this.carreras.forEach(carrera => { 
         if(carrera.facultad_id == idFac){
           this.facultades.push(carrera); // llenar las carreras de la facultad
-
         }        
-
       });
-
       this.carreras.forEach(element =>{
         this.carrerasFiltradas.push(element);
       });
-
     } 
   }
 }

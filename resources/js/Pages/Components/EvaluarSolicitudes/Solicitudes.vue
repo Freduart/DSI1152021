@@ -138,16 +138,6 @@
                                   
                                 </div>
                               </div>
-                              
-
-                              <!--<div class="col">
-                                <div class="form-group">
-                                  <jet-label for="proyecto_social_id" value="Proyecto Social al que pertenece" />
-                                  <jet-input id="proyecto_social_id" type="text" readonly="readonly" v-model="formUp.proyecto_social_id" required autofocus autocomplete="proyecto_social_id"/> 
-                                </div>
-                              </div>-->
-
-
 
                             </div> 
                                  <!--FILA nombre estudiante-->

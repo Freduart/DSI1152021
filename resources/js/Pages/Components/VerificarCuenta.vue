@@ -20,6 +20,8 @@
     </div>
     <!-- /.content-header -->
 
+
+
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -215,8 +217,10 @@
                                 <div class="form-group">
 
                                      <jet-label for="materias_cursadas" value="Porcentaje de avance del alumno en la carrera (%)" />
-                                     <jet-input id="materias_cursadas" type="text" readonly="readonly" v-model="formUp.porcentaje_aprobacion" required autofocus autocomplete="materias_cursadas"/>
-                                  
+                                     
+                                     <jet-input v-if="formUp.porcentaje_aprobacion >= 60" id="materias_cursadas" type="text" readonly="readonly" v-model="formUp.porcentaje_aprobacion" required autofocus autocomplete="materias_cursadas"/>
+                                     <jet-input v-else id="materias_cursadas" type="text" style="border: 1px solid red; font-color: red;" readonly="readonly" v-model="formUp.porcentaje_aprobacion" required autofocus autocomplete="materias_cursadas"/>
+            
                                 </div>
                               </div>
                             </div> 
@@ -227,6 +231,37 @@
                                        <jet-label for="cantidad_horas_ss" value="Cantidad de Horas de Servicio Social" />
                                        <jet-input id="cantidad_horas_ss" type="text" readonly="readonly" v-model="formUp.cantidad_horas_ss" required autofocus autocomplete="cantidad_horas_ss" />
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group text-center">
+                                        <jet-label for="archivo_comprobacion" value="Captura de comprobacion de avance de carrera" />
+                                        <a :href="formUp.archivo_comprobante_url" target="_blank">
+                                            <br/>
+                                            <img id="archivoComprobante" :src="formUp.archivo_comprobante_url" style="height: 200px; width: 300px; rounded: 15px;" @mouseover="efectoBlur()" @mouseleave="salidaEfectoBlur()" alt="archivo de comprobacion de avance"/>
+                                        </a>
+                                        <!-- <small>{{ formUp.archivo_comprobante_url }}</small> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div v-if="this.existeObservacion" class="form-group" style="cursor:pointer;">
+                                        <div v-on:click="agregarObservaciones()">
+                                        <i class="fa fa-eye text-primary" aria-hidden="true"></i> Agregar observaciones
+                                        </div>
+                                        <div>
+                                            <textarea class="form-control" rows="3" v-model="this.formUp.observacion_registro"/>
+                                        </div>
+                                    </div>
+                                    <div v-else class="form-group" style="cursor:pointer;">
+                                        <div v-on:click="agregarObservaciones()">
+                                        <i class="fa fa-eye" aria-hidden="true"></i> Agregar observaciones
+                                        </div>
+                                    </div>                                    
                                 </div>
                             </div>
 
@@ -248,11 +283,11 @@
 
                                         <div class="col">
                                             <div class="form-group">
-                                                <inertia-link v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-warning" title="Desactivar estudiante" method="delete" :href="route('verificarcuenta.destroy', this.formUp.id)" v-on:click="changestatus(formUp)"> 
-                                                 <i class="fas"></i>DENEGAR </inertia-link>  
+                                                <button v-if="estudiante.estado_estudiante == 'En espera'" class="btn btn-warning" title="Desactivar estudiante" method="delete" v-on:click="changestatus(formUp)"> 
+                                                 <i class="fas"></i>DENEGAR </button>  
 
-                                                 <inertia-link v-else class="btn btn-warning" title="Desactivar estudiante" method="delete" :href="route('verificarcuenta.destroy', this.formUp.id)"  v-on:click="changestatus(formUp)"> 
-                                                 <i class="fas"></i>DENEGAR </inertia-link>
+                                                 <button v-else class="btn btn-warning" title="Desactivar estudiante" method="delete" v-on:click="changestatus(formUp)"> 
+                                                 <i class="fas"></i>DENEGAR </button>
                                            </div>
                                         </div>
 
@@ -362,6 +397,7 @@ import Button from '../../Jetstream/Button.vue'
             },
             changestatus(estudiante){
                 //this.borrado = true;
+
                 if(estudiante.estado_estudiante == 'En espera'){
                     Swal.fire({
                       title: '¿Esta seguro que desea desactivar al estudiante?',
@@ -374,8 +410,11 @@ import Button from '../../Jetstream/Button.vue'
                       cancelButtonText: 'No, cancelar'
                   }).then((result) => {
                       if (result.isConfirmed) {
+                          console.log(estudiante)
                           //var tipo = 1;
                           //this.$inertia.delete(route('verificarcuenta.eliminar', estudiante.id/*, tipo*/));
+
+                          this.$inertia.delete(route('verificarcuenta.destroy', this.formUp))
                           Swal.fire(
                           '!Desactivado!',
                           'El estudiante se desactivo correctamente',
@@ -386,7 +425,6 @@ import Button from '../../Jetstream/Button.vue'
                   })
                 }
             },
-
             submitUpdate(form){
                 console.log(this.formUp);
                 console.log(form);
@@ -420,7 +458,22 @@ import Button from '../../Jetstream/Button.vue'
                 this.formUp.cantidad_horas_ss=estudiante.cantidad_horas_ss;
                 this.formUp.estado_estudiante = estudiante.estado_estudiante;
                 this.formUp.porcentaje_aprobacion = estudiante.porcentaje_aprobacion;
+                this.formUp.archivo_comprobante_url = estudiante.archivo_comprobante_url.replace('localhost', '127.0.0.1:8000');
+                this.formUp.archivo_comprobante_path = estudiante.archivo_comprobante_path;
+                this.formUp.observacion_registro = estudiante.observacion_registro;
                 console.log(this.formUp);
+            },
+            efectoBlur(){
+                var img = document.getElementById("archivoComprobante");
+                img.style.filter = 'blur(6px)';
+            },
+            salidaEfectoBlur(){
+                var img = document.getElementById("archivoComprobante");
+                img.style.filter = 'blur(0px)';                
+            },
+            agregarObservaciones(){
+                this.existeObservacion = !this.existeObservacion;
+                console.log(this.existeObservacion);
             }
 
         },    
@@ -430,7 +483,7 @@ import Button from '../../Jetstream/Button.vue'
                 estudiantesFiltradas:[],
                 successGuardado:false,
                 formularioNuevaCarrera:false,
-                                
+                existeObservacion:false,                
                 formUp: this.$inertia.form({
                     id:'',
                     nombre_estudiante:'',
@@ -445,17 +498,24 @@ import Button from '../../Jetstream/Button.vue'
                     materias_cursadas:'',
                     cantidad_horas_ss:'',
                     estado_estudiante:'Activo',
-                    porcentaje_aprobacion:''
+                    porcentaje_aprobacion:'',
+                    archivo_comprobante_url:'',
+                    archivo_comprobante_path:'',
+                    observacion_registro:''
                     }),
                 activo: true,    
                 }
             },        
         mounted(){
+            
             this.estudiantes.forEach(element => {
                 this.estudiantesFiltradas.push(element);
             }),
             // this.mostrarMensajeSuccess();
             this.successGuardado = false;        
         },
+        setup(){
+            
+        }
     }
 </script>

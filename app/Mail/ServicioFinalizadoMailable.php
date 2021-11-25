@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class CredencialesMailable extends Mailable
+class ServicioFinalizadoMailable extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -31,6 +31,6 @@ class CredencialesMailable extends Mailable
      */
     public function build()
     {
-        return $this->subject('Envio de credenciales SASS-UES')->view('emails.credenciales');
+        return $this->subject('Servicio finalizado - SASS-UES')->view('emails.serviciofinalizado');
     }
 }
