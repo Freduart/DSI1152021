@@ -219,7 +219,7 @@ import JetInput from '@/Jetstream/Input'
 import JetCheckbox from "@/Jetstream/Checkbox";
 import JetLabel from '@/Jetstream/Label'
 import JetValidationErrors from '@/Jetstream/ValidationErrors'
-import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
+//import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 import Base from "@/Pages/Base.vue"
 
 export default {
@@ -232,7 +232,7 @@ export default {
     JetLabel,
     JetValidationErrors,
     Base,
-    VueBootstrapTypeahead,
+   // VueBootstrapTypeahead,
   },
 
   props:['peticiones', 'facultades', 'idFacultad', 'carreras', 'tipoServicios', 'instituciones'],

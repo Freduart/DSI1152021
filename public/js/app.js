@@ -20099,15 +20099,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Jetstream_Checkbox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Jetstream/Checkbox */ "./resources/js/Jetstream/Checkbox.vue");
 /* harmony import */ var _Jetstream_Label__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Jetstream/Label */ "./resources/js/Jetstream/Label.vue");
 /* harmony import */ var _Jetstream_ValidationErrors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Jetstream/ValidationErrors */ "./resources/js/Jetstream/ValidationErrors.vue");
-Object(function webpackMissingModule() { var e = new Error("Cannot find module 'vue-bootstrap-typeahead'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
-/* harmony import */ var _Pages_Base_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Pages/Base.vue */ "./resources/js/Pages/Base.vue");
+/* harmony import */ var _Pages_Base_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Pages/Base.vue */ "./resources/js/Pages/Base.vue");
 
 
 
 
 
 
-
+ //import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -20119,8 +20118,8 @@ Object(function webpackMissingModule() { var e = new Error("Cannot find module '
     JetCheckbox: _Jetstream_Checkbox__WEBPACK_IMPORTED_MODULE_4__.default,
     JetLabel: _Jetstream_Label__WEBPACK_IMPORTED_MODULE_5__.default,
     JetValidationErrors: _Jetstream_ValidationErrors__WEBPACK_IMPORTED_MODULE_6__.default,
-    Base: _Pages_Base_vue__WEBPACK_IMPORTED_MODULE_8__.default,
-    VueBootstrapTypeahead: Object(function webpackMissingModule() { var e = new Error("Cannot find module 'vue-bootstrap-typeahead'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())
+    Base: _Pages_Base_vue__WEBPACK_IMPORTED_MODULE_7__.default // VueBootstrapTypeahead,
+
   },
   props: ['peticiones', 'facultades', 'idFacultad', 'carreras', 'tipoServicios', 'instituciones'],
   data: function data() {

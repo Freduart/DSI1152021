@@ -175,17 +175,18 @@ class PeticionController extends Controller
 
         $data = $request->input();
         
-        User::create([
+        /*User::create([
           'name' => $data['nombre_institucion'],
           'email'=> $data['correo_peticion'],
           'password' => bcrypt($contra)
-        ])->assignRole('Institucion');
+        ])->assignRole('Institucion');*/
 
         //envio de correo
         //details es un array que contiene las variables que se van a renderizar en la vista del correo
         $details = [
-            'usuario' => $peticionF->correo_peticion,
-            'contrasena' => $contra,
+            //'usuario' => $peticionF->correo_peticion,
+            //'contrasena' => $contra,
+            'institucion' => $institucion->nombre_institucion,
             'proyecto' => $peticionF->nombre_peticion,
             'estado' => $peticionF->estado_peticion,
             'mensaje' => 'Su solicitud de registro en el sistema SASS-UES ha sido aceptada',
