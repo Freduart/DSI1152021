@@ -206,6 +206,14 @@
                             <p>Servicios Disponibles</p>
                             </inertia-link>
                     </li>
+
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Encargado Escuela'" class="nav-item">
+                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item"> -->
+                            <inertia-link :href="route('serviciofinalizado.index')" class="nav-link">
+                            <i class="nav-icon fas fa-clipboard-check"></i>
+                            <p>Horas finalizadas</p>
+                            </inertia-link>
+                    </li>
                     </ul>
                 </li>            
             </ul>
