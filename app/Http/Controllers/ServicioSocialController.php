@@ -65,7 +65,7 @@ class ServicioSocialController extends Controller
                 })
                 ->get();
 
-                return Inertia::render('Components/ServicioSocial/ListarServicioSocialEstudiante', ['servicio' => $servicioActivo, 'servicios' => $servicios]);
+                return Inertia::render('Components/ServicioSocial/ListarServicioSocialEstudiante', ['servicio' => $servicioActivo, 'servicios' => $servicios, 'idEstudiante' => $idEstudiante]);
             } else {
                 $servicios = ProyectoSocial::select('proyectos_sociales.id as id', 'cantidad_horas', 'estado_proyecto_social', 'cantidad_estudiantes', 
                 'descripcion_peticion', 'ubicacion_actividades', 'fecha_peticion', 'fecha_peticion_fin', 'estado_proyecto_social', 

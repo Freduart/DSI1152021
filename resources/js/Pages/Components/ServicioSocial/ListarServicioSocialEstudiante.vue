@@ -138,11 +138,25 @@
               <div class="card">
                 <!-- /.card-header -->
                 <div class="card-header">
-                  <h5 class="mt-2 mb-2 ml-2">Servicios sociales realizados</h5>
+                  <div class="row mb-2">
+                    <div class="col-sm-6">
+                      <h5 class="mt-2 mb-2 ml-2">Servicios sociales realizados</h5>
+                    </div>
+                  </div>
                 </div>
+                
                 <!-- /.card-body -->
                 <div class="card-body" v-if="servicios.length != 0">
-                  
+                  <div class="row mb-2">
+                    <div class="col-sm-6">
+                      <h5 class="mt-2 mb-2 ml-2">Constancia de cumplimiento de servicio social</h5>
+                    </div>
+                    <div class="col-sm-6">
+                    <a :href="route('constancia.pdf', $props.idEstudiante)">
+                      <button class="ml-16 btn btn-info float-right" >Generar PDF</button>
+                     </a>
+                    </div>
+                  </div>
                   <!-- todo text -->
                   <!-- tabla de las solicitudes del estudiante -->
                   <table class="table table-hover text-center ">
@@ -409,10 +423,14 @@
     import JetCheckbox from "@/Jetstream/Checkbox";
     import JetLabel from '@/Jetstream/Label'
     import JetValidationErrors from '@/Jetstream/ValidationErrors'
+    import JetNavLink from '@/Jetstream/NavLink'
+    import JetDropdownLink from '@/Jetstream/DropdownLink'
 
 
     export default {
         components:{
+          JetNavLink,
+          JetDropdownLink,
           JetAuthenticationCard,
           JetAuthenticationCardLogo,
           JetInput,
@@ -421,7 +439,7 @@
           JetValidationErrors,
           Base
         },
-        props: ['servicio', 'servicios'],
+        props: ['servicio', 'servicios', 'idEstudiante'],
         methods:{
 
           //carga informacion de la institucion 
@@ -470,9 +488,12 @@
               ubicacion: ''
             },
             
-            form:{
-              
-            }
+            form: this.$inertia.form({
+              proyecto_social_id: this.$props.idServicio,
+            }),
+            formUp: this.$inertia.form({
+              proyecto_social_id: this.$props.idServicio,
+            }),
           }
         }, 
         mounted(){
