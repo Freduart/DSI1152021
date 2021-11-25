@@ -74,7 +74,10 @@
                                   <jet-button type="button" class="fas fa-info-circle text-green" data-toggle="modal" data-target="#verInfo" v-on:click="mostrarInfo(peticiones)" title="Ver informacion de la institucion"></jet-button>
                                   
                                   <!-- Boton para editar -->
-                                  <!-- <inertia-link class="fas fa-edit" title="Editar peticion" :href="route('peticiones.edit', peticiones.idPeticion)"></inertia-link>                                   -->
+                                  <inertia-link 
+                                  v-if="$page.props.user && ($page.props.user.rol == 'Encargado Facultad' || $page.props.user.rol == 'Encargado Escuela')"
+                                  class="fas fa-edit" title="Editar peticion" 
+                                  :href="route('peticiones.edit', peticiones.idPeticion)"></inertia-link>
 
                                   <!-- Boton para eliminar -->
                                   <!-- <jet-button class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Eliminar institucion" method="delete" 
@@ -175,7 +178,11 @@
                       <!-- <button v-if="peticiones.estado_peticion == 'En espera'" class="btn btn-success float-center" title="Aceptar peticion" v-on:click="cambiarEstado(form)"> 
                         <i class="fas fa-check" aria-hidden="true"></i> Aceptar </button>   -->
 
-                        <button v-if="is('Encargado Escuela') || is('Encargado Facultad')" class="btn btn-success float-center" title="Activar estudiante" v-on:click="cambiarEstado(this.formUp)"> 
+                        <button 
+                        v-if="$page.props.user && ($page.props.user.rol == 'Encargado Facultad' || $page.props.user.rol == 'Encargado Escuela')"
+                        class="btn btn-success float-center" 
+                        title="Activar estudiante" 
+                        v-on:click="cambiarEstado(this.formUp)"> 
                         <i class="fas fa-check" aria-hidden="true"></i> Aceptar </button>
                     </div>
                   </div>
@@ -189,7 +196,11 @@
                       <!-- <inertia-link v-if="this.peticiones.estado_peticion == 'En espera'" class="btn btn-danger" title="Desactivar institucion"  v-on:click="rechazarEstado(formUp)"> 
                         <i class="fas fa-times" aria-hidden="true"></i> Rechazar </inertia-link>   -->
 
-                        <button v-if="is('Encargado Escuela') || is('Encargado Facultad')" class="btn btn-danger" title="Desactivar estudiante" method="delete" v-on:click="rechazarEstado(this.formUp)"> 
+                        <button 
+                        v-if="$page.props.user && ($page.props.user.rol == 'Encargado Facultad' || $page.props.user.rol == 'Encargado Escuela')"
+                        class="btn btn-danger" title="Desactivar estudiante" 
+                        method="delete" 
+                        v-on:click="rechazarEstado(this.formUp)"> 
                         <i class="fas fa-times" aria-hidden="true"></i> Rechazar </button>
                     </div>
                   </div>

@@ -20106,7 +20106,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- //import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -20118,8 +20117,7 @@ __webpack_require__.r(__webpack_exports__);
     JetCheckbox: _Jetstream_Checkbox__WEBPACK_IMPORTED_MODULE_4__.default,
     JetLabel: _Jetstream_Label__WEBPACK_IMPORTED_MODULE_5__.default,
     JetValidationErrors: _Jetstream_ValidationErrors__WEBPACK_IMPORTED_MODULE_6__.default,
-    Base: _Pages_Base_vue__WEBPACK_IMPORTED_MODULE_7__.default // VueBootstrapTypeahead,
-
+    Base: _Pages_Base_vue__WEBPACK_IMPORTED_MODULE_7__.default
   },
   props: ['peticiones', 'facultades', 'idFacultad', 'carreras', 'tipoServicios', 'instituciones'],
   data: function data() {
@@ -33755,7 +33753,7 @@ var _hoisted_55 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
   disabled: "",
   value: ""
-}, "Seleccione un tipo de servicio social", -1
+}, "Seleccione una institucion", -1
 /* HOISTED */
 );
 
@@ -34044,9 +34042,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , ["href"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
     "for": "institucion",
     value: "Institucion"
-  }), _hoisted_55, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+  }), _hoisted_55, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" select para cargar las facultades "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
     "class": "custom-select col-md-10",
-    id: "institucion_id",
+    id: "institucion",
     "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
       return $data.form.institucion_id = $event;
     }),
@@ -34054,7 +34052,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [_hoisted_56, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.instituciones, function (institucion, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
       key: index,
-      value: $props.instituciones.id
+      value: institucion.id
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(institucion.nombre_institucion), 9
     /* TEXT, PROPS */
     , ["value"]);
@@ -34062,7 +34060,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))], 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.institucion_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" select para cargar las facultades "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <vue-bootstrap-typeahead class=\"col-md-10\"\r\n                                  v-model=\"query\"\r\n                                  size=\"md\"                                  \r\n                                  :data=\"institucionesFiltradas\"\r\n                                /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.institucion_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
     href: _ctx.route('instituciones.create'),
     type: "button",
     "class": "btn btn-success col-md-2"
@@ -34460,7 +34458,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       title: "Ver informacion de la institucion"
     }, null, 8
     /* PROPS */
-    , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para editar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <inertia-link class=\"fas fa-edit\" title=\"Editar peticion\" :href=\"route('peticiones.edit', peticiones.idPeticion)\"></inertia-link>                                   "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para eliminar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <jet-button class=\"fas fa-arrow-alt-circle-down\" style='color:#dc3545' title=\"Eliminar institucion\" method=\"delete\" \r\n                                  v-on:click=\"deleteInstitucion(instituciones)\"></jet-button> ")])])]);
+    , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para editar "), _ctx.$page.props.user && (_ctx.$page.props.user.rol == 'Encargado Facultad' || _ctx.$page.props.user.rol == 'Encargado Escuela') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_inertia_link, {
+      key: 0,
+      "class": "fas fa-edit",
+      title: "Editar peticion",
+      href: _ctx.route('peticiones.edit', peticiones.idPeticion)
+    }, null, 8
+    /* PROPS */
+    , ["href"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para eliminar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <jet-button class=\"fas fa-arrow-alt-circle-down\" style='color:#dc3545' title=\"Eliminar institucion\" method=\"delete\" \r\n                                  v-on:click=\"deleteInstitucion(instituciones)\"></jet-button> ")])])]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Card Body ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Card ")])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Main Content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal de la informacion de la institucion "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", _hoisted_23, "Titulo: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.formUp.nombre_peticion), 1
@@ -34497,14 +34502,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["href"])])]), _hoisted_60, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para aprobar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_62, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button v-if=\"peticiones.estado_peticion == 'En espera'\" class=\"btn btn-success float-center\" title=\"Aceptar peticion\" v-on:click=\"cambiarEstado(form)\"> \r\n                        <i class=\"fas fa-check\" aria-hidden=\"true\"></i> Aceptar </button>   "), _ctx.is('Encargado Escuela') || _ctx.is('Encargado Facultad') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+  , ["href"])])]), _hoisted_60, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para aprobar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_62, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button v-if=\"peticiones.estado_peticion == 'En espera'\" class=\"btn btn-success float-center\" title=\"Aceptar peticion\" v-on:click=\"cambiarEstado(form)\"> \r\n                        <i class=\"fas fa-check\" aria-hidden=\"true\"></i> Aceptar </button>   "), _ctx.$page.props.user && (_ctx.$page.props.user.rol == 'Encargado Facultad' || _ctx.$page.props.user.rol == 'Encargado Escuela') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 0,
     "class": "btn btn-success float-center",
     title: "Activar estudiante",
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $options.cambiarEstado(_this.formUp);
     })
-  }, [_hoisted_63, _hoisted_64])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), _hoisted_65, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para rechazar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <inertia-link v-if=\"this.peticiones.estado_peticion == 'En espera'\" class=\"btn btn-danger\" title=\"Desactivar institucion\"  v-on:click=\"rechazarEstado(formUp)\"> \r\n                        <i class=\"fas fa-times\" aria-hidden=\"true\"></i> Rechazar </inertia-link>   "), _ctx.is('Encargado Escuela') || _ctx.is('Encargado Facultad') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+  }, [_hoisted_63, _hoisted_64])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), _hoisted_65, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Boton para rechazar "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <inertia-link v-if=\"this.peticiones.estado_peticion == 'En espera'\" class=\"btn btn-danger\" title=\"Desactivar institucion\"  v-on:click=\"rechazarEstado(formUp)\"> \r\n                        <i class=\"fas fa-times\" aria-hidden=\"true\"></i> Rechazar </inertia-link>   "), _ctx.$page.props.user && (_ctx.$page.props.user.rol == 'Encargado Facultad' || _ctx.$page.props.user.rol == 'Encargado Escuela') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 0,
     "class": "btn btn-danger",
     title: "Desactivar estudiante",
