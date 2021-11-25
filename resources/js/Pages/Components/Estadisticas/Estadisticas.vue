@@ -60,16 +60,30 @@
                         </div>
 
                     </div>
-                    <div class="row">
-
-                        <div class="col">
-                            <!-- <div class="chart">
-                                    <apexchart type="bar" width="800" height="350" :options="this.graficoBarrasHorizontales.options" :series="this.graficoBarrasHorizontales.series"></apexchart>                                                       
-                            </div> -->
+                    <div class="row mt-5 ">
+                        
+                        <div class="col" v-if="this.usuario.rol == 'Encargado Escuela'">
+                            <h5 style="font-weight: 1; font-family: 'Arial'; font-size: 20px; font-color: 'black'">Cantidad de servicios sociales clasificados por tipo:</h5>
+                            <table class="table table-hover text-center">
+                                <thead class="thead-dark">
+                                    <th scope="col">TipoServicioSocial</th>
+                                    <th scope="col">Cantidad</th>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary" scope="row" v-for="(ss, index) in this.serviciosSocialesByTipo" :key="index">
+                                        <td>{{ ss.nombre_tipo_servicio }}</td>
+                                        <td>{{ ss.cantTipo }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>  
-                        <div class="col">
+
+                        <div class="col  float-right">
                             <div>
                                 <!-- <apexchart type="donut" width="800" height="350" :options="this.graficoDonut.options" :series="this.graficoDonut.series"></apexchart>                                                        -->
+                                <div class="chart">
+                                        <apexchart type="pie" width="800" height="350" :options="this.graficoPastel.options" :series="this.graficoPastel.series"></apexchart>                                                       
+                                </div>
                             </div>
                         </div>
 
@@ -138,9 +152,25 @@
             Base,
             apexchart: VueApexCharts,
         },
-        props: ['estudiantesBySexo', 'carrera', 'estudiantesByEstado', 'serviciosSocialesByEstado', 'usuario'],
+        props: ['estudiantesBySexo', 'carrera', 'estudiantesByEstado', 'serviciosSocialesByEstado', 'usuario', 'serviciosSocialesByTipo'],
         data:function(){
           return{
+
+                mostrar: false,
+
+                cantEstudiantesM:0,
+                cantEstudiantesF:0,
+
+                cantEstudiantesActivos:0,
+                cantEstudiantesInactivos:0,
+                cantEstudiantesRealizandoServicio:0,
+                cantEstudiantesEnEspera:0,
+                cantEstudiantesServicioFinalizado:0,
+
+                cantServiciosSocialNoIniciado:0,
+                cantServiciosSocialEnCurso:0,
+                cantServiciosSocialFinalizado:0,
+
                 graficoDonutData: [],
                 graficoBarraData: [],
                 graficoBarraHorizontalData: [],
@@ -260,64 +290,60 @@
                 },
                 //Fin de gráfico de donut
 
-                //Para el gráfico de barras horizontales
-                graficoBarrasHorizontales:{
-                    options: {
+                //Para el gráfico de pastel
+                graficoPastel:{
+                    series:[],
+                    chart:{
+                        type:'pie',
+                    },
+                    options:{
                         plotOptions:{
-                            bar:{
-                                horizontal: true,
-                                borderRadius: 4,
-                                distributed: false,
-                            }
-                        },
-                        dataLabels:{
-                            enabled: false,
-                        },
-                        chart: {
-                            type: 'bar',
-                        },
-                        xaxis: {
-                            categories: ['No iniciado', 'En curso', 'Finalizado', 'Cancelado'],
-                            labels:{
-                                style:{
-                                    fontSize: '12px',
+                            pie:{
+                                donut:{
+                                    labels:{
+                                        show: false,
+                                        name:{
+                                            show: true,
+                                        },
+                                        total:{
+                                            show: false,
+                                            color: 'black',
+                                            showAlways: false,
+                                            fontSize: '16px',
+                                        }
+                                    }
                                 }
                             }
                         },
-                        yaxis:{
-                            labels:{
-                                style:{
-                                    fontSize: '14px'
-                                }
-                            }
+                        fill:{
+                            colors:['#34495E','#2ECC71','#2980B9'],
                         },
-                        fill: {
-                            colors: ['#E74C3C']
-                        },
-                        bar:{
-                            horizontal: true,
-                        },
+                        labels: ['No Iniciado', 'En Curso', 'Finalizado'],
                         legend:{
-                            show: true,
-                            position: 'bottom',
-                            fontSize: '16px'
+                            markers:{
+                                fillColors:['#34495E','#2ECC71','#2980B9']
+                            }
+                        },
+                        tooltip:{
+                            enabled: true,
+                            followCursor: false,
+                            fillSeriesColor: false,
+                            marker:{
+                                show:false,
+                            }
                         },
                         title:{
-                            text:'Cantidad de servicios sociales según estado',
+                            text:'Cantidad de servicios sociales clasificados por estado:',
                             style:{
                                 fontWeight: 1,
                                 fontFamily: 'Arial',
                                 fontSize: '20px',
-                            }                            
-                        }
-                        
+                            }
+                        }   
                     },
-                    series: [{
-                        name: 'Cantidad de Estudiantes',
-                        data: [],
-                    }]                    
+
                 },
-                //Fin de gráfico de barras horizontales
+                //Fin de gráfico de pastel
             }
 
         },
@@ -325,35 +351,49 @@
 
             graficoDonutfillData(){
 
-                // const graficoDonutData = [];
-                this.estudiantesBySexo.forEach(element => {
-                    this.graficoDonutData.push(element.cant);
-                    // graficoDonutData.pop();
-                    console.log(element.cant);
+                this.estudiantesBySexo.forEach(element=> {
+                    if(element.sexo_estudiante == 'Masculino'){
+                        this.cantEstudiantesM++;
+                    }else{
+                        this.cantEstudiantesF++;
+                    }
                 });
-                
-                console.log(this.graficoDonutData);
-                this.graficoDonut.series = this.graficoDonutData;
+                this.graficoDonut.series.push(this.cantEstudiantesM);
+                this.graficoDonut.series.push(this.cantEstudiantesF);
+                console.log(this.graficoDonut);
 
             },
 
             graficoBarrafillData(){
-
                 this.estudiantesByEstado.forEach(element => {
-                    this.graficoBarraData.push(element.estado);
-                    console.log(element.estado);
+                    if(element.estado_estudiante == 'Activo'){ this.cantEstudiantesActivos++ }
+                    if(element.estado_estudiante == 'Inactivo'){ this.cantEstudiantesInactivos++ }
+                    if(element.estado_estudiante == 'Realizando servicio'){ this.cantEstudiantesRealizandoServicio++ }
+                    if(element.estado_estudiante == 'En espera'){ this.cantEstudiantesEnEspera++ }
+                    if(element.estado_estudiante == 'Servicio finalizado'){ this.cantEstudiantesServicioFinalizado++ }
                 });
-                this.graficoBarras.series[0].data = this.graficoBarraData;
 
+                this.graficoBarras.series[0].data.push(this.cantEstudiantesInactivos);
+                this.graficoBarras.series[0].data.push(this.cantEstudiantesEnEspera);
+                this.graficoBarras.series[0].data.push(this.cantEstudiantesRealizandoServicio);
+                this.graficoBarras.series[0].data.push(this.cantEstudiantesActivos);
+                this.graficoBarras.series[0].data.push(this.cantEstudiantesServicioFinalizado);
             },
 
             graficoBarraHorizontalfillData(){
 
+                console.table(this.serviciosSocialesByEstado);
                 this.serviciosSocialesByEstado.forEach(element => {
-                    this.graficoBarraHorizontalData.push(element.estado);
-                    console.log("sdfsdf"+element.estado);
+                    if(element.estado_proyecto_social == 'No iniciado'){ this.cantServiciosSocialNoIniciado++ }
+                    if(element.estado_proyecto_social == 'En curso'){ this.cantServiciosSocialEnCurso++ }
+                    if(element.estado_proyecto_social == 'Finalizado'){ this.cantServiciosSocialFinalizado++ }
                 });
-                this.graficoBarrasHorizontales.series[0].data = this.graficoBarraHorizontalData;
+
+                this.graficoPastel.series.push(this.cantServiciosSocialNoIniciado);
+                this.graficoPastel.series.push(this.cantServiciosSocialEnCurso);
+                this.graficoPastel.series.push(this.cantServiciosSocialFinalizado);
+
+                console.log(this.graficoPastel);
 
             }
             
@@ -367,16 +407,13 @@
                 sideBar.click();
             },850);
 
-
-            console.log(sideBar);
-            console.table(this.estudiantesBySexo);
-            console.table(this.estudiantesByEstado);
-
             this.graficoDonutfillData();
             this.graficoBarrafillData();
             this.graficoBarraHorizontalfillData();
 
-
+            setTimeout(function(){
+                this.mostrar = true;
+            }, 800); 
 
         }
 
