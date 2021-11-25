@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\Mail\CorreossInstitucionMailable;
+use App\Mail\EvaluacionMailable;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
@@ -168,30 +169,19 @@ class PeticionController extends Controller
         // return $request;
         $peticionF= Peticion::find($peticion);
         $peticionF->estado_peticion = "Aceptado";
-        $peticionF->save();
-
-        $instituci = Institucion::all();
+        $peticionF->save();    
         
         //AQUIIIIII SE ENVIARA EL CORREO A LA INSTITUCIONNNN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
         //$contra = "institucion";
 
         $data = $request->input();
-        
-        /*User::create([
-          'name' => $data['nombre_institucion'],
-          'email'=> $data['correo_peticion'],
-          'password' => bcrypt($contra)
-        ])->assignRole('Institucion');*/
 
         //envio de correo
         //details es un array que contiene las variables que se van a renderizar en la vista del correo
-        $details = [
-            //'usuario' => $peticionF->correo_peticion,
-            //'contrasena' => $contra,
-            //'institucion' => $instituci->nombre_institucion,
+        $details = [            
             'proyecto' => $peticionF->nombre_peticion,
             'estado' => $peticionF->estado_peticion,
-            'mensaje' => 'Su solicitud de registro en el sistema SASS-UES ha sido aceptada',
+            'mensaje' => 'Su solicitud de registro de proyecto en el sistema SASS-UES ha sido ACEPTADA',
         ];
         //Se crea un objeto correo de tipo CredencialesMailable para el envio de correo de credenciales
         //Se debe crear otra clase de tipo Mailable si se quiere crear un correo que sirva para otra cosa
@@ -200,13 +190,15 @@ class PeticionController extends Controller
         Mail::to($peticionF->correo_peticion)
               ->send($correo);      
 
-        $usuario = User::where('email', '=', $data['correo_peticion'])->firstOrFail();
-        $id = $usuario->id;
+        // $usuario = User::where('email', '=', $data['correo_peticion'])->firstOrFail();
+        // $id = $usuario->id;
 
-        $institucion = Institucion::where('correo_institucion', '=', $data['correo_peticion'])->firstOrFail();
+        // $institucion = Institucion::where('correo_institucion', '=', $data['correo_peticion'])->firstOrFail();        
+        
+        // $institucion->user_id = $id;
+        // $institucion->save();
+        
 
-        $institucion->user_id = $id;
-        $institucion->save();
         
         ProyectoSocial::create([
             'estado_proyecto_social' => 'No iniciado',
@@ -232,7 +224,23 @@ class PeticionController extends Controller
     {
         //Aca se debe cambiar el estado de las peticiones de servicio social 
         $peticionF = Peticion::find($peticion);
-        $peticionF->delete();
+        $peticionF->estado_peticion = "Rechazado";
+        $peticionF->save();  
+
+
+        $details = [            
+            'proyecto' => $peticionF->nombre_peticion,
+            'estado' => $peticionF->estado_peticion,
+            'mensaje' => 'Su solicitud de registro de proyecto en el sistema SASS-UES ha sido RECHAZADA',
+        ];
+        //Se crea un objeto correo de tipo CredencialesMailable para el envio de correo de credenciales
+        //Se debe crear otra clase de tipo Mailable si se quiere crear un correo que sirva para otra cosa
+        $correo = new CorreossInstitucionMailable($details);
+        //Se envía el correo, con la dirección de la institucion
+        Mail::to($peticionF->correo_peticion)
+              ->send($correo); 
+
+
         return Redirect::route('peticiones.index');
     }
 }

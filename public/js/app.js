@@ -22847,7 +22847,8 @@ __webpack_require__.r(__webpack_exports__);
         if (result.isConfirmed) {
           _this.$inertia.put(route('peticiones.update', peticion.id), _this.formUp);
 
-          Swal.fire('!Aceptado!', 'La peticion se acepto correctamente', 'success'); //window.location.reload(true);
+          Swal.fire('!Aceptado!', 'La peticion se acepto correctamente', 'success');
+          window.location.reload(true);
         }
       });
     },

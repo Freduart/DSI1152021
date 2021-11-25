@@ -33,6 +33,6 @@ class CorreossInstitucionMailable extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.correossinstitucion');
+        return $this->subject('Confirmacion de solicitud para servicio social')->view('emails.correossinstitucion');
     }
 }
