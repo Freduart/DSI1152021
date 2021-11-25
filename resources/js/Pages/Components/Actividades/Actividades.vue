@@ -164,7 +164,7 @@
                                               data-target="#modificarActividad" title="Editar Actividad"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>
 
                                               <!--BOTON DE ELIMINAR -->
-                                              <inertia-link v-if="actividad.verificado != 'Aceptada'" class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a actividad" method="delete"
+                                              <inertia-link v-if="is('Encargado Escuela') && actividad.verificado != 'Aceptada'" class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a actividad" method="delete"
                                               :href="route('actividades.destroy', actividad.id)"
                                               v-on:click="mostrarMensajeDelete(actividad)"></inertia-link>
                                                     
