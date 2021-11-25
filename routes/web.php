@@ -21,7 +21,8 @@ use App\Http\Controllers\ServicioSocialController;
 use App\Http\Controllers\PeticionController;
 use App\Http\Controllers\TipoServicioController;
 use App\Http\Controllers\ConstanciaController;
-use App\Http\Controllers\FinalizarProyectoController;
+use App\Http\Controllers\FinalizarServicioController;
+
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\UsersController;
 
 use App\Mail\CredencialesMailable;
+use App\Models\Bitacora;
 use Illuminate\Support\Facades\Mail;
 
 /*
@@ -104,7 +106,7 @@ Route::resource('serviciossociales', ServicioSocialController::class)->middlewar
 
 Route::resource('constancia', ConstanciaController::class)->middleware(['auth:sanctum', 'verified']);
 
-Route::resource('finproyecto',FinalizarProyectoController::class)->middleware(['auth:sanctum', 'verified']);
+Route::resource('serviciofinalizado',FinalizarServicioController::class)->middleware(['auth:sanctum', 'verified']);
 
 
 Route::get('actividades/{proyecto_social_id}', [ActividadesController::class, 'show'])->name('actividades');
@@ -126,3 +128,5 @@ Route::resource('tipoServicio', TipoServicioController::class)->only([
 
 //Ruta de las peticiones
 Route::resource('peticiones', PeticionController::class);
+
+Route::get('/bitacoras/pdf/{proyecto_social_id}', [BitacoraController::class, 'generarPDF'])->name('bitacora.pdf');

@@ -14,6 +14,11 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0">Bitacora del estudiante</h1>
+          </div>
+          <div class="col-sm-6">
+            <a :href="route('bitacora.pdf', $props.idServicio)">
+              <button class="ml-16 btn btn-info float-right" >Generar PDF</button>
+            </a>       
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -164,7 +169,7 @@
                                               data-target="#modificarActividad" title="Editar Actividad"> <i class="fas fa-edit" style='color:#007bff'></i> </jet-button>
 
                                               <!--BOTON DE ELIMINAR -->
-                                              <inertia-link v-if="actividad.verificado != 'Aceptada'" class="fas fa-trash ml-1" style='color:#dc3545' title="Dar de baja a actividad" method="delete"
+                                              <inertia-link v-if="is('Encargado Escuela') && actividad.verificado != 'Aceptada'" class="fas fa-arrow-alt-circle-down" style='color:#dc3545' title="Dar de baja a actividad" method="delete"
                                               :href="route('actividades.destroy', actividad.id)"
                                               v-on:click="mostrarMensajeDelete(actividad)"></inertia-link>
                                                     

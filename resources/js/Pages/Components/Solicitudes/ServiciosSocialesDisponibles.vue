@@ -490,6 +490,16 @@ import Button from '../../../Jetstream/Button.vue';
                         allowOutsideClick: true,
                         showConfirmButton: true,  
                     })
+                } else if(this.estudiante.estado_estudiante == "Servicio finalizado"){
+                    Swal.fire({
+                        title: 'Error',
+                        text: "Usted ya termino su servicio social.",
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                        allowEscapeKey: true,
+                        allowOutsideClick: true,
+                        showConfirmButton: true,  
+                    })
                 } else {
                     var cont = 0;
                     var solicitudes = this.solicitudes;

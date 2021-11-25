@@ -1,0 +1,355 @@
+<template>
+
+  <div class="wrapper">
+    <!-- Navbar -->
+    <Base>
+      <template v-slot:header></template>
+    </Base> 
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0">Estudiantes con Sevicio Social Finalizado</h1>
+            </div><!-- /.col -->          
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+            <!-- Main row -->
+            <div class="row">
+            <!-- Left col -->
+              <section class="col-lg-12 connectedSortable">
+                <!-- TO DO List -->
+                <!-- Ejemplo de como podria ser una tabla pero se tendria que añadir al width del 100% -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title mt-3 mb-3 ml-2">
+                        <i class="ion ion-clipboard mr-1"></i> 
+                            <div class="row">
+                                <div class="col">
+                                    <span>Buscar: </span>
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="rounded-sm mb-2" style="width: 350px;" v-model="this.buscarNombre" v-on:keyup="buscar(this.buscarNombre)"> 
+                                </div>    
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <span>Filtrar por: </span>
+                                </div>
+                                <div class="col">
+                                    <select class="col-5 ml-3" style="width: 350px;" v-model="this.estado" v-on:change="filtrarByEstado(this.estado)">
+                                        <option value="0" selected>Todos</option>
+                                        <option value="Inactivo">Inactivo</option>
+                                        <option value="Activo">Activo</option>
+                                        <option value="En espera">En espera</option>
+                                        <option value="Realizando servicio">Realizando servicio</option>
+                                        <option value="Servicio finalizado">Servicio finalizado</option>
+                                    </select> 
+                                </div>      
+                            </div>                       
+                        </h3>                  
+                    </div>
+
+                    <div class="card-footer clearfix" >
+                        <!-- <p>{{ estudiante.nombre_estudiante }}</p> -->
+                      
+                        <table v-if="filtrarEstudiantes.length != 0" class="table table-hover text-center" style="font-size: 20px">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope='col'>Carnet</th>
+                                    <th scope="col">Estudiante</th>
+                                    <th scope="col">Horas completadas</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-secondary" scope="row" v-for="(estudiante, index) in filtrarEstudiantes" :key="index">
+                                    <td>{{ estudiante.carnet_estudiante }}</td>
+                                    <td>{{ estudiante.nombre_estudiante }} {{ estudiante.apellido_estudiante }}</td>
+                                    <td>{{ estudiante.cantidad_horas_ss }}</td>
+                                    <td>
+                                    <!-- General tools such as edit or delete-->
+                                        <div class="flex justify-center">
+                                            <jet-button type="button" class="fas fa-info-circle text-yellow" data-toggle="modal" data-target="#detalleEstudianteModal" v-on:click="verDetalle(estudiante)" title="Ver informacion del estudiante"></jet-button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                        <div v-else class="alert alert-warning ml-4 mr-4 mt-3 justify-center" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                            No se han encontrado registros
+                        </div>
+                       
+                    </div>
+                </div><!-- /.card -->
+              </section><!-- right col -->
+            </div><!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
+      </section>
+        <!-- /.content -->
+    </div>
+        <!-- /.content-wrapper -->
+  </div>
+
+
+  <!-- Modal -->
+<div class="modal fade" id="detalleEstudianteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h5 class="modal-title" id="exampleModalLabel">{{ verDetalleForm.nombre_estudiante }} {{ verDetalleForm.apellido_estudiante }}</h5> -->
+                <h3 class="modal-title text-primary">{{ verDetalleForm.nombre_estudiante }} {{ verDetalleForm.apellido_estudiante }}</h3>
+                <span class="d-flex flex-row-reverse bd-highlight col">
+                    <button class="btn btn-dark text-light text-lg" style="cursor: default;">
+                        {{ verDetalleForm.carnet_estudiante }}                   
+                    </button>     
+                    <!-- <h3 class="modal-title text-primary border rounded-lg mx-4">{{ verDetalleForm.carnet_estudiante }} </h3> -->
+                </span>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+            <div class="modal-body"> 
+              <div>
+                  <div class="row">
+                      <div class="col">
+                          <h5 class=""><strong>Correo: </strong>{{ verDetalleForm.correo_estudiante }}</h5>
+                      </div>
+                      <div class="col">
+                          <h5 class=""><strong>Teléfono: </strong>{{ verDetalleForm.telefono_estudiante }}</h5>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col">
+                          <h5 class=""><strong>Sexo: </strong>{{ verDetalleForm.sexo_estudiante }}</h5>
+                      </div>
+                      <div class="col">
+                          <h5 class=""></h5>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col" v-if="verDetalleForm.dui_estudiante != null">
+                          <h5 class=""><strong>DUI: </strong>{{ verDetalleForm.dui_estudiante}}</h5>
+                      </div>
+                      <div class="col" v-else>
+                          <h5 class=""><strong>DUI: </strong><span class="text-danger">No se ha ingresado este dato.</span></h5>
+                      </div>
+                      <div class="col" v-if="verDetalleForm.nit_estudiante != null">
+                          <h5 class=""><strong>NIT:</strong>{{ verDetalleForm.nit_estudiante }}</h5>
+                      </div>
+                      <div class="col" v-else>
+                          <h5 class=""><strong>NIT: </strong><span class="text-danger">No se ha ingresado este dato.</span></h5>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col">
+                          <h5 class=""><strong>Porcentaje de carrera: </strong>{{ verDetalleForm.porcentaje_aprobacion }} %</h5>
+                      </div>
+                      <div class="col">
+                          <h5 class=""><strong>Cantidad horas en servicio: </strong>{{ verDetalleForm.cantidad_horas_ss }} h</h5>
+                      </div>
+                  </div>
+                  <div class="">
+                      <div class="">
+                          <h5 class=""><strong>Facultad: </strong>{{ verDetalleForm.nombre_facultad }}</h5>
+                      </div>
+                      <div class="row">
+                          <h5 class="col"><strong>Carrera: </strong>{{ verDetalleForm.nombre_carrera }}</h5>
+                      </div>
+                      <div class="row"> 
+                          <span class="d-flex flex-row bd-highlight col">
+                              <h5 class=""><strong>Estado:  </strong>
+                                  <button v-if="verDetalleForm.estado_estudiante == 'En espera'" class="btn btn-primary" disabled>{{ verDetalleForm.estado_estudiante }}</button>
+                                  <button v-else-if="verDetalleForm.estado_estudiante == 'Inactivo'" class="btn btn-danger" disabled>{{ verDetalleForm.estado_estudiante }}</button>
+                                  <button v-else-if="verDetalleForm.estado_estudiante == 'Activo'" class="btn btn-secondary" style="cursor: default;">{{ verDetalleForm.estado_estudiante }}</button>
+                                  <button v-else-if="verDetalleForm.estado_estudiante == 'Servicio finalizado'" class="btn btn-success" disabled>{{ verDetalleForm.estado_estudiante }}</button>
+                                  <button v-else-if="verDetalleForm.estado_estudiante == 'Realizando servicio'" class="btn btn-info" disabled>En servicio</button>
+                              </h5>
+                          </span>
+                      </div>
+                  </div>
+
+              </div>  
+              <hr class="mb-1"/>
+            </div>
+            <div class="mb-4">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button> -->
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-warning" v-on:click="this.verDetalle(estudiante)" data-dismiss="modal">
+                            <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                            Ocultar detalle
+                    </button>
+                    <button class="btn btn-success ml-3" v-on:click="this.finalizarServicio(verDetalleForm)">
+                            <i class="fa fa-check-circle" aria-hidden="true"></i>
+                            Finalizar servicio del estudiante
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+</template>
+
+<script>
+    import JetNavLink from '@/Jetstream/NavLink'
+    import JetDropdownLink from '@/Jetstream/DropdownLink'
+    import JetInput from '@/Jetstream/Input'
+    import JetLabel from '@/Jetstream/Label'
+    import JetButton from '@/Jetstream/Button'
+
+
+    import Base from "@/Pages/Base.vue";
+
+    export default {
+        components:{
+          //   JetAuthenticationCard,
+          //   JetAuthenticationCardLogo,
+          //   JetInput,
+          //   JetCheckbox,
+          //   JetLabel,
+          //   JetValidationErrors,
+            JetNavLink,
+            JetDropdownLink,
+          //    JetButton,
+            Base
+        },
+        props:['estudiantes'],
+        methods:{
+            verDetalle(estudiante){
+                // console.log(estudiante);
+                this.verDetalleForm.id = estudiante.id;
+                this.verDetalleForm.nombre_estudiante = estudiante.nombre_estudiante;
+                this.verDetalleForm.apellido_estudiante = estudiante.apellido_estudiante;
+                this.verDetalleForm.carnet_estudiante = estudiante.carnet_estudiante;
+                this.verDetalleForm.nombre_carrera = estudiante.nombre_carrera;
+                this.verDetalleForm.nombre_facultad = estudiante.nombre_facultad;
+                this.verDetalleForm.estado_estudiante = estudiante.estado_estudiante;
+                this.verDetalleForm.correo_estudiante = estudiante.correo_estudiante;
+                this.verDetalleForm.telefono_estudiante = estudiante.telefono_estudiante;
+                this.verDetalleForm.sexo_estudiante = estudiante.sexo_estudiante;
+                this.verDetalleForm.dui_estudiante = estudiante.dui_estudiante;
+                this.verDetalleForm.nit_estudiante = estudiante.nit_estudiante;
+                this.verDetalleForm.materias_cursadas = estudiante.materias_cursadas;
+                this.verDetalleForm.cantidad_horas_ss = estudiante.cantidad_horas_ss;
+                this.verDetalleForm.porcentaje_aprobacion = estudiante.porcentaje_aprobacion;
+            },
+            buscar(nombreEstudiante){
+                this.estado = 0;
+                this.filtrarEstudiantes.splice(0, this.filtrarEstudiantes.length);
+                console.log(nombreEstudiante);
+                if(nombreEstudiante == null || nombreEstudiante == ''){
+                    this.filtrarEstudiantes.splice(0, this.filtrarEstudiantes.length);
+                    this.estudiantes.forEach(element => {
+                        this.filtrarEstudiantes.push(element);
+                    });
+                }else{
+                    this.estudiantes.forEach(element => {
+                        // console.log(element);
+                        var nombreCompleto = element.nombre_estudiante + element.apellido_estudiante;
+                        //Filtrar por nombre
+                        if(nombreCompleto.toUpperCase().includes(nombreEstudiante.toUpperCase())){
+                            console.log(element);
+                            this.filtrarEstudiantes.push(element);
+                        }
+                        //Filtrar por carnet
+                        if(element.carnet_estudiante.toUpperCase().includes(nombreEstudiante.toUpperCase())){
+                            console.log(element);
+                            this.filtrarEstudiantes.push(element);
+                        }
+                    });
+                }
+                console.log(this.filtrarEstudiantes);
+            },
+            filtrarByEstado(estado){
+                this.buscarNombre = '';
+                this.filtrarEstudiantes.splice(0, this.filtrarEstudiantes.length);
+                console.log(estado);
+                if(estado == 0){
+                    this.filtrarEstudiantes.splice(0, this.filtrarEstudiantes.length);
+                    this.estudiantes.forEach(element => {
+                        this.filtrarEstudiantes.push(element);
+                    });
+                }
+                else{
+                    this.estudiantes.forEach(element => {
+                        if(estado == element.estado_estudiante){
+                            this.filtrarEstudiantes.push(element);
+                        }
+                    });
+                }
+            },
+            finalizarServicio(verDetalleForm){
+            Swal.fire({
+                  title:'¿Está seguro que finalizar el servicio social del estudiante?',
+                  text: 'Se dará por finalizado el servicio social del estudiante: ' + this.verDetalleForm.nombre_estudiante + ' ' + this.verDetalleForm.apellido_estudiante +'.',
+                  icon:'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Aceptar',
+                  cancelButtonText: 'No, cancelar'
+                }).then((result)=>{
+                  if(result.isConfirmed){
+                    //this.$inertia.put(route('verftodas'), this.form);
+                    this.$inertia.put(route('serviciofinalizado.update', this.verDetalleForm.id), verDetalleForm);
+                    Swal.fire({
+                    title: 'Actividades aceptadas',
+                    text: 'El servicio social del estudiante ' + this.verDetalleForm.nombre_estudiante + ' ' + this.verDetalleForm.apellido_estudiante +' ha finalizado',
+                    iconColor: '#CB3234',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showConfirmButton: true,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        location.reload();
+                      }
+                    });
+                    
+                  }
+                })
+            },
+        },    
+        data(){
+            return{
+                verDetalleForm: this.$inertia.form({
+                    id:0,
+                    nombre_estudiante:'',
+                    apellido_estudiante:'',
+                    correo_estudiante:'',
+                    telefono_estudiante:'',
+                    sexo_estudiante:'',
+                    dui_estudiante:'',
+                    nit_estudiante:'',
+                    materias_cursadas:'',
+                    cantidad_horas_ss:'',
+                    nombre_facultad:'',
+                    nombre_carrera:'',
+                    estado_estudiante:'',
+                    carnet_estudiante:'',
+                    porcentaje_aprobacion:'',
+                }),
+                buscarNombre:'',
+                filtrarEstudiantes:[],
+                estado: 0,
+            }
+        },        
+        mounted(){
+            this.estudiantes.forEach(element => {
+                this.filtrarEstudiantes.push(element);
+            });
+        },
+    }
+</script>
