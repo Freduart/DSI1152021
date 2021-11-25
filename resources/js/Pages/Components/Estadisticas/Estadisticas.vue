@@ -51,18 +51,21 @@
 
                         <div class="col">
                             <div id="chart">
-                                <apexchart type="donut" width="800" height="350" :options="this.graficoDonut.options" :series="this.graficoDonut.series"></apexchart>                                                       
+                                <apexchart id="donut" type="donut" width="600" height="350" :options="this.graficoDonut.options" :series="this.graficoDonut.series"></apexchart>                                                       
                                 <!-- <apexchart type="bar" width="800" height="350" :options="this.graficoBarras.options" :series="this.graficoBarras.series"></apexchart>                                -->
                             </div>
                         </div>
                         <div class="col float-right">
-                                <apexchart type="bar" width="800" height="350" :options="this.graficoBarrasHorizontal.options" :series="this.graficoBarrasHorizontal.series"></apexchart>                                                       
+                                <apexchart id="barras" type="bar" width="600" height="350" :options="this.graficoBarras.options" :series="this.graficoBarras.series"></apexchart>                                                       
                         </div>
 
-                        <div class="col">
-                            <table>
+                    </div>
+                    <div class="row">
 
-                            </table>
+                        <div class="col">
+                            <!-- <div class="chart">
+                                    <apexchart type="bar" width="800" height="350" :options="this.graficoBarrasHorizontales.options" :series="this.graficoBarrasHorizontales.series"></apexchart>                                                       
+                            </div> -->
                         </div>  
                         <div class="col">
                             <div>
@@ -71,7 +74,6 @@
                         </div>
 
                     </div>
-
 
                         </li>
                     </ul>
@@ -136,24 +138,23 @@
             Base,
             apexchart: VueApexCharts,
         },
-        props: ['estudiantesBySexo', 'carrera', 'estudiantesByEstado'],
+        props: ['estudiantesBySexo', 'carrera', 'estudiantesByEstado', 'serviciosSocialesByEstado', 'usuario'],
         data:function(){
           return{
                 graficoDonutData: [],
+                graficoBarraData: [],
                 graficoBarraHorizontalData: [],
-                //Para el gráfico de barras horizontales
-                graficoBarrasHorizontal:{   
-
+                //Para el gráfico de barras
+                graficoBarras:{  
                     options: {
                         plotOptions:{
                             bar:{
                                 horizontal: false,
                                 borderRadius: 4,
                                 distributed: true,
-                                columnWidth: '45%',
                             }
                         },
-                        colors:['#1ABC9C', '#1ABCFC', '#1FFCF0'],
+                        colors:['#E74C3C', '#2ECC71', '#AAB7B8', '#3498DB', '#F1C40F'],
                         dataLabels:{
                             enabled: false,
                         },
@@ -163,8 +164,9 @@
                         xaxis: {
                             categories: ['Inactivo', 'Activo', 'En Espera', 'Realizando Servicio', 'Servicio Finalizado'],
                             labels:{
+                                show: false,
                                 style:{
-                                    fontSize: '14px',
+                                    fontSize: '12px',
                                 }
                             }
                         },
@@ -176,17 +178,18 @@
                             }
                         },
                         fill: {
-                            colors: ['#1ABC9C', '#1ABCFC', '#1FFCF0']
+                            colors: ['#E74C3C', '#2ECC71', '#AAB7B8', '#3498DB', '#F1C40F']
                         },
                         bar:{
                             horizontal: true,
                         },
                         legend:{
                             show: true,
-                            position: 'right',
+                            position: 'bottom',
+                            fontSize: '16px'
                         },
                         title:{
-                            text:'Cantidad de estudiantes según estado en la carrera: '+this.$props.carrera.nombre_carrera,
+                            text:'Cantidad de estudiantes según estado:',
                             style:{
                                 fontWeight: 1,
                                 fontFamily: 'Arial',
@@ -200,7 +203,7 @@
                         data: [],
                     }]
                 },
-                //Fin graficoBarras
+                //Fin grafico de barras
 
                 //Para el gráfico de donut
                 graficoDonut:{
@@ -245,7 +248,7 @@
                             }
                         },
                         title:{
-                            text:'Estudiantes M o F en la carrera: '+this.$props.carrera.nombre_carrera,
+                            text:'Cantidad de estudiantes clasificados según sexo:',
                             style:{
                                 fontWeight: 1,
                                 fontFamily: 'Arial',
@@ -257,6 +260,64 @@
                 },
                 //Fin de gráfico de donut
 
+                //Para el gráfico de barras horizontales
+                graficoBarrasHorizontales:{
+                    options: {
+                        plotOptions:{
+                            bar:{
+                                horizontal: true,
+                                borderRadius: 4,
+                                distributed: false,
+                            }
+                        },
+                        dataLabels:{
+                            enabled: false,
+                        },
+                        chart: {
+                            type: 'bar',
+                        },
+                        xaxis: {
+                            categories: ['No iniciado', 'En curso', 'Finalizado', 'Cancelado'],
+                            labels:{
+                                style:{
+                                    fontSize: '12px',
+                                }
+                            }
+                        },
+                        yaxis:{
+                            labels:{
+                                style:{
+                                    fontSize: '14px'
+                                }
+                            }
+                        },
+                        fill: {
+                            colors: ['#E74C3C']
+                        },
+                        bar:{
+                            horizontal: true,
+                        },
+                        legend:{
+                            show: true,
+                            position: 'bottom',
+                            fontSize: '16px'
+                        },
+                        title:{
+                            text:'Cantidad de servicios sociales según estado',
+                            style:{
+                                fontWeight: 1,
+                                fontFamily: 'Arial',
+                                fontSize: '20px',
+                            }                            
+                        }
+                        
+                    },
+                    series: [{
+                        name: 'Cantidad de Estudiantes',
+                        data: [],
+                    }]                    
+                },
+                //Fin de gráfico de barras horizontales
             }
 
         },
@@ -276,13 +337,23 @@
 
             },
 
-            graficoBarraHorizontalfillData(){
+            graficoBarrafillData(){
 
                 this.estudiantesByEstado.forEach(element => {
-                    this.graficoBarraHorizontalData.push(element.estado);
+                    this.graficoBarraData.push(element.estado);
                     console.log(element.estado);
                 });
-                this.graficoBarrasHorizontal.series[0].data = this.graficoBarraHorizontalData;
+                this.graficoBarras.series[0].data = this.graficoBarraData;
+
+            },
+
+            graficoBarraHorizontalfillData(){
+
+                this.serviciosSocialesByEstado.forEach(element => {
+                    this.graficoBarraHorizontalData.push(element.estado);
+                    console.log("sdfsdf"+element.estado);
+                });
+                this.graficoBarrasHorizontales.series[0].data = this.graficoBarraHorizontalData;
 
             }
             
@@ -290,13 +361,21 @@
         mounted(){
 
             var sideBar = document.getElementById("sideBar");
-            sideBar.click();            
+            sideBar.click();
+            setTimeout(function(){
+                var sideBar = document.getElementById("sideBar");
+                sideBar.click();
+            },850);
+
+
             console.log(sideBar);
             console.table(this.estudiantesBySexo);
             console.table(this.estudiantesByEstado);
 
             this.graficoDonutfillData();
+            this.graficoBarrafillData();
             this.graficoBarraHorizontalfillData();
+
 
 
         }

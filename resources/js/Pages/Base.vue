@@ -191,6 +191,7 @@
                     <li v-if="$page.props.user && ($page.props.user.rol == 'Encargado Escuela'
                                                  | $page.props.user.rol == 'Encargado Facultad'
                                                  | $page.props.user.rol == 'Estudiante'
+                                                 | $page.props.user.rol == 'Administrador'
                                                  | $page.props.user.rol == 'Unidad de Proyeccion Social')" class="nav-item">
                     <!-- <li v-if="is('Encargado Escuela') || is('Encargado Facultad') || is('Estudiante') || is('Unidad de Proyeccion Social')" class="nav-item"> -->
                             <inertia-link :href="route('serviciossociales.index')" class="nav-link">
@@ -206,6 +207,16 @@
                             <p>Servicios Disponibles</p>
                             </inertia-link>
                     </li>
+
+                    <li v-if="$page.props.user && ($page.props.user.rol == 'Encargado Escuela'
+                                                 | $page.props.user.rol == 'Encargado Facultad'
+                                                 | $page.props.user.rol == 'Administrador')" class="nav-item">
+                            <inertia-link :href="route('estadisticas')" class="nav-link">
+                            <i class="fa fa-life-ring nav-icon"></i>
+                            <p>Estadísticas</p>
+                            </inertia-link>
+                    </li>
+
                     </ul>
                 </li>            
             </ul>
