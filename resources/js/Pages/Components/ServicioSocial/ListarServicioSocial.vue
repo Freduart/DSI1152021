@@ -95,8 +95,7 @@
               <!-- /.card-body -->
               <div class="card-footer clearfix" >
                   <!-- <p>{{ estudiante.nombre_estudiante }}</p> -->
-                <div class="row">
-                    
+                                    
                         <table v-if="serviciosFiltrados.length != 0" class="table table-hover text-center" style="font-size: 20px">
                                     <thead class="thead-dark">
                                         <tr>                                        
@@ -287,7 +286,7 @@
 
                     <!-- </div>     -->
 
-                </div>  
+                  
               </div>
               </div>
               <!-- /.card -->
