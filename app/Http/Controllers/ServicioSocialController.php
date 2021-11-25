@@ -208,17 +208,7 @@ class ServicioSocialController extends Controller
     //public function edit(ProyectoSocial $proyectoSocial)
     public function edit(Request $request, $servicio)
     {
-        //AQUI SE EDITA LA cantidad de horas
-        //Actualiza el campo de numero_horas en la DB
-        $servicios=Peticion::find($servicio);
-        $servicios->cantidad_horas=$request->cantidad_horas;
-        $servicios->save();
         
-        //Actualiza el campo de cantidad_estudiantes en la DB
-        //$peticiones=Peticion::find($request->idPeticion);
-        //$peticiones->cantidad_horas=$request->cantidad_horas;
-        //$peticiones->save();
-        return redirect()->route('serviciossociales', ['servicio' => $servicio]);
 
     }
 
@@ -242,11 +232,6 @@ class ServicioSocialController extends Controller
                 $servicio = ProyectoSocial::join('peticiones','proyectos_sociales.peticion_id', '=', 'peticiones.id')
                 ->where('proyectos_sociales.id', '=', $proyecto_social_id)
                 ->first();
-                
-                $servicios=Peticion::find($servicio);
-                 $servicios->cantidad_horas=$request->cantidad_horas;
-              $servicios->save();
-                
 
                 // obteniendo el id del estudiante logeado
                 $estudiantes = DB::table('estudiantes')->select('estudiantes.id as id')
@@ -282,19 +267,24 @@ class ServicioSocialController extends Controller
                             $sol->estado_solicitud = 'Rechazado';
                             $sol->save();
                         }
+                    }else if ($request->tipo==null){
+                        $proyecto = ProyectoSocial::find($proyecto_social_id);
+                        $servic = Peticion::find($proyecto->peticion_id);
+                        $servic->cantidad_horas=$request->cantidad_horas;
+                        $servic->save();
                     }
-                    
 
+                    
                     return redirect()->route('serviciossociales', ['proyecto_social_id' => $proyecto_social_id]);
                 } else {
-                    return "nop";
+                    return Redirect::route('login');
                 }
 
             } else {
-                return "escuela";
+                return Redirect::route('login');
             }
         } else {
-            return "acceso";
+            return Redirect::route('login');
         }
 
     }

@@ -656,26 +656,54 @@ import Base from "@/Pages/Base.vue";
             },
             //Muestra mensaje cuando se actualiza los campos
             submitUpdate(form){
-                alert(this.formUp.cantidad_horas);
                 console.log(this.formUp);
                 console.log(form);
                 Swal.fire({
+                  title:'¿Está seguro que desea actualizar la hora del servicio social?',
+                  icon:'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Aceptar',
+                  cancelButtonText: 'No, cancelar'
+                }).then((result)=>{
+                  if(result.isConfirmed){
+                    //this.$inertia.put(route('verftodas'), this.form);
+                    this.$inertia.put(route("serviciossociales.update", this.servicio.id), this.formUp);
+                    Swal.fire({
+                    title: 'El total de horas ha sido actualizado con exito',
+                    //text: 'El estudiante ' + this.estudiante.nombre_estudiante + ' ' + this.estudiante.apellido_estudiante +' ha finalizado las actividades del servicio social',
+                    iconColor: '#6ae594',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showConfirmButton: true,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        location.reload();
+                      }
+                    });
+                    
+                  }
+                })
+                /*Swal.fire({
                     title: 'Se han actualizado las cantidades ',
                     text: 'Actualice la página para ver los cambios',
                     icon: 'success',
                     iconColor: '#FF8000',
                     confirmButtonText: 'Aceptar',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
+                    allowEscapeKey: true,
+                    allowOutsideClick: true,
                     showConfirmButton: false,
                 });
-                this.$inertia.put(route("serviciosocial.edit", this.formUp.idServicio), this.formUp);
+                this.$inertia.put(route("serviciossociales.update", this.servicio.id), this.formUp);*/
             },
             mostrarMensajeUpdate(servicio){
                 console.log(servicio);
                 this.formUp.cantidad_horas= servicio.cantidad_horas;
                 //this.formUp.horas = servicio.horas;                
-                this.formUp.idServicio = servicio.idServicio;
+                this.formUp.id = servicio.id;
                 this.formUp.idPeticion = servicio.idPeticion;
                 
                 console.log(this.formUp);
@@ -711,14 +739,14 @@ import Base from "@/Pages/Base.vue";
 
                 form: this.$inertia.form({
                     cantidad_horas:0,
-                    idServicio:0,
+                    id:0,
                     idPeticion:0
                     }),
 
                 formUp: this.$inertia.form({
                     //Aqui van los campos que se van a modificar
                     cantidad_horas:0,
-                    idServicio:0,
+                    id:0,
                     idPeticion:0
                     }),
             }
