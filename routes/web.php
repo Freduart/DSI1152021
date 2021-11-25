@@ -21,7 +21,7 @@ use App\Http\Controllers\ServicioSocialController;
 use App\Http\Controllers\PeticionController;
 use App\Http\Controllers\TipoServicioController;
 use App\Http\Controllers\ConstanciaController;
-use App\Http\Controllers\FinalizarProyectoController;
+use App\Http\Controllers\FinalizarServicioController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -104,7 +104,7 @@ Route::resource('serviciossociales', ServicioSocialController::class)->middlewar
 
 Route::resource('constancia', ConstanciaController::class)->middleware(['auth:sanctum', 'verified']);
 
-Route::resource('finproyecto',FinalizarProyectoController::class)->middleware(['auth:sanctum', 'verified']);
+Route::resource('serviciofinalizado',FinalizarServicioController::class)->middleware(['auth:sanctum', 'verified']);
 
 
 Route::get('actividades/{proyecto_social_id}', [ActividadesController::class, 'show'])->name('actividades');
