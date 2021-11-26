@@ -65,7 +65,7 @@ class ServicioSocialController extends Controller
                 })
                 ->get();
 
-                return Inertia::render('Components/ServicioSocial/ListarServicioSocialEstudiante', ['servicio' => $servicioActivo, 'servicios' => $servicios]);
+                return Inertia::render('Components/ServicioSocial/ListarServicioSocialEstudiante', ['servicio' => $servicioActivo, 'servicios' => $servicios, 'idEstudiante' => $idEstudiante]);
             } else if (Auth::user()->hasRole('Encargado Escuela')) {
                 // obteniendo el id del usuario logeado
                 $idUsuario = Auth::id();

@@ -30,6 +30,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\UsersController;
 
 use App\Mail\CredencialesMailable;
+use App\Mail\CorreossInstitucionMailable;
 use App\Models\Bitacora;
 use Illuminate\Support\Facades\Mail;
 
@@ -120,6 +121,18 @@ Route::get('serviciossociales/{proyecto_social_id}/estudiante/{estudiante_id}', 
 Route::get('serviciosdisponibles', [ServicioSocialController::class, 'serviciosDisponibles'])->name('serviciosDisponibles')->middleware(['auth:sanctum', 'verified']);
 
 
+//Confirmacion de peticion se servicio social
+//Supongo que confirmacion es el nombre de la ruta
+/*Route::get('confirmacion', function(){
+
+    
+    $correossinsti = new CorreossInstitucionMailable;
+
+    Mail::to('stefany19rodriguez@gmail.com')->send(new CorreossInstitucionMailable());
+    return "Mensaje enviado";
+});*/
+
+
 
 //Ruta para el tipo de servicio social
 Route::resource('tipoServicio', TipoServicioController::class)->only([
@@ -130,3 +143,5 @@ Route::resource('tipoServicio', TipoServicioController::class)->only([
 Route::resource('peticiones', PeticionController::class);
 
 Route::get('/bitacoras/pdf/{proyecto_social_id}', [BitacoraController::class, 'generarPDF'])->name('bitacora.pdf');
+
+Route::get('/constancia/pdf/{idEstudiante}', [ConstanciaController::class, 'generarPDF'])->name('constancia.pdf');
