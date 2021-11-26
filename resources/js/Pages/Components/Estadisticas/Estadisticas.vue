@@ -14,7 +14,7 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0">Estadísticas del sistema</h1>
- 
+            
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -66,7 +66,7 @@
                             <h5 style="font-weight: 1; font-family: 'Arial'; font-size: 20px; font-color: 'black'">Cantidad de servicios sociales clasificados por tipo:</h5>
                             <table class="table table-hover text-center">
                                 <thead class="thead-dark">
-                                    <th scope="col">TipoServicioSocial</th>
+                                    <th scope="col">Tipo de servicio</th>
                                     <th scope="col">Cantidad</th>
                                 </thead>
                                 <tbody>
@@ -77,6 +77,33 @@
                                 </tbody>
                             </table>
                         </div>  
+                        
+                        <div class="col" v-if="this.usuario.rol == 'Encargado Facultad' || this.usuario.rol == 'Administrador'">
+                            <h5 style="font-weight: 1; font-family: 'Arial'; font-size: 20px; font-color: 'black'">Cantidad de servicios sociales por tipo de servicio:</h5>
+                            
+                            <select class="custom-select col-5 ml-3 mb-3" style="width: 350px;" v-model="this.carrera_tipo" v-on:change="filtrarByTipo(this.carrera_tipo)">
+                                <option value="0" selected>Todos</option>
+                                <option v-for="(carrera, index) in carreras" :key="index" :value="carrera.nombre_carrera">{{ carrera.nombre_carrera }}</option>
+                            </select> 
+                            
+                            <table v-if="this.filtrarProyectosTipo.length != 0" class="table table-hover text-center">
+                                <thead class="thead-dark">
+                                    <th scope="col">Carrera</th>
+                                    <th scope="col">Tipo de servicio</th>
+                                    <th scope="col">Cantidad</th>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary" scope="row" v-for="(ss, index) in this.filtrarProyectosTipo" :key="index">
+                                        <td>{{ ss.nombre_carrera }}</td>
+                                        <td>{{ ss.nombre_tipo_servicio }}</td>
+                                        <td>{{ ss.cantTipo }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div v-else class="alert alert-warning ml-4 mr-4 mt-3 justify-center" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                                No se han encontrado registros
+                            </div>
+                        </div>
 
                         <div class="col  float-right">
                             <div>
@@ -87,6 +114,35 @@
                             </div>
                         </div>
 
+                    </div>
+
+                    <div class="row mt-5 ">
+                        <div class="col" v-if="this.usuario.rol == 'Encargado Facultad' || this.usuario.rol == 'Administrador'">
+                            <h5 style="font-weight: 1; font-family: 'Arial'; font-size: 20px; font-color: 'black'">Cantidad de servicios sociales por institución:</h5>
+                            
+                            <select class="custom-select col-5 ml-3 mb-3" style="width: 350px;" v-model="this.carrera_institucion" v-on:change="filtrarByInstitucion(this.carrera_institucion)">
+                                <option value="0" selected>Todos</option>
+                                <option v-for="(carrera, index) in carreras" :key="index" :value="carrera.nombre_carrera">{{ carrera.nombre_carrera }}</option>
+                            </select> 
+                            
+                            <table v-if="this.filtrarProyectosIntitucion.length != 0" class="table table-hover text-center">
+                                <thead class="thead-dark">
+                                    <th scope="col">Carrera</th>
+                                    <th scope="col">Institucion</th>
+                                    <th scope="col">Cantidad</th>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-secondary" scope="row" v-for="(ss, index) in this.filtrarProyectosIntitucion" :key="index">
+                                        <td>{{ ss.nombre_carrera }}</td>
+                                        <td>{{ ss.nombre_institucion }}</td>
+                                        <td>{{ ss.cantInstitucion }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div v-else class="alert alert-warning ml-4 mr-4 mt-3 justify-center" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                                No se han encontrado registros
+                            </div>
+                        </div>
                     </div>
 
                         </li>
@@ -152,7 +208,7 @@
             Base,
             apexchart: VueApexCharts,
         },
-        props: ['estudiantesBySexo', 'carrera', 'estudiantesByEstado', 'serviciosSocialesByEstado', 'usuario', 'serviciosSocialesByTipo'],
+        props: ['estudiantesBySexo', 'carrera', 'estudiantesByEstado', 'serviciosSocialesByEstado', 'usuario', 'serviciosSocialesByTipo', 'carreras', 'serviciosSocialesByInstitucion'],
         data:function(){
           return{
 
@@ -174,6 +230,13 @@
                 graficoDonutData: [],
                 graficoBarraData: [],
                 graficoBarraHorizontalData: [],
+
+                filtrarProyectosTipo: [],
+                carrera_tipo:'',
+
+                filtrarProyectosIntitucion: [],
+                carrera_institucion:'',
+
                 //Para el gráfico de barras
                 graficoBarras:{  
                     options: {
@@ -372,11 +435,10 @@
                     if(element.estado_estudiante == 'En espera'){ this.cantEstudiantesEnEspera++ }
                     if(element.estado_estudiante == 'Servicio finalizado'){ this.cantEstudiantesServicioFinalizado++ }
                 });
-
                 this.graficoBarras.series[0].data.push(this.cantEstudiantesInactivos);
+                this.graficoBarras.series[0].data.push(this.cantEstudiantesActivos);
                 this.graficoBarras.series[0].data.push(this.cantEstudiantesEnEspera);
                 this.graficoBarras.series[0].data.push(this.cantEstudiantesRealizandoServicio);
-                this.graficoBarras.series[0].data.push(this.cantEstudiantesActivos);
                 this.graficoBarras.series[0].data.push(this.cantEstudiantesServicioFinalizado);
             },
 
@@ -395,6 +457,40 @@
 
                 console.log(this.graficoPastel);
 
+            },
+            filtrarByTipo(carrera){
+                this.filtrarProyectosTipo.splice(0, this.filtrarProyectosTipo.length);
+                console.log(carrera);
+                if(carrera == 0){
+                    this.filtrarProyectosTipo.splice(0, this.filtrarProyectosTipo.length);
+                    this.serviciosSocialesByTipo.forEach(element => {
+                        this.filtrarProyectosTipo.push(element);
+                    });
+                }
+                else{
+                    this.serviciosSocialesByTipo.forEach(element => {
+                        if(carrera == element.nombre_carrera){
+                            this.filtrarProyectosTipo.push(element);
+                        }
+                    });
+                }
+            },
+            filtrarByInstitucion(carrera){
+                this.filtrarProyectosIntitucion.splice(0, this.filtrarProyectosIntitucion.length);
+                console.log(carrera);
+                if(carrera == 0){
+                    this.filtrarProyectosIntitucion.splice(0, this.filtrarProyectosIntitucion.length);
+                    this.serviciosSocialesByInstitucion.forEach(element => {
+                        this.filtrarProyectosIntitucion.push(element);
+                    });
+                }
+                else{
+                    this.serviciosSocialesByInstitucion.forEach(element => {
+                        if(carrera == element.nombre_carrera){
+                            this.filtrarProyectosIntitucion.push(element);
+                        }
+                    });
+                }
             }
             
         },
@@ -414,6 +510,14 @@
             setTimeout(function(){
                 this.mostrar = true;
             }, 800); 
+
+            this.serviciosSocialesByTipo.forEach(element => {
+                this.filtrarProyectosTipo.push(element);
+            });
+
+            this.serviciosSocialesByInstitucion.forEach(element => {
+                this.filtrarProyectosIntitucion.push(element);
+            });
 
         }
 
