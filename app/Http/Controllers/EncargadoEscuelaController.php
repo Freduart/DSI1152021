@@ -154,7 +154,8 @@ class EncargadoEscuelaController extends Controller
             User::create([
                 'name' => $data['codigo_encargado_escuela'],
                 'email'=> $data['correo_encargado_escuela'],
-                'password' => bcrypt($contra)
+                'password' => bcrypt($contra),
+                'rol'=>'Encargado Escuela'
             ])->assignRole('Encargado Escuela');
                 
             // obteniendo el id usuario creado
