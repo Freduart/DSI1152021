@@ -143,3 +143,5 @@ Route::resource('tipoServicio', TipoServicioController::class)->only([
 Route::resource('peticiones', PeticionController::class);
 
 Route::get('/bitacoras/pdf/{proyecto_social_id}', [BitacoraController::class, 'generarPDF'])->name('bitacora.pdf');
+
+Route::get('/constancia/pdf/{idEstudiante}', [ConstanciaController::class, 'generarPDF'])->name('constancia.pdf');

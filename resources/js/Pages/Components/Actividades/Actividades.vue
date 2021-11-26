@@ -17,7 +17,9 @@
           </div>
           <div class="col-sm-6">
             <a :href="route('bitacora.pdf', $props.idServicio)">
-              <button class="ml-16 btn btn-info float-right" >Generar PDF</button>
+              <button class="ml-16 btn btn-info float-right" >
+                <i class="far fa-file-pdf"></i> Generar PDF
+                </button>
             </a>       
           </div><!-- /.col -->          
         </div><!-- /.row -->

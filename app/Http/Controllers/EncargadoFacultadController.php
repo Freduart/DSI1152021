@@ -97,7 +97,8 @@ class EncargadoFacultadController extends Controller
         User::create([
           'name' => $data['codigo_encargado_facultad'],
           'email'=> $data['correo_encargado_facultad'],
-          'password' => bcrypt($contra)
+          'password' => bcrypt($contra),
+          'rol'=>'Encargado Facultad'
         ])->assignRole('Encargado Facultad');
         
         // obteniendo el id usuario creado
