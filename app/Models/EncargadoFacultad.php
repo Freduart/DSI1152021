@@ -25,16 +25,11 @@ class EncargadoFacultad extends Model
 
     //Relacion uno a uno con Facultad
     public function facultad(){
-        return $this->hasOne('App\Models\Facultad');
-    }
-
-    //Relacion uno a uno con Persona
-    // public function persona(){
-    //     return $this->hasOne('App\Models\Persona');
-    // }
+        return $this->hasOne(Facultad::class);
+    }    
 
     //Relacion uno a uno con Usuario
     public function usuario(){
-        return $this->hasOne('App\Models\User');
+        return $this->hasOne(User::class);
     }
 }
