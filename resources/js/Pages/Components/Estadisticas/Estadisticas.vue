@@ -64,7 +64,7 @@
                         
                         <div class="col" v-if="this.usuario.rol == 'Encargado Escuela'">
                             <h5 style="font-weight: 1; font-family: 'Arial'; font-size: 20px; font-color: 'black'">Cantidad de servicios sociales clasificados por tipo:</h5>
-                            <table class="table table-hover text-center">
+                            <table v-if="this.serviciosSocialesByTipo.length != 0" class="table table-hover text-center">
                                 <thead class="thead-dark">
                                     <th scope="col">Tipo de servicio</th>
                                     <th scope="col">Cantidad</th>
@@ -76,6 +76,9 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <div v-else class="alert alert-warning ml-4 mr-4 mt-3 justify-center" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                                No se han encontrado registros
+                            </div>
                         </div>  
                         
                         <div class="col" v-if="this.usuario.rol == 'Encargado Facultad' || this.usuario.rol == 'Administrador'">
@@ -108,7 +111,7 @@
                         <div class="col  float-right">
                             <div>
                                 <!-- <apexchart type="donut" width="800" height="350" :options="this.graficoDonut.options" :series="this.graficoDonut.series"></apexchart>                                                        -->
-                                <div class="chart">
+                                <div v-if="this.serviciosSocialesByEstado.length != 0" class="chart">
                                         <apexchart type="pie" width="800" height="350" :options="this.graficoPastel.options" :series="this.graficoPastel.series"></apexchart>                                                       
                                 </div>
                             </div>

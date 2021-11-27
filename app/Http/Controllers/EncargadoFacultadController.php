@@ -72,6 +72,13 @@ class EncargadoFacultadController extends Controller
      */
     public function store(Request $request)
     {
+      
+      $request->validate([
+        'correo_encargado_facultad' => 'required|unique:encargado_facultades|regex:/^.+@.+$/i',
+        'codigo_encargado_facultad' => 'required|unique:encargado_facultades|max:12',
+        'dui_encargado_facultad' => 'required|unique:encargado_facultades|regex:/[0-9]{8}-[0-9]/i|size:10',
+        'telefono_encargado_facultad' => 'required|unique:encargado_facultades|regex:/[0-9]{4}(-)?[0-9]{4}/i',
+      ]);
       // generación de contraseña
       /*$permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
       $contra = substr(str_shuffle($permitted_chars), 0, 10);*/

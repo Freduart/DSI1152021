@@ -27,7 +27,7 @@ class EstadisticasController extends Controller
                 $encargado = EncargadoEscuela::where('user_id', '=', $idUsuario)->firstOrFail();
                 $usuario = User::where('id', '=', $idUsuario)->firstOrFail();
                 $carrera = Carrera::where('id', '=', $encargado->carrera_id)->firstOrFail();
-                $carreras = 0;
+                $carreras = [];
                 // dd($carrera);
                 // $estudiantes = Estudiante::where('carrera_id', '=', $carrera)->count();
                 $alumnosBySexo = DB::select(DB::raw("select * from estudiantes where carrera_id = :carreraid"),
@@ -42,8 +42,9 @@ class EstadisticasController extends Controller
                 $serviciosSocialesByTipo = DB::select(DB::raw("select count(nombre_tipo_servicio) as cantTipo, nombre_tipo_servicio from peticiones s join proyectos_sociales p on s.id = p.peticion_id and carrera_id = :carreraid join tipos_servicio_social t on t.id = s.tipo_servicio_social_id group by nombre_tipo_servicio"),
                                          array('carreraid' => $carrera->id));   
                 // dd($serviciosSocialesByTipo);
-                // dd($usuario);                  
-                $serviciosSocialesByInstitucion = 0;                              
+                // dd($usuario);     
+
+                $serviciosSocialesByInstitucion = [];                              
             }else if(Auth::user()->hasRole('Encargado Facultad')){
 
                 $idUsuario = Auth::id();
