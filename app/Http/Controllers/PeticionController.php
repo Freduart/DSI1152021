@@ -16,6 +16,7 @@ use App\Mail\CorreossInstitucionMailable;
 use App\Mail\EvaluacionMailable;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class PeticionController extends Controller
 {
@@ -26,16 +27,29 @@ class PeticionController extends Controller
      */
     public function index()
     {
-        
-        // Obteniendo las peticiones de servicio social
-        $peticion=Peticion::join('carreras', 'peticiones.carrera_id', '=', 'carreras.id')
-        ->join('tipos_servicio_social', 'peticiones.tipo_servicio_social_id', '=', 'tipos_servicio_social.id')
-        ->join('instituciones', 'peticiones.institucion_id', '=', 'instituciones.id')
-        ->where('estado_peticion', '=', 'En espera')
-        ->select('peticiones.id AS idPeticion', 'cantidad_estudiantes', 'nombre_peticion', 'descripcion_peticion', 'ubicacion_actividades', 'fecha_peticion', 'fecha_peticion_fin', 'cantidad_horas', 'otros_tipo_servicio', 'estado_peticion', 'correo_peticion', 'carrera_id', 'nombre_carrera', 'tipo_servicio_social_id', 'nombre_tipo_servicio', 'institucion_id', 'nombre_institucion')
-        ->get();
-        $carreras= Carrera::all();
-        return Inertia::render('Components/Peticiones/ListarPeticion',['peticiones' => $peticion, 'carreras' => $carreras]);
+        if(Auth::check()){
+            if(Auth::user()->hasRole('Institucion')){
+                $idUsuario = Auth::id();
+                $UserInstitucion = User::where('id', '=', $idUsuario)->firstOrFail();
+                $institucion = Institucion::where('user_id', '=', $UserInstitucion->id)->firstOrFail();
+                $peticiones = Peticion::join('instituciones', 'peticiones.institucion_id', '=', 'instituciones.id')
+                                        ->join('proyectos_sociales', 'proyectos_sociales.peticion_id', '=', 'peticiones.id')
+                                        ->where('peticiones.institucion_id', '=', $institucion->id)
+                                        ->get();
+                // dd($peticiones);
+                return Inertia::render('Components/Peticiones/PeticionesParaInstitucion', ['peticiones' => $peticiones, 'institucion' => $institucion]);
+            }else{
+                // Obteniendo las peticiones de servicio social
+                $peticion=Peticion::join('carreras', 'peticiones.carrera_id', '=', 'carreras.id')
+                ->join('tipos_servicio_social', 'peticiones.tipo_servicio_social_id', '=', 'tipos_servicio_social.id')
+                ->join('instituciones', 'peticiones.institucion_id', '=', 'instituciones.id')
+                ->where('estado_peticion', '=', 'En espera')
+                ->select('peticiones.id AS idPeticion', 'cantidad_estudiantes', 'nombre_peticion', 'descripcion_peticion', 'ubicacion_actividades', 'fecha_peticion', 'fecha_peticion_fin', 'cantidad_horas', 'otros_tipo_servicio', 'estado_peticion', 'correo_peticion', 'carrera_id', 'nombre_carrera', 'tipo_servicio_social_id', 'nombre_tipo_servicio', 'institucion_id', 'nombre_institucion')
+                ->get();
+                $carreras= Carrera::all();
+                return Inertia::render('Components/Peticiones/ListarPeticion',['peticiones' => $peticion, 'carreras' => $carreras]);
+            }
+        }
 
     }
 
@@ -119,7 +133,6 @@ class PeticionController extends Controller
         ->select('carreras.id AS idC', 'nombre_carrera', 'facultad_id')
         ->where('peticiones.id', '=', $peticion)
         ->get();*/
-
         // Obtenemos la peticion 
         $peticionF = Peticion::find($peticion);
 
@@ -148,12 +161,15 @@ class PeticionController extends Controller
         ->where('peticiones.id', '=', $peticion)
         ->get();*/
 
-
+        // dd($peticionF);
         // Obtenemos la carrera 
         $facultades= Facultad::all();
 
+        $carrera = Carrera::find($peticionF->carrera_id)->firstOrFail();
+        $idFacultad = Facultad::find($carrera->facultad_id)->firstOrFail();
+
         // Renderizamos la vista para modificar la peticion
-        return Inertia::render('Components/Peticiones/FormPeticion', ['carreras'=>$carreras, 'peticiones' => $peticionF, 'tipoServicios' => $tipoServicioSociales, 'instituciones' => $instituciones, 'facultades'=> $facultades,]);   // 'idFacultad'=> $idFacultad]);
+        return Inertia::render('Components/Peticiones/FormPeticion', ['carreras'=>$carreras, 'peticiones' => $peticionF, 'tipoServicios' => $tipoServicioSociales, 'instituciones' => $instituciones, 'facultades'=> $facultades, 'idFacultad'=> $idFacultad]);   // 'idFacultad'=> $idFacultad]);
     }
 
     /**
@@ -164,18 +180,21 @@ class PeticionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $peticion)
+    {   
+        // return $request->all();
+        $peticion = Peticion::find($peticion);
+        $peticion -> update($request -> all());
+        // if(Auth::user()->hasRole('Institucion')){
+        //     return Redirect::route('peticiones.index');
+        // }
+        return Redirect::route('peticiones.index');
+    }
+
+    public function updateStatus($peticion)
     {
-        // return $peticion;
-        // return $request;
         $peticionF= Peticion::find($peticion);
         $peticionF->estado_peticion = "Aceptado";
-        $peticionF->save();    
-        
-        //AQUIIIIII SE ENVIARA EL CORREO A LA INSTITUCIONNNN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-        //$contra = "institucion";
-
-        $data = $request->input();
-
+        $peticionF->save(); 
         //envio de correo
         //details es un array que contiene las variables que se van a renderizar en la vista del correo
         $details = [            
@@ -203,15 +222,10 @@ class PeticionController extends Controller
         ProyectoSocial::create([
             'estado_proyecto_social' => 'No iniciado',
             'peticion_id' => $peticionF->id,  
-        ]);
+        ]);        
 
         return Redirect::route('peticiones.index');
 
-    }
-
-    public function updateStatus(Request $request, $peticion)
-    {
-        return "Funciono";
     }
 
     /**
@@ -239,7 +253,6 @@ class PeticionController extends Controller
         //Se envía el correo, con la dirección de la institucion
         Mail::to($peticionF->correo_peticion)
               ->send($correo); 
-
 
         return Redirect::route('peticiones.index');
     }

@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Actividad;
 use App\Models\Carrera;
+use App\Models\EncargadoEscuela;
+use App\Models\EncargadoFacultad;
 use App\Models\Estudiante;
 use App\Models\Facultad;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class EstudianteController extends Controller
 {
@@ -18,11 +24,34 @@ class EstudianteController extends Controller
      */
     public function index()
     {
-        // $estudiantes = Estudiante::all();
-        $estudiantes = Facultad::join('carreras', 'carreras.facultad_id', '=', 'facultades.id')
-                                ->join('estudiantes', 'estudiantes.carrera_id', '=', 'carreras.id')
-                                ->select('*')->get();
-        // return $estudiantes;
+        if(Auth::check()){
+            if(Auth::user()->hasRole('Administrador')){
+                $estudiantes = Facultad::join('carreras', 'carreras.facultad_id', '=', 'facultades.id')
+                ->join('estudiantes', 'estudiantes.carrera_id', '=', 'carreras.id')
+                ->select('*')->get();
+            }else if(Auth::user()->hasRole('Encargado Escuela')){
+                $idUsuario = Auth::id();
+                $usuario = User::where('id', '=', $idUsuario)->firstOrFail();
+                $encargadoEscuela = EncargadoEscuela::where('user_id', '=', $usuario->id)->firstOrFail();
+                $estudiantes = Facultad::join('carreras', 'carreras.facultad_id', '=', 'facultades.id')
+                ->join('estudiantes', 'estudiantes.carrera_id', '=','carreras.id')
+                ->select('*')->where('estudiantes.carrera_id', '=', $encargadoEscuela->carrera_id)->get();                
+            }else if(Auth::user()->hasRole('Encargado Facultad')){
+                $idUsuario = Auth::id();
+                $usuario = User::where('id', '=', $idUsuario)->firstOrFail();
+                $encargadoFacultad = EncargadoFacultad::where('user_id', '=', $usuario->id)->firstOrFail();
+
+                $estudiantes = DB::select(DB::raw("select * from estudiantes 
+                join carreras on carreras.id = estudiantes.carrera_id
+                join facultades on facultades.id = carreras.facultad_id 
+                where carreras.facultad_id = :facultadid"),
+                array('facultadid' => $encargadoFacultad->facultad_id));
+            }else{
+                return Redirect::route('dashboard');
+            }
+        }else{
+            return Redirect::route('login');
+        }
        return Inertia::render('Components/ListarEstudiante', ['estudiantes' => $estudiantes]);
         // return "hola";
     }
@@ -82,8 +111,8 @@ class EstudianteController extends Controller
         // $url_archivo = $estudiante->archivo_comprobacion_url;
         // $estudiante->archivo_comprobante_url = str_replace('localhost', '127.0.0.1:8000', $url_archivo);
         // $estudiante->save();    
-        // return Inertia::render('Dashboard');  
-        return Redirect::route("dashboard");  
+        // return Inertia::render('Admins/home');  
+        return Redirect::route("homepage");  
         // return Inertia::render('Welcome');
     }
 
