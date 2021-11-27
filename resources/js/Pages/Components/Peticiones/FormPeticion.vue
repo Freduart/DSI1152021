@@ -241,7 +241,7 @@ export default {
         estado_peticion: this.$props.peticiones.estado_peticion,
         correo_peticion: this.$props.peticiones.correo_peticion,
         carrera_id: this.$props.peticiones.carrera_id,
-        facultad_id: this.$props.idFacultad,
+        facultad_id: this.$props.idFacultad.id,
         tipo_servicio_social_id: this.$props.peticiones.tipo_servicio_social_id,
         institucion_id: this.$props.peticiones.institucion_id,
       }),
@@ -253,7 +253,7 @@ export default {
   methods: {
     submit(){
       if(this.$props.peticiones.id != null){
-        this.$inertia.put(route('peticiones.updateStatus', this.$props.peticiones.id), this.form);
+        this.$inertia.put(route('peticiones.update', this.$props.peticiones.id), this.form);
       }
       else{
         this.form.post(route('peticiones.store'));        

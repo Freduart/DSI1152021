@@ -116,7 +116,7 @@
 
                     </div>
 
-                    <div class="row mt-5 ">
+                    <div class="row mt-5 ">             
                         <div class="col" v-if="this.usuario.rol == 'Encargado Facultad' || this.usuario.rol == 'Administrador'">
                             <h5 style="font-weight: 1; font-family: 'Arial'; font-size: 20px; font-color: 'black'">Cantidad de servicios sociales por institución:</h5>
                             
@@ -232,10 +232,10 @@
                 graficoBarraHorizontalData: [],
 
                 filtrarProyectosTipo: [],
-                carrera_tipo:'',
+                carrera_tipo:0,
 
                 filtrarProyectosIntitucion: [],
-                carrera_institucion:'',
+                carrera_institucion:0,
 
                 //Para el gráfico de barras
                 graficoBarras:{  

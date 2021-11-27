@@ -112,9 +112,11 @@ class EstadisticasController extends Controller
                 join carreras c on c.id = s.carrera_id
                 and p.estado_proyecto_social = 'En curso'
                 group by nombre_institucion, nombre_carrera"));   
+            }else{
+                return Redirect::route('/');
             }
         }else{
-
+            return Redirect::route('login');
         }
 
         $estudiantes = Estudiante::all();
@@ -128,6 +130,7 @@ class EstadisticasController extends Controller
             'usuario' => $usuario, 
             'serviciosSocialesByTipo' => $serviciosSocialesByTipo, 
             'carreras' => $carreras, 
-            'serviciosSocialesByInstitucion' => $serviciosSocialesByInstitucion]);
+            'serviciosSocialesByInstitucion' => $serviciosSocialesByInstitucion
+        ]);
     }
 }
