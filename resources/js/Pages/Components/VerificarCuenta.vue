@@ -238,10 +238,16 @@
                                 <div class="col">
                                     <div class="form-group text-center">
                                         <jet-label for="archivo_comprobacion" value="Captura de comprobacion de avance de carrera" />
-                                        <a :href="formUp.archivo_comprobante_url" target="_blank">
-                                            <br/>
-                                            <img id="archivoComprobante" :src="formUp.archivo_comprobante_url" style="height: 200px; width: 300px; rounded: 15px;" @mouseover="efectoBlur()" @mouseleave="salidaEfectoBlur()" alt="archivo de comprobacion de avance"/>
-                                        </a>
+                                        <div v-if="formUp.archivo_comprobante_path">
+                                            <a :href="formUp.archivo_comprobante_url" target="_blank">
+                                                <br/>
+                                                <img id="archivoComprobante" :src="formUp.archivo_comprobante_url" style="height: 200px; width: 300px; rounded: 15px;" @mouseover="efectoBlur()" @mouseleave="salidaEfectoBlur()" alt="archivo de comprobacion de avance"/>
+                                            </a>
+                                        </div>
+                                        <div v-else>
+                                            <img src="https://coacademy-server-jc.com/uploads/courses/images/890.jpg" style="height: 200px; width: 300px; rounded: 15px;" alt="archivo de comprobacion de avance"/>
+                                        </div>
+
                                         <!-- <small>{{ formUp.archivo_comprobante_url }}</small> -->
                                     </div>
                                 </div>

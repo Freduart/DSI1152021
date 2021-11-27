@@ -54,6 +54,15 @@ class InstitucionController extends Controller
     public function store(Request $request)
     {  	
 
+        $request->validate([
+            'nombre_institucion' => 'required|max:30',
+            'contacto_institucion' => 'required|max:50',
+            'correo_institucion' => 'required|unique:instituciones|regex:/^.+@.+$/i|max:50',
+            'telefono_estudiante' => 'required|unique:instituciones|regex:/[0-9]{4}(-)?[0-9]{4}/i',
+            'ubicacion_institucion' => 'required|max:50',
+            'rubro_institucion' => 'required|max:100',
+        ]);
+
         // Se le asigna la contraseña
         $contra = "institucion";
         // Se obtienen los datos del request

@@ -133,6 +133,14 @@ class EncargadoEscuelaController extends Controller
         // generación de contraseña
         /*$permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
         $contra = substr(str_shuffle($permitted_chars), 0, 10);*/
+
+        $request->validate([
+            'correo_encargado_escuela' => 'required|unique:encargado_escuelas|regex:/^.+@.+$/i',
+            'codigo_encargado_escuela' => 'required|unique:encargado_escuelas|max:12',
+            'dui_encargado_escuela' => 'required|unique:encargado_escuelas|regex:/[0-9]{8}-[0-9]/i|size:10',
+            'telefono_encargado_escuela' => 'required|unique:encargado_escuelas|regex:/[0-9]{4}(-)?[0-9]{4}/i',
+        ]);
+
         $contra = "adminadmin";
 
         // obteniendo la data de request

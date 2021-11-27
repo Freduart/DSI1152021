@@ -12,7 +12,8 @@
         <div class="row justify-content-center mb-2">
           <div class="col-sm-5">
             <h1 v-if="this.$props.instituciones.id != null" class="m-2">Modificar institucion</h1>
-            <h1 v-else class="m-2">Agregar institucion</h1>            
+            <h1 v-else class="m-2">Agregar institucion</h1>   
+            <jet-validation-errors class="mb-3" />         
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->

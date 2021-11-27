@@ -13,6 +13,7 @@
           <div class="col-sm-5">
             <h1 v-if="this.$props.encargadoF.id != null" class="m-2">Modificar encargado de facultad</h1>
             <h1 v-else class="m-2">Agregar encargado de facultad</h1>
+            <jet-validation-errors class="mb-3" />
           </div><!-- /.col -->          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->

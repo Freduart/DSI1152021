@@ -103,7 +103,14 @@ class PeticionController extends Controller
     public function store(Request $request)
     {
         // Obtenemos la data del request
-        // Agregamos la nueva peticion                
+        // Agregamos la nueva peticion
+        
+        $request->validate([
+            'nombre_peticion' => 'requireds|max:60',
+            'ubicacion_actividades' => 'required|max:60',
+            'correo_peticion' => 'required|regex:/^.+@.+$/i',
+        ]);
+        
         Peticion::create($request->all());
         return Redirect::route("dashboard");
     }

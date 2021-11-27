@@ -12,7 +12,7 @@
                 <!-- titulo que cambiará conforme a la accion seleccionada -->
                 <h1 v-if="this.$props.peticiones.id != null" class="m-2">Modificar peticion de servicio social</h1>
                 <h1 v-else class="m-2">Agregar peticion de servicio social</h1>
-                
+                <jet-validation-errors class="mb-3" />
               </div><!-- /.col -->          
             </div><!-- /.row -->
           </div><!-- /.container-fluid -->
