@@ -12,7 +12,7 @@
                 <!-- titulo que cambiará conforme a la accion seleccionada -->
                 <h1 v-if="this.$props.peticiones.id != null" class="m-2">Modificar peticion de servicio social</h1>
                 <h1 v-else class="m-2">Agregar peticion de servicio social</h1>
-                
+                <jet-validation-errors class="mb-3" />
               </div><!-- /.col -->          
             </div><!-- /.row -->
           </div><!-- /.container-fluid -->
@@ -71,8 +71,8 @@
                             <div class="col">
                               <!-- codigo de empleado del encargado -->
                               <div class="form-group">
-                                <jet-label for="cantidad_horas" value="Cantidad de horas" />
-                                <jet-input id="cantidad_horas" type="text" v-model="form.cantidad_horas"/>
+                                <!-- <jet-label for="cantidad_horas" value="Cantidad de horas" /> -->
+                                <jet-input id="cantidad_horas" type="hidden" v-model="form.cantidad_horas"/>
                               </div>
                             </div>
                           </div> 
@@ -214,9 +214,7 @@ import JetInput from '@/Jetstream/Input'
 import JetCheckbox from "@/Jetstream/Checkbox";
 import JetLabel from '@/Jetstream/Label'
 import JetValidationErrors from '@/Jetstream/ValidationErrors'
-
 import Base from "@/Pages/Base.vue"
-
 export default {
   components: {
     JetAuthenticationCard,
@@ -228,9 +226,7 @@ export default {
     JetValidationErrors,
     Base
   },
-
   props:['peticiones', 'facultades', 'idFacultad', 'carreras', 'tipoServicios', 'instituciones'],
-
   data(){
     return{
       form: this.$inertia.form({
@@ -240,34 +236,29 @@ export default {
         ubicacion_actividades: this.$props.peticiones.ubicacion_actividades,
         fecha_peticion: this.$props.peticiones.fecha_peticion,
         fecha_peticion_fin: this.$props.peticiones.fecha_peticion_fin,
-        cantidad_horas: this.$props.peticiones.cantidad_horas,
+        cantidad_horas: 0,
         otros_tipo_servicio: this.$props.peticiones.otros_tipo_servicio,
         estado_peticion: this.$props.peticiones.estado_peticion,
         correo_peticion: this.$props.peticiones.correo_peticion,
         carrera_id: this.$props.peticiones.carrera_id,
-        facultad_id: this.$props.idFacultad,
+        facultad_id: this.$props.idFacultad.id,
         tipo_servicio_social_id: this.$props.peticiones.tipo_servicio_social_id,
         institucion_id: this.$props.peticiones.institucion_id,
       }),
-
       carrerasFiltradas:[],
       tiposFiltrados:[],
       institucionesFiltradas:[],
-
     }
   },
-
   methods: {
-
     submit(){
       if(this.$props.peticiones.id != null){
-        this.$inertia.put(route('peticiones.updateStatus', this.$props.peticiones.id), this.form);
+        this.$inertia.put(route('peticiones.update', this.$props.peticiones.id), this.form);
       }
       else{
         this.form.post(route('peticiones.store'));        
       }
     },
-
     // funcion para cargar las carreras de la facultad seleccionada
     buscarCarreras(id){
       this.carrerasFiltradas.length = 0; // vaciar arreglo
@@ -277,7 +268,6 @@ export default {
           
         }
       });
-
       // compara la facultad seleccionada con la facultad del encargado 
       if (id == this.$props.idFacultad){
         this.escuela.forEach(element => {
@@ -294,15 +284,11 @@ export default {
       this.carreras.forEach(carrera => { 
         if(carrera.facultad_id == idFac){
           this.facultades.push(carrera); // llenar las carreras de la facultad
-
         }        
-
       });
-
       this.carreras.forEach(element =>{
         this.carrerasFiltradas.push(element);
       });
-
     } 
   }
 }

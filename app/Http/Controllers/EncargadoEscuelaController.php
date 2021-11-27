@@ -14,6 +14,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\EncargadoFacultad;
+use App\Mail\CredencialesMailable;
+use Illuminate\Support\Facades\Mail;
 
 class EncargadoEscuelaController extends Controller
 {
@@ -24,21 +26,54 @@ class EncargadoEscuelaController extends Controller
      */
     public function index()
     {
-        // obteniendo los encargados de escuela
-        $encargadosEscuela = DB::table('encargado_escuelas')
-        ->join('carreras', 'encargado_escuelas.carrera_id', '=', 'carreras.id')
-        ->join('facultades', 'carreras.facultad_id', '=', 'facultades.id')
-        ->select('encargado_escuelas.id AS idEncargado', 'codigo_encargado_escuela', 'dui_encargado_escuela', 'nombre_encargado_escuela', 'apellido_encargado_escuela', 'correo_encargado_escuela', 'telefono_encargado_escuela', 'estado_encargado_escuela', 'nombre_facultad', 'facultad_id', 'nombre_carrera', 'carrera_id')
-        ->get();
-        // obteniendo los encargados de facultad 
-        $facultades = DB::table('facultades')->distinct('nombre_facultad')
-        ->join('carreras', 'facultades.id', '=', 'carreras.facultad_id')
-        ->join('encargado_escuelas', 'carreras.id', '=', 'encargado_escuelas.carrera_id')
-        ->leftJoin('encargado_facultades', 'facultades.id', '=', 'encargado_facultades.facultad_id')
-        ->select('nombre_facultad', 'estado_encargado_escuela', 'nombre_encargado_facultad', 'apellido_encargado_facultad')
-        ->get();
-        // obteniendo las carreras
-        $carreras = Carrera::all();
+        $facultad = null;
+        // validando que el usuario ha iniciado sesion
+        if(Auth::check()){            
+            // validando el rol del usuario logeado
+            if (Auth::user()->hasRole('Encargado Facultad')) {
+                $idUsuario = Auth::id();
+                $encargadoF = EncargadoFacultad::where('user_id', '=', $idUsuario)->first();
+
+                // obteniendo los encargados de escuela
+                $encargadosEscuela = DB::table('encargado_escuelas')
+                ->join('carreras', 'encargado_escuelas.carrera_id', '=', 'carreras.id')
+                ->join('facultades', 'carreras.facultad_id', '=', 'facultades.id')
+                ->select('encargado_escuelas.id AS idEncargado', 'codigo_encargado_escuela', 'dui_encargado_escuela', 'nombre_encargado_escuela', 'apellido_encargado_escuela', 'correo_encargado_escuela', 'telefono_encargado_escuela', 'estado_encargado_escuela', 'nombre_facultad', 'facultad_id', 'nombre_carrera', 'carrera_id')
+                ->where('facultad_id', '=', $encargadoF->facultad_id)
+                ->get();
+                // obteniendo los encargados de facultad 
+                $facultades = DB::table('facultades')->distinct('nombre_facultad')
+                ->join('carreras', 'facultades.id', '=', 'carreras.facultad_id')
+                ->join('encargado_escuelas', 'carreras.id', '=', 'encargado_escuelas.carrera_id')
+                ->leftJoin('encargado_facultades', 'facultades.id', '=', 'encargado_facultades.facultad_id')
+                ->select('facultades.id as id','nombre_facultad', 'estado_encargado_escuela', 'nombre_encargado_facultad', 'apellido_encargado_facultad')
+                ->where('facultades.id', '=', $encargadoF->facultad_id)
+                ->get();
+                // obteniendo las carreras
+                $carreras = Carrera::all();
+
+            } else {
+                //$facultades = Facultad::all();
+                // obteniendo los encargados de escuela
+                $encargadosEscuela = DB::table('encargado_escuelas')
+                ->join('carreras', 'encargado_escuelas.carrera_id', '=', 'carreras.id')
+                ->join('facultades', 'carreras.facultad_id', '=', 'facultades.id')
+                ->select('encargado_escuelas.id AS idEncargado', 'codigo_encargado_escuela', 'dui_encargado_escuela', 'nombre_encargado_escuela', 'apellido_encargado_escuela', 'correo_encargado_escuela', 'telefono_encargado_escuela', 'estado_encargado_escuela', 'nombre_facultad', 'facultad_id', 'nombre_carrera', 'carrera_id')
+                ->get();
+                // obteniendo los encargados de facultad 
+                $facultades = DB::table('facultades')->distinct('nombre_facultad')
+                ->join('carreras', 'facultades.id', '=', 'carreras.facultad_id')
+                ->join('encargado_escuelas', 'carreras.id', '=', 'encargado_escuelas.carrera_id')
+                ->leftJoin('encargado_facultades', 'facultades.id', '=', 'encargado_facultades.facultad_id')
+                ->select('nombre_facultad', 'estado_encargado_escuela', 'nombre_encargado_facultad', 'apellido_encargado_facultad')
+                ->get();
+                // obteniendo las carreras
+                $carreras = Carrera::all();
+            }
+        }
+
+
+        
         return Inertia::render('Components/EncargadoEscuela/ListarEncargadoEscuela', ['encargadosE' => $encargadosEscuela, 'facultades' => $facultades, 'carreras' => $carreras]);
     }
 
@@ -98,6 +133,14 @@ class EncargadoEscuelaController extends Controller
         // generación de contraseña
         /*$permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
         $contra = substr(str_shuffle($permitted_chars), 0, 10);*/
+
+        $request->validate([
+            'correo_encargado_escuela' => 'required|unique:encargado_escuelas|regex:/^.+@.+$/i',
+            'codigo_encargado_escuela' => 'required|unique:encargado_escuelas|max:12',
+            'dui_encargado_escuela' => 'required|unique:encargado_escuelas|regex:/[0-9]{8}-[0-9]/i|size:10',
+            'telefono_encargado_escuela' => 'required|unique:encargado_escuelas|regex:/[0-9]{4}(-)?[0-9]{4}/i',
+        ]);
+
         $contra = "adminadmin";
 
         // obteniendo la data de request
@@ -119,7 +162,8 @@ class EncargadoEscuelaController extends Controller
             User::create([
                 'name' => $data['codigo_encargado_escuela'],
                 'email'=> $data['correo_encargado_escuela'],
-                'password' => bcrypt($contra)
+                'password' => bcrypt($contra),
+                'rol'=>'Encargado Escuela'
             ])->assignRole('Encargado Escuela');
                 
             // obteniendo el id usuario creado
@@ -130,6 +174,19 @@ class EncargadoEscuelaController extends Controller
             $encargado = EncargadoEscuela::where('correo_encargado_escuela', '=', $data['correo_encargado_escuela'])->firstOrFail();
             $encargado->user_id = $id;
             $encargado->save();
+
+            //envio de correo
+            //details es un array que contiene las variables que se van a renderizar en la vista del correo
+            $details = [
+                'usuario' => $data['correo_encargado_escuela'],
+                'contraseña' => $contra,
+                'mensaje' => 'Estimado/a '.$data['nombre_encargado_escuela'].' '.$data['apellido_encargado_escuela'].', su cuenta como encargado de escuela en SASS-UES ha sido creada.',
+            ];
+            //Se crea un objeto correo de tipo CredencialesMailable para el envio de correo de credenciales
+            //Se debe crear otra clase de tipo Mailable si se quiere crear un correo que sirva para otra cosa
+            $correo = new CredencialesMailable($details);
+            //Se envía el correo, con la dirección del estudiante
+            Mail::to($data['correo_encargado_escuela'])->send($correo); 
         }
 
         return Redirect::route('encargadosescuela.index');  

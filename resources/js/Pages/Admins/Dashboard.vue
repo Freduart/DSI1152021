@@ -16,7 +16,7 @@
               </div>
               <div class="col-sm-8 alinging">
                 <h1 class="ml-3">Universidad de El Salvador</h1>
-                <h4 class="ml-3">Hacia la libertal por la cultura</h4>
+                <h4 class="ml-3">Hacia la libertad por la cultura</h4>
               </div>
             </div>
             <div class="col-md-4">
@@ -59,11 +59,8 @@
 <script>
     import JetNavLink from '@/Jetstream/NavLink'
     import JetDropdownLink from '@/Jetstream/DropdownLink'
-
     import Base from "@/Pages/Base.vue";
-
     export default {
-
         name: 'ContentActions',
         components:{
             JetNavLink,
@@ -85,18 +82,6 @@
             //this.$forceUpdate();
             
         },
-        /*watch: {
-                     // Si la ruta cambia, el método se ejecutará nuevamente
-          "$route" (to, from){
-              //location.reload();
-            if(to !== from ) {
-                this.siteData = this.getSiteData();
-            }
-          },
-        },*/
-        /*beforeRouteEnter (to, from, next) { 
-            location.reload()
-        } */
     }    
     
 </script>

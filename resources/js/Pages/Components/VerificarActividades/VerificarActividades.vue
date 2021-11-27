@@ -12,14 +12,14 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Verificación de actividades</h1>
+              <h1 class="m-0">Bitácora del estudiante</h1>
             </div><!-- /.col -->          
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->
       </div><!-- /.content-header -->
 
       <!-- Main content -->
-      <div  v-if="actividadesFiltradas.length != 0">
+      
       <section class="content">
         <div class="container-fluid">
           <!-- Main row -->
@@ -28,33 +28,117 @@
             <section class="col-lg-12 connectedSortable">
               <!-- TO DO List -->
               <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="ion ion-clipboard mr-1"></i>
-                      Lista de Actividades de los estudiantes
-                  </h3>
-                  <br>
-                  
-                  <!--Boton para finalizar actividades-->
-                  <div class="col">
-                    <div class="form-group">
-                      <inertia-link type="button" class="btn btn-success float-left mt-2" :href="route('finalizaractividades.index')">
-                        <i class="fa fa-check-square"></i> Finalizar Actividades
-                      </inertia-link>
+                  <div class="card-header">
+                    <h5><strong>Información del servicio social</strong></h5>
+                  </div>
+                 
+                  <div class="card-body">
+                    <!-- <h5 class="mt-2 ml-3" style="margin-bottom: 0.2rem;">{{ proyecto.nombre_peticion }}</h5>
+                      <p class="ml-4 mb-1 text-gray" >Tipo Servicio: {{ proyecto.nombre_tipo_servicio }}</p>
+                      <p class="ml-4 mb-4 text-gray" >Institución: {{ proyecto.nombre_institucion }}</p> -->
+                    <div class="row">
+                        
+                      <div class="col-sm-6 ml-4">
+
+                        <div class="row">
+                          <div class="col-md-5">
+                            <strong>Servicio social:</strong>
+                          </div>
+                          <div class="col-md-6">
+                            {{ $props.proyecto.nombre_peticion }}
+                          </div>
+                        </div> 
+
+                        <div class="row">
+                          <div class="col-md-5">
+                            <strong>Tipo de servicio:</strong>
+                          </div>
+                          <div class="col-md-6">
+                            {{ $props.proyecto.nombre_tipo_servicio }}
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-5">
+                            <strong>Institucion:</strong>
+                          </div>
+                          <div class="col-md-6">
+                            {{ $props.proyecto.nombre_institucion }}
+                          </div>
+                        </div>
+                       
+                        <div class="row">
+                          <div class="col-md-5">
+                            <strong>Nombre Estudiante:</strong>
+                          </div>
+                          <div class="col-md-6">
+                            {{ $props.estudiante.nombre_estudiante }} {{ $props.estudiante.apellido_estudiante }}
+                          </div>
+                        </div> 
+
+                        
+
+                        <div class="row">
+                          <div class="col-md-5">
+                            <strong>Estado de las actividades:</strong>
+                          </div>
+                          <div class="col-md-6">
+                            <h5 class="">
+                                  <button v-if="$props.proyecto.estado_bitacora == 'En curso'" class="btn btn-primary" style="cursor: default;">{{ $props.proyecto.estado_bitacora }}</button>
+                                  <button v-else-if="$props.proyecto.estado_bitacora == 'Finalizado'" class="btn btn-success" style="cursor: default;">{{ $props.proyecto.estado_bitacora }}</button>
+                            </h5>
+                          </div>
+                        </div> 
+                        <!--Boton para finalizar actividades-->
+                        <div class="col">
+                          <div class="form-group">
+                            <a type="button" class="btn btn-secondary float-left mt-2 mr-2" :href="`/serviciossociales/${proyecto.idServicio}`">
+                              <i class="fa fa-arrow-left"></i> Regresar al servicio social
+                            </a>
+                            <a v-if="proyecto.estado_bitacora == 'En curso' && actividadesFiltradas.length != 0" type="button" class="btn btn-success float-left mt-2" v-on:click="concederHoras();">
+                              <i class="fa fa-clipboard-check"></i> Conceder horas al estudiante
+                            </a>
+                          </div>
+                        </div> 
+                      </div>
                     </div>
                   </div>
+                  
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title mt-2 ml-3"><strong>Lista de Actividades</strong></h5>
+                   <div class="row">
+                      <!--Boton para añadir actividades-->
+                      <div class="col">
+                          <div v-if="actividadesFiltradas.length != 0" class="form-group">
+                            <button v-if="proyecto.estado_bitacora == 'En curso'" type="button" class="btn btn-success float-right" v-on:click="aceptarTodas();">
+                            <i class="fas fa-check-circle"></i> Aceptar todas las actividades</button> 
+                          </div>
+                      </div>
+                    </div>
+                  
+                  
+                  
                 </div>
+
+                
                 <!-- /.card-header -->
-                <div v-if="actividadesFiltradas.length != 0">
+                
                 <div class="card-body">
                   <ul class="todo-list" data-widget="todo-list">
                     <li>
                       <!--Tabla donde apareceran todos las actividades-->
+                      <div v-if="actividadesFiltradas.length != 0">
+                      
                       <table class="table table-hover text-center" width="500" style="font-size: 20px">
                         <thead class="thead-dark">
                           <tr>
-                            <th scope="col" width="20%">Código de la actividad</th>
-                            <th scope="col">Nombre de la actividad</th>
+                            <th scope="col">Actividad</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Horas</th>
+                            <th scope="col">Estado</th>
                             <th scope="col">Acción</th>
                           </tr>
                         </thead>
@@ -62,26 +146,44 @@
                         <tbody>
                           <tr class="table-secondary" scope="row" v-for="(actividad, index) in actividadesFiltradas" :key="index">
                             <!--Aqui devuelven los datos que se mostraran en pantalla -->
-                            <td>{{ actividad.id }}</td>
                             <td>{{ actividad.nombre_actividad }}</td>
+                            <td>{{ actividad.fecha_actividad }}</td>
+                            <td>{{ actividad.total_horas }}</td>
+                            <!-- <td>{{ actividad.verificado }}</td> -->
+                            <td><button v-if="actividad.verificado == 'Reportada'" class="btn btn-danger" style="cursor: default;"><i>{{ actividad.verificado }}</i></button>
+                                <button v-else-if="actividad.verificado == 'Aceptada'" class="btn btn-success" style="cursor: default;"><i>{{ actividad.verificado }}</i></button>
+                                <button v-else-if="actividad.verificado == 'En espera'" class="btn btn-warning" style="cursor: default;"><i>{{ actividad.verificado }}</i></button>
+                            </td>
                             <td>
                               <div class="flex justify-center">      
                                 <!--boton verificar-->
-                                <button class="btn btn-primary" v-on:click="mostrarDatos(actividad)" data-toggle="modal" data-target="#verificar">
+                                <button v-if="actividad.verificado == 'Reportada' || actividad.verificado == 'Aceptada'" class="btn btn-info" v-on:click="mostrarDatos(actividad)" data-toggle="modal" data-target="#verificar">
+                                  <i class="fa fa-info-circle"></i> &nbsp; <strong> Ver actividad </strong>
+                                </button>
+                                <button v-if="actividad.verificado == 'En espera'" class="btn btn-warning" v-on:click="mostrarDatos(actividad)" data-toggle="modal" data-target="#verificar">
                                   <i class="fa fa-glasses"></i> &nbsp; <strong> Verificar </strong>
                                 </button>
+                                
+                                
                               </div>
                             </td>
                           </tr>
                         </tbody>
                       </table>
+                      <h5> 
+                          <strong>Total de horas aceptadas: 
+                          <!--Llamamos la variblae total, que tiene el total de horas de las actividades realizadas-->
+                          {{ this.horasTotales }} horas 
+                          </strong>
+                      </h5>
+                      </div>
+                      <div v-else class="alert alert-warning ml-4 mr-4 mt-3" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+                          No se han encontrado datos
+                      </div>
                     </li>
                   </ul>
                 </div>  
-                </div>
-                <div v-else class="alert alert-warning ml-4 mr-4 mt-3" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
-                    No se han encontrado datos
-                </div>
+                
 
 
               </div>
@@ -89,10 +191,7 @@
           </div><!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
       </section><!-- /.content -->
-      </div>
-      <div v-else class="alert alert-warning ml-4 mr-4 mt-3" role="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
-        No se han encontrado datos
-      </div>
+      
     </div><!-- /.content-wrapper -->
   </div>
 
@@ -114,8 +213,8 @@
           <div class="card-body">
             <table class="">
               <tr>
-                <td><h5 class=""><strong>Códido de la actividad: </strong></h5></td>
-                <td><h5>{{ form.id }}</h5></td>
+                <td><h5 class=""><strong>Estudiante: </strong></h5></td>
+                <td><h5>{{ form.nombre_estudiante }} {{ form.apellido_estudiante }}</h5></td>
               </tr>
               <tr>
                 <td><h5 class=""><strong>Nombre de la actividad: </strong></h5></td>
@@ -133,11 +232,22 @@
                 <td><h5><strong>Estado de actividad:</strong></h5></td>
                 <td>
                 <h5><strong>
-                  <button v-if="form.verificado == 'En espera'" class="btn btn-info" style="cursor: default;" disabled>
-                    <i class="far fa-clock"></i> &nbsp; <strong> En espera </strong>
+                  <button v-if="form.verificado == 'En espera'" class="btn btn-warning" style="cursor: default;" >
+                    <i> En espera </i>
+                  </button>
+                  <button v-else-if="form.verificado == 'Aceptada'" class="btn btn-success" style="cursor: default;" >
+                    <i> Aceptada </i>
+                  </button>
+                  <button v-else-if="form.verificado == 'Reportada'" class="btn btn-danger" style="cursor: default;" >
+                    <i> Reportada </i>
                   </button>
                 </strong></h5>
                 </td>
+              </tr>
+              <tr>
+                <td><h5 class=""><strong>Observaciones: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strong></h5></td>
+                <td v-if="form.observaciones_actividad == null || form.observaciones_actividad == ''"><h5>-</h5></td>
+                <td v-else><h5>{{ form.observaciones_actividad }}</h5></td>
               </tr>
             </table>
           </div><!-- Fin card body-->
@@ -146,37 +256,80 @@
           <div class="card-footer clearfix">
             <div class="d-flex justify-content-center align-items-baseline">
               <!--Fila de los botones-->
+              
+                <!--boton atras-->
+                <button class="btn btn-dark float-center mr-2" title="Atras" data-dismiss="modal">
+                  <i class="fas"></i>Cerrar
+                </button>
+              
+                <!--boton de reportar actividad-->
+                <button v-if="form.verificado == 'En espera'" class="btn btn-danger mr-2" title="Verificar actividad" data-dismiss="modal" data-toggle="modal" data-target="#observaciones"> 
+                  <i class="fas"></i>Reportar actividad
+                </button>
+
+              
+                <!--boton de verificación de actividad-->
+                <button v-if="form.verificado == 'En espera' || form.verificado == 'Reportada'" class="btn btn-success" title="Verificar actividad" v-on:click="verificacion(form)"> 
+                  Aceptar actividad
+                </button>
+              
+
+            </div>
+          </div>
+          <!--Fin de sección de botones-->
+        </div><!--Fin cuerpo de la modal-->
+      </div><!--Fin contenido de la modal-->
+    </div>
+  </div>
+
+
+
+  <!-- Modal para el reporte de la actividad del estudiante-->
+  <div class="modal fade" id="observaciones" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <!--Contenido de la modal-->
+      <div class="modal-content">
+        <!--Encabezado de la modal-->
+        <div class="modal-header">
+          <!--Título de la modal-->
+          <h5 class="modal-title" id="exampleModalLabel">Reportar actividad</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div><!--Fin del encabezado-->
+        <!--Cuerpo de la modal-->
+        <div class="modal-body">
+          <div class="card-body">
+              <h5>La actividad: "{{ form.nombre_actividad }}" se le asignará el estado de Reportada. Indique las correcciones a realizar por el estudiante.</h5>
+              <br>
+              <form>
+                <jet-label for="observaciones_actividad" value="Observaciones" />
+                <textarea class="form-control" id="observaciones_actividad" type="text" v-model="form.observaciones_actividad" required autofocus autocomplete="off"/>
+              </form>
+          </div>
+          <div class="card-footer clearfix">
+            <div class="d-flex justify-content-center align-items-baseline">
+              <!--Fila de los botones-->
               <div class="row">
                 <!--Primera columna-->
                 <div class="col">
-                  <!--boton de verificación de actividad-->
-                  <inertia-link class="btn btn-warning" title="Verificar actividad" method="put" :href="route('verificaractividades.update', this.form)" v-on:click="verificacion(form)"> 
-                    <i class="fas"></i>Aceptar
-                  </inertia-link>
+                  <!--boton atras-->
+                  <button class="btn btn-secondary float-center" title="Atras" data-dismiss="modal" data-toggle="modal" data-target="#verificar">
+                    <i class="fas"></i>Cancelar
+                  </button>
                 </div><!--Fin primera columna-->
 
                 <!--Segunda columna-->
                 <div class="col">
-                  <!--boton de reportar actividad-->
-                  <inertia-link class="btn btn-danger" title="Verificar actividad" method="delete" :href="route('verificaractividades.destroy', this.form)" v-on:click="Reportar(form)"> 
-                    <i class="fas"></i>Reportar 
-                  </inertia-link>
-                  <!--<button v-else class="btn btn-danger float-center" title="Verificar actividad" v-on:click="Reportar(form)">
-                    <i class="fas"></i>Reportar
-                  </button>-->
-                </div><!--Fin Segunda columna-->
-
-                <!--Tercera columna-->
-                <div class="col">
-                  <!--boton atras-->
-                  <button :href="route('verificaractividades.index')" class="btn btn-dark float-center" title="Atras" data-dismiss="modal">
-                    <i class="fas"></i>Atrás
+                  <!--boton de verificación de actividad-->
+                  <button class="btn btn-primary" title="Verificar actividad" v-on:click="reportar(form)"> 
+                    <i class="fas"></i>Continuar
                   </button>
-                </div><!--Fin Tercera columna-->
+                </div>
+                <!--Fin Segunda columna-->
               </div><!--Fin de la fila de los botones-->
             </div>
           </div>
-          <!--Fin de sección de botones-->
         </div><!--Fin cuerpo de la modal-->
       </div><!--Fin contenido de la modal-->
     </div>
@@ -204,7 +357,7 @@
             //JetButton,
             Base
         },
-        props:['actividades'],
+        props:['actividades', 'proyecto', 'estudiante'],
         methods:{
             logout() {
                 this.$inertia.post(route('logout'));
@@ -230,36 +383,67 @@
           
           //Metodo para la verificación de la actividad
             verificacion(actividad){
-              if(actividad.verificado == 'En espera'){
-                Swal.fire({
-                  title:'¿Está seguro que desea dar por verificada la actividad?',
-                  text: "Código " + actividad.id + " Nombre de actividad" + actividad.nombre_actividad,
-                  icon:'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Si, dar por verificada',
-                  cancelButtonText: 'No, cancelar'
-                }).then((result)=>{
-                  if(result.isConfirmed){
-                    this.$inertia.put(route('verificaractividades.update', actividad.id), this.formUp);
-                    Swal.fire(
-                      '!Verificada',
-                      'La actividad a sido verificada correctamente',
-                      'success'
-                    );
-                    window.location.reload(true);
-                  }
-                })
-              }
+              Swal.fire({
+                title:'¿Está seguro que desea dar por aceptada la actividad?',
+                text: 'Se aceptará la actividad: "' + actividad.nombre_actividad + "'",
+                icon:'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, dar por verificada',
+                cancelButtonText: 'No, cancelar'
+              }).then((result)=>{
+                if(result.isConfirmed){
+                  this.form.verificado = 'Aceptada';
+                  this.$inertia.put(route('verificaractividades.update', actividad.id), this.form);
+                  Swal.fire({
+                  title: 'Actividad Verificada',
+                  text: 'La actividad: ' + actividad.nombre_actividad + ', ha sido verificada correctamente',
+                  icon: 'success',
+                  confirmButtonText: 'Aceptar',
+                  allowEscapeKey: false,
+                  allowOutsideClick: false,
+                  showConfirmButton: true,
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      location.reload();
+                    }
+                  });
+
+                }
+              })
             },
 
             // Método para reportar la actividad
-            Reportar(actividad){
-              if(actividad.verificado == 'En espera'){
-                Swal.fire({
-                  title:'¿Está seguro que desea reportar la actividad?',
-                  text: "Código " +actividad.id + " Nombre de actividad " +actividad.nombre_actividad,
+            reportar(actividad){
+              
+              var valor = document.getElementById('observaciones_actividad').value;
+              //alert(valor);
+              this.form.verificado = 'Reportada';
+              this.form.observaciones_actividad = valor;
+              this.$inertia.put(route('verificaractividades.update', actividad.id), this.form);
+              Swal.fire({
+              title: 'Actividad Reportada',
+              text: 'La actividad: ' + actividad.nombre_actividad + ', ha sido reportada correctamente',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+              showConfirmButton: true,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  location.reload();
+                }
+              });
+                    
+                  
+            },
+
+            // Método para aceptar todas las actividades
+            aceptarTodas(){
+              Swal.fire({
+                  title:'¿Está seguro que desea aceptar todas las actividades?',
+                  text: "Todas las actividades serán aceptadas, incluso las que estan reportadas",
                   icon:'warning',
                   showCancelButton: true,
                   confirmButtonColor: '#3085d6',
@@ -268,25 +452,105 @@
                   cancelButtonText: 'No, cancelar'
                 }).then((result)=>{
                   if(result.isConfirmed){
-                    //this.$inertia.put(route('verificaractividades.destroy', actividad.id), this.formUp);
-                    Swal.fire(
-                      '!Reportada',
-                      'La actividad ha sido reportada correctamente',
-                      'success'
-                    );
-                    window.location.reload(true);
+                    this.form.verificado = 'Aceptadas';
+                    //this.$inertia.put(route('verftodas'), this.form);
+                    this.$inertia.put(route('verificaractividades.update', this.estudiante.idE), this.form);
+                    Swal.fire({
+                    title: 'Actividades aceptadas',
+                    text: 'Todas las actividades del estudiante ' + this.estudiante.nombre_estudiante + ' ' + this.estudiante.apellido_estudiante +' han sido aceptadas correctamente',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showConfirmButton: true,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        location.reload();
+                      }
+                    });
+                    
                   }
                 })
+            },
+
+            // Método para conceder horas
+            concederHoras(){
+              var cont = 0;
+              var actividades = this.actividades;
+              for(var actividad of actividades){
+                  if (actividad.verificado == 'En espera' || actividad.verificado == 'Reportada'){
+                      cont++;
+                  }
+              } 
+
+              if (cont == 0){
+                this.form.verificado = 'Finalizadas';
+                Swal.fire({
+                  title:'¿Está seguro que desea conceder horas al estudiante?',
+                  text: "Se dará como finalizadas las actividades del estudiante para el servicio social. El estudiante NO podrá realizar más actividades para este proyecto.",
+                  icon:'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Aceptar',
+                  cancelButtonText: 'No, cancelar'
+                }).then((result)=>{
+                  if(result.isConfirmed){
+                    //this.$inertia.put(route('verftodas'), this.form);
+                    this.$inertia.put(route('verificaractividades.update', this.estudiante.idE), this.form);
+                    Swal.fire({
+                    title: 'Actividades Finalizadas del estudiante',
+                    text: 'El estudiante ' + this.estudiante.nombre_estudiante + ' ' + this.estudiante.apellido_estudiante +' ha finalizado las actividades del servicio social',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showConfirmButton: true,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        location.reload();
+                      }
+                    });
+                    
+                  }
+                })
+              } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: "No es posible conceder horas ya que hay actividades que se encuentran sin verificar o que están reportadas.",
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar',
+                    allowEscapeKey: true,
+                    allowOutsideClick: true,
+                    showConfirmButton: true,  
+                })
               }
+              
             },
 
             //carga informacion de la actividad seleccionada al formulario del modal
             mostrarDatos(actividad){
               this.form.id = actividad.id,
+              this.form.nombre_estudiante = actividad.nombre_estudiante,
+              this.form.apellido_estudiante = actividad.apellido_estudiante,
               this.form.nombre_actividad = actividad.nombre_actividad,
               this.form.fecha_actividad = actividad.fecha_actividad,
+              this.form.observaciones_actividad = actividad.observaciones_actividad,
               this.form.total_horas = actividad.total_horas,
-              this.form.verificado = actividad.verificado
+              this.form.verificado = actividad.verificado,
+              this.form.estudiante_id = actividad.idE,
+              this.form.proyecto_social_id = this.proyecto.idServicio
+            },
+
+            calcularTotal(){
+              var total = 0;
+              this.actividades.forEach(element => {
+                if(element.verificado == 'Aceptada'){
+                  total += element.total_horas;
+                }
+              });
+              this.horasTotales = total;
+              
             }
     },    
       
@@ -294,14 +558,21 @@
         return{
           actividad:0,
           actividadesFiltradas:[],
+          proyectosFiltradas:[],
           successGuardado:false,
+          horasTotales:0,
           //formularioNuevaCarrera:false,
           form: this.$inertia.form({
             id:'',
             nombre_actividad:'',
             fecha_actividad:'',
-            total_horas:'',
+            total_horas:0,
             verificado:'En espera',
+            nombre_estudiante: '',
+            apellido_estudiante: '',
+            observaciones_actividad:null,
+            proyecto_social_id: this.proyecto.idServicio,
+            estudiante_id: this.estudiante.idE,
           }),
           formUp: this.$inertia.form({
             id:'',
@@ -309,6 +580,8 @@
             fecha_actividad:'',
             total_horas:'',
             verificado:'En espera',
+            //proyecto_social_id: this.props.proyecto.proyecto_social_id,
+            //estudiante_id:'',
           }),
         }
     },        
@@ -318,7 +591,8 @@
         this.actividadesFiltradas.push(element);
       }),
       // this.mostrarMensajeSuccess();
-      this.successGuardado = false;        
+      this.successGuardado = false; 
+      this.calcularTotal(); 
     },
   }
 </script>

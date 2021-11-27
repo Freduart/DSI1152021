@@ -21,7 +21,10 @@ use App\Http\Controllers\ServicioSocialController;
 use App\Http\Controllers\PeticionController;
 use App\Http\Controllers\TipoServicioController;
 use App\Http\Controllers\ConstanciaController;
-use App\Http\Controllers\FinalizarProyectoController;
+use App\Http\Controllers\EstadisticasController;
+// use App\Http\Controllers\FinalizarProyectoController;
+use App\Http\Controllers\FinalizarServicioController;
+
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +32,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\UsersController;
 
 use App\Mail\CredencialesMailable;
+use App\Mail\CorreossInstitucionMailable;
+use App\Models\Bitacora;
 use Illuminate\Support\Facades\Mail;
 
 /*
@@ -42,17 +47,25 @@ use Illuminate\Support\Facades\Mail;
 |
 */
 
-Route::resource('usuarios', UsersController::class)->middleware(['auth:sanctum','verified']);
-Route::resource('roles', RolController::class)->middleware(['auth:sanctum','verified']);
+
 
 Route::get('/', function () {
-    return Inertia::render('Admins/Dashboard', [
+    return Inertia::render('Admins/home', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('homepage');
+
+// Route::middleware(['auth'])->group(function(){
+//     Route::get('/usuarios/detalle/{id}', [UsersController::class, 'show'])->name('user.show')->middleware('permission:user.create');
+// });
+
+
+
+Route::resource('usuarios', UsersController::class)->middleware(['auth:sanctum','verified']);
+Route::resource('roles', RolController::class)->middleware(['auth:sanctum','verified']);
 
 Route::get('/dashboard', function () {
    // return Inertia::render('Dashboard');
@@ -66,15 +79,10 @@ Route::prefix('admin')->name('admin')->middleware(['auth:sanctum','verified'])->
 });
 
 Route::resource('estudiantes', EstudianteController::class);
-// Route::get('/formEstudiante', [EstudianteController::class, 'create'])->name('formEstudiante');
-// Route::get('/findCarrerabyFacultad/{id}?', [EstudianteController::class, 'findCarrerasByFacultad', 'id' => null])->name('findCarreraByFac');
 
 Route::resource('carreras', CarreraController::class)->middleware(['auth:sanctum','verified']);
 
-// Route::put('carreras/cambiar/{estado}', function($carrera, $estado){
-//     $carrera->estado_carrera = $estado;
-//     return $carrera->all();
-// })->name('carreras.updateStatus');
+
 Route::resource('encargadosfacultad', EncargadoFacultadController::class)->middleware(['auth:sanctum','verified']);
 Route::resource('facultades', FacultadController::class)->middleware(['auth:sanctum','verified']);
 
@@ -101,19 +109,31 @@ Route::resource('serviciossociales', ServicioSocialController::class)->middlewar
 
 Route::resource('constancia', ConstanciaController::class)->middleware(['auth:sanctum', 'verified']);
 
-Route::resource('finproyecto',FinalizarProyectoController::class)->middleware(['auth:sanctum', 'verified']);
-Route::get('actividades/{proyecto_social_id}', ['as' => 'actividades', 'uses' => 'ActividadesController@show']);
+Route::resource('serviciofinalizado',FinalizarServicioController::class)->middleware(['auth:sanctum', 'verified']);
 
-//Route::delete('verificarcuenta/{id}', [VerificarCuentaController::class, 'id'])->name('verificarcuenta.eliminar');
-Route::get('credenciales', function (){
-  $details = [
-    'usuario' => 'usuariooo',
-    'contrasena' => 'contra'
-  ];
-  //$correo = new CredencialesMailable;
-  Mail::to('jganuzaramírez@gmail.com')->send(new CredencialesMailable($details));
-  return "mensaje enviado";
-});
+
+Route::get('actividades/{proyecto_social_id}', [ActividadesController::class, 'show'])->name('actividades');
+
+
+Route::get('serviciossociales/{proyecto_social_id}', [ServicioSocialController::class, 'show'])->name('serviciossociales');
+
+
+Route::get('serviciossociales/{proyecto_social_id}/estudiante/{estudiante_id}', [VerificarActividadesController::class, 'actividades'])->name('actividadesestudiante');
+
+Route::get('serviciosdisponibles', [ServicioSocialController::class, 'serviciosDisponibles'])->name('serviciosDisponibles')->middleware(['auth:sanctum', 'verified']);
+
+
+//Confirmacion de peticion se servicio social
+//Supongo que confirmacion es el nombre de la ruta
+/*Route::get('confirmacion', function(){
+
+    
+    $correossinsti = new CorreossInstitucionMailable;
+
+    Mail::to('stefany19rodriguez@gmail.com')->send(new CorreossInstitucionMailable());
+    return "Mensaje enviado";
+});*/
+
 
 
 //Ruta para el tipo de servicio social
@@ -122,4 +142,12 @@ Route::resource('tipoServicio', TipoServicioController::class)->only([
 ]);
 
 //Ruta de las peticiones
+Route::put('peticiones/status/{peticion}', [PeticionController::class, 'updateStatus'])->name('peticiones.updateStatus');
 Route::resource('peticiones', PeticionController::class);
+
+
+Route::get('estadisticas', [EstadisticasController::class, 'index'])->middleware(['auth:sanctum', 'verified'])->name('estadisticas');
+Route::get('/bitacoras/pdf/{proyecto_social_id}', [BitacoraController::class, 'generarPDF'])->name('bitacora.pdf');
+// Route::get('/bitacoras/pdf/{proyecto_social_id}', [BitacoraController::class, 'generarPDF'])->name('bitacora.pdf');
+
+Route::get('/constancia/pdf/{idEstudiante}', [ConstanciaController::class, 'generarPDF'])->name('constancia.pdf');

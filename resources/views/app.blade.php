@@ -18,6 +18,10 @@
         <link rel="stylesheet" href="../themes/default/default.css" type="text/css" media="screen" />
         <link rel="stylesheet" href="../nivo-slider.css" type="text/css" media="screen" />
 
+        {{-- Autocomplete --}}
+        <link href="https://unpkg.com/vue-bootstrap-typeahead/dist/VueBootstrapTypeahead.css" rel="stylesheet">
+        <script src="https://unpkg.com/vue-bootstrap-typeahead"></script>
+
         @routes
         
         
@@ -34,7 +38,7 @@
         <script type="text/javascript">
             window.Laravel = {
                 csrfToken: "{{ csrf_token() }}",
-                jsPermissions: {!! auth()->check()?auth()->user()->jsPermissions():null !!}
+                jsPermissions: {!! auth() -> check() ? auth() -> user() -> jsPermissions():0 !!}
             }
         </script>
     </head>

@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use App\Mail\CredencialesMailable;
+use Illuminate\Support\Facades\Mail;
 
 class EncargadoFacultadController extends Controller
 {
@@ -70,6 +72,13 @@ class EncargadoFacultadController extends Controller
      */
     public function store(Request $request)
     {
+      
+      $request->validate([
+        'correo_encargado_facultad' => 'required|unique:encargado_facultades|regex:/^.+@.+$/i',
+        'codigo_encargado_facultad' => 'required|unique:encargado_facultades|max:12',
+        'dui_encargado_facultad' => 'required|unique:encargado_facultades|regex:/[0-9]{8}-[0-9]/i|size:10',
+        'telefono_encargado_facultad' => 'required|unique:encargado_facultades|regex:/[0-9]{4}(-)?[0-9]{4}/i',
+      ]);
       // generación de contraseña
       /*$permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
       $contra = substr(str_shuffle($permitted_chars), 0, 10);*/
@@ -95,7 +104,8 @@ class EncargadoFacultadController extends Controller
         User::create([
           'name' => $data['codigo_encargado_facultad'],
           'email'=> $data['correo_encargado_facultad'],
-          'password' => bcrypt($contra)
+          'password' => bcrypt($contra),
+          'rol'=>'Encargado Facultad'
         ])->assignRole('Encargado Facultad');
         
         // obteniendo el id usuario creado
@@ -106,6 +116,19 @@ class EncargadoFacultadController extends Controller
         $encargado = EncargadoFacultad::where('correo_encargado_facultad', '=', $data['correo_encargado_facultad'])->firstOrFail();
         $encargado->user_id = $id;
         $encargado->save();
+
+        //envio de correo
+        //details es un array que contiene las variables que se van a renderizar en la vista del correo
+        $details = [
+          'usuario' => $data['correo_encargado_facultad'],
+          'contraseña' => $contra,
+          'mensaje' => 'Estimado/a '.$data['nombre_encargado_facultad'].' '.$data['apellido_encargado_facultad'].', su cuenta como encargado de facultad en SASS-UES ha sido creada.',
+        ];
+        //Se crea un objeto correo de tipo CredencialesMailable para el envio de correo de credenciales
+        //Se debe crear otra clase de tipo Mailable si se quiere crear un correo que sirva para otra cosa
+        $correo = new CredencialesMailable($details);
+        //Se envía el correo, con la dirección del estudiante
+        Mail::to($data['correo_encargado_facultad'])->send($correo);  
       }
 
       return Redirect::route('encargadosfacultad.index');  

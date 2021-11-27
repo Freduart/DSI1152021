@@ -112,12 +112,8 @@
                         <div class="row">
                               <div class="col">
                                 <jet-button type="button" class="mt-3 ml-2 mb-1 btn btn-primary" data-toggle="modal" data-target="#verInstitucion" v-on:click="mostrarInstitucion(servicioA)" title="Ver informacion de la institución">Información de la institución</jet-button>
-                                <a type="button" class="mt-3 ml-2 mb-1 btn btn-warning left" :href="`/actividades/${servicioA.idServicio}`" title="Ver informacion de la actividad">Información de la actividad</a>                             
+                                <a v-if="servicioA.estado == 'En curso'" type="button" class="mt-3 ml-2 mb-1 btn btn-warning left" :href="`/actividades/${servicioA.idServicio}`" title="Ver informacion de la actividad">Información de las actividades</a>                             
                               </div>
-                          <div class="col">
-                            <!--BOTON DE ACTIVIDADES -->
-                                  
-                           </div>
                         </div>
                       
                     </div>
@@ -142,14 +138,28 @@
               <div class="card">
                 <!-- /.card-header -->
                 <div class="card-header">
-                  <h5 class="mt-2 mb-2 ml-2">Servicios sociales realizados</h5>
+                  <div class="row mb-2">
+                    <div class="col-sm-6">
+                      <h5 class="mt-2 mb-2 ml-2">Servicios sociales realizados</h5>
+                    </div>
+                  </div>
                 </div>
+                
                 <!-- /.card-body -->
                 <div class="card-body" v-if="servicios.length != 0">
-                  
+                  <div class="row mb-2">
+                    <div class="col-sm-6">
+                      <h5 class="mt-2 mb-2 ml-2">Constancia de cumplimiento de servicio social</h5>
+                    </div>
+                    <div class="col-sm-6">
+                    <a :href="route('constancia.pdf', $props.idEstudiante)">
+                      <button class="ml-16 btn btn-info float-right" >Generar PDF</button>
+                     </a>
+                    </div>
+                  </div>
                   <!-- todo text -->
                   <!-- tabla de las solicitudes del estudiante -->
-                  <table class="table table-hover text-center ">
+                  <table class="table table-hover text-center "  width="500" style="font-size: 17px">
                       <thead class="thead-dark">
                           <tr>
                           <th scope='col' width="40%">Proyecto</th>
@@ -157,7 +167,7 @@
                           <th scope="col">Horas</th>
                           <th scope="col">Finalizado el</th>
                           <th scope="col">Estado</th>
-                          <th scope="col" width="10%"></th>
+                          <th scope="col" width="7%"></th>
                           </tr>
                       </thead>
                       <tbody>
@@ -166,8 +176,8 @@
                               
                               <td> <strong></strong>{{ serv.nombre_peticion }} - Tipo: {{ serv.nombre_tipo_servicio }}</td>
                               <td> {{ serv.nombre_institucion }}</td>
-                              <td> {{ serv.numero_horas }} h</td>
-                              <td> {{ serv.fecha_fin }} </td>
+                              <td> {{ serv.cantidad_horas }} h</td>
+                              <td> {{ serv.fecha_peticion_fin }} </td>
                               <td> 
                                 <button v-if="serv.estado_proyecto_social == 'No iniciado'" class="btn btn-primary" style="cursor: default;">{{ serv.estado_proyecto_social }}</button>
                                 <button v-else-if="serv.estado_proyecto_social == 'En curso'" class="btn btn-success" style="cursor: default;">{{ serv.estado_proyecto_social }}</button>
@@ -382,6 +392,8 @@
                     <i class="fa fa-eye-slash" aria-hidden="true"></i>
                     Ocultar detalle
             </button>
+            <a type="button" class="ml-2 btn btn-success" :href="`/actividades/${form.idServicio}`" title="Ver informacion de la actividad">Información de las actividades</a>               
+              
           </div>
           </div>
         </div>
@@ -411,10 +423,14 @@
     import JetCheckbox from "@/Jetstream/Checkbox";
     import JetLabel from '@/Jetstream/Label'
     import JetValidationErrors from '@/Jetstream/ValidationErrors'
+    import JetNavLink from '@/Jetstream/NavLink'
+    import JetDropdownLink from '@/Jetstream/DropdownLink'
 
 
     export default {
         components:{
+          JetNavLink,
+          JetDropdownLink,
           JetAuthenticationCard,
           JetAuthenticationCardLogo,
           JetInput,
@@ -423,7 +439,7 @@
           JetValidationErrors,
           Base
         },
-        props: ['servicio', 'servicios'],
+        props: ['servicio', 'servicios', 'idEstudiante'],
         methods:{
 
           //carga informacion de la institucion 
@@ -438,6 +454,7 @@
           
           //carga informacion de la solicitud seleccionada al formulario del modal
           mostrarinfo(servicio){
+            this.form.idServicio = servicio.proyecto_social_id;
             this.form.fecha_inicio = servicio.fecha_inicio;
             this.form.fecha_fin = servicio.fecha_fin;
             this.form.numero_horas = servicio.numero_horas;
@@ -471,9 +488,12 @@
               ubicacion: ''
             },
             
-            form:{
-              
-            }
+            form: this.$inertia.form({
+              proyecto_social_id: this.$props.idServicio,
+            }),
+            formUp: this.$inertia.form({
+              proyecto_social_id: this.$props.idServicio,
+            }),
           }
         }, 
         mounted(){

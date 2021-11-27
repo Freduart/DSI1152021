@@ -76,16 +76,8 @@
                                         <!-- <option value="Cancelado">Cancelado</option> -->
                                     </select>    
                                 </div>
-
-
                             </div>   
-                                
-
-                                
                         </div>
-
-
-                    
                   </h3>
                     <inertia-link type="button" class="btn btn-success float-right mt-2" :href="route('finalizaractividades.index')">
                         <i class="fa fa-check-square"></i> Finalizar Actividades
@@ -103,8 +95,7 @@
               <!-- /.card-body -->
               <div class="card-footer clearfix" >
                   <!-- <p>{{ estudiante.nombre_estudiante }}</p> -->
-                <div class="row">
-                    
+                                    
                         <table v-if="serviciosFiltrados.length != 0" class="table table-hover text-center" style="font-size: 20px">
                                     <thead class="thead-dark">
                                         <tr>                                        
@@ -144,8 +135,9 @@
                                                     <!-- <button class="btn btn-warning" v-on:click="this.verDetalle(servicio)" data-toggle="modal" data-target="#detalleServicioModal">
                                                         <i class="fas fa-eye mx-12"></i>
                                                     </button>     -->
-                                                    <jet-button type="button" class="fas fa-info-circle text-yellow" data-toggle="modal" data-target="#detalleServicioModal" v-on:click="verDetalle(servicio)" title="Ver informacion del servicio social"></jet-button>
-                                                
+                                                    <!-- <jet-button type="button" class="fas fa-info-circle text-yellow" data-toggle="modal" data-target="#detalleServicioModal" v-on:click="verDetalle(servicio)" title="Ver informacion del servicio social"></jet-button> -->
+                                                    <a type="button" class="fas fa-info-circle text-yellow" :href="`/serviciossociales/${servicio.id}`" title="Ver informacion del servicio social"></a>
+                                                    <!-- <a type="button" class="mt-3 ml-2 mb-1 btn btn-warning left"  title="Ver servicio social">Información del servicio</a>  -->
                                                 </div>
                                             </td>
                                         </tr>
@@ -294,7 +286,7 @@
 
                     <!-- </div>     -->
 
-                </div>  
+                  
               </div>
               </div>
               <!-- /.card -->
