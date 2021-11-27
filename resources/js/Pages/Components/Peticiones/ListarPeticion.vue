@@ -270,7 +270,7 @@
           cancelButtonText: 'No, cancelar'
         }).then((result)=> {
           if(result.isConfirmed){
-              this.$inertia.put(route('peticiones.update', peticion.id), this.formUp);
+              this.$inertia.put(route('peticiones.updateStatus', peticion.id), this.formUp);
               Swal.fire(
                 '!Aceptado!',
                 'La peticion se acepto correctamente',

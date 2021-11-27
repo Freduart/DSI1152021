@@ -8,7 +8,7 @@
         <!-- Left navbar links -->
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                <a class="nav-link" id="sideBar" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
 
             
@@ -81,11 +81,12 @@
                     
                     <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <inertia-link href="/" class="nav-link" >
+                        <inertia-link href="/dashboard" class="nav-link" >
                         <i class="fa fa-home nav-icon"></i>
                         <p>Inicio</p>
                         </inertia-link>
                     </li>
+                    
                     <!-- <li v-if="is('Administrador')" class="nav-item"> -->
                     <li v-if="$page.props.user && $page.props.user.rol == 'Administrador'" class="nav-item">    
                         <inertia-link :href="route('carreras.index')" class="nav-link" >
@@ -191,11 +192,22 @@
                     <li v-if="$page.props.user && ($page.props.user.rol == 'Encargado Escuela'
                                                  | $page.props.user.rol == 'Encargado Facultad'
                                                  | $page.props.user.rol == 'Estudiante'
+                                                 | $page.props.user.rol == 'Administrador'
                                                  | $page.props.user.rol == 'Unidad de Proyeccion Social')" class="nav-item">
                     <!-- <li v-if="is('Encargado Escuela') || is('Encargado Facultad') || is('Estudiante') || is('Unidad de Proyeccion Social')" class="nav-item"> -->
                             <inertia-link :href="route('serviciossociales.index')" class="nav-link">
                             <i class="fa fa-th-large nav-icon"></i>
                             <p>Servicios Sociales</p>
+                            </inertia-link>
+                    </li>
+
+                                        <li v-if="$page.props.user && ($page.props.user.rol == 'Encargado Escuela'
+                                                 | $page.props.user.rol == 'Encargado Facultad'
+                                                 | $page.props.user.rol == 'Administrador'
+                                                 | $page.props.user.rol == 'Unidad de Proyeccion Social')" class="nav-item">
+                            <inertia-link :href="route('peticiones.index')" class="nav-link">
+                            <i class="fa fa-podcast nav-icon"></i>
+                            <p>Peticiones</p>
                             </inertia-link>
                     </li>
 
@@ -207,11 +219,28 @@
                             </inertia-link>
                     </li>
 
+                    <li v-if="$page.props.user && ($page.props.user.rol == 'Encargado Escuela'
+                                                 | $page.props.user.rol == 'Encargado Facultad'
+                                                 | $page.props.user.rol == 'Administrador')" class="nav-item">
+                            <inertia-link :href="route('estadisticas')" class="nav-link">
+                            <i class="fa fa-life-ring nav-icon"></i>
+                            <p>Estadísticas</p>
+                            </inertia-link>
+                    </li>
+
                     <li v-if="$page.props.user && $page.props.user.rol == 'Encargado Escuela'" class="nav-item">
                     <!-- <li v-if="is('Encargado Escuela')" class="nav-item"> -->
                             <inertia-link :href="route('serviciofinalizado.index')" class="nav-link">
                             <i class="nav-icon fas fa-clipboard-check"></i>
                             <p>Horas finalizadas</p>
+                            </inertia-link>
+                    </li>
+
+                    <li v-if="$page.props.user && $page.props.user.rol == 'Institucion'" class="nav-item">
+                    <!-- <li v-if="is('Encargado Escuela')" class="nav-item"> -->
+                            <inertia-link :href="route('peticiones.index')" class="nav-link">
+                            <i class="nav-icon fas fa-braille"></i>
+                            <p>Peticiones Realizadas</p>
                             </inertia-link>
                     </li>
                     </ul>

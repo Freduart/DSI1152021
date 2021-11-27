@@ -21,6 +21,8 @@ use App\Http\Controllers\ServicioSocialController;
 use App\Http\Controllers\PeticionController;
 use App\Http\Controllers\TipoServicioController;
 use App\Http\Controllers\ConstanciaController;
+use App\Http\Controllers\EstadisticasController;
+// use App\Http\Controllers\FinalizarProyectoController;
 use App\Http\Controllers\FinalizarServicioController;
 
 
@@ -140,8 +142,12 @@ Route::resource('tipoServicio', TipoServicioController::class)->only([
 ]);
 
 //Ruta de las peticiones
+Route::put('peticiones/status/{peticion}', [PeticionController::class, 'updateStatus'])->name('peticiones.updateStatus');
 Route::resource('peticiones', PeticionController::class);
 
+
+Route::get('estadisticas', [EstadisticasController::class, 'index'])->middleware(['auth:sanctum', 'verified'])->name('estadisticas');
 Route::get('/bitacoras/pdf/{proyecto_social_id}', [BitacoraController::class, 'generarPDF'])->name('bitacora.pdf');
+// Route::get('/bitacoras/pdf/{proyecto_social_id}', [BitacoraController::class, 'generarPDF'])->name('bitacora.pdf');
 
 Route::get('/constancia/pdf/{idEstudiante}', [ConstanciaController::class, 'generarPDF'])->name('constancia.pdf');

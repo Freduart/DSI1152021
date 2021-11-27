@@ -36,7 +36,9 @@
         "vue-loader": "^16.8.3"
     },
     "dependencies": {
+        "apexcharts": "^3.30.0",
         "laravel-permission-to-vuejs": "^3.0.0",
-        "vue-bootstrap-typeahead": "^0.2.6"
+        "vue-bootstrap-typeahead": "^0.2.6",
+        "vue3-apexcharts": "^1.4.1"
     }
 }
