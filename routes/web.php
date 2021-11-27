@@ -148,3 +148,6 @@ Route::resource('peticiones', PeticionController::class);
 
 Route::get('estadisticas', [EstadisticasController::class, 'index'])->middleware(['auth:sanctum', 'verified'])->name('estadisticas');
 Route::get('/bitacoras/pdf/{proyecto_social_id}', [BitacoraController::class, 'generarPDF'])->name('bitacora.pdf');
+// Route::get('/bitacoras/pdf/{proyecto_social_id}', [BitacoraController::class, 'generarPDF'])->name('bitacora.pdf');
+
+Route::get('/constancia/pdf/{idEstudiante}', [ConstanciaController::class, 'generarPDF'])->name('constancia.pdf');

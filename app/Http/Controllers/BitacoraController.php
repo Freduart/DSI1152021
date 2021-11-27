@@ -70,7 +70,7 @@ class BitacoraController extends Controller
         $idUsuario = Auth::id();
         
         // obteniendo el id del estudiante logeado
-        $estudiante = DB::table('estudiantes')->select('estudiantes.id as idE', 'nombre_facultad', 'nombre_carrera', 'carnet_estudiante', 'nombre_estudiante', 'apellido_estudiante')
+        $estudiante = DB::table('estudiantes')->select('estudiantes.id as idE', 'nombre_facultad', 'nombre_carrera', 'carnet_estudiante', 'nombre_estudiante', 'apellido_estudiante', 'correo_estudiante')
         ->join('carreras','carreras.id', '=', 'estudiantes.carrera_id')
         ->join('facultades', 'facultades.id', '=', 'carreras.facultad_id')
         ->where('user_id', '=', $idUsuario)
@@ -94,11 +94,12 @@ class BitacoraController extends Controller
         ->where('proyectos_sociales.id', '=', $proyecto_social_id)
         ->first();
 
-        // dd($actividades);
+        $totalH = DB::select('SELECT SUM(total_horas) as total_horas FROM actividades WHERE verificado = "Aceptada"');
 
         view()->share('actividades', $actividades);
         view()->share('estudiante', $estudiante);
         view()->share('servicio', $servicio);
+        view()->share('totalH', $totalH);
         $pdf = PDF::loadview('PDFs/bitacorapdf');
         return $pdf->download('bitacorapdf.pdf');
     }
