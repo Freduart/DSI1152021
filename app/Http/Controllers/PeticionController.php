@@ -91,7 +91,7 @@ class PeticionController extends Controller
         ->distinct('nombre_carrera')
         ->get();
 
-        return Inertia::render('Components/Peticiones/FormPeticion',['peticiones' => $peticion, 'carreras' => $carreras, 'tipoServicios' => $tipoServicioSociales, 'instituciones' => $instituciones, 'facultades' => $facultades]);
+        return Inertia::render('Components/Peticiones/FormPeticion',['peticiones' => $peticion, 'carreras' => $carreras, 'tipoServicios' => $tipoServicioSociales, 'instituciones' => $instituciones, 'facultades' => $facultades, 'idFacultad' => 0]);
     }
 
     /**
@@ -106,7 +106,7 @@ class PeticionController extends Controller
         // Agregamos la nueva peticion
         
         $request->validate([
-            'nombre_peticion' => 'requireds|max:60',
+            'nombre_peticion' => 'required|max:60',
             'ubicacion_actividades' => 'required|max:60',
             'correo_peticion' => 'required|regex:/^.+@.+$/i',
         ]);
