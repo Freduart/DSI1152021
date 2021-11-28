@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Estudiante;
 use App\Models\EncargadoEscuela;
+use App\Models\Peticion;
 use App\Models\Solicitud;
 
 class ServicioSocialController extends Controller
@@ -229,9 +230,11 @@ class ServicioSocialController extends Controller
      * @param  \App\Models\ProyectoSocial  $proyectoSocial
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProyectoSocial $proyectoSocial)
+    //public function edit(ProyectoSocial $proyectoSocial)
+    public function edit(Request $request, $servicio)
     {
-        //
+        
+
     }
 
     /**
@@ -289,19 +292,24 @@ class ServicioSocialController extends Controller
                             $sol->estado_solicitud = 'Rechazado';
                             $sol->save();
                         }
+                    }else if ($request->tipo==null){
+                        $proyecto = ProyectoSocial::find($proyecto_social_id);
+                        $servic = Peticion::find($proyecto->peticion_id);
+                        $servic->cantidad_horas=$request->cantidad_horas;
+                        $servic->save();
                     }
-                    
 
+                    
                     return redirect()->route('serviciossociales', ['proyecto_social_id' => $proyecto_social_id]);
                 } else {
-                    return "nop";
+                    return Redirect::route('login');
                 }
 
             } else {
-                return "escuela";
+                return Redirect::route('login');
             }
         } else {
-            return "acceso";
+            return Redirect::route('login');
         }
 
     }

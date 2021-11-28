@@ -58,14 +58,14 @@ class EstablecerHAController extends Controller
     public function update(Request $request, $servicio)
     {
         //Actualiza el campo de numero_horas en la DB
-        $servicios=ProyectoSocial::find($servicio);
-        $servicios->numero_horas=$request->horas;
+        $servicios=Peticion::find($servicio);
+        $servicios->cantidad_horas=$request->horas;
         $servicios->save();
         
         //Actualiza el campo de cantidad_estudiantes en la DB
-        $peticiones=Peticion::find($request->idPeticion);
-        $peticiones->cantidad_estudiantes=$request->cantidad;
-        $peticiones->save();
+        //$peticiones=Peticion::find($request->idPeticion);
+        //$peticiones->cantidad_estudiantes=$request->cantidad;
+        //$peticiones->save();
 
         return Redirect::route('establecerha.index');
     }
