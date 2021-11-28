@@ -30,21 +30,21 @@ class Peticion extends Model
 
     //Relacion muchos a uno con carreras
     public function carreras(){
-        return $this->belongsTo('App\Models\Carrera');
+        return $this->belongsTo(Carrera::class);
     }
 
     //Relacion muchos a uno con tipos de servicio social
     public function tiposServicioSocial(){
-        return $this->belongsTo('App\Models\TipoServicioSocial');
+        return $this->belongsTo(TipoServicioSocial::class);
     }
 
     //Relacion muchos a uno con instituciones
     public function instituciones(){
-        return $this->belongsTo('App\Models\Institucion');
+        return $this->hasOne(Institucion::class);
     }
 
     //Relacion uno a uno con proyectos sociales
     public function proyectosSociales(){
-        return $this->hasOne('App\Models\ProyectoSocial');
-    }
+        return $this->hasOne(ProyectoSocial::class);
+    }    
 }

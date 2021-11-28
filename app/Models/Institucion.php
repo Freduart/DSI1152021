@@ -22,11 +22,11 @@ class Institucion extends Model
 
     //Relacion uno a muchos con peticiones
     public function peticiones(){
-        return $this->hasMany('App\Models\Peticion');
+        return $this->hasMany(Peticion::class);
     }    
 
     //Relacion uno a uno con Usuario
     public function usuario(){
         return $this->hasOne('App\Models\User');
-    }
+    }   
 }

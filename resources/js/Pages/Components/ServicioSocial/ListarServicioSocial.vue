@@ -78,10 +78,7 @@
                                 </div>
                             </div>   
                         </div>
-                  </h3>
-                    <inertia-link type="button" class="btn btn-success float-right mt-2" :href="route('finalizaractividades.index')">
-                        <i class="fa fa-check-square"></i> Finalizar Actividades
-                    </inertia-link>                                    
+                  </h3>                        
               </div>
               <!-- /.card-header -->
               <!-- <div class="card-body">

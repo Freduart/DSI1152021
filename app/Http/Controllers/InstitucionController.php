@@ -58,7 +58,7 @@ class InstitucionController extends Controller
             'nombre_institucion' => 'required|max:30',
             'contacto_institucion' => 'required|max:50',
             'correo_institucion' => 'required|unique:instituciones|regex:/^.+@.+$/i|max:50',
-            'telefono_estudiante' => 'required|unique:instituciones|regex:/[0-9]{4}(-)?[0-9]{4}/i',
+            'telefono_institucion' => 'required|unique:instituciones|regex:/[0-9]{4}(-)?[0-9]{4}/i',
             'ubicacion_institucion' => 'required|max:50',
             'rubro_institucion' => 'required|max:100',
         ]);
