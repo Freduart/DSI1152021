@@ -18,7 +18,7 @@ class EncargadoFacultadSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
 
         $encargadadosF = [
-            [2,"EF0239856974","Alexis", "Pocasangre",11 ,"03079945-9", "alexis@gmail.com","7698-8425","Activo"],
+            [2,"EF0239856974","Alexis", "Pocasangre",12 ,"03079945-9", "alexis@gmail.com","7698-8425","Activo"],
         ];
 
         foreach($encargadadosF as $encargadoF){

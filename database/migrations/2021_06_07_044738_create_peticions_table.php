@@ -24,7 +24,7 @@ class CreatePeticionsTable extends Migration
             $table->unsignedBigInteger('cantidad_horas');
             $table->string('otros_tipo_servicio')->nullable();
             $table->enum('estado_peticion', ['En espera', 'Aceptado', 'Rechazado']);
-            $table->string('correo_peticion', 50)->unique();
+            $table->string('correo_peticion', 50);
 
             $table->unsignedBigInteger('carrera_id')->nullable();
             $table->unsignedBigInteger('tipo_servicio_social_id')->nullable();

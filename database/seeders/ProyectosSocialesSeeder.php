@@ -20,6 +20,8 @@ class ProyectosSocialesSeeder extends Seeder
 
         $proyectos = [
             [2,"En curso"],
+            [3, "No iniciado"],
+            [4, "No iniciado"],
         ];
 
         foreach($proyectos as $proyecto){

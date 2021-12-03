@@ -34,6 +34,9 @@
                     <inertia-link class="btn btn-danger" :href="route('peticiones.create')" title="Eliminar tipo de servicio social">
                       Volver a crear peticiones
                     </inertia-link>
+                    <inertia-link class="ml-4 btn btn-warning" :href="route('homepage')" title="Volver al home">
+                      Volver al Portal Público
+                    </inertia-link>
                   
                   <!--Boton para añadir instituciones-->
                   <inertia-link type="button" class="btn btn-success float-right"  :href="route('instituciones.create')">

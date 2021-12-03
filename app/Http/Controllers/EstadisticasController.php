@@ -114,7 +114,7 @@ class EstadisticasController extends Controller
                 and p.estado_proyecto_social = 'En curso'
                 group by nombre_institucion, nombre_carrera"));   
             }else{
-                return Redirect::route('/');
+                return Redirect::route('dashboard');
             }
         }else{
             return Redirect::route('login');

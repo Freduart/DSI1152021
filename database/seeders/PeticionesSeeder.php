@@ -19,7 +19,9 @@ class PeticionesSeeder extends Seeder
 
         $peticiones = [
             [2,"Pasantia para desarrollo","Se necesita dos estudiantes con ganas de aprender","San Salvador","2021-09-24","2021-10-10",300,null,"En espera","applaudoempleado@gmail.com",4,1,1],
-            [3,"Desarrollador Web","Se necesita dos estudiantes con ganas de aprender","Santa Tecla","2021-09-27","2021-11-10",400,null,"Aceptado","novatech@gmail.com",4,3,1],
+            [2,"Desarrollador Web","Se necesita dos estudiantes con ganas de aprender","Santa Tecla","2021-09-27","2021-11-10",400,null,"Aceptado","novatech@gmail.com",4,3,1],
+            [5,"Desarrollador para ReactJS","Se necesitan 5 estudiantes para un proyecto","Santa Tecla","2022-02-12","2022-04-10",500,null,"En espera","novatech@gmail.com",4,3,2],
+            [3,"Servicio de soporte técnico","Se requieren 3 estudiantes en el área de servicios técnicos","Santa Ana","2022-09-27","2022-12-10",400,null,"En espera","novatech@gmail.com",4,3,2],
         ];
 
         foreach($peticiones as $peticion){

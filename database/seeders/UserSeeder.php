@@ -53,7 +53,8 @@ class UserSeeder extends Seeder
 
       $encargadosE = [
         ["Balmore", "balmore@gmail.com", "encargadoE", "Encargado Escuela"],
-        ["Garcia", "garcia@gmail.com", "encargadoE", "Encargado Escuela"]
+        ["Garcia", "garcia@gmail.com", "encargadoE", "Encargado Escuela"],
+        ["Rudy", "rudy@gmail.com", "encargadoE", "Encargado Escuela"]
       ];
 
       foreach($encargadosE as $encargadoE){

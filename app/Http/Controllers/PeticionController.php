@@ -27,18 +27,11 @@ class PeticionController extends Controller
      */
     public function index()
     {
-        if(Auth::check()){
-            if(Auth::user()->hasRole('Institucion')){
-                $idUsuario = Auth::id();
-                $UserInstitucion = User::where('id', '=', $idUsuario)->firstOrFail();
-                $institucion = Institucion::where('user_id', '=', $UserInstitucion->id)->firstOrFail();
-                $peticiones = Peticion::join('instituciones', 'peticiones.institucion_id', '=', 'instituciones.id')
-                                        ->join('proyectos_sociales', 'proyectos_sociales.peticion_id', '=', 'peticiones.id')
-                                        ->where('peticiones.institucion_id', '=', $institucion->id)
-                                        ->get();
-                // dd($peticiones);
-                return Inertia::render('Components/Peticiones/PeticionesParaInstitucion', ['peticiones' => $peticiones, 'institucion' => $institucion]);
-            }else{
+
+        if(!Auth::check()){
+            return Redirect::route('homepage'); 
+        }else{
+            if(Auth::user()->hasRole('Encargado Escuela') || Auth::user()->hasRole('Encargado Facultad') || Auth::user()->hasRole('Administrador')){
                 // Obteniendo las peticiones de servicio social
                 $peticion=Peticion::join('carreras', 'peticiones.carrera_id', '=', 'carreras.id')
                 ->join('tipos_servicio_social', 'peticiones.tipo_servicio_social_id', '=', 'tipos_servicio_social.id')
@@ -47,11 +40,27 @@ class PeticionController extends Controller
                 ->select('peticiones.id AS idPeticion', 'cantidad_estudiantes', 'nombre_peticion', 'descripcion_peticion', 'ubicacion_actividades', 'fecha_peticion', 'fecha_peticion_fin', 'cantidad_horas', 'otros_tipo_servicio', 'estado_peticion', 'correo_peticion', 'carrera_id', 'nombre_carrera', 'tipo_servicio_social_id', 'nombre_tipo_servicio', 'institucion_id', 'nombre_institucion')
                 ->get();
                 $carreras= Carrera::all();
-                return Inertia::render('Components/Peticiones/ListarPeticion',['peticiones' => $peticion, 'carreras' => $carreras]);
+                return Inertia::render('Components/Peticiones/ListarPeticion',['peticiones' => $peticion, 'carreras' => $carreras]);           
+            }
+            else{
+                if(Auth::user()->hasRole('Institucion')){
+                    $idUsuario = Auth::id();
+                    $UserInstitucion = User::where('id', '=', $idUsuario)->firstOrFail();
+                    $institucion = Institucion::where('user_id', '=', $UserInstitucion->id)->firstOrFail();
+                    $peticiones = Peticion::join('instituciones', 'peticiones.institucion_id', '=', 'instituciones.id')
+                                            ->join('proyectos_sociales', 'proyectos_sociales.peticion_id', '=', 'peticiones.id')
+                                            ->where('peticiones.institucion_id', '=', $institucion->id)
+                                            ->get();
+                    // dd($peticiones);
+                    return Inertia::render('Components/Peticiones/PeticionesParaInstitucion', ['peticiones' => $peticiones, 'institucion' => $institucion]);                    
+                }
             }
         }
 
+
     }
+
+
 
     /**
      * Show the form for creating a new resource.
